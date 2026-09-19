@@ -1,0 +1,63 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_background }}">
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+  {{ content_for_header }}
+
+  {%- render 'meta-tags' -%}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  {{ 'theme.css.liquid' | asset_url | stylesheet_tag }}
+
+  {{ 'archivo-400-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+  {{ 'bodoni-moda-400-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+
+  {%- render 'favicon' -%}
+
+  <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+</head>
+
+<body class="template-{{ request.page_type | handleize }}">
+  <a class="skip-to-content" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  {% sections 'header-group' %}
+
+  <main id="MainContent" class="content-for-layout" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+  {%- render 'mobile-dock' -%}
+
+  {% section 'cart-drawer' %}
+  {%- render 'search-drawer' -%}
+
+  <script id="theme-settings" type="application/json">
+    {
+      "moneyFormat": {{ shop.money_format | json }},
+      "cartUrl": {{ routes.cart_url | json }},
+      "cartAddUrl": {{ routes.cart_add_url | json }},
+      "cartChangeUrl": {{ routes.cart_change_url | json }},
+      "cartType": {{ settings.cart_type | json }},
+      "predictiveSearchUrl": {{ '/search/suggest.json' | json }}
+    }
+  </script>
+</body>
+</html>

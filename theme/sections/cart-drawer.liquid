@@ -1,0 +1,65 @@
+<div class="cart-drawer" data-cart-drawer aria-hidden="true">
+  <div class="cart-drawer__scrim" data-cart-drawer-close></div>
+  <div class="cart-drawer__panel" role="dialog" aria-label="{{ 'sections.cart.title' | t }}">
+    <div class="cart-drawer__head">
+      <h2 style="margin:0;font-size:20px">{{ 'sections.cart.title' | t }} ({{ cart.item_count }})</h2>
+      <button type="button" class="btn-icon" data-cart-drawer-close aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'icon', icon: 'close' %}
+      </button>
+    </div>
+
+    <div class="cart-drawer__body">
+      {%- if cart.item_count == 0 -%}
+        <p style="padding:32px 0">{{ 'sections.cart.empty' | t }}</p>
+        <a href="/collections/all" class="btn btn-secondary" data-cart-drawer-close>{{ 'sections.cart.empty_link' | t }}</a>
+      {%- else -%}
+        {%- if settings.cart_show_free_shipping_bar -%}
+          {%- render 'free-shipping-bar' -%}
+        {%- endif -%}
+        {%- for item in cart.items -%}
+          <div class="cart-line" data-cart-line="{{ item.key }}">
+            <a href="{{ item.url }}">
+              <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" width="200" height="{{ 200 | divided_by: item.image.aspect_ratio | default: 250 }}" loading="lazy">
+            </a>
+            <div>
+              <a href="{{ item.url }}" style="font-family:var(--font-heading);font-size:15px">{{ item.product.title }}</a>
+              {%- if item.variant.title != 'Default Title' -%}
+                <div class="text-muted" style="font-size:12.5px">{{ item.variant.title }}</div>
+              {%- endif -%}
+              <div class="quantity-selector" data-quantity-selector style="margin-top:8px">
+                <button type="button" data-cart-qty-step="-1" aria-label="Decrease quantity">−</button>
+                <input type="number" min="0" value="{{ item.quantity }}" data-cart-qty-input aria-label="{{ 'sections.cart.quantity' | t }}">
+                <button type="button" data-cart-qty-step="1" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div>{{ item.final_line_price | money }}</div>
+              <button type="button" class="btn-ghost" data-cart-remove="{{ item.key }}" style="margin-top:8px">{{ 'sections.cart.remove' | t }}</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="cart-drawer__foot">
+        <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+          <span>{{ 'sections.cart.subtotal' | t }}</span>
+          <strong>{{ cart.total_price | money }}</strong>
+        </div>
+        <p class="text-muted" style="font-size:12px;margin-bottom:16px">{{ 'sections.cart.shipping_at_checkout' | t }}</p>
+        <a href="{{ routes.cart_url }}" class="btn btn-secondary btn-block" style="margin-bottom:8px">{{ 'sections.cart.title' | t }}</a>
+        <a href="{{ routes.cart_url }}/checkout" class="btn btn-primary btn-block">{{ 'sections.cart.checkout' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+
+  ]
+}
+{% endschema %}

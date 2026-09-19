@@ -1,0 +1,225 @@
+{
+  "general": {
+    "collections": {
+      "title": "Collections",
+      "products": "products"
+    },
+    "gift_card": {
+      "title": "{{ value }} gift card for {{ shop }}",
+      "subtext": "Here's your gift card!",
+      "expired": "Expired",
+      "balance": "{{ balance }} left",
+      "shop_link": "Start shopping at {{ shop }}",
+      "add_to_wallet": "Add to Apple Wallet"
+    },
+    "meta": {
+      "page": "Page {{ page }}"
+    },
+    "accessibility": {
+      "skip_to_content": "Skip to content",
+      "close": "Close",
+      "next_slide": "Next slide",
+      "previous_slide": "Previous slide",
+      "loading": "Loading..."
+    },
+    "password_page": {
+      "opening_soon": "Opening soon",
+      "password": "Password",
+      "login_form_submit": "Enter",
+      "login_form_error": "Wrong password. Please try again.",
+      "admin_link_html": "Are you the store owner? <a href=\"/admin\">Log in here</a>"
+    },
+    "search": {
+      "search": "Search",
+      "placeholder": "Search products, journal, and more",
+      "no_results_html": "No results found for \"{{ terms }}\". Check the spelling or use a different word.",
+      "results_for_html": "Results for \"{{ terms }}\""
+    },
+    "newsletter": {
+      "email_placeholder": "you@email.com",
+      "submit": "Join",
+      "success": "Thank you for subscribing",
+      "error": "Please enter a valid email"
+    }
+  },
+  "sections": {
+    "header": {
+      "announcement": "Free delivery over $75 · 60-day returns",
+      "search": "Search",
+      "account": "Account",
+      "cart": "Bag",
+      "menu": "Menu"
+    },
+    "cart": {
+      "title": "Your bag",
+      "empty": "Your bag is empty",
+      "empty_link": "Continue shopping",
+      "saved_for_later": "Saved for later",
+      "subtotal": "Subtotal",
+      "shipping_at_checkout": "Shipping and taxes calculated at checkout",
+      "checkout": "Checkout",
+      "remove": "Remove",
+      "quantity": "Quantity",
+      "free_shipping_reached": "You've unlocked free shipping",
+      "free_shipping_remaining_html": "Add {{ amount }} more for free shipping",
+      "update": "Update"
+    },
+    "featured-collection": {
+      "view_all": "View all"
+    },
+    "quiz": {
+      "title": "Twelve products, narrowed to a routine.",
+      "start": "Start the quiz",
+      "next": "Next",
+      "back": "Back",
+      "see_results": "See my routine",
+      "retake": "Retake the quiz",
+      "add_routine_to_bag": "Add routine to bag"
+    },
+    "faq": {
+      "title": "Help"
+    },
+    "contact": {
+      "title": "Talk to us",
+      "name": "Name",
+      "email": "Email",
+      "topic": "Topic",
+      "message": "Message",
+      "submit": "Send message",
+      "success": "Thanks — we usually reply within 6 hours."
+    }
+  },
+  "templates": {
+    "404": {
+      "title": "This page is not part of the routine.",
+      "subtext": "The page you're looking for doesn't exist or has moved.",
+      "link": "Back to shop"
+    },
+    "search": {
+      "title": "Search"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_bag": "Add to bag",
+      "sold_out": "Sold out",
+      "sale": "Sale",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity",
+      "size": "Size",
+      "view_details": "View details",
+      "description": "Description",
+      "how_to_use": "How to use",
+      "ingredients": "Ingredients",
+      "reviews": "Reviews",
+      "complete_the_routine": "Complete the routine",
+      "sale_price": "Sale price",
+      "regular_price": "Regular price",
+      "unit_price": "Unit price"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "Keep reading",
+      "back_to_journal": "Back to the Journal",
+      "by_author": "By {{ author }}",
+      "share": "Share this article"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Your account",
+      "greeting": "Hello, {{ name }}",
+      "details": "Your details",
+      "view_addresses": "View addresses",
+      "return": "Return to Account Details",
+      "log_out": "Log out"
+    },
+    "activate_account": {
+      "title": "Activate account",
+      "subtext": "Create your password to activate your account.",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Activate account",
+      "cancel": "Decline invitation"
+    },
+    "addresses": {
+      "title": "Your addresses",
+      "default": "Default address",
+      "add_new": "Add a new address",
+      "edit_address": "Edit address",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "company": "Company",
+      "address1": "Address line 1",
+      "address2": "Address line 2",
+      "city": "City",
+      "country": "Country/region",
+      "province": "Province",
+      "zip": "Postal/ZIP code",
+      "phone": "Phone",
+      "set_default": "Set as default address",
+      "add": "Add address",
+      "update": "Update address",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "delete_confirm": "Are you sure you wish to delete this address?"
+    },
+    "login_page": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "forgot_password": "Forgot your password?",
+      "sign_in": "Sign in",
+      "create_account": "Create account",
+      "guest_title": "Continue as a guest",
+      "guest_continue": "Continue"
+    },
+    "recover_password": {
+      "title": "Reset your password",
+      "subtext": "We will send you an email to reset your password.",
+      "submit": "Submit",
+      "success": "We've sent you an email with a link to update your password.",
+      "cancel": "Cancel"
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create"
+    },
+    "reset_password": {
+      "title": "Reset account password",
+      "subtext_generic": "Enter a new password for your account.",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Reset password"
+    },
+    "orders": {
+      "title": "Order history",
+      "order_number": "Order",
+      "date": "Date",
+      "payment_status": "Payment status",
+      "fulfillment_status": "Fulfillment status",
+      "total": "Total",
+      "none": "You haven't placed any orders yet."
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "date_html": "Placed on {{ date }}",
+      "cancelled_html": "Order Cancelled on {{ date }}",
+      "cancelled_reason": "Reason: {{ reason }}",
+      "billing_address": "Billing address",
+      "shipping_address": "Shipping address",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "total": "Total",
+      "fulfilled_at_html": "Fulfilled {{ date }}",
+      "track_shipment": "Track shipment"
+    }
+  }
+}

@@ -1,0 +1,94 @@
+<section class="section container" style="max-width:760px">
+  <h1>{{ 'sections.faq.title' | t }}</h1>
+
+  
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'group' -%}
+      {%- unless forloop.first -%}</div>{%- endunless -%}
+      <div class="faq-group" data-accordion-single {{ block.shopify_attributes }}>
+        <h2 style="font-size:20px;margin-bottom:var(--space-4)">{{ block.settings.title }}</h2>
+    {%- endif -%}
+    {%- if block.type == 'question' -%}
+      <div class="faq-item" data-accordion-item {{ block.shopify_attributes }}>
+        <button type="button" class="faq-item__trigger" data-accordion-trigger>
+          {{ block.settings.question }}
+          {% render 'icon', icon: 'chevron-down', size: 16 %}
+        </button>
+        <div class="faq-item__panel">{{ block.settings.answer }}</div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+  {%- unless section.blocks.size == 0 -%}</div>{%- endunless -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.faq-accordion.name",
+  "blocks": [
+    {
+      "type": "group",
+      "name": "t:sections.faq-accordion.blocks.group.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.faq-accordion.blocks.group.settings.title.label"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "t:sections.faq-accordion.blocks.question.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.faq-accordion.blocks.question.settings.question.label"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:sections.faq-accordion.blocks.question.settings.answer.label"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "group",
+        "settings": {
+          "title": "Shipping & returns"
+        }
+      },
+      {
+        "type": "question",
+        "settings": {
+          "question": "How long does delivery take?",
+          "answer": "<p>3-5 business days within the continental US.</p>"
+        }
+      },
+      {
+        "type": "question",
+        "settings": {
+          "question": "What is your return policy?",
+          "answer": "<p>60 days, unopened or opened — we stand behind the formulas.</p>"
+        }
+      },
+      {
+        "type": "group",
+        "settings": {
+          "title": "Formulas"
+        }
+      },
+      {
+        "type": "question",
+        "settings": {
+          "question": "Are your products fragrance-free?",
+          "answer": "<p>Nine of our twelve formulas are fragrance-free.</p>"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

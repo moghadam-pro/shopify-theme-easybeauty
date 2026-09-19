@@ -1,0 +1,75 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "EasyBeauty — Clean skincare",
+        "heading": "Love your skin from within",
+        "text": "Twelve weightless formulas, dermatologist tested, built for the barrier you already have.",
+        "button_label": "Shop the edit",
+        "button_link": "/collections/all",
+        "button_label_2": "Take the skin quiz",
+        "button_link_2": "/pages/quiz"
+      },
+      "blocks": {
+        "hotspot-1": {
+          "type": "hotspot",
+          "settings": {
+            "horizontal_position": 68,
+            "vertical_position": 58,
+            "title": "Radiance Serum No.3",
+            "text": "Niacinamide at 10% — the formula that stopped stinging."
+          }
+        }
+      },
+      "block_order": [
+        "hotspot-1"
+      ]
+    },
+    "perks": {
+      "type": "perk-bar"
+    },
+    "best-sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Best sellers",
+        "products_to_show": 4,
+        "columns_desktop": "4",
+        "view_all_link": "/collections/all"
+      }
+    },
+    "ingredient-highlight": {
+      "type": "image-text",
+      "settings": {
+        "layout": "left",
+        "eyebrow": "The lab",
+        "heading": "One lab outside Lisbon, batch-tested before it leaves.",
+        "text": "<p>A team of nine, four of them chemists. No seasonal launches — just twelve formulas we keep improving.</p>",
+        "button_label": "About EasyBeauty",
+        "button_link": "/pages/about"
+      }
+    },
+    "quiz-teaser": {
+      "type": "image-text",
+      "settings": {
+        "layout": "right",
+        "eyebrow": "Skin quiz",
+        "heading": "Six questions, three products, no account needed.",
+        "text": "<p>Answer six questions and we will narrow twelve products to three.</p>",
+        "button_label": "Take the quiz",
+        "button_link": "/pages/quiz"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter"
+    }
+  },
+  "order": [
+    "hero",
+    "perks",
+    "best-sellers",
+    "ingredient-highlight",
+    "quiz-teaser",
+    "newsletter"
+  ]
+}

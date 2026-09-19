@@ -1,0 +1,73 @@
+<section class="section container" style="max-width:760px">
+  {%- for block in section.blocks -%}
+    <div {{ block.shopify_attributes }} style="margin-bottom:var(--space-4)">
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          <h2>{{ block.settings.heading }}</h2>
+        {%- when 'text' -%}
+          <div class="rte">{{ block.settings.content }}</div>
+        {%- when 'button' -%}
+          <a href="{{ block.settings.button_link | default: '#' }}" class="btn btn-primary">{{ block.settings.button_label }}</a>
+      {%- endcase -%}
+    </div>
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.rich-text.name",
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.rich-text.blocks.heading.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.rich-text.blocks.heading.settings.heading.label"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.rich-text.blocks.text.name",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.rich-text.blocks.text.settings.content.label"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "t:sections.rich-text.blocks.button.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.rich-text.blocks.button.settings.button_label.label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.rich-text.blocks.button.settings.button_link.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.rich-text.presets.name",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

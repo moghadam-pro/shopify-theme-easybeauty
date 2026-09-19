@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "intro": {
+      "type": "rich-text",
+      "blocks": {
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Twelve formulas. No seasonal launches."
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "content": "<p>We ship the same twelve products, continuously improved, instead of chasing trend launches.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "h",
+        "t"
+      ]
+    },
+    "values": {
+      "type": "about-values"
+    },
+    "lab": {
+      "type": "image-text",
+      "settings": {
+        "layout": "left",
+        "eyebrow": "The lab",
+        "heading": "One lab outside Lisbon, batch-tested before it leaves.",
+        "text": "<p>Every batch is checked in-house before it ships — nothing is outsourced past formulation.</p>"
+      }
+    },
+    "team": {
+      "type": "team-grid"
+    },
+    "quiz-cta": {
+      "type": "image-text",
+      "settings": {
+        "layout": "right",
+        "eyebrow": "Skin quiz",
+        "heading": "Six questions, three products, no account needed.",
+        "button_label": "Take the quiz",
+        "button_link": "/pages/quiz"
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "values",
+    "lab",
+    "team",
+    "quiz-cta"
+  ]
+}

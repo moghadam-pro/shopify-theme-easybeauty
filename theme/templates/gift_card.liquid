@@ -1,0 +1,38 @@
+{%- liquid
+  assign gift_card_value = gift_card.initial_value | money
+  assign gift_card_balance = gift_card.balance | money
+-%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ 'general.gift_card.title' | t: value: gift_card_value, shop: shop.name }}</title>
+  <meta name="robots" content="noindex">
+  {{ 'theme.css.liquid' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body class="template-gift-card">
+  <main class="section container" style="max-width:520px;text-align:center;padding-top:64px">
+    <h1 style="font-size:28px">{{ shop.name }}</h1>
+    <p class="eyebrow">{{ 'general.gift_card.subtext' | t }}</p>
+
+    <div class="card" style="border:2px solid var(--ink);padding:var(--space-8);margin:var(--space-8) 0">
+      <div style="font-size:36px;font-family:var(--font-heading)">{{ gift_card.initial_value | money }}</div>
+      {%- if gift_card.enabled == false or gift_card.expired -%}
+        <p class="tag" style="margin-top:12px">{{ 'general.gift_card.expired' | t }}</p>
+      {%- else -%}
+        <p style="margin-top:12px;font-size:13px" class="text-muted">{{ 'general.gift_card.balance' | t: balance: gift_card_balance }}</p>
+      {%- endif -%}
+
+      <p style="margin-top:24px;font-family:monospace;font-size:18px;letter-spacing:0.08em">{{ gift_card.code | format_code }}</p>
+    </div>
+
+    <a href="{{ shop.url }}" class="btn btn-primary">{{ 'general.gift_card.shop_link' | t: shop: shop.name }}</a>
+
+    {%- if gift_card.pass_url -%}
+      <p style="margin-top:16px"><a href="{{ gift_card.pass_url }}">{{ 'general.gift_card.add_to_wallet' | t }}</a></p>
+    {%- endif -%}
+  </main>
+</body>
+</html>

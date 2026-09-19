@@ -1,0 +1,66 @@
+<section class="section container" style="max-width:760px">
+  {%- liquid
+    assign order_date = order.created_at | date: '%B %d, %Y'
+    assign cancelled_date = order.cancelled_at | date: '%B %d, %Y'
+  -%}
+  <a href="{{ routes.account_url }}" class="btn-ghost">&larr; {{ 'customer.account.return' | t }}</a>
+  <h1>{{ 'customer.order.title' | t: name: order.name }}</h1>
+  <p class="text-muted">{{ 'customer.order.date_html' | t: date: order_date }}</p>
+
+  {%- if order.cancelled -%}
+    <p class="form-message form-message--error">
+      {{ 'customer.order.cancelled_html' | t: date: cancelled_date }}
+      {%- if order.cancel_reason -%} — {{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason }}{%- endif -%}
+    </p>
+  {%- endif -%}
+
+  <table class="table" style="margin:var(--space-6) 0">
+    <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th></tr></thead>
+    <tbody>
+      {%- for line_item in order.line_items -%}
+        <tr>
+          <td><a href="{{ line_item.product.url }}">{{ line_item.title }}</a></td>
+          <td>{{ line_item.price | money }}</td>
+          <td>{{ line_item.quantity }}</td>
+          <td>{{ line_item.final_line_price | money }}</td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+
+  <div style="max-width:280px;margin-left:auto">
+    <div style="display:flex;justify-content:space-between"><span>Subtotal</span><span>{{ order.line_items_subtotal_price | money }}</span></div>
+    {%- for discount in order.cart_level_discount_applications -%}
+      <div style="display:flex;justify-content:space-between"><span>{{ 'customer.order.discount' | t }}</span><span>-{{ discount.total_allocated_amount | money }}</span></div>
+    {%- endfor -%}
+    {%- for shipping_method in order.shipping_methods -%}
+      <div style="display:flex;justify-content:space-between"><span>{{ 'customer.order.shipping' | t }}</span><span>{{ shipping_method.price | money }}</span></div>
+    {%- endfor -%}
+    {%- for tax_line in order.tax_lines -%}
+      <div style="display:flex;justify-content:space-between"><span>{{ 'customer.order.tax' | t }} ({{ tax_line.title }})</span><span>{{ tax_line.price | money }}</span></div>
+    {%- endfor -%}
+    <div style="display:flex;justify-content:space-between;font-weight:700;margin-top:8px;border-top:2px solid var(--ink);padding-top:8px">
+      <span>{{ 'customer.order.total' | t }}</span><span>{{ order.total_price | money }}</span>
+    </div>
+  </div>
+
+  <div class="grid grid-2" style="margin-top:var(--space-8)">
+    <div>
+      <h2 style="font-size:16px">{{ 'customer.order.billing_address' | t }}</h2>
+      <p>{{ order.billing_address | format_address }}</p>
+    </div>
+    <div>
+      <h2 style="font-size:16px">{{ 'customer.order.shipping_address' | t }}</h2>
+      <p>{{ order.shipping_address | format_address }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main-customer-order.name",
+  "settings": [
+
+  ]
+}
+{% endschema %}

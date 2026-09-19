@@ -1,0 +1,171 @@
+{%- liquid
+  assign main_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image
+  assign add_text = 'products.product.add_to_bag' | t
+  assign soldout_text = 'products.product.sold_out' | t
+  assign unavailable_text = 'products.product.unavailable' | t
+-%}
+<section class="section container">
+  <div class="product" data-product-root>
+    <div class="product__gallery">
+      <div class="product__gallery-main">
+        <img
+          src="{{ main_image | image_url: width: 1200 }}"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          width="1200"
+          height="{{ 1200 | divided_by: main_image.aspect_ratio | default: 1500 }}"
+          loading="eager"
+          data-product-main-image
+        >
+      </div>
+      {%- if product.images.size > 1 -%}
+        <div class="product__gallery-thumbs">
+          {%- for image in product.images -%}
+            <img
+              src="{{ image | image_url: width: 200 }}"
+              data-full-src="{{ image | image_url: width: 1200 }}"
+              data-gallery-thumb
+              class="{% if forloop.first %}is-active{% endif %}"
+              alt="{{ image.alt | escape }}"
+              width="200"
+              height="{{ 200 | divided_by: image.aspect_ratio | default: 250 }}"
+              loading="lazy"
+            >
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="product__info">
+      {%- if product.vendor != blank -%}<div class="eyebrow">{{ product.vendor }}</div>{%- endif -%}
+      <h1>{{ product.title }}</h1>
+
+      <div class="product__price">
+        <span data-product-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+        <s data-product-compare-price {% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}hidden{% endunless %}>
+          {{ product.selected_or_first_available_variant.compare_at_price | money }}
+        </s>
+      </div>
+
+      {%- if product.description != blank -%}
+        <div class="rte" style="margin-bottom:var(--space-6)">{{ product.description | strip_html | truncatewords: 40 }}</div>
+      {%- endif -%}
+
+      {%- form 'product', product, data-product-form: true, data-add-text: add_text, data-soldout-text: soldout_text, data-unavailable-text: unavailable_text -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="product__variants field">
+              <label>{{ option.name }}</label>
+              <div class="swatch-list">
+                {%- for value in option.values -%}
+                  <label class="swatch">
+                    <input
+                      type="radio"
+                      name="option-{{ option.position }}"
+                      value="{{ value | escape }}"
+                      data-option-input
+                      {% if option.selected_value == value %}checked{% endif %}
+                    >
+                    {{ value }}
+                  </label>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="field">
+          <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+          <div class="quantity-selector" data-quantity-selector>
+            <button type="button" data-quantity-step="decrease" aria-label="Decrease quantity">−</button>
+            <input type="number" name="quantity" id="Quantity" value="1" min="1">
+            <button type="button" data-quantity-step="increase" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <p class="field-error" data-form-error hidden></p>
+
+        <button type="submit" class="btn btn-primary btn-block" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          {%- if product.selected_or_first_available_variant.available -%}
+            {{ 'products.product.add_to_bag' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      {%- endform -%}
+
+      <div class="product__accordion" data-accordion-single>
+        {%- if product.description != blank -%}
+          <div class="product__accordion-item" data-accordion-item>
+            <button type="button" class="product__accordion-trigger" data-accordion-trigger>
+              {{ 'products.product.description' | t }}
+              <span class="icon-plus">{% render 'icon', icon: 'plus', size: 14 %}</span>
+              <span class="icon-minus">{% render 'icon', icon: 'minus', size: 14 %}</span>
+            </button>
+            <div class="product__accordion-panel">{{ product.description }}</div>
+          </div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'accordion' -%}
+            <div class="product__accordion-item" data-accordion-item {{ block.shopify_attributes }}>
+              <button type="button" class="product__accordion-trigger" data-accordion-trigger>
+                {{ block.settings.title }}
+                <span class="icon-plus">{% render 'icon', icon: 'plus', size: 14 %}</span>
+                <span class="icon-minus">{% render 'icon', icon: 'minus', size: 14 %}</span>
+              </button>
+              <div class="product__accordion-panel">{{ block.settings.content }}</div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <script type="application/json" data-product-json>
+    {{ product | json }}
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main-product.name",
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "t:sections.faq-accordion.blocks.question.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.faq-accordion.blocks.question.settings.question.label"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.faq-accordion.blocks.question.settings.answer.label"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "accordion",
+        "settings": {
+          "title": "How to use",
+          "content": "<p>Apply morning and night after cleansing, before moisturiser.</p>"
+        }
+      },
+      {
+        "type": "accordion",
+        "settings": {
+          "title": "Ingredients",
+          "content": "<p>Aqua, Niacinamide, Glycerin, Panthenol.</p>"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

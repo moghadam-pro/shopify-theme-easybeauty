@@ -1,0 +1,20 @@
+{%- comment -%} Sticky bottom nav shown on small screens only (see .mobile-dock in theme.css.liquid). {%- endcomment -%}
+<nav class="mobile-dock" aria-label="{{ 'sections.header.menu' | t }}">
+  <a href="/collections/all" {% if request.page_type == 'collection' or request.page_type == 'list-collections' %}aria-current="page"{% endif %}>
+    {% render 'icon', icon: 'grid', size: 21 %}
+    <span>Shop</span>
+  </a>
+  <a href="#" data-search-drawer-open>
+    {% render 'icon', icon: 'search', size: 21 %}
+    <span>{{ 'general.search.search' | t }}</span>
+  </a>
+  <a href="{{ routes.cart_url }}" {% if request.page_type == 'cart' %}aria-current="page"{% endif %}>
+    {% render 'icon', icon: 'bag', size: 21 %}
+    <span data-cart-count>{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+    <span>{{ 'sections.header.cart' | t }}</span>
+  </a>
+  <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" {% if request.page_type contains 'customers' %}aria-current="page"{% endif %}>
+    {% render 'icon', icon: 'account', size: 21 %}
+    <span>{{ 'sections.header.account' | t }}</span>
+  </a>
+</nav>

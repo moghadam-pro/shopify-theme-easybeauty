@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "main": {
+      "type": "faq-accordion"
+    },
+    "contact-cta": {
+      "type": "contact-form",
+      "settings": {
+        "heading": "A formulator answers, not a script.",
+        "text": "Still stuck? Send us a message and a chemist will reply."
+      }
+    }
+  },
+  "order": [
+    "main",
+    "contact-cta"
+  ]
+}

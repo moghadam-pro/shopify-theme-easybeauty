@@ -1,0 +1,42 @@
+<section class="section container">
+  <h1>{{ blog.title }}</h1>
+
+  {%- paginate blog.articles by 9 -%}
+    <div class="grid grid-3">
+      {%- for article in blog.articles -%}
+        <a href="{{ article.url }}" class="card">
+          {%- if article.image -%}
+            <div class="product-card__media" style="aspect-ratio:4/3">
+              <img
+                src="{{ article.image | image_url: width: 700 }}"
+                alt="{{ article.image.alt | escape }}"
+                width="700"
+                height="{{ 700 | divided_by: article.image.aspect_ratio | default: 525 }}"
+                loading="lazy"
+              >
+            </div>
+          {%- endif -%}
+          <div class="card-title">{{ article.title }}</div>
+          <p class="card-body">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+          <div class="card-meta">{{ article.published_at | date: '%B %d, %Y' }}</div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav style="display:flex;gap:8px;justify-content:center;margin-top:var(--space-8)">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn-secondary">&larr;</a>{%- endif -%}
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn-secondary">&rarr;</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "settings": [
+
+  ]
+}
+{% endschema %}
