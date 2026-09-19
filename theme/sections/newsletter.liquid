@@ -1,0 +1,41 @@
+<section class="section newsletter">
+  <div class="container" style="max-width:640px" data-newsletter-wrapper>
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+
+    {%- form 'customer', id: 'NewsletterForm', class: 'newsletter__form', data-newsletter-form: true -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label for="NewsletterEmail" class="visually-hidden">{{ 'general.newsletter.email_placeholder' | t }}</label>
+      <input type="email" name="contact[email]" id="NewsletterEmail" class="input" placeholder="{{ 'general.newsletter.email_placeholder' | t }}" required>
+      <button type="submit" class="btn btn-primary" data-success-text="{{ 'general.newsletter.success' | t }}" data-error-text="{{ 'general.newsletter.error' | t }}">
+        {{ 'general.newsletter.submit' | t }}
+      </button>
+    {%- endform -%}
+    <p class="form-message" data-form-message hidden></p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.newsletter.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.newsletter.settings.heading.label",
+      "default": "Formulation notes, not marketing noise."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "t:sections.newsletter.settings.text.label",
+      "default": "One email a month. Ingredient research, restock notices, nothing else."
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.newsletter.presets.name"
+    }
+  ]
+}
+{% endschema %}

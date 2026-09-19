@@ -1,0 +1,90 @@
+<section class="perk-bar">
+  <div class="perk-bar__grid">
+    {%- for block in section.blocks -%}
+      <div class="perk-bar__item" {{ block.shopify_attributes }}>
+        {% render 'icon', icon: block.settings.icon, size: 18 %}
+        {{ block.settings.text }}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.perk-bar.name",
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "t:sections.perk-bar.blocks.perk.name",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "t:sections.perk-bar.blocks.perk.settings.icon.label",
+          "options": [
+            {
+              "value": "shipping",
+              "label": "Shipping"
+            },
+            {
+              "value": "return",
+              "label": "Returns"
+            },
+            {
+              "value": "lab",
+              "label": "Lab / formula"
+            },
+            {
+              "value": "lock",
+              "label": "Secure checkout"
+            }
+          ],
+          "default": "shipping"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.perk-bar.blocks.perk.settings.text.label"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "perk",
+        "settings": {
+          "icon": "shipping",
+          "text": "Free shipping over $75"
+        }
+      },
+      {
+        "type": "perk",
+        "settings": {
+          "icon": "return",
+          "text": "60-day returns"
+        }
+      },
+      {
+        "type": "perk",
+        "settings": {
+          "icon": "lab",
+          "text": "Dermatologist tested"
+        }
+      },
+      {
+        "type": "perk",
+        "settings": {
+          "icon": "lock",
+          "text": "Secure checkout"
+        }
+      }
+    ]
+  },
+  "presets": [
+    {
+      "name": "t:sections.perk-bar.presets.name"
+    }
+  ]
+}
+{% endschema %}

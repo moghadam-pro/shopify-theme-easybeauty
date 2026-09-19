@@ -1,0 +1,81 @@
+<section class="section container">
+  <div style="margin-bottom:var(--space-6)">
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}<div class="rte text-muted">{{ collection.description }}</div>{%- endif -%}
+  </div>
+
+  {%- comment -%}
+    Filters and sort share one GET form so changing the sort order doesn't
+    drop whichever filter.* params are already applied — a separate <form>
+    per control would submit only its own field and wipe the others.
+  {%- endcomment -%}
+  <form action="{{ collection.url }}" method="get" class="collection-toolbar" data-collection-filter-form>
+    <div class="collection-filters">
+      {%- for filter in collection.filters -%}
+        {%- if filter.type == 'list' -%}
+          <details>
+            <summary class="btn btn-secondary" style="display:inline-flex">{{ filter.label }}</summary>
+            <div style="padding:12px 0;display:flex;flex-direction:column;gap:8px">
+              {%- for value in filter.values -%}
+                <label style="display:flex;gap:8px;align-items:center;font-size:13.5px">
+                  <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} onchange="this.form.submit()">
+                  {{ value.label }} ({{ value.count }})
+                </label>
+              {%- endfor -%}
+            </div>
+          </details>
+        {%- elsif filter.type == 'boolean' -%}
+          {%- assign value = filter.values.first -%}
+          <label class="btn btn-secondary" style="display:inline-flex;gap:8px;cursor:pointer">
+            <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} onchange="this.form.submit()">
+            {{ filter.label }}
+          </label>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div style="display:flex;gap:8px;align-items:center">
+      <label for="SortBy" class="visually-hidden">Sort</label>
+      <select name="sort_by" id="SortBy" class="input" onchange="this.form.submit()" style="min-height:36px">
+        {%- for option in collection.sort_options -%}
+          <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
+        {%- endfor -%}
+      </select>
+    </div>
+  </form>
+
+  {%- paginate collection.products by 24 -%}
+    {%- if collection.products.size == 0 -%}
+      <p>{{ 'general.search.no_results_html' | t: terms: collection.title }}</p>
+    {%- else -%}
+      <div class="grid grid-4">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" style="display:flex;gap:8px;justify-content:center;margin-top:var(--space-8)">
+        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn-secondary">&larr;</a>{%- endif -%}
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" class="btn btn-secondary">{{ part.title }}</a>
+          {%- else -%}
+            <span class="btn" style="border:1px solid var(--ink)">{{ part.title }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn-secondary">&rarr;</a>{%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection.name",
+  "settings": [
+
+  ]
+}
+{% endschema %}

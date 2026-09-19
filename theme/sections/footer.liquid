@@ -1,0 +1,131 @@
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div>
+      <div class="site-header__logo" style="margin-bottom:16px">{{ shop.name }}</div>
+      <p style="font-size:13px;line-height:1.7;color:rgba(251,250,248,0.72)">{{ section.settings.tagline }}</p>
+
+      {%- if section.settings.show_newsletter -%}
+        <div data-newsletter-wrapper>
+          {%- form 'customer', id: 'FooterNewsletterForm', class: 'site-footer__newsletter-form', data-newsletter-form: true -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <label for="FooterNewsletterEmail" class="visually-hidden">{{ 'general.newsletter.email_placeholder' | t }}</label>
+            <input
+              type="email"
+              name="contact[email]"
+              id="FooterNewsletterEmail"
+              class="input"
+              placeholder="{{ 'general.newsletter.email_placeholder' | t }}"
+              required
+            >
+            <button type="submit" class="btn btn-primary" data-success-text="{{ 'general.newsletter.success' | t }}" data-error-text="{{ 'general.newsletter.error' | t }}">
+              {{ 'general.newsletter.submit' | t }}
+            </button>
+          {%- endform -%}
+          <p class="form-message" data-form-message hidden></p>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      <div {{ block.shopify_attributes }}>
+        {%- case block.type -%}
+          {%- when 'link_list' -%}
+            <div class="site-footer__heading">{{ block.settings.title }}</div>
+            <div class="site-footer__links">
+              {%- for link in block.settings.menu.links -%}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {%- endfor -%}
+            </div>
+          {%- when 'text' -%}
+            <div class="site-footer__heading">{{ block.settings.title }}</div>
+            <div class="site-footer__links rte">{{ block.settings.content }}</div>
+        {%- endcase -%}
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <div class="site-footer__bottom">
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
+    <span style="display:flex;gap:20px">
+      {%- if shop.privacy_policy -%}<a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title }}</a>{%- endif -%}
+      {%- if shop.terms_of_service -%}<a href="{{ shop.terms_of_service.url }}">{{ shop.terms_of_service.title }}</a>{%- endif -%}
+      {%- if shop.refund_policy -%}<a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>{%- endif -%}
+    </span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "t:sections.footer.settings.tagline.label",
+      "default": "Clean, clinically supported skincare. Made in Portugal."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "t:sections.footer.settings.show_newsletter.label",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "t:sections.footer.blocks.link_list.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.footer.blocks.link_list.settings.title.label"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "t:sections.footer.blocks.link_list.settings.menu.label"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "t:sections.footer.blocks.text.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.footer.blocks.text.settings.title.label"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "t:sections.footer.blocks.text.settings.content.label"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "link_list",
+        "settings": {
+          "title": "Shop"
+        }
+      },
+      {
+        "type": "link_list",
+        "settings": {
+          "title": "Company"
+        }
+      },
+      {
+        "type": "link_list",
+        "settings": {
+          "title": "Help"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

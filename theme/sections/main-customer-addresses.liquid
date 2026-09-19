@@ -1,0 +1,57 @@
+<section class="section container" style="max-width:640px">
+  <h1>{{ 'customer.addresses.title' | t }}</h1>
+  <a href="{{ routes.account_url }}" class="btn-ghost">&larr; {{ 'customer.account.return' | t }}</a>
+
+  <div style="margin-top:var(--space-6)">
+    {%- for address in customer.addresses -%}
+      <div class="card" style="border:1px solid var(--color-border);padding:var(--space-4);margin-bottom:var(--space-4)">
+        {{ address | format_address }}
+        {%- if address == customer.default_address -%}<span class="tag" style="margin-top:8px">{{ 'customer.addresses.default' | t }}</span>{%- endif -%}
+        <div style="display:flex;gap:12px;margin-top:12px">
+          <a href="{{ routes.account_addresses_url }}/{{ address.id }}/edit" class="btn-ghost">{{ 'customer.addresses.edit' | t }}</a>
+          {%- form 'customer_address', address, data-address-delete: true -%}
+            <button type="submit" name="_method" value="delete" class="btn-ghost" onclick="return confirm('{{ 'customer.addresses.delete_confirm' | t }}')">{{ 'customer.addresses.delete' | t }}</button>
+          {%- endform -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <details style="margin-top:var(--space-6)">
+    <summary class="btn btn-secondary" style="display:inline-flex">{{ 'customer.addresses.add_new' | t }}</summary>
+    <div style="margin-top:var(--space-4)">
+      {%- form 'customer_address', customer.new_address -%}
+        <div class="grid grid-2">
+          <div class="field"><label>{{ 'customer.addresses.first_name' | t }}</label><input type="text" class="input" name="address[first_name]" value="{{ form.first_name }}"></div>
+          <div class="field"><label>{{ 'customer.addresses.last_name' | t }}</label><input type="text" class="input" name="address[last_name]" value="{{ form.last_name }}"></div>
+        </div>
+        <div class="field"><label>{{ 'customer.addresses.company' | t }}</label><input type="text" class="input" name="address[company]" value="{{ form.company }}"></div>
+        <div class="field"><label>{{ 'customer.addresses.address1' | t }}</label><input type="text" class="input" name="address[address1]" value="{{ form.address1 }}"></div>
+        <div class="field"><label>{{ 'customer.addresses.address2' | t }}</label><input type="text" class="input" name="address[address2]" value="{{ form.address2 }}"></div>
+        <div class="grid grid-2">
+          <div class="field"><label>{{ 'customer.addresses.city' | t }}</label><input type="text" class="input" name="address[city]" value="{{ form.city }}"></div>
+          <div class="field"><label>{{ 'customer.addresses.zip' | t }}</label><input type="text" class="input" name="address[zip]" value="{{ form.zip }}"></div>
+        </div>
+        <div class="field">
+          <label>{{ 'customer.addresses.country' | t }}</label>
+          <select class="input" name="address[country]" data-address-country-select>{{ country_option_tags }}</select>
+        </div>
+        <div class="field"><label>{{ 'customer.addresses.province' | t }}</label><input type="text" class="input" name="address[province]" value="{{ form.province }}"></div>
+        <div class="field"><label>{{ 'customer.addresses.phone' | t }}</label><input type="tel" class="input" name="address[phone]" value="{{ form.phone }}"></div>
+        <label style="display:flex;gap:8px;align-items:center;margin-bottom:var(--space-4)">
+          <input type="checkbox" name="address[default]" value="1"> {{ 'customer.addresses.set_default' | t }}
+        </label>
+        <button type="submit" class="btn btn-primary">{{ 'customer.addresses.add' | t }}</button>
+      {%- endform -%}
+    </div>
+  </details>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main-customer-addresses.name",
+  "settings": [
+
+  ]
+}
+{% endschema %}

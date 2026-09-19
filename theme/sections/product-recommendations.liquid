@@ -1,0 +1,33 @@
+<section class="section container" data-product-recommendations data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}">
+  <div class="section__head">
+    <h2>{{ section.settings.heading }}</h2>
+  </div>
+  <div class="grid grid-4" data-product-recommendations-grid>
+    {%- for recommended in recommendations.products -%}
+      {% render 'product-card', product: recommended %}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.product-recommendations.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.product-recommendations.settings.heading.label",
+      "default": "Complete the routine"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "label": "t:sections.product-recommendations.settings.products_to_show.label",
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

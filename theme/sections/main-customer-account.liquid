@@ -1,0 +1,51 @@
+<section class="section container">
+  <div class="section__head">
+    <h1>{{ 'customer.account.greeting' | t: name: customer.first_name }}</h1>
+    {%- form 'customer_logout' -%}
+      <button type="submit" class="btn-ghost">{{ 'customer.account.log_out' | t }}</button>
+    {%- endform -%}
+  </div>
+
+  <div class="grid grid-2">
+    <div class="card" style="border:1px solid var(--color-border);padding:var(--space-6)">
+      <h2 style="font-size:22px">{{ 'customer.account.details' | t }}</h2>
+      <p>{{ customer.name }}<br>{{ customer.email }}</p>
+      <a href="{{ routes.account_addresses_url }}" class="btn-ghost">{{ 'customer.account.view_addresses' | t }} &rarr;</a>
+    </div>
+
+    <div class="card" style="border:1px solid var(--color-border);padding:var(--space-6)">
+      <h2 style="font-size:22px">{{ 'customer.orders.title' | t }}</h2>
+      {%- if customer.orders.size == 0 -%}
+        <p class="text-muted">{{ 'customer.orders.none' | t }}</p>
+      {%- else -%}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>{{ 'customer.orders.order_number' | t }}</th>
+              <th>{{ 'customer.orders.date' | t }}</th>
+              <th>{{ 'customer.orders.total' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for order in customer.orders limit: 10 -%}
+              <tr>
+                <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+                <td>{{ order.total_price | money }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main-customer-account.name",
+  "settings": [
+
+  ]
+}
+{% endschema %}

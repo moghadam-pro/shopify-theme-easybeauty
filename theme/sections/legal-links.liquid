@@ -1,0 +1,30 @@
+{%- comment -%}
+  Shopify manages policy text natively (Settings → Policies) and serves each
+  one at its own URL with the automatic `policy` template. This section is a
+  simple hub that links out to whichever policies the merchant has published,
+  rather than duplicating that legal text inside the theme.
+{%- endcomment -%}
+<section class="section container" style="max-width:640px">
+  <h1>{{ section.settings.heading }}</h1>
+  <div style="display:flex;flex-direction:column">
+    {%- if shop.privacy_policy -%}<a href="{{ shop.privacy_policy.url }}" class="faq-item__trigger" style="border-bottom:1px solid var(--color-border)">{{ shop.privacy_policy.title }} &rarr;</a>{%- endif -%}
+    {%- if shop.terms_of_service -%}<a href="{{ shop.terms_of_service.url }}" class="faq-item__trigger" style="border-bottom:1px solid var(--color-border)">{{ shop.terms_of_service.title }} &rarr;</a>{%- endif -%}
+    {%- if shop.refund_policy -%}<a href="{{ shop.refund_policy.url }}" class="faq-item__trigger" style="border-bottom:1px solid var(--color-border)">{{ shop.refund_policy.title }} &rarr;</a>{%- endif -%}
+    {%- if shop.shipping_policy -%}<a href="{{ shop.shipping_policy.url }}" class="faq-item__trigger" style="border-bottom:1px solid var(--color-border)">{{ shop.shipping_policy.title }} &rarr;</a>{%- endif -%}
+    {%- if shop.subscription_policy -%}<a href="{{ shop.subscription_policy.url }}" class="faq-item__trigger">{{ shop.subscription_policy.title }} &rarr;</a>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.legal-links.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Legal"
+    }
+  ]
+}
+{% endschema %}

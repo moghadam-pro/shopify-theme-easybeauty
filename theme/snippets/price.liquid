@@ -1,0 +1,19 @@
+{%- comment -%}
+  Renders a product/variant price with compare-at strike-through.
+  Usage: {% render 'price', product: product %} or {% render 'price', variant: variant %}
+{%- endcomment -%}
+{%- liquid
+  assign target = variant | default: product
+  assign price = target.price | default: product.price_min
+  assign compare_at = target.compare_at_price | default: product.compare_at_price_max
+-%}
+<span class="price">
+  {%- if compare_at > price -%}
+    <s class="price__compare">{{ compare_at | money }}</s>
+  {%- endif -%}
+  {%- if product.price_varies and variant == blank -%}
+    <span class="price__current">{{ price | money }}+</span>
+  {%- else -%}
+    <span class="price__current">{{ price | money }}</span>
+  {%- endif -%}
+</span>

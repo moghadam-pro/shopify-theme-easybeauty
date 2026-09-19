@@ -1,0 +1,31 @@
+<section class="section container">
+  <h1>{{ 'general.collections.title' | t }}</h1>
+  <div class="grid grid-3">
+    {%- for collection in collections -%}
+      <a href="{{ collection.url }}" class="card">
+        {%- if collection.featured_image -%}
+          <div class="product-card__media" style="aspect-ratio:4/3">
+            <img
+              src="{{ collection.featured_image | image_url: width: 700 }}"
+              alt="{{ collection.featured_image.alt | default: collection.title | escape }}"
+              width="700"
+              height="{{ 700 | divided_by: collection.featured_image.aspect_ratio | default: 525 }}"
+              loading="lazy"
+            >
+          </div>
+        {%- endif -%}
+        <div class="card-title">{{ collection.title }}</div>
+        <div class="card-meta">{{ collection.products_count }} {{ 'general.collections.products' | t }}</div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.main-list-collections.name",
+  "settings": [
+
+  ]
+}
+{% endschema %}

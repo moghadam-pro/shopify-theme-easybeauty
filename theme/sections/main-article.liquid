@@ -1,0 +1,50 @@
+<article class="section container" style="max-width:720px">
+  <a href="{{ blog.url }}" class="btn-ghost">&larr; {{ 'blogs.article.back_to_journal' | t }}</a>
+  <h1 style="margin-top:var(--space-4)">{{ article.title }}</h1>
+  <div class="card-meta" style="margin-bottom:var(--space-6)">
+    {%- if article.author != blank -%}{{ 'blogs.article.by_author' | t: author: article.author }} &middot; {%- endif -%}
+    {{ article.published_at | date: '%B %d, %Y' }}
+  </div>
+
+  {%- if article.image -%}
+    <img
+      src="{{ article.image | image_url: width: 1400 }}"
+      alt="{{ article.image.alt | escape }}"
+      width="1400"
+      height="{{ 1400 | divided_by: article.image.aspect_ratio | default: 933 }}"
+      loading="eager"
+      style="width:100%;margin-bottom:var(--space-8)"
+    >
+  {%- endif -%}
+
+  <div class="rte">{{ article.content }}</div>
+
+  {%- if blog.comments_enabled? -%}
+    <div style="margin-top:var(--space-8);padding-top:var(--space-8);border-top:1px solid var(--color-border)">
+      {%- form 'new_comment', article -%}
+        <div class="field">
+          <label for="CommentAuthor">{{ 'general.newsletter.email_placeholder' | t }}</label>
+          <input type="text" name="comment[author]" id="CommentAuthor" class="input" required>
+        </div>
+        <div class="field">
+          <label for="CommentEmail">Email</label>
+          <input type="email" name="comment[email]" id="CommentEmail" class="input" required>
+        </div>
+        <div class="field">
+          <label for="CommentBody">Comment</label>
+          <textarea name="comment[body]" id="CommentBody" class="input" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Post comment</button>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+</article>
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "settings": [
+
+  ]
+}
+{% endschema %}

@@ -1,0 +1,189 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "EasyBeauty",
+    "theme_version": "1.0.0",
+    "theme_author": "EasyBeauty",
+    "theme_documentation_url": "https://github.com/moghadam-pro/shopify-theme-easybeauty/blob/main/docs/ARCHITECTURE.md",
+    "theme_support_url": "https://github.com/moghadam-pro/shopify-theme-easybeauty/issues"
+  },
+  {
+    "name": "t:settings.favicon.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings.favicon.image"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.colors.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings.colors.header"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "t:settings.colors.background",
+        "default": "#F5F0EA"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "t:settings.colors.surface",
+        "default": "#FBFAF8"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "t:settings.colors.text",
+        "default": "#2B241D"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "t:settings.colors.accent",
+        "default": "#94513C"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_2",
+        "label": "t:settings.colors.accent_2",
+        "default": "#3D6A4D"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "t:settings.colors.border",
+        "default": "#D8CDBE"
+      },
+      {
+        "type": "color",
+        "id": "color_inverse_background",
+        "label": "t:settings.colors.inverse_background",
+        "default": "#2B241D"
+      },
+      {
+        "type": "color",
+        "id": "color_inverse_text",
+        "label": "t:settings.colors.inverse_text",
+        "default": "#FBFAF8"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.typography.name",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:settings.typography.brand_font_note"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "min": 90,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "t:settings.typography.heading_scale",
+        "default": 100
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "min": 90,
+        "max": 130,
+        "step": 5,
+        "unit": "%",
+        "label": "t:settings.typography.body_scale",
+        "default": 100
+      }
+    ]
+  },
+  {
+    "name": "t:settings.layout.name",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1200,
+        "max": 1800,
+        "step": 50,
+        "unit": "px",
+        "label": "t:settings.layout.page_width",
+        "default": 1600
+      },
+      {
+        "type": "range",
+        "id": "corner_radius",
+        "min": 0,
+        "max": 24,
+        "step": 2,
+        "unit": "px",
+        "label": "t:settings.layout.corner_radius",
+        "default": 0
+      }
+    ]
+  },
+  {
+    "name": "t:settings.social.name",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram_url",
+        "label": "Instagram"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_url",
+        "label": "TikTok"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_url",
+        "label": "Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_url",
+        "label": "Pinterest"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.cart.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "t:settings.cart.type",
+        "options": [
+          {
+            "value": "drawer",
+            "label": "t:settings.cart.drawer"
+          },
+          {
+            "value": "page",
+            "label": "t:settings.cart.page"
+          }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_free_shipping_bar",
+        "label": "t:settings.cart.show_free_shipping_bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_free_shipping_threshold",
+        "label": "t:settings.cart.free_shipping_threshold",
+        "default": "75"
+      }
+    ]
+  }
+]

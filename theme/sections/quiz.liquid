@@ -1,0 +1,162 @@
+<section class="section container">
+  <div class="quiz" data-quiz>
+    <div class="quiz__progress"><div class="quiz__progress-fill" data-quiz-progress-fill></div></div>
+
+    <div class="quiz__step is-active" data-quiz-step="intro">
+      <h1>{{ section.settings.heading }}</h1>
+      {%- if section.settings.text != blank -%}<p class="text-muted">{{ section.settings.text }}</p>{%- endif -%}
+      <button type="button" class="btn btn-primary" data-quiz-start>{{ 'sections.quiz.start' | t }}</button>
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'question' -%}
+        <div class="quiz__step" data-quiz-step="q{{ forloop.index }}">
+          <h2>{{ block.settings.question }}</h2>
+          <div class="quiz__options">
+            {%- if block.settings.option_1 != blank -%}
+              <label class="quiz__option" data-quiz-option data-quiz-tag="{{ block.settings.tag_1 }}">
+                <input type="radio" name="quiz-q{{ forloop.index }}"> {{ block.settings.option_1 }}
+              </label>
+            {%- endif -%}
+            {%- if block.settings.option_2 != blank -%}
+              <label class="quiz__option" data-quiz-option data-quiz-tag="{{ block.settings.tag_2 }}">
+                <input type="radio" name="quiz-q{{ forloop.index }}"> {{ block.settings.option_2 }}
+              </label>
+            {%- endif -%}
+            {%- if block.settings.option_3 != blank -%}
+              <label class="quiz__option" data-quiz-option data-quiz-tag="{{ block.settings.tag_3 }}">
+                <input type="radio" name="quiz-q{{ forloop.index }}"> {{ block.settings.option_3 }}
+              </label>
+            {%- endif -%}
+          </div>
+          <button type="button" class="btn-ghost" data-quiz-back style="margin-top:var(--space-6)">&larr; {{ 'sections.quiz.back' | t }}</button>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <div class="quiz__step" data-quiz-step="result">
+      <h1>Your routine</h1>
+      <p class="text-muted">{{ section.settings.result_text }}</p>
+      <div class="grid grid-3" data-quiz-results style="margin-top:var(--space-6)">
+        {%- for product in section.settings.result_collection.products limit: 6 -%}
+          <div data-quiz-product data-tags="{{ product.tags | join: ',' }}">
+            {% render 'product-card', product: product %}
+          </div>
+        {%- endfor -%}
+      </div>
+      <button type="button" class="btn-ghost" data-quiz-restart style="margin-top:var(--space-6)">{{ 'sections.quiz.retake' | t }}</button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.quiz.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Twelve products, narrowed to a routine."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Six questions, three products, no account needed."
+    },
+    {
+      "type": "textarea",
+      "id": "result_text",
+      "label": "Result intro text",
+      "default": "Based on your answers, here is where we would start."
+    },
+    {
+      "type": "collection",
+      "id": "result_collection",
+      "label": "Collection to pull recommendations from"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "t:sections.quiz.blocks.question.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.quiz.blocks.question.settings.question.label"
+        },
+        {
+          "type": "text",
+          "id": "option_1",
+          "label": "t:sections.quiz.blocks.question.settings.option_1.label"
+        },
+        {
+          "type": "text",
+          "id": "tag_1",
+          "label": "t:sections.quiz.blocks.question.settings.tag_1.label"
+        },
+        {
+          "type": "text",
+          "id": "option_2",
+          "label": "t:sections.quiz.blocks.question.settings.option_2.label"
+        },
+        {
+          "type": "text",
+          "id": "tag_2",
+          "label": "t:sections.quiz.blocks.question.settings.tag_2.label"
+        },
+        {
+          "type": "text",
+          "id": "option_3",
+          "label": "t:sections.quiz.blocks.question.settings.option_3.label"
+        },
+        {
+          "type": "text",
+          "id": "tag_3",
+          "label": "t:sections.quiz.blocks.question.settings.tag_3.label"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "question",
+        "settings": {
+          "question": "How does your skin feel by midday?",
+          "option_1": "Tight and dry",
+          "tag_1": "dry",
+          "option_2": "Shiny, especially T-zone",
+          "tag_2": "oily",
+          "option_3": "Comfortable, balanced",
+          "tag_3": "balanced"
+        }
+      },
+      {
+        "type": "question",
+        "settings": {
+          "question": "What's your main concern?",
+          "option_1": "Redness or sensitivity",
+          "tag_1": "sensitive",
+          "option_2": "Dullness / uneven tone",
+          "tag_2": "brightening",
+          "option_3": "Fine lines",
+          "tag_3": "anti-aging"
+        }
+      },
+      {
+        "type": "question",
+        "settings": {
+          "question": "How much routine time do you want?",
+          "option_1": "Minimal — 2 steps",
+          "tag_1": "minimal",
+          "option_2": "A full routine",
+          "tag_2": "full"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

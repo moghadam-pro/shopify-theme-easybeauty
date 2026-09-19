@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:#EFD3C9}
+@media (max-width:760px){
+  [data-site-header] nav{display:none !important}
+  [data-site-header] > div{height:58px !important;padding:0 16px !important}
+}
+</style>
+</helmet>
+
+<div>
+  <div style="background:var(--ink);color:var(--off);height:38px;display:flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:0.14em;text-transform:uppercase">
+    <span style="opacity:0.92">{{ ann }}</span>
+  </div>
+
+  <header data-site-header="true" onMouseLeave="{{ closeMega }}" style="{{ headerStyle }}">
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;padding:0 28px;height:72px;max-width:1600px;margin:0 auto">
+      <nav style="display:flex;gap:22px;align-items:center;font-size:13px;letter-spacing:0.08em;text-transform:uppercase">
+        <sc-for list="{{ links }}" as="l" hint-placeholder-count="4">
+          <a href="{{ l.href }}" onMouseEnter="{{ l.enter }}" onFocus="{{ l.enter }}" onClick="{{ l.click }}" aria-expanded="{{ l.expanded }}" style="{{ l.style }}">
+            <span>{{ l.label }}</span>
+            <span style="{{ l.caretStyle }}">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" style="display:block"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </a>
+        </sc-for>
+      </nav>
+      <a href="EasyBeauty_Landing.html" style="font-family:var(--serif);font-size:26px;letter-spacing:0.02em;white-space:nowrap">EasyBeauty</a>
+      <div style="display:flex;gap:16px;align-items:center;justify-content:flex-end">
+        <button type="button" onClick="{{ search }}" aria-label="Search" style="background:none;border:0;padding:6px;cursor:pointer;color:var(--ink);display:flex">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6"></path></svg>
+        </button>
+
+        <div data-account="true" style="position:relative;display:flex">
+          <button type="button" onClick="{{ accountClick }}" aria-label="Account" style="{{ accountBtnStyle }}">
+            <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"></circle><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"></path></svg>
+            </sc-if>
+            <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:12.5px;letter-spacing:0.04em">{{ initials }}</span>
+            </sc-if>
+          </button>
+
+          <div style="{{ menuStyle }}">
+            <div style="display:flex;align-items:center;gap:12px;padding:18px 18px 16px;border-bottom:1px solid var(--color-border)">
+              <div style="width:38px;height:38px;flex:0 0 auto;background:var(--terra);color:var(--off);display:flex;align-items:center;justify-content:center;font-size:12.5px">{{ initials }}</div>
+              <div style="min-width:0">
+                <div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ userName }}</div>
+                <div style="font-size:12px;color:#655B4F">{{ userPhone }}</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;border-top:1px solid var(--color-border)">
+              <sc-for list="{{ menuLinks }}" as="l" hint-placeholder-count="4">
+                <a href="{{ l.href }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;font-size:13.5px;border-bottom:1px solid var(--color-border);color:var(--ink)">
+                  <span>{{ l.label }}</span>
+                  <span style="font-size:11.5px;color:#655B4F">{{ l.note }}</span>
+                </a>
+              </sc-for>
+              <button type="button" onClick="{{ logout }}" style="display:flex;align-items:center;gap:10px;background:none;border:0;cursor:pointer;padding:15px 18px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--terra);text-align:left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 19H6a2 2 0 01-2-2V7a2 2 0 012-2h4M16 12H9M14 8l4 4-4 4"></path></svg>
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" onClick="{{ bag }}" aria-label="Bag" style="background:none;border:0;padding:6px 6px 6px 8px;cursor:pointer;color:var(--ink);display:flex;align-items:center;gap:7px">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8z"></path><path d="M9.5 8V6.5a2.5 2.5 0 015 0V8"></path></svg>
+          <span style="{{ countStyle }}">{{ countLabel }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div style="{{ megaStyle }}">
+      <div style="max-width:1600px;margin:0 auto;display:grid;grid-template-columns:{{ megaCols }}">
+        <div style="min-width:0;display:grid;grid-template-columns:{{ megaGridCols }};background:var(--off);border-right:{{ megaRule }}">
+          <sc-for list="{{ megaColumns }}" as="c" hint-placeholder-count="3">
+            <div style="{{ c.style }}">
+              <div style="font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--terra)">{{ c.title }}</div>
+              <div style="display:flex;flex-direction:column">
+                <sc-for list="{{ c.items }}" as="i" hint-placeholder-count="5">
+                  <a href="{{ i.href }}" style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--color-border);font-size:14px;letter-spacing:0;text-transform:none">
+                    <span>{{ i.label }}</span>
+                    <span style="font-size:11.5px;color:#8C8073">{{ i.note }}</span>
+                  </a>
+                </sc-for>
+              </div>
+              <a href="{{ c.allHref }}" style="margin-top:auto;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:3px;align-self:flex-start">{{ c.allLabel }}</a>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="{{ megaFeatureStyle }}">
+          <a href="{{ feature.href }}" role="img" aria-label="{{ feature.title }}" style="{{ feature.imgStyle }}"></a>
+          <div style="padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--terra)">{{ feature.kicker }}</div>
+            <div style="font-family:var(--serif);font-size:24px;line-height:1.12">{{ feature.title }}</div>
+            <p style="font-size:13px;line-height:1.7;color:#655B4F;margin:0">{{ feature.body }}</p>
+            <a href="{{ feature.href }}" class="btn btn-primary" style="align-self:flex-start;text-transform:uppercase;letter-spacing:0.1em;font-size:11.5px;margin-top:6px">{{ feature.cta }}</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:2px solid var(--ink);background:var(--cream);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:14px 28px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#655B4F">
+        <span>{{ megaFootnote }}</span>
+        <span style="display:flex;gap:22px">
+          <a href="EasyBeauty_Quiz.html" style="color:var(--ink)">Skin quiz</a>
+          <a href="EasyBeauty_FAQ.html" style="color:var(--ink)">Shipping &amp; returns</a>
+        </span>
+      </div>
+    </div>
+  </header>
+  <div onClick="{{ closeMega }}" style="{{ megaScrimStyle }}"></div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:120},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;shop&quot;,&quot;options&quot;:[&quot;shop&quot;,&quot;journal&quot;,&quot;about&quot;,&quot;&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;count&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:20,&quot;tsType&quot;:&quot;number&quot;},&quot;onSearch&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;},&quot;onBag&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;() =&gt; void&quot;}}">
+const R = (p) => (window.__resources && window.__resources[p]) || p;
+const ANN = [
+  'Free delivery over $75 · 60-day returns',
+  'Dermatologist tested · Fragrance-free options',
+  'Twelve formulas, no seasonal launches'
+];
+
+const NAV = [
+  { key:'shop',        label:'Shop',        href:'EasyBeauty Collection.html', mega:'shop' },
+  { key:'collections', label:'Collections', href:'EasyBeauty Collection.html', mega:'collections' },
+  { key:'journal',     label:'Journal',     href:'EasyBeauty Blog.html' },
+  { key:'about',       label:'About',       href:'EasyBeauty About.html' }
+];
+
+const C = 'EasyBeauty Collection.html';
+
+const MEGA = {
+  shop: {
+    footnote: 'Twelve formulas · nine fragrance-free · free delivery over $75',
+    columns: [
+      { title:'By category', allLabel:'All products', allHref:C, items:[
+        { label:'Cleansers', note:'3', href:C },
+        { label:'Serums', note:'4', href:C },
+        { label:'Moisturisers', note:'2', href:C },
+        { label:'Masks', note:'2', href:C },
+        { label:'Lip care', note:'1', href:C }
+      ] },
+      { title:'By concern', allLabel:'Take the quiz', allHref:'EasyBeauty Quiz.html', items:[
+        { label:'Brightening', note:'5 formulas', href:C },
+        { label:'Hydration', note:'6 formulas', href:C },
+        { label:'Sensitivity', note:'7 formulas', href:C },
+        { label:'Acne-prone', note:'4 formulas', href:C },
+        { label:'Anti-aging', note:'3 formulas', href:C }
+      ] },
+      { title:'By ingredient', allLabel:'Formulation notes', allHref:'EasyBeauty Blog.html', items:[
+        { label:'Niacinamide 10%', note:'No.3', href:'EasyBeauty Product.html' },
+        { label:'Ceramides', note:'Barrier', href:C },
+        { label:'Squalane', note:'Light oil', href:C },
+        { label:'Azelaic acid', note:'Redness', href:C },
+        { label:'Mineral SPF', note:'Daily', href:C }
+      ] }
+    ],
+    feature: {
+      kicker:'Best seller', title:'Radiance Serum No.3',
+      body:'Niacinamide at 10%, the third formula — the one that stopped stinging. 1,284 reviews at 4.9.',
+      cta:'View the serum', href:'EasyBeauty Product.html', img:R('assets/p4.jpg')
+    }
+  },
+  collections: {
+    footnote: 'Sets are priced below the sum of their parts · swap any product before checkout',
+    columns: [
+      { title:'Routines', allLabel:'All collections', allHref:C, items:[
+        { label:'Lookbook', note:'Spring 2026', href:'EasyBeauty Lookbook.html' },
+        { label:'Morning routine', note:'3 products', href:C },
+        { label:'Night routine', note:'3 products', href:C },
+        { label:'Minimal three', note:'3 products', href:C },
+        { label:'Barrier repair set', note:'4 products', href:C },
+        { label:'Travel trio', note:'30 ml each', href:C }
+      ] },
+      { title:'For skin that is', allLabel:'Find your set', allHref:'EasyBeauty Quiz.html', items:[
+        { label:'Reactive', note:'Fragrance-free', href:C },
+        { label:'Dry through winter', note:'Rich textures', href:C },
+        { label:'Oily by midday', note:'Water-light', href:C },
+        { label:'Post-treatment', note:'Barrier first', href:C },
+        { label:'New to actives', note:'Low strength', href:C }
+      ] },
+      { title:'Gifting', allLabel:'Gift guide', allHref:C, items:[
+        { label:'Duo pack', note:'Save 10%', href:'EasyBeauty Product.html' },
+        { label:'The full twelve', note:'Studio box', href:C },
+        { label:'Under $60', note:'6 options', href:C },
+        { label:'Plain packaging', note:'No prices', href:'EasyBeauty FAQ.html' }
+      ] }
+    ],
+    feature: {
+      kicker:'New set', title:'The Barrier Repair Four',
+      body:'Cleansing milk, mineral toner, ceramide cream and No.3 — eight weeks of a full routine, $32 below the individual prices.',
+      cta:'See the set', href:'EasyBeauty Lookbook.html', img:R('assets/apply.jpg')
+    }
+  }
+};
+
+class Component extends DCLogic {
+  state = { ann:0, scrolled:false, menuOpen:false, signedIn:false, userName:'', userPhone:'', mega:'' };
+
+  componentDidMount() {
+    this.annTimer = setInterval(() => this.setState((s) => ({ ann:(s.ann + 1) % ANN.length })), 4000);
+    this.onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const next = y > 60;
+      if (next !== this.state.scrolled) this.setState({ scrolled:next });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+    this.onDocClick = (e) => {
+      if (this.state.menuOpen && !e.target.closest('[data-account]')) this.setState({ menuOpen:false });
+    };
+    this.onMegaKey = (e) => { if (e.key === 'Escape' && this.state.mega) this.setState({ mega:'' }); };
+    window.addEventListener('keydown', this.onMegaKey);
+    this.onMegaResize = () => {
+      const wideMega = window.innerWidth >= 900;
+      if (wideMega !== this.state.wideMega) this.setState({ wideMega });
+    };
+    this.onMegaResize();
+    window.addEventListener('resize', this.onMegaResize);
+    document.addEventListener('click', this.onDocClick);
+    this.readAccount();
+    this.onStore = () => this.readAccount();
+    window.addEventListener('storage', this.onStore);
+    window.addEventListener('eb-account-change', this.onStore);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.annTimer);
+    window.removeEventListener('scroll', this.onScroll);
+    document.removeEventListener('click', this.onDocClick);
+    window.removeEventListener('keydown', this.onMegaKey);
+    window.removeEventListener('resize', this.onMegaResize);
+    window.removeEventListener('storage', this.onStore);
+    window.removeEventListener('eb-account-change', this.onStore);
+  }
+
+  readAccount() {
+    let a = null;
+    try { a = JSON.parse(localStorage.getItem('eb-account') || 'null'); } catch (e) {}
+    if (a && a.phone) this.setState({ signedIn:true, userName:a.name || 'Lara Moreira', userPhone:a.phone });
+    else this.setState({ signedIn:false, userName:'', userPhone:'' });
+  }
+
+  savedCount() {
+    try { return (JSON.parse(localStorage.getItem('eb-saved') || '[]') || []).length; } catch (e) { return 0; }
+  }
+
+  renderVals() {
+    const st = this.state;
+    const active = this.props.active ?? '';
+    const count = this.props.count ?? 0;
+    const onSearch = this.props.onSearch;
+    const onBag = this.props.onBag;
+    const initials = (st.userName || 'You').split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+    const saved = this.savedCount();
+    const mega = MEGA[st.mega] || null;
+    const wideMega = this.state.wideMega !== false;
+
+    return {
+      ann: ANN[st.ann],
+      headerStyle: 'position:relative;z-index:45;background:var(--off);border-bottom:2px solid var(--ink);transition:box-shadow .25s ease;box-shadow:' + (st.scrolled ? '0 10px 26px rgba(43,36,29,0.09)' : 'none'),
+      links: NAV.map((l) => {
+        const on = st.mega && st.mega === l.mega;
+        return {
+          label:l.label, href:l.href,
+          expanded: l.mega ? (on ? 'true' : 'false') : null,
+          style: 'display:flex;align-items:center;gap:6px;padding-bottom:2px;border-bottom:2px solid ' + (on || active === l.key ? 'var(--terra)' : 'transparent') + ';color:var(--ink)',
+          caretStyle: 'display:' + (l.mega ? 'flex' : 'none') + ';color:' + (on ? 'var(--terra)' : '#A99C8B') + ';transition:transform .2s ease;transform:rotate(' + (on ? '180deg' : '0deg') + ')',
+          enter: () => this.setState({ mega: l.mega || '' }),
+          click: (e) => {
+            if (!l.mega) return;
+            if (st.mega !== l.mega) { e.preventDefault(); this.setState({ mega:l.mega }); }
+          }
+        };
+      }),
+
+      closeMega: () => this.setState({ mega:'' }),
+      megaStyle: 'position:absolute;left:0;right:0;top:100%;z-index:58;background:var(--off);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);box-shadow:0 26px 54px rgba(43,36,29,0.18);transition:opacity .2s ease,transform .22s ease,visibility .22s;visibility:' + (mega ? 'visible' : 'hidden') + ';opacity:' + (mega ? 1 : 0) + ';transform:translateY(' + (mega ? '0' : '-8px') + ')',
+      megaScrimStyle: 'position:fixed;inset:0;z-index:40;background:rgba(28,23,19,0.28);transition:opacity .22s ease,visibility .22s;visibility:' + (mega ? 'visible' : 'hidden') + ';opacity:' + (mega ? 1 : 0),
+      megaCols: wideMega ? 'minmax(0,1fr) minmax(0,340px)' : 'minmax(0,1fr)',
+      megaRule: wideMega ? '2px solid var(--ink)' : '0',
+      megaGridCols: wideMega ? 'repeat(' + (mega ? mega.columns.length : 3) + ',minmax(0,1fr))' : 'minmax(0,1fr)',
+      megaColumns: mega ? mega.columns.map((c, i) => Object.assign({}, c, {
+        style: 'background:var(--off);padding:26px 24px 28px;display:flex;flex-direction:column;gap:14px;border-' + (wideMega ? 'right' : 'bottom') + ':' + (i < mega.columns.length - 1 ? '1px solid var(--color-border)' : '0')
+      })) : [],
+      megaFootnote: mega ? mega.footnote : '',
+      feature: mega ? {
+        kicker: mega.feature.kicker, title: mega.feature.title, body: mega.feature.body,
+        cta: mega.feature.cta, href: mega.feature.href,
+        imgStyle: 'display:block;width:100%;height:' + (wideMega ? '220px' : '180px') + ';background:#EDE6DC url("' + R(mega.feature.img) + '") center/cover no-repeat;filter:grayscale(1)'
+      } : { kicker:'', title:'', body:'', cta:'', href:'#', imgStyle:'display:none' },
+      megaFeatureStyle: wideMega
+        ? 'background:var(--cream);display:flex;flex-direction:column'
+        : 'background:var(--cream);border-top:2px solid var(--ink);display:flex;flex-direction:column',
+
+      search: () => {
+        if (typeof onSearch === 'function') onSearch();
+        else window.location.href = 'EasyBeauty Collection.html#search';
+      },
+      bag: () => {
+        if (typeof onBag === 'function') onBag();
+        else window.location.href = 'EasyBeauty Bag.html';
+      },
+      countLabel: count > 0 ? String(count) : '',
+      countStyle: 'min-width:20px;height:20px;padding:0 6px;background:var(--terra);color:var(--off);font-size:11px;line-height:20px;text-align:center;transition:opacity .2s ease;opacity:' + (count > 0 ? 1 : 0),
+
+      signedIn: st.signedIn,
+      signedOut: !st.signedIn,
+      initials,
+      userName: st.userName,
+      userPhone: st.userPhone,
+      accountClick: () => {
+        if (st.signedIn) this.setState((s) => ({ menuOpen: !s.menuOpen }));
+        else window.dispatchEvent(new CustomEvent('eb-auth-open'));
+      },
+      accountBtnStyle: 'display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:' + (st.signedIn ? 'var(--ink)' : 'transparent') + ';color:' + (st.signedIn ? 'var(--off)' : 'var(--ink)') + ';border:0;cursor:pointer;padding:0',
+      menuStyle: 'position:absolute;top:calc(100% + 14px);right:0;width:272px;background:var(--off);border:2px solid var(--ink);box-shadow:0 20px 44px rgba(43,36,29,0.16);z-index:60;transition:opacity .18s ease,transform .18s ease;transform:translateY(' + (st.menuOpen ? '0' : '-6px') + ');opacity:' + (st.menuOpen ? 1 : 0) + ';pointer-events:' + (st.menuOpen ? 'auto' : 'none'),
+      menuLinks: [
+        { label:'Your details', href:'EasyBeauty Account.html', note:'Profile' },
+        { label:'Saved', href:'EasyBeauty Account.html', note: saved ? saved + ' items' : 'Empty' },
+        { label:'Orders', href:'EasyBeauty Account.html', note:'1 in transit' },
+        { label:'Help & contact', href:'EasyBeauty Contact.html', note:'~6h reply' }
+      ],
+      logout: () => {
+        try { localStorage.removeItem('eb-account'); } catch (e) {}
+        window.dispatchEvent(new CustomEvent('eb-account-change'));
+        this.setState({ menuOpen:false });
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
