@@ -49,7 +49,9 @@
         </div>
         <p class="text-muted" style="font-size:12px;margin-bottom:16px">{{ 'sections.cart.shipping_at_checkout' | t }}</p>
         <a href="{{ routes.cart_url }}" class="btn btn-secondary btn-block" style="margin-bottom:8px">{{ 'sections.cart.title' | t }}</a>
-        <a href="{{ routes.cart_url }}/checkout" class="btn btn-primary btn-block">{{ 'sections.cart.checkout' | t }}</a>
+        {%- form 'cart' -%}
+          <button type="submit" name="checkout" class="btn btn-primary btn-block">{{ 'sections.cart.checkout' | t }}</button>
+        {%- endform -%}
       </div>
     {%- endif -%}
   </div>

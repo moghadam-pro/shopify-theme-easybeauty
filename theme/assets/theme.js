@@ -7,9 +7,35 @@
   /* ---------- helpers ---------- */
   function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
   function qsa(sel, ctx) { return Array.from((ctx || document).querySelectorAll(sel)); }
-  function formatMoney(cents) {
-    const amount = (cents / 100).toFixed(2);
-    return settings.moneyFormat.replace(/\{\{\s*(amount)\s*\}\}/, amount).replace('{{amount}}', amount) || ('$' + amount);
+  function formatWithDelimiters(cents, precision, thousands, decimal) {
+    precision = isNaN(precision) ? 2 : precision;
+    thousands = thousands === undefined ? ',' : thousands;
+    decimal = decimal === undefined ? '.' : decimal;
+    if (isNaN(cents)) return '0';
+    const fixed = (cents / 100).toFixed(precision);
+    const parts = fixed.split('.');
+    const dollars = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + thousands);
+    const centsPart = parts[1] ? decimal + parts[1] : '';
+    return dollars + centsPart;
+  }
+  /* Mirrors Shopify's documented Shopify.formatMoney helper: supports every
+     token shop.money_format can use, not just the plain {{ amount }} case. */
+  function formatMoney(cents, format) {
+    format = format || settings.moneyFormat || '${{ amount }}';
+    const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+    const match = format.match(placeholderRegex);
+    const token = match ? match[1] : 'amount';
+    let value;
+    switch (token) {
+      case 'amount_no_decimals': value = formatWithDelimiters(cents, 0); break;
+      case 'amount_with_comma_separator': value = formatWithDelimiters(cents, 2, '.', ','); break;
+      case 'amount_no_decimals_with_comma_separator': value = formatWithDelimiters(cents, 0, '.'); break;
+      case 'amount_with_space_separator': value = formatWithDelimiters(cents, 2, ' ', ','); break;
+      case 'amount_no_decimals_with_space_separator': value = formatWithDelimiters(cents, 0, ' '); break;
+      case 'amount':
+      default: value = formatWithDelimiters(cents, 2); break;
+    }
+    return match ? format.replace(placeholderRegex, value) : '$' + value;
   }
   function trapFocus(container) {
     const focusable = qsa('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])', container);
@@ -289,15 +315,30 @@
     }
 
     function buildResult() {
-      const tagCounts = {};
-      Object.values(answers).forEach((tag) => { if (tag) tagCounts[tag] = (tagCounts[tag] || 0) + 1; });
-      const topTag = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a])[0];
+      const pickedTags = Object.values(answers).filter(Boolean);
       const resultList = qs('[data-quiz-results]', quiz);
       if (!resultList) return;
-      qsa('[data-quiz-product]', resultList).forEach((card) => {
-        const tags = (card.getAttribute('data-tags') || '').split(',');
-        card.hidden = !!topTag && !tags.includes(topTag);
+      const cards = qsa('[data-quiz-product]', resultList);
+      if (!pickedTags.length) {
+        cards.forEach((card) => { card.hidden = false; });
+        return;
+      }
+      /* Score every card by how many of the answers it satisfies, rather than
+         picking one "top" tag — with one tag per question, counts tie and a
+         single-tag filter would only ever reflect whichever answer sorted
+         first, ignoring the rest of the quiz. */
+      const scored = cards.map((card) => {
+        const tags = (card.getAttribute('data-tags') || '').split(',').map((t) => t.trim());
+        const score = pickedTags.reduce((n, tag) => n + (tags.includes(tag) ? 1 : 0), 0);
+        return { card, score };
       });
+      const bestScore = Math.max(0, ...scored.map((s) => s.score));
+      scored
+        .sort((a, b) => b.score - a.score)
+        .forEach(({ card, score }) => {
+          resultList.appendChild(card);
+          card.hidden = bestScore > 0 && score === 0;
+        });
     }
 
     quiz.addEventListener('click', (e) => {

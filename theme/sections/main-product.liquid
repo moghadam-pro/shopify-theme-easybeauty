@@ -8,14 +8,18 @@
   <div class="product" data-product-root>
     <div class="product__gallery">
       <div class="product__gallery-main">
-        <img
-          src="{{ main_image | image_url: width: 1200 }}"
-          alt="{{ product.featured_image.alt | default: product.title | escape }}"
-          width="1200"
-          height="{{ 1200 | divided_by: main_image.aspect_ratio | default: 1500 }}"
-          loading="eager"
-          data-product-main-image
-        >
+        {%- if main_image -%}
+          <img
+            src="{{ main_image | image_url: width: 1200 }}"
+            alt="{{ product.featured_image.alt | default: product.title | escape }}"
+            width="1200"
+            height="{{ 1200 | divided_by: main_image.aspect_ratio | default: 1500 }}"
+            loading="eager"
+            data-product-main-image
+          >
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: class: 'placeholder-svg', data-product-main-image: true }}
+        {%- endif -%}
       </div>
       {%- if product.images.size > 1 -%}
         <div class="product__gallery-thumbs">

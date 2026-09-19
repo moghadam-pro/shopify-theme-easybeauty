@@ -4,7 +4,12 @@
     {%- if collection.description != blank -%}<div class="rte text-muted">{{ collection.description }}</div>{%- endif -%}
   </div>
 
-  <div class="collection-toolbar">
+  {%- comment -%}
+    Filters and sort share one GET form so changing the sort order doesn't
+    drop whichever filter.* params are already applied — a separate <form>
+    per control would submit only its own field and wipe the others.
+  {%- endcomment -%}
+  <form action="{{ collection.url }}" method="get" class="collection-toolbar" data-collection-filter-form>
     <div class="collection-filters">
       {%- for filter in collection.filters -%}
         {%- if filter.type == 'list' -%}
@@ -13,25 +18,31 @@
             <div style="padding:12px 0;display:flex;flex-direction:column;gap:8px">
               {%- for value in filter.values -%}
                 <label style="display:flex;gap:8px;align-items:center;font-size:13.5px">
-                  <input type="checkbox" {% if value.active %}checked{% endif %} onclick="window.location.href='{% if value.active %}{{ value.remove_url }}{% else %}{{ value.url_to_add }}{% endif %}'">
+                  <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} onchange="this.form.submit()">
                   {{ value.label }} ({{ value.count }})
                 </label>
               {%- endfor -%}
             </div>
           </details>
+        {%- elsif filter.type == 'boolean' -%}
+          {%- assign value = filter.values.first -%}
+          <label class="btn btn-secondary" style="display:inline-flex;gap:8px;cursor:pointer">
+            <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} onchange="this.form.submit()">
+            {{ filter.label }}
+          </label>
         {%- endif -%}
       {%- endfor -%}
     </div>
 
-    <form action="{{ collection.url }}" method="get" style="display:flex;gap:8px;align-items:center">
+    <div style="display:flex;gap:8px;align-items:center">
       <label for="SortBy" class="visually-hidden">Sort</label>
       <select name="sort_by" id="SortBy" class="input" onchange="this.form.submit()" style="min-height:36px">
         {%- for option in collection.sort_options -%}
           <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>{{ option.name }}</option>
         {%- endfor -%}
       </select>
-    </form>
-  </div>
+    </div>
+  </form>
 
   {%- paginate collection.products by 24 -%}
     {%- if collection.products.size == 0 -%}

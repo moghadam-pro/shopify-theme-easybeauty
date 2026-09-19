@@ -50,19 +50,51 @@
         {% render 'icon', icon: 'menu' %}
       </button>
     </div>
+
+    {%- comment -%}
+      Mega panels live inside [data-site-nav] (not just after it) so that
+      moving the pointer from a trigger down into its panel stays within the
+      DOM subtree theme.js watches for mouseleave — panels are absolutely
+      positioned against the sticky <header>, so nesting them here doesn't
+      change where they render.
+    {%- endcomment -%}
+    {%- for link in section.settings.menu.links -%}
+      {%- if link.links != blank -%}
+        <div class="mega-panel" id="MegaPanel-{{ forloop.index }}" data-mega-panel>
+          <div class="container mega-panel__grid">
+            {%- for sublink in link.links -%}
+              <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
   </div>
 
-  {%- for link in section.settings.menu.links -%}
-    {%- if link.links != blank -%}
-      <div class="mega-panel" id="MegaPanel-{{ forloop.index }}" data-mega-panel>
-        <div class="container mega-panel__grid">
-          {%- for sublink in link.links -%}
-            <a href="{{ sublink.url }}">{{ sublink.title }}</a>
-          {%- endfor -%}
-        </div>
-      </div>
-    {%- endif -%}
-  {%- endfor -%}
+  <div class="mobile-nav-panel" data-mobile-menu aria-hidden="true">
+    <div class="mobile-nav-panel__head">
+      <span class="site-header__logo" style="font-size:20px">{{ section.settings.logo_text | default: shop.name }}</span>
+      <button type="button" class="btn-icon" data-mobile-menu-toggle aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'icon', icon: 'close' %}
+      </button>
+    </div>
+    <nav class="mobile-nav-panel__links" aria-label="{{ 'sections.header.menu' | t }}">
+      {%- for link in section.settings.menu.links -%}
+        {%- if link.links != blank -%}
+          <details>
+            <summary>{{ link.title }}</summary>
+            <div class="mobile-nav-panel__sublinks">
+              {%- for sublink in link.links -%}
+                <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+              {%- endfor -%}
+            </div>
+          </details>
+        {%- else -%}
+          <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+  </div>
 </header>
 
 {%- style -%}
@@ -75,6 +107,25 @@
   .mega-panel.is-open { display: block; }
   .mega-panel__grid { display: flex; flex-wrap: wrap; gap: 24px 40px; padding: 28px; }
   .mega-panel__grid a { font-size: 14px; }
+
+  .mobile-nav-panel {
+    position: fixed; inset: 0; z-index: 90; background: var(--off);
+    display: none; flex-direction: column; overflow-y: auto;
+  }
+  .mobile-nav-panel.is-open { display: flex; }
+  .mobile-nav-panel__head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px; border-bottom: 2px solid var(--ink);
+  }
+  .mobile-nav-panel__links { display: flex; flex-direction: column; padding: 8px 20px; }
+  .mobile-nav-panel__links > a, .mobile-nav-panel__links summary {
+    padding: 16px 0; border-bottom: 1px solid var(--color-border);
+    font-size: 15px; cursor: pointer; list-style: none;
+  }
+  .mobile-nav-panel__links summary::-webkit-details-marker { display: none; }
+  .mobile-nav-panel__sublinks { display: flex; flex-direction: column; padding: 0 0 12px 12px; }
+  .mobile-nav-panel__sublinks a { padding: 10px 0; font-size: 14px; color: var(--terra); }
+
   @media (max-width: 900px) {
     .site-header__icon-btn[data-mobile-menu-toggle] { display: flex !important; }
   }
