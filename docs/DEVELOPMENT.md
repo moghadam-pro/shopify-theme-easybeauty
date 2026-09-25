@@ -42,6 +42,13 @@ npm run preview          # render + screenshots → out/*.html, out/shots/*.png
 node render.mjs index    # render only some pages
 ```
 
+To preview another revision without touching your checkout, export it and point the tool at it:
+
+```bash
+git archive <commit> theme | tar -x -C /tmp/old
+THEME_DIR=/tmp/old/theme OUT_DIR=/tmp/old/out node render.mjs
+```
+
 It is an approximation: admin-uploaded images, real filters, predictive search, and Shopify's
 own scripts don't exist there. Mock data lives in `tools/preview/mock-data.mjs`. The real check
 is still `shopify theme dev`.

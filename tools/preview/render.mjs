@@ -14,8 +14,8 @@ import { Liquid, Tag, Hash, Tokenizer } from 'liquidjs';
 import * as mock from './mock-data.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const THEME = path.resolve(HERE, '../../theme');
-const OUT = path.join(HERE, 'out');
+const THEME = path.resolve(process.env.THEME_DIR || path.join(HERE, '../../theme'));
+const OUT = path.resolve(process.env.OUT_DIR || path.join(HERE, 'out'));
 
 const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8').replace(/^\s*\/\*[\s\S]*?\*\/\s*/, ''));
 const locale = readJson(path.join(THEME, 'locales/en.default.json'));

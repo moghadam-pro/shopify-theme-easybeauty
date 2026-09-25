@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.join(HERE, 'out');
+const OUT = path.resolve(process.env.OUT_DIR || path.join(HERE, 'out'));
 const SHOTS = path.join(OUT, 'shots');
 const VIEWPORTS = { desktop: { width: 1440, height: 900 }, mobile: { width: 390, height: 844 } };
 
