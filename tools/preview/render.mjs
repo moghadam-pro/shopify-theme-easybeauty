@@ -284,6 +284,29 @@ function globalsFor(name, meta) {
   };
 }
 
+// Storefront paths written into templates/settings → the matching local preview file.
+function localizeLinks(html) {
+  const map = [
+    [/^\/collections\/?$/, 'list-collections.html'],
+    [/^\/collections\/[^/]+$/, 'collection.html'],
+    [/^\/(collections\/[^/]+\/)?products\/[^/]+$/, 'product.html'],
+    [/^\/pages\/([a-z-]+)$/, (m) => (PAGES[`page.${m[1]}`] ? `page.${m[1]}.html` : 'page.html')],
+    [/^\/blogs\/[^/]+$/, 'blog.html'],
+    [/^\/blogs\/[^/]+\/[^/]+$/, 'article.html'],
+    [/^\/cart$/, 'cart.html'],
+    [/^\/search$/, 'search.html'],
+    [/^\/account(\/login)?$/, 'customers.login.html'],
+    [/^\/$/, 'index.html'],
+  ];
+  return html.replace(/href="(\/[^"#?]*)([^"]*)"/g, (all, p) => {
+    for (const [re, to] of map) {
+      const m = p.match(re);
+      if (m) return `href="${typeof to === 'function' ? to(m) : to}"`;
+    }
+    return all;
+  });
+}
+
 async function renderPage(name, meta) {
   const tpl = readJson(path.join(THEME, 'templates', `${name}.json`));
   const globals = globalsFor(name, meta);
@@ -294,7 +317,7 @@ async function renderPage(name, meta) {
     content += await renderSection(id, cfg, globals);
   }
   const layout = fs.readFileSync(path.join(THEME, 'layout', `${tpl.layout || 'theme'}.liquid`), 'utf8');
-  return engine.parseAndRender(layout, { ...globals, content_for_layout: content });
+  return localizeLinks(await engine.parseAndRender(layout, { ...globals, content_for_layout: content }));
 }
 
 async function main() {
