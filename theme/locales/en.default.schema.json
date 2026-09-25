@@ -124,6 +124,15 @@
         "image": {
           "label": "Image"
         },
+        "copy_position": {
+          "label": "Text position",
+          "options__1": {
+            "label": "Left"
+          },
+          "options__2": {
+            "label": "Right"
+          }
+        },
         "eyebrow": {
           "label": "Eyebrow"
         },

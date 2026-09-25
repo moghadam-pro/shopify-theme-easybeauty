@@ -1,7 +1,127 @@
 {
   "sections": {
     "main": {
-      "type": "faq-accordion"
+      "type": "faq-accordion",
+      "blocks": {
+        "faq-1": {
+          "type": "group",
+          "settings": {
+            "title": "Placing and changing an order"
+          }
+        },
+        "faq-2": {
+          "type": "question",
+          "settings": {
+            "question": "Can I change or cancel after ordering?",
+            "answer": "<p>Until the parcel is picked, yes. Message us with the order number and we will edit or cancel it. Once it is with the carrier you can refuse delivery or use the 60-day return.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "group",
+          "settings": {
+            "title": "Shipping"
+          }
+        },
+        "faq-4": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Orders leave within 24 working hours. Portugal and Spain take two to three days, the rest of the EU three to five, the UK four to six. You get a tracking link when the label is printed.</p>"
+          }
+        },
+        "faq-5": {
+          "type": "question",
+          "settings": {
+            "question": "When is delivery free?",
+            "answer": "<p>Free over $75 after any discount. Below that it is a flat $4.90.</p>"
+          }
+        },
+        "faq-6": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship outside Europe?",
+            "answer": "<p>Not at the moment. We list every market we can ship to at checkout.</p>"
+          }
+        },
+        "faq-7": {
+          "type": "group",
+          "settings": {
+            "title": "Returns"
+          }
+        },
+        "faq-8": {
+          "type": "question",
+          "settings": {
+            "question": "What is the return window?",
+            "answer": "<p>Sixty days from delivery, including opened bottles. Skin takes six to eight weeks to answer a new formula, so a half-used bottle is a fair test.</p>"
+          }
+        },
+        "faq-9": {
+          "type": "question",
+          "settings": {
+            "question": "How do I start a return?",
+            "answer": "<p>Open Orders in your account and choose the order, or message us with the order number. We send a prepaid label; refunds land within five working days of the parcel reaching us.</p>"
+          }
+        },
+        "faq-10": {
+          "type": "question",
+          "settings": {
+            "question": "What if something arrives damaged?",
+            "answer": "<p>Send one photo of the bottle and the box. We ship a replacement the same day and you keep the damaged unit.</p>"
+          }
+        },
+        "faq-11": {
+          "type": "group",
+          "settings": {
+            "title": "Formulas and routine"
+          }
+        },
+        "faq-12": {
+          "type": "question",
+          "settings": {
+            "question": "Are the formulas fragrance-free?",
+            "answer": "<p>Nine of the twelve carry no fragrance at all. The three that do are marked on the product page.</p>"
+          }
+        },
+        "faq-13": {
+          "type": "question",
+          "settings": {
+            "question": "Which product comes first in a routine?",
+            "answer": "<p>Cleanser, then any water-light serum, then moisturiser, then SPF in the morning.</p>"
+          }
+        },
+        "faq-14": {
+          "type": "question",
+          "settings": {
+            "question": "Are they tested on animals?",
+            "answer": "<p>No, at any stage and in any market.</p>"
+          }
+        },
+        "faq-15": {
+          "type": "question",
+          "settings": {
+            "question": "How long does a bottle last?",
+            "answer": "<p>About eight weeks at the dose on the label. Unopened shelf life is thirty months; once opened, use within twelve.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4",
+        "faq-5",
+        "faq-6",
+        "faq-7",
+        "faq-8",
+        "faq-9",
+        "faq-10",
+        "faq-11",
+        "faq-12",
+        "faq-13",
+        "faq-14",
+        "faq-15"
+      ]
     },
     "contact-cta": {
       "type": "contact-form",

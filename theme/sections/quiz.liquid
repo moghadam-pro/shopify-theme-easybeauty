@@ -37,7 +37,7 @@
     <div class="quiz__step" data-quiz-step="result">
       <h1>Your routine</h1>
       <p class="text-muted">{{ section.settings.result_text }}</p>
-      <div class="grid grid-3" data-quiz-results style="margin-top:var(--space-6)">
+      <div class="grid grid--products grid-3" data-quiz-results style="margin-top:var(--space-6)">
         {%- for product in section.settings.result_collection.products limit: 6 -%}
           <div data-quiz-product data-tags="{{ product.tags | join: ',' }}">
             {% render 'product-card', product: product %}

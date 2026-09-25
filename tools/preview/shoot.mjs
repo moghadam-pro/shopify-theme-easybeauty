@@ -24,7 +24,12 @@ for (const [label, viewport] of Object.entries(VIEWPORTS)) {
   page.on('pageerror', (e) => console.warn(`  js error (${label}): ${e.message}`));
   for (const f of pages) {
     await page.goto(`file://${path.join(OUT, f)}`, { waitUntil: 'load' });
-    await page.evaluate(() => document.fonts.ready);
+    // Lazy images below the fold never load in a full-page capture; load them all first.
+    await page.evaluate(async () => {
+      document.querySelectorAll('img[loading="lazy"]').forEach((img) => { img.loading = 'eager'; });
+      await Promise.all([...document.images].map((img) => (img.complete ? null : new Promise((r) => { img.onload = img.onerror = r; }))));
+      await document.fonts.ready;
+    });
     const file = path.join(SHOTS, `${f.replace(/\.html$/, '')}--${label}.png`);
     await page.screenshot({ path: file, fullPage: true });
     console.log(`shot ${path.relative(HERE, file)}`);

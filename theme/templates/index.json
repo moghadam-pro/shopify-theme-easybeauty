@@ -9,14 +9,15 @@
         "button_label": "Shop the edit",
         "button_link": "/collections/all",
         "button_label_2": "Take the skin quiz",
-        "button_link_2": "/pages/quiz"
+        "button_link_2": "/pages/quiz",
+        "copy_position": "right"
       },
       "blocks": {
         "hotspot-1": {
           "type": "hotspot",
           "settings": {
-            "horizontal_position": 68,
-            "vertical_position": 58,
+            "horizontal_position": 34,
+            "vertical_position": 72,
             "title": "Radiance Serum No.3",
             "text": "Niacinamide at 10% — the formula that stopped stinging."
           }
@@ -27,7 +28,43 @@
       ]
     },
     "perks": {
-      "type": "perk-bar"
+      "type": "perk-bar",
+      "blocks": {
+        "perk-1": {
+          "type": "perk",
+          "settings": {
+            "icon": "shipping",
+            "text": "Free shipping over $75"
+          }
+        },
+        "perk-2": {
+          "type": "perk",
+          "settings": {
+            "icon": "return",
+            "text": "60-day returns"
+          }
+        },
+        "perk-3": {
+          "type": "perk",
+          "settings": {
+            "icon": "lab",
+            "text": "Dermatologist tested"
+          }
+        },
+        "perk-4": {
+          "type": "perk",
+          "settings": {
+            "icon": "lock",
+            "text": "Secure checkout"
+          }
+        }
+      },
+      "block_order": [
+        "perk-1",
+        "perk-2",
+        "perk-3",
+        "perk-4"
+      ]
     },
     "best-sellers": {
       "type": "featured-collection",

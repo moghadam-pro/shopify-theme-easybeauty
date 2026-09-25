@@ -3,7 +3,32 @@
   "name": "t:sections.header.name",
   "sections": {
     "announcement-bar": {
-      "type": "announcement-bar"
+      "type": "announcement-bar",
+      "blocks": {
+        "message-1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free delivery over $75 · 60-day returns"
+          }
+        },
+        "message-2": {
+          "type": "announcement",
+          "settings": {
+            "text": "Dermatologist tested · Fragrance-free options"
+          }
+        },
+        "message-3": {
+          "type": "announcement",
+          "settings": {
+            "text": "Twelve formulas, no seasonal launches"
+          }
+        }
+      },
+      "block_order": [
+        "message-1",
+        "message-2",
+        "message-3"
+      ]
     },
     "header": {
       "type": "header"
