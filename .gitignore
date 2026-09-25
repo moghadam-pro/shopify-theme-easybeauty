@@ -2,3 +2,7 @@
 Thumbs.db
 *.log
 .shopifyignore.local
+
+# store-less preview tool
+tools/preview/node_modules/
+tools/preview/out/

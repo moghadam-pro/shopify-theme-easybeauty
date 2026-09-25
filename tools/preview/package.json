@@ -1,0 +1,15 @@
+{
+  "name": "easybeauty-preview",
+  "private": true,
+  "type": "module",
+  "description": "Store-less local preview of /theme for design review (approximate; final check is `shopify theme dev`).",
+  "scripts": {
+    "render": "node render.mjs",
+    "shoot": "node shoot.mjs",
+    "preview": "node render.mjs && node shoot.mjs"
+  },
+  "dependencies": {
+    "liquidjs": "^10.29.0",
+    "playwright-core": "^1.63.0"
+  }
+}
