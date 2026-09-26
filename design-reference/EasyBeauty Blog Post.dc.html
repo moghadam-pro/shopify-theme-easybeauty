@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-accent-2:#94513C; --color-accent-2-500:#94513C; --color-accent-2-600:#82472F;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+
+@media (max-width:760px){
+  header nav{display:none !important}
+  header > div{height:58px !important;padding:0 16px !important}
+  footer{padding-bottom:26px !important}
+}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip">
+
+  <dc-import name="SiteHeader" active="journal" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+  <div style="position:sticky;top:112px;z-index:43;height:3px;background:var(--sand)">
+    <div style="{{ readBarStyle }}"></div>
+  </div>
+
+  <section style="border-bottom:2px solid var(--ink);padding:36px 28px 40px">
+    <div style="max-width:1600px;margin:0 auto">
+      <nav style="font-size:12px;letter-spacing:0.06em;color:var(--t2);margin-bottom:26px">
+        <a href="EasyBeauty Landing.dc.html" style="color:var(--t2)">Home</a> / <a href="EasyBeauty Blog.dc.html" style="color:var(--t2)">Journal</a> / <span style="color:var(--ink)">Niacinamide</span>
+      </nav>
+      <div style="display:flex;gap:16px;align-items:center;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:22px;flex-wrap:wrap">
+        <span style="background:var(--accent-fill);color:var(--off);padding:5px 11px">Ingredients</span>
+        <span>9 March 2026</span><span>·</span><span>7 min read</span><span>·</span><span>Reviewed by Dr. Inês Rocha</span>
+      </div>
+      <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.6vw,76px);line-height:1.0;margin:0 0 22px;max-width:18ch">Niacinamide, without the internet noise</h1>
+      <p style="font-size:clamp(16px,1.5vw,20px);line-height:1.65;color:var(--t1);margin:0;max-width:58ch">What 4% actually does to a compromised barrier, why the 10% versions sting, and how to layer it with acids without undoing either.</p>
+    </div>
+  </section>
+
+  <div role="img" aria-label="Article photograph" style="height:clamp(300px,46vw,620px);background:var(--sand) url('assets/p4.jpg') center/cover no-repeat;border-bottom:2px solid var(--ink)"></div>
+  <div style="padding:14px 28px;border-bottom:2px solid var(--ink);font-size:12px;color:var(--t2);letter-spacing:0.04em">Niacinamide at 4% in our Radiance Serum No.3 — photographed at the Lisbon lab.</div>
+
+  <section style="display:grid;grid-template-columns:{{ shellCols }};border-bottom:2px solid var(--ink)">
+
+    <aside style="{{ railStyle }}">
+      <div style="padding:34px 24px 30px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">Written by</div>
+        <div style="display:flex;align-items:center;gap:13px;margin-bottom:12px">
+          <div role="img" aria-label="Author portrait" style="width:48px;height:48px;background:var(--imgbg) url('assets/skin.jpg') center/cover no-repeat"></div>
+          <div>
+            <div style="font-size:14px;font-weight:500">Maren Sousa</div>
+            <div style="font-size:12px;color:var(--t2)">Head of formulation</div>
+          </div>
+        </div>
+        <p style="font-size:13px;line-height:1.7;color:var(--t1);margin:0">Twelve years formulating barrier-first skincare. Writes the ingredient notes on every batch we ship.</p>
+      </div>
+
+      <div style="border-top:2px solid var(--ink);padding:30px 24px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">In this article</div>
+        <nav style="display:flex;flex-direction:column;gap:2px">
+          <sc-for list="{{ toc }}" as="t" hint-placeholder-count="5">
+            <a href="{{ t.href }}" style="{{ t.style }}">{{ t.label }}</a>
+          </sc-for>
+        </nav>
+      </div>
+
+      <div style="border-top:2px solid var(--ink);padding:28px 24px 34px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:16px">Share</div>
+        <div style="display:flex;gap:2px">
+          <sc-for list="{{ shares }}" as="s" hint-placeholder-count="3">
+            <button type="button" onClick="{{ s.act }}" style="{{ s.style }}">{{ s.label }}</button>
+          </sc-for>
+        </div>
+        <div style="{{ copiedStyle }}">{{ copiedNote }}</div>
+      </div>
+    </aside>
+
+    <article style="{{ articleStyle }}">
+      <p style="font-size:17px;line-height:1.8;color:var(--ink);margin:0 0 28px">Niacinamide is the most recommended and least understood active in a modern routine. It appears at 2% in barrier creams and at 20% in serums sold on the same claim, which tells you something is off in how the ingredient is being marketed. The dose-response curve flattens far earlier than the packaging suggests.</p>
+
+      <h2 id="s1" style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3vw,38px);line-height:1.12;margin:52px 0 18px;scroll-margin-top:100px">What it actually does</h2>
+      <p style="font-size:16px;line-height:1.8;color:var(--t1);margin:0 0 20px">Vitamin B3 is a precursor to NAD+ and NADP+, two coenzymes involved in the synthesis of ceramides and free fatty acids. When you apply it topically, keratinocytes get the raw material to rebuild the lipid matrix that holds water in the stratum corneum. That is the whole mechanism, and it is a slow one: measurable barrier improvement appears at four weeks, not four days.</p>
+      <p style="font-size:16px;line-height:1.8;color:var(--t1);margin:0 0 20px">Two secondary effects are well documented. It interrupts the transfer of melanosomes from melanocytes to keratinocytes, which is why it reads as brightening on post-inflammatory marks. And it reduces sebum output in oily skin at concentrations above 2%.</p>
+
+      <figure style="margin:40px 0;border:2px solid var(--ink);background:var(--off)">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;background:var(--color-border)">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+            <div style="background:var(--off);padding:26px 22px">
+              <div style="font-family:var(--serif);font-size:38px;line-height:1;margin-bottom:10px;color:var(--terra)">{{ s.n }}</div>
+              <div style="font-size:12.5px;line-height:1.6;color:var(--t1)">{{ s.l }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <figcaption style="border-top:2px solid var(--ink);padding:14px 22px;font-size:12px;color:var(--t2)">Internal 12-week study, 84 participants, 4% niacinamide twice daily.</figcaption>
+      </figure>
+
+      <h2 id="s2" style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3vw,38px);line-height:1.12;margin:52px 0 18px;scroll-margin-top:100px">Why 10% stings</h2>
+      <p style="font-size:16px;line-height:1.8;color:var(--t1);margin:0 0 20px">Two things happen in high-percentage formulas. First, niacinamide is hygroscopic and mildly acidic in solution, so at high load it draws water and shifts the formula pH downward unless it is buffered carefully. Second, and more often the real culprit, commercial niacinamide can carry trace nicotinic acid — a known vasodilator. That is the flushing people describe as a tingle.</p>
+
+      <blockquote style="margin:44px 0;padding:34px 0 34px 30px;border-left:4px solid var(--terra)">
+        <p style="font-family:var(--serif);font-size:clamp(22px,2.6vw,32px);line-height:1.28;margin:0;color:var(--ink)">Above roughly 5%, you are not buying more benefit. You are buying more chance of irritation.</p>
+      </blockquote>
+
+      <p style="font-size:16px;line-height:1.8;color:var(--t1);margin:0 0 20px">We formulate at 4% for that reason. It sits above the threshold for sebum regulation and well above the barrier-support dose, and it stays inside the tolerance range for reactive skin.</p>
+
+      <h2 id="s3" style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3vw,38px);line-height:1.12;margin:52px 0 18px;scroll-margin-top:100px">Layering it with acids</h2>
+      <p style="font-size:16px;line-height:1.8;color:var(--t1);margin:0 0 24px">The claim that niacinamide cancels out vitamin C comes from a 1960s study on heated solutions, not on skin. In a finished formula at room temperature, the interaction is negligible. What does matter is pH: exfoliating acids need a low pH to work, and niacinamide nudges it up. Give them room.</p>
+
+      <ol style="list-style:none;counter-reset:step;padding:0;margin:0 0 32px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <li style="display:grid;grid-template-columns:52px 1fr;gap:20px;padding:22px 0;border-top:1px solid var(--color-border)">
+            <div style="font-family:var(--serif);font-size:24px;color:var(--terra)">{{ s.n }}</div>
+            <div>
+              <div style="font-size:15px;font-weight:500;margin-bottom:7px">{{ s.t }}</div>
+              <div style="font-size:14.5px;line-height:1.7;color:var(--t1)">{{ s.b }}</div>
+            </div>
+          </li>
+        </sc-for>
+      </ol>
+
+      <div style="background:var(--dark-bg);color:var(--off);padding:32px 30px;margin:0 0 32px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(251,250,248,0.62);margin-bottom:14px">One caveat</div>
+        <p style="font-size:15.5px;line-height:1.75;margin:0;color:rgba(251,250,248,0.94)">If your skin is actively compromised — stinging with water, visibly flushed — stop all actives for a week and use only cleanser, a ceramide cream, and sunscreen. Niacinamide supports repair; it does not outrun damage you are still causing.</p>
+      </div>
+
+      <h2 id="s4" style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3vw,38px);line-height:1.12;margin:52px 0 18px;scroll-margin-top:100px">Where it sits in our range</h2>
+      <p style="font-size:16px;line-height:1.8;color:var(--t1);margin:0 0 28px">Two formulas carry it. The serum pairs 4% niacinamide with hyaluronic acid and ceramides for morning use; the SPF fluid carries a lower load so it is not doing the heavy lifting there.</p>
+
+      <div style="border:2px solid var(--ink);background:var(--off);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-bottom:36px">
+        <div role="img" aria-label="Radiance Serum No.3" style="min-height:220px;background:var(--sand) url('assets/p4.jpg') center/cover no-repeat"></div>
+        <div style="padding:28px 26px;display:flex;flex-direction:column;justify-content:center">
+          <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:12px">Mentioned in this article</div>
+          <div style="font-family:var(--serif);font-size:26px;line-height:1.12;margin-bottom:8px">Radiance Serum No.3</div>
+          <div style="font-size:13.5px;color:var(--t1);margin-bottom:18px">4% niacinamide · 30 ml · 4.9 (1,284 reviews)</div>
+          <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px">
+            <span style="font-family:var(--serif);font-size:24px">$68</span>
+            <span style="font-size:12.5px;color:var(--t2)">or $57.80 on subscription</span>
+          </div>
+          <a href="EasyBeauty Product.dc.html" class="btn btn-primary" style="align-self:flex-start;text-transform:uppercase;letter-spacing:0.1em;font-size:12px">View the product</a>
+        </div>
+      </div>
+
+      <h2 id="s5" style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3vw,38px);line-height:1.12;margin:52px 0 18px;scroll-margin-top:100px">References</h2>
+      <div style="display:flex;flex-direction:column;gap:12px;font-size:13.5px;line-height:1.7;color:var(--t2);margin-bottom:34px">
+        <span>Bissett, D. et al. Topical niacinamide and barrier function. <em>Int J Cosmet Sci</em>, 2005.</span>
+        <span>Draelos, Z. Sebum regulation with topical niacinamide. <em>J Cosmet Dermatol</em>, 2006.</span>
+        <span>EasyBeauty internal study EB-2025-04, 84 participants, 12 weeks.</span>
+      </div>
+
+      <div style="display:flex;gap:2px;flex-wrap:wrap;padding-top:26px;border-top:2px solid var(--ink)">
+        <sc-for list="{{ tags }}" as="t" hint-placeholder-count="4">
+          <a href="EasyBeauty Blog.dc.html" style="border:1px solid var(--color-border);background:var(--off);padding:8px 13px;font-size:12px;letter-spacing:0.06em;color:var(--ink)">{{ t }}</a>
+        </sc-for>
+      </div>
+    </article>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink)">
+    <div style="padding:34px 28px 26px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap">
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,3vw,38px);line-height:1.1;margin:0">Keep reading</h2>
+      <a href="EasyBeauty Blog.dc.html" style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:5px">All articles</a>
+    </div>
+    <div style="background:var(--color-border);display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;border-top:2px solid var(--ink)">
+      <sc-for list="{{ related }}" as="p" hint-placeholder-count="3">
+        <a href="EasyBeauty Blog Post.dc.html" onMouseEnter="{{ p.enter }}" onMouseLeave="{{ p.leave }}" style="{{ p.cardStyle }}">
+          <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--sand)">
+            <div role="img" aria-label="{{ p.title }}" style="{{ p.imgStyle }}"></div>
+          </div>
+          <div style="padding:22px 24px 26px">
+            <div style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--t2);margin-bottom:12px">{{ p.meta }}</div>
+            <h3 style="font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.16;margin:0">{{ p.title }}</h3>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div style="padding:clamp(40px,5vw,72px) 28px;display:flex;flex-direction:column;justify-content:center;max-width:640px">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">One letter, every other Thursday</div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 22px">New research, plainly summarised. No launches, no urgency.</h2>
+      <form onSubmit="{{ submit }}" style="display:flex;gap:2px;flex-wrap:wrap">
+        <input type="email" required aria-label="Email address for the journal newsletter" autocomplete="email" placeholder="you@email.com" value="{{ email }}" onChange="{{ setEmail }}" style="flex:1 1 220px;border:2px solid var(--ink);background:var(--off);padding:14px 16px;font-family:inherit;font-size:14px;color:var(--ink);outline:none">
+        <button type="submit" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Subscribe</button>
+      </form>
+      <div role="status" aria-live="polite" style="{{ noteStyle }}">{{ note }}</div>
+    </div>
+    <div role="img" aria-label="Editorial photograph" style="min-height:300px;background:var(--sand) url('assets/apply.jpg') center/cover no-repeat;border-left:2px solid var(--ink)"></div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="journal" hint-size="100%,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#94513C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#94513C&quot;,&quot;#82472F&quot;,&quot;#3F4A3D&quot;,&quot;#7A4A55&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;measure&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Comfortable&quot;,&quot;options&quot;:[&quot;Compact&quot;,&quot;Comfortable&quot;,&quot;Wide&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Article&quot;}}">
+const ANN = [
+  'Welcome offer — 10% off your first order',
+  'Free shipping on orders over $75',
+  'Ships in 24h from Lisbon'
+];
+
+const TOC = [
+  { id:'s1', label:'What it actually does' },
+  { id:'s2', label:'Why 10% stings' },
+  { id:'s3', label:'Layering it with acids' },
+  { id:'s4', label:'Where it sits in our range' },
+  { id:'s5', label:'References' }
+];
+
+const STATS = [
+  { n:'−31%', l:'Trans-epidermal water loss at week 12' },
+  { n:'4 wks', l:'Before barrier change was measurable' },
+  { n:'96%', l:'Reported no stinging on application' }
+];
+
+const STEPS = [
+  { n:'01', t:'Cleanse, then wait', b:'Skin at neutral pH absorbs more evenly. Sixty seconds is enough.' },
+  { n:'02', t:'Acid or retinal at night, alone', b:'Give the low-pH step the field. Nothing else needs to be on the skin.' },
+  { n:'03', t:'Niacinamide in the morning', b:'On damp skin, before moisturiser. Two to three drops covers the face.' },
+  { n:'04', t:'Seal, then sunscreen', b:'A ceramide cream holds the water in; SPF protects the repair you just paid for.' }
+];
+
+const RELATED = [
+  { t:'The order of a routine matters more than the products', c:'Routines', d:'2 March 2026', r:'5 min', img:'assets/apply.jpg' },
+  { t:'What retinal does that retinol does not', c:'Ingredients', d:'24 February 2026', r:'8 min', img:'assets/p3.jpg' },
+  { t:'Barrier repair, measured over twelve weeks', c:'Science', d:'17 February 2026', r:'6 min', img:'assets/p2.jpg' }
+];
+
+const TAGS = ['Niacinamide', 'Barrier', 'Brightening', 'Layering', 'Sensitive skin'];
+
+class Component extends DCLogic {
+  state = { ann:0, scrolled:false, progress:0, active:'s1', hover:null, copied:false, email:'', sent:false, rail:true };
+
+  componentDidMount() {
+    this.applyAccent();
+    this.annTimer = setInterval(() => this.setState((s) => ({ ann:(s.ann + 1) % ANN.length })), 4000);
+    this.onScroll = () => {
+      const doc = document.documentElement;
+      const y = window.scrollY || doc.scrollTop || 0;
+      const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const progress = Math.min(1, y / max);
+      let active = this.state.active;
+      for (const t of TOC) {
+        const el = document.getElementById(t.id);
+        if (el && el.getBoundingClientRect().top <= 140) active = t.id;
+      }
+      const scrolled = y > 80;
+      if (progress !== this.state.progress || active !== this.state.active || scrolled !== this.state.scrolled) {
+        this.setState({ progress, active, scrolled });
+      }
+    };
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+    this.onResize = () => {
+      const wide = window.innerWidth >= 1000;
+      if (wide !== this.state.rail) this.setState({ rail:wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentDidUpdate() { this.applyAccent(); }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (!a || String(a).indexOf('var(') === 0 || String(a).toUpperCase() === '#94513C') return;
+    document.documentElement.style.setProperty('--accent-fill', a);
+    const r = document.documentElement.style;
+    r.setProperty('--terra', a);
+    r.setProperty('--color-accent', a);
+    r.setProperty('--color-accent-500', a);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.annTimer);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  share(label) {
+    if (label === 'Copy link') {
+      const url = window.location.href;
+      if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {});
+      this.setState({ copied:true });
+      clearTimeout(this.copyTimer);
+      this.copyTimer = setTimeout(() => this.setState({ copied:false }), 2200);
+    }
+  }
+
+  renderVals() {
+    const st = this.state;
+    const measure = this.props.measure ?? 'Comfortable';
+    const widths = { Compact:'640px', Comfortable:'720px', Wide:'820px' };
+    const railTop = st.rail ? 75 : 61;
+
+    return {
+      ann: ANN[st.ann],
+      headerStyle: 'position:sticky;top:0;z-index:40;background:' + (st.scrolled ? 'rgba(245,240,234,0.96)' : 'var(--cream)') + ';backdrop-filter:blur(8px);border-bottom:2px solid var(--ink);box-shadow:' + (st.scrolled ? '0 6px 24px rgba(43,36,29,0.08)' : 'none') + ';transition:box-shadow .3s ease,background .3s ease',
+      readBarStyle: 'height:100%;background:var(--terra);transition:width .12s linear;width:' + (st.progress * 100) + '%',
+
+      shellCols: st.rail ? 'minmax(0,300px) minmax(0,1fr)' : 'minmax(0,1fr)',
+      railStyle: 'position:sticky;top:' + railTop + 'px;align-self:start;max-height:calc(100vh - ' + railTop + 'px);overflow-y:auto;border-right:2px solid var(--ink);background:var(--cream);' + (st.rail ? '' : 'display:none'),
+      articleStyle: 'padding:clamp(34px,4vw,60px) 28px clamp(50px,6vw,80px);max-width:' + widths[measure] + ';width:100%;justify-self:center',
+
+      toc: TOC.map((t) => {
+        const on = st.active === t.id;
+        return {
+          href: '#' + t.id, label: t.label,
+          style: 'font-size:13.5px;line-height:1.5;padding:9px 12px;border-left:2px solid ' + (on ? 'var(--terra)' : 'var(--color-border)') + ';background:' + (on ? 'var(--off)' : 'transparent') + ';color:' + (on ? 'var(--terra)' : 'var(--t1)') + ';transition:background .2s ease,color .2s ease,border-color .2s ease'
+        };
+      }),
+
+      shares: ['Copy link', 'X', 'Mail'].map((label) => ({
+        label,
+        style: 'flex:1;background:var(--off);border:1px solid var(--ink);cursor:pointer;padding:10px 8px;font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink)',
+        act: () => this.share(label)
+      })),
+      copiedNote: st.copied ? 'Link copied' : '',
+      copiedStyle: 'font-size:12px;color:var(--terra);margin-top:10px;transition:opacity .2s ease;opacity:' + (st.copied ? 1 : 0),
+
+      stats: STATS.map((s) => ({ n:s.n, l:s.l })),
+      steps: STEPS.map((s) => ({ n:s.n, t:s.t, b:s.b })),
+      tags: TAGS,
+
+      related: RELATED.map((p, i) => {
+        const on = st.hover === i;
+        return {
+          title:p.t, meta: p.c + ' · ' + p.r + ' read',
+          cardStyle: 'display:block;background:var(--off);color:var(--ink);transition:transform .25s ease,box-shadow .25s ease;transform:translateY(' + (on ? '-4px' : '0') + ');box-shadow:' + (on ? '0 16px 34px rgba(43,36,29,0.14)' : 'none') + ';z-index:' + (on ? 2 : 1),
+          imgStyle: 'position:absolute;inset:0;background:var(--sand) url("' + p.img + '") center/cover no-repeat;transition:transform .5s ease;transform:scale(' + (on ? 1.06 : 1) + ')',
+          enter: () => this.setState({ hover:i }),
+          leave: () => this.setState((s) => s.hover === i ? { hover:null } : null)
+        };
+      }),
+
+      email: st.email,
+      setEmail: (e) => this.setState({ email:e.target.value }),
+      submit: (e) => { e.preventDefault(); this.setState({ sent:true }); },
+      note: st.sent ? 'Thanks — check your inbox to confirm.' : 'Unsubscribe in one click. We never sell addresses.',
+      noteStyle: 'font-size:12.5px;margin-top:14px;transition:color .2s ease;color:' + (st.sent ? 'var(--terra)' : 'var(--t2)')
+    };
+  }
+}
+</script>
+</body>
+</html>

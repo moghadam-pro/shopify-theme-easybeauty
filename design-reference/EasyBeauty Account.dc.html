@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-accent-2:#94513C; --color-accent-2-500:#94513C; --color-accent-2-600:#82472F;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+input,select,textarea{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+
+@media (max-width:760px){
+  header nav{display:none !important}
+  header > div{height:58px !important;padding:0 16px !important}
+  footer{padding-bottom:26px !important}
+}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip">
+
+  <dc-import name="SiteHeader" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+
+  <section style="border-bottom:2px solid var(--ink);padding:34px 28px 30px">
+    <nav style="font-size:12px;letter-spacing:0.06em;color:var(--t2);margin-bottom:22px">
+      <a href="EasyBeauty Landing.dc.html" style="color:var(--t2)">Home</a> / <span style="color:var(--ink)">Account</span>
+    </nav>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:26px;flex-wrap:wrap">
+      <div>
+        <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.2vw,56px);line-height:1.02;margin:0 0 10px">{{ greeting }}</h1>
+        <p style="font-size:14.5px;color:var(--t2);margin:0">Member since March 2024 · {{ phoneLabel }}</p>
+      </div>
+      <a href="EasyBeauty Collection.dc.html" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Continue shopping</a>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);background:var(--color-border);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px">
+    <sc-for list="{{ quick }}" as="q" hint-placeholder-count="4">
+      <div style="background:var(--cream);padding:26px 24px 28px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:14px">{{ q.k }}</div>
+        <div style="font-family:var(--serif);font-size:28px;line-height:1.1;margin-bottom:8px">{{ q.v }}</div>
+        <div style="font-size:12.5px;color:var(--t2)">{{ q.n }}</div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="display:grid;grid-template-columns:{{ shellCols }};border-bottom:2px solid var(--ink)">
+    <aside style="{{ navStyle }}">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <button type="button" onClick="{{ t.pick }}" style="{{ t.style }}">
+          <span>{{ t.label }}</span>
+          <span style="{{ t.badgeStyle }}">{{ t.badge }}</span>
+        </button>
+      </sc-for>
+      <a href="EasyBeauty Blog.dc.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--color-border);padding:18px 24px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink)">
+        <span>The Journal</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+      </a>
+      <a href="EasyBeauty Contact.dc.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--color-border);padding:18px 24px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink)">
+        <span>Help &amp; contact</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+      </a>
+      <button type="button" onClick="{{ logout }}" style="display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;border-top:1px solid var(--color-border);cursor:pointer;padding:18px 24px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--terra);text-align:left">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 19H6a2 2 0 01-2-2V7a2 2 0 012-2h4M16 12H9M14 8l4 4-4 4"></path></svg>
+        Log out
+      </button>
+    </aside>
+
+    <div style="padding:clamp(28px,3.4vw,48px) 28px clamp(40px,5vw,64px);min-width:0">
+
+      <sc-if value="{{ isProfile }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:720px">
+          <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin:0 0 8px">Your details</h2>
+          <p style="font-size:14px;line-height:1.7;color:var(--t2);margin:0 0 30px">We use this only for delivery and order updates.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+            <sc-for list="{{ fields }}" as="f" hint-placeholder-count="5">
+              <label style="display:block">
+                <span style="display:block;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:9px">{{ f.label }}</span>
+                <input type="text" value="{{ f.value }}" onChange="{{ f.set }}" aria-label="{{ f.label }}" placeholder="{{ f.placeholder }}" style="width:100%;border:2px solid var(--ink);background:var(--off);padding:13px 15px;font-size:14px;color:var(--ink);outline:none">
+              </label>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:32px;border-top:2px solid var(--ink);padding-top:26px">
+            <div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:16px">Skin profile</div>
+            <div style="display:flex;gap:2px;flex-wrap:wrap">
+              <sc-for list="{{ skinChips }}" as="c" hint-placeholder-count="6">
+                <button type="button" onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button>
+              </sc-for>
+            </div>
+            <p style="font-size:13px;line-height:1.7;color:var(--t2);margin:16px 0 0">Used to filter the shop and to flag anything in a formula you should avoid.</p>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:34px">
+            <button type="button" onClick="{{ save }}" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">{{ saveLabel }}</button>
+            <span style="{{ savedStyle }}">{{ savedNote }}</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isSavedTab }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:880px">
+          <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin:0 0 8px">Saved</h2>
+          <p style="font-size:14px;line-height:1.7;color:var(--t2);margin:0 0 30px">{{ savedCountLabel }} — kept on this device until you move them to the bag.</p>
+
+          <sc-if value="{{ hasSavedItems }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,260px));gap:2px">
+              <sc-for list="{{ savedItems }}" as="s" hint-placeholder-count="3">
+                <div style="background:var(--off);border:1px solid var(--color-border);display:flex;flex-direction:column">
+                  <a href="EasyBeauty Product.dc.html" role="img" aria-label="{{ s.name }}" style="{{ s.imgStyle }}"></a>
+                  <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:7px;flex:1 1 auto">
+                    <a href="EasyBeauty Product.dc.html" style="font-size:15px;font-weight:500">{{ s.name }}</a>
+                    <span style="font-size:12px;color:var(--t3)">{{ s.meta }}</span>
+                    <span style="{{ s.stockStyle }}">{{ s.stockLabel }}</span>
+                    <span style="font-size:14px;margin-top:2px">{{ s.priceLabel }}</span>
+                    <div style="display:flex;gap:2px;margin-top:12px">
+                      <a href="EasyBeauty Product.dc.html" class="btn btn-primary" style="flex:1 1 auto;justify-content:flex-start;text-transform:uppercase;letter-spacing:0.1em;font-size:11px;padding:11px 13px">Add to bag</a>
+                      <button type="button" onClick="{{ s.remove }}" aria-label="Remove from saved" style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:40px;border:2px solid var(--ink);background:transparent;cursor:pointer;color:var(--ink)">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ savedEmpty }}" hint-placeholder-val="{{ true }}">
+            <div style="border:2px solid var(--ink);padding:44px 28px">
+              <div style="font-family:var(--serif);font-size:26px;margin-bottom:10px">Nothing saved yet.</div>
+              <p style="font-size:14px;line-height:1.7;color:var(--t2);max-width:420px;margin:0 0 22px">Tap the heart on any product to keep it here while you decide.</p>
+              <a href="EasyBeauty Collection.dc.html" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Browse the shop</a>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isLocation }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:820px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:28px">
+            <div>
+              <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin:0 0 8px">Delivery addresses</h2>
+              <p style="font-size:14px;color:var(--t2);margin:0">The default is used for every order and subscription.</p>
+            </div>
+            <button type="button" onClick="{{ addAddress }}" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Add address</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border)">
+            <sc-for list="{{ addresses }}" as="a" hint-placeholder-count="2">
+              <div style="{{ a.cardStyle }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
+                  <span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2)">{{ a.label }}</span>
+                  <span style="{{ a.tagStyle }}">{{ a.tag }}</span>
+                </div>
+                <div style="font-size:14.5px;line-height:1.8;color:var(--ink);margin-bottom:20px">{{ a.lines }}</div>
+                <div style="display:flex;gap:16px;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;margin-top:auto">
+                  <button type="button" onClick="{{ a.makeDefault }}" style="{{ a.defaultBtnStyle }}">{{ a.defaultBtnLabel }}</button>
+                  <button type="button" style="background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);color:var(--t2);font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase">Edit</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:30px;border:2px solid var(--ink);background:var(--off);display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+            <div role="img" aria-label="Map placeholder" style="min-height:180px;background:var(--sand) url('assets/skin.jpg') center/cover no-repeat"></div>
+            <div style="padding:26px 24px;display:flex;flex-direction:column;justify-content:center">
+              <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:12px">Pickup point</div>
+              <div style="font-size:15px;line-height:1.7;margin-bottom:16px">Collect from our Sintra studio, Mon–Fri 10–18. No shipping fee.</div>
+              <button type="button" onClick="{{ togglePickup }}" style="{{ pickupBtnStyle }}">{{ pickupLabel }}</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isOrders }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px">
+            <div>
+              <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin:0 0 8px">Orders</h2>
+              <p style="font-size:14px;color:var(--t2);margin:0">{{ orderCountLabel }}</p>
+            </div>
+            <div style="display:flex;gap:2px;flex-wrap:wrap">
+              <sc-for list="{{ orderFilters }}" as="f" hint-placeholder-count="3">
+                <button type="button" onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="border:1px solid var(--color-border);background:var(--off)">
+            <sc-for list="{{ orders }}" as="o" hint-placeholder-count="3">
+              <div style="border-bottom:1px solid var(--color-border)">
+                <button type="button" onClick="{{ o.toggle }}" style="display:grid;grid-template-columns:{{ o.cols }};align-items:center;gap:16px;width:100%;background:none;border:0;cursor:pointer;padding:20px 22px;text-align:left;color:var(--ink)">
+                  <span style="font-size:13.5px;font-weight:500">{{ o.id }}</span>
+                  <span style="font-size:13px;color:var(--t2)">{{ o.date }}</span>
+                  <span style="{{ o.statusStyle }}">{{ o.status }}</span>
+                  <span style="font-size:13.5px;white-space:nowrap">{{ o.total }}</span>
+                  <span style="{{ o.iconStyle }}">+</span>
+                </button>
+                <div style="{{ o.bodyStyle }}">
+                  <div style="padding:0 22px 22px">
+                    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+                      <sc-for list="{{ o.items }}" as="i" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:14px;font-size:13.5px">
+                          <div role="img" aria-label="{{ i.name }}" style="{{ i.imgStyle }}"></div>
+                          <span style="flex:1;min-width:0">{{ i.name }}</span>
+                          <span style="color:var(--t2)">× {{ i.qty }}</span>
+                          <span style="white-space:nowrap">{{ i.price }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase">
+                      <a href="EasyBeauty Collection.dc.html" style="text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--ink);padding:10px 0;display:inline-flex;align-items:center;min-height:44px">Reorder</a>
+                      <a href="EasyBeauty Contact.dc.html" style="color:var(--t2);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);padding:10px 0;display:inline-flex;align-items:center;min-height:44px">Get help</a>
+                      <span style="color:var(--t2)">{{ o.tracking }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isSubs }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:720px">
+          <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.8vw,34px);line-height:1.1;margin:0 0 8px">Subscription</h2>
+          <p style="font-size:14px;color:var(--t2);margin:0 0 28px">Skip, delay or cancel with no notice period.</p>
+          <div style="border:2px solid var(--ink);background:var(--off);padding:26px 24px">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:22px">
+              <div role="img" aria-label="Radiance Serum No.3" style="width:64px;height:64px;background:var(--sand) url('assets/p4.jpg') center/cover no-repeat"></div>
+              <div>
+                <div style="font-size:15.5px;font-weight:500;margin-bottom:5px">Radiance Serum No.3 · 30 ml</div>
+                <div style="font-size:13px;color:var(--t2)">$57.80 every 8 weeks · next 14 April 2026</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:2px;flex-wrap:wrap">
+              <sc-for list="{{ subActions }}" as="a" hint-placeholder-count="3">
+                <button type="button" onClick="{{ a.act }}" style="{{ a.style }}">{{ a.label }}</button>
+              </sc-for>
+            </div>
+            <div role="status" aria-live="polite" style="{{ subNoteStyle }}">{{ subNote }}</div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="account" hint-size="100%,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#94513C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#94513C&quot;,&quot;#82472F&quot;,&quot;#3F4A3D&quot;,&quot;#7A4A55&quot;],&quot;section&quot;:&quot;Theme&quot;}}">
+const TABS = [
+  { key:'profile',  label:'Your details', badge:'' },
+  { key:'saved',    label:'Saved',        badge:'' },
+  { key:'location', label:'Addresses',    badge:'2' },
+  { key:'orders',   label:'Orders',       badge:'6' },
+  { key:'subs',     label:'Subscription', badge:'1' }
+];
+
+const SAVED_KEY = 'eb-saved';
+function readSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY)) || []; } catch (e) { return []; } }
+function writeSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list)); } catch (e) {} }
+
+const ORDERS = [
+  { id:'EB-10428', date:'2 March 2026',    status:'In transit', total:'$126.00', tracking:'CTT · 3–4 days',
+    items:[{ name:'Radiance Serum No.3 · Duo', qty:1, price:'$122.40', img:'assets/p4.jpg' }, { name:'Ceramide Lip Balm', qty:1, price:'$18.00', img:'assets/p1.jpg' }] },
+  { id:'EB-10190', date:'14 January 2026', status:'Delivered',  total:'$58.00',  tracking:'Delivered 17 Jan',
+    items:[{ name:'Barrier Repair Cream', qty:1, price:'$58.00', img:'assets/p2.jpg' }] },
+  { id:'EB-09884', date:'3 December 2025', status:'Delivered',  total:'$138.00', tracking:'Delivered 6 Dec',
+    items:[{ name:'Gentle Cleansing Milk', qty:1, price:'$42.00', img:'assets/p3.jpg' }, { name:'Radiance Serum No.3', qty:1, price:'$68.00', img:'assets/p4.jpg' }, { name:'Mineral Mist Toner', qty:1, price:'$28.00', img:'assets/p2.jpg' }] },
+  { id:'EB-09502', date:'19 October 2025', status:'Refunded',   total:'$31.00',  tracking:'Refunded 24 Oct',
+    items:[{ name:'Clay Balance Mask', qty:1, price:'$31.00', img:'assets/p2.jpg' }] }
+];
+
+const SKINS = ['Dry', 'Oily', 'Combination', 'Sensitive', 'Acne-prone', 'Fragrance-free only'];
+
+class Component extends DCLogic {
+  state = {
+    scrolled:false, tab:'profile', wide:true,
+    name:'Lara Moreira', email:'lara@email.com', phone:'+351 912 340 118', birthday:'', company:'',
+    skins:['Sensitive', 'Fragrance-free only'], saved:false, savedItems:[],
+    defaultAddr:0, pickup:false, orderFilter:'All', openOrder:0, subNote:''
+  };
+
+  componentDidMount() {
+    this.applyAccent();
+    this.onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const next = y > 60;
+      if (next !== this.state.scrolled) this.setState({ scrolled:next });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+    this.onResize = () => {
+      const wide = window.innerWidth >= 900;
+      if (wide !== this.state.wide) this.setState({ wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+    this.setState({ savedItems: readSaved() });
+    this.onStore = (e) => { if (!e.key || e.key === SAVED_KEY) this.setState({ savedItems: readSaved() }); };
+    window.addEventListener('storage', this.onStore);
+  }
+
+  removeSaved(id) {
+    const next = readSaved().filter((x) => x.id !== id);
+    writeSaved(next);
+    this.setState({ savedItems: next });
+  }
+
+  componentDidUpdate() { this.applyAccent(); }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (!a || String(a).indexOf('var(') === 0 || String(a).toUpperCase() === '#94513C') return;
+    document.documentElement.style.setProperty('--accent-fill', a);
+    const r = document.documentElement.style;
+    r.setProperty('--terra', a);
+    r.setProperty('--color-accent', a);
+    r.setProperty('--color-accent-500', a);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.onStore);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  field(key, label, placeholder) {
+    return {
+      label, placeholder, value: this.state[key],
+      set: (e) => this.setState({ [key]:e.target.value, saved:false })
+    };
+  }
+
+  renderVals() {
+    const st = this.state;
+    const chip = (on) => 'background:' + (on ? 'var(--ink)' : 'var(--off)') + ';color:' + (on ? 'var(--off)' : 'var(--ink)') + ';border:1px solid ' + (on ? 'var(--ink)' : 'var(--color-border)') + ';padding:9px 14px;font-size:12px;letter-spacing:0.06em;cursor:pointer;transition:background .2s ease,color .2s ease';
+    const first = (st.name || 'there').split(' ')[0];
+    const orders = ORDERS.filter((o) => st.orderFilter === 'All' || o.status === st.orderFilter);
+
+    const addresses = [
+      { label:'Home', lines:'Lara Moreira\nRua das Amoreiras 22, 3º\n1250-096 Lisboa, Portugal' },
+      { label:'Studio', lines:'EasyBeauty c/o Lara\nAv. da Liberdade 180\n1250-146 Lisboa, Portugal' }
+    ];
+
+    return {
+      headerStyle: 'position:sticky;top:0;z-index:40;background:' + (st.scrolled ? 'rgba(245,240,234,0.96)' : 'var(--cream)') + ';backdrop-filter:blur(8px);border-bottom:2px solid var(--ink);transition:background .3s ease',
+      initials: (st.name || 'L M').split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase(),
+      phoneLabel: st.phone,
+      greeting: 'Hello, ' + first,
+
+      quick: [
+        { k:'Store credit', v:'$18.40', n:'From your October refund' },
+        { k:'Next delivery', v:'14 Apr', n:'Radiance Serum No.3 · 30 ml' },
+        { k:'Orders', v:'6', n:'One in transit' },
+        { k:'Points', v:'340', n:'60 more for a free travel size' }
+      ],
+
+      shellCols: st.wide ? 'minmax(0,250px) minmax(0,1fr)' : 'minmax(0,1fr)',
+      navStyle: st.wide
+        ? 'border-right:2px solid var(--ink);display:flex;flex-direction:column;align-self:start;position:sticky;top:' + (st.wide ? 75 : 59) + 'px'
+        : 'border-bottom:2px solid var(--ink);display:flex;flex-direction:column',
+      tabs: TABS.map((t) => {
+        const on = st.tab === t.key;
+        const badge = t.key === 'saved' ? (st.savedItems.length ? String(st.savedItems.length) : '') : t.badge;
+        return {
+          label:t.label, badge,
+          style: 'display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;background:' + (on ? 'var(--off)' : 'transparent') + ';border:0;border-left:3px solid ' + (on ? 'var(--terra)' : 'transparent') + ';border-bottom:1px solid var(--color-border);cursor:pointer;padding:18px 22px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);text-align:left;transition:background .2s ease',
+          badgeStyle: 'font-size:11px;color:var(--t2);transition:opacity .2s ease;opacity:' + (badge ? 1 : 0),
+          pick: () => this.setState({ tab:t.key })
+        };
+      }),
+      logout: () => { try { localStorage.removeItem('eb-account'); } catch (e) {} window.location.href = 'EasyBeauty Collection.dc.html'; },
+
+      isProfile: st.tab === 'profile',
+      isSavedTab: st.tab === 'saved',
+      hasSavedItems: st.savedItems.length > 0,
+      savedEmpty: st.savedItems.length === 0,
+      savedCountLabel: st.savedItems.length === 1 ? '1 product saved' : st.savedItems.length + ' products saved',
+      savedItems: st.savedItems.map((it) => ({
+        name: it.name,
+        meta: [it.cat, it.size].filter(Boolean).join(' · '),
+        priceLabel: '$' + Number(it.price).toFixed(2),
+        imgStyle: 'width:100%;aspect-ratio:1/1;background:var(--imgbg) url("' + it.img + '") center/cover no-repeat',
+        stockLabel: it.stock === false ? 'Back in 2 weeks' : 'In stock',
+        stockStyle: 'font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:' + (it.stock === false ? 'var(--terra)' : 'var(--t2)'),
+        remove: () => this.removeSaved(it.id)
+      })),
+      isLocation: st.tab === 'location',
+      isOrders: st.tab === 'orders',
+      isSubs: st.tab === 'subs',
+
+      fields: [
+        this.field('name', 'Full name', 'Your name'),
+        this.field('phone', 'Phone', '+351 …'),
+        this.field('email', 'Email', 'you@email.com'),
+        this.field('birthday', 'Birthday (optional)', 'DD / MM'),
+        this.field('company', 'Company (optional)', 'For invoices')
+      ],
+      skinChips: SKINS.map((s) => ({
+        label:s, style: chip(st.skins.indexOf(s) >= 0),
+        pick: () => this.setState((p) => ({
+          skins: p.skins.indexOf(s) >= 0 ? p.skins.filter((x) => x !== s) : p.skins.concat([s]), saved:false
+        }))
+      })),
+      save: () => this.setState({ saved:true }),
+      saveLabel: st.saved ? 'Saved' : 'Save changes',
+      savedNote: st.saved ? 'Your details are up to date.' : '',
+      savedStyle: 'font-size:12.5px;color:var(--terra);transition:opacity .2s ease;opacity:' + (st.saved ? 1 : 0),
+
+      addresses: addresses.map((a, i) => {
+        const on = st.defaultAddr === i;
+        return {
+          label:a.label, lines:a.lines,
+          cardStyle: 'background:var(--off);padding:24px 22px 22px;display:flex;flex-direction:column;border-left:3px solid ' + (on ? 'var(--terra)' : 'transparent'),
+          tag: on ? 'Default' : '',
+          tagStyle: 'font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;background:var(--accent-fill);color:var(--off);padding:4px 9px;transition:opacity .2s ease;opacity:' + (on ? 1 : 0),
+          defaultBtnLabel: on ? 'In use' : 'Make default',
+          defaultBtnStyle: 'background:none;border:0;cursor:' + (on ? 'default' : 'pointer') + ';padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:' + (on ? 'transparent' : 'var(--ink)') + ';color:' + (on ? 'var(--t5)' : 'var(--ink)') + ';font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase',
+          makeDefault: () => this.setState({ defaultAddr:i })
+        };
+      }),
+      addAddress: () => this.setState({ tab:'location' }),
+      togglePickup: () => this.setState((s) => ({ pickup: !s.pickup })),
+      pickupLabel: st.pickup ? 'Pickup selected' : 'Use pickup instead',
+      pickupBtnStyle: 'align-self:flex-start;background:' + (st.pickup ? 'var(--ink)' : 'transparent') + ';color:' + (st.pickup ? 'var(--off)' : 'var(--ink)') + ';border:2px solid var(--ink);cursor:pointer;padding:11px 16px;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;transition:background .2s ease,color .2s ease',
+
+      orderCountLabel: orders.length + ' of ' + ORDERS.length + ' orders' + (st.orderFilter === 'All' ? '' : ' · ' + st.orderFilter),
+      orderFilters: ['All', 'In transit', 'Delivered', 'Refunded'].map((f) => ({
+        label:f, style: chip(st.orderFilter === f), pick: () => this.setState({ orderFilter:f, openOrder:0 })
+      })),
+      orders: orders.map((o, i) => {
+        const on = st.openOrder === i;
+        const colour = o.status === 'Delivered' ? 'var(--moss)' : o.status === 'Refunded' ? 'var(--t2)' : 'var(--terra)';
+        return {
+          id:o.id, date:o.date, status:o.status, total:o.total, tracking:o.tracking,
+          cols: st.wide ? '1fr 1fr 1fr auto 20px' : '1fr auto 20px',
+          statusStyle: 'font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:' + colour,
+          iconStyle: 'font-size:16px;line-height:1;color:var(--t2);transition:transform .25s ease;transform:rotate(' + (on ? '45deg' : '0deg') + ')',
+          bodyStyle: 'overflow:hidden;transition:max-height .3s ease,opacity .25s ease;max-height:' + (on ? '420px' : '0') + ';opacity:' + (on ? 1 : 0),
+          items: o.items.map((it) => ({
+            name:it.name, qty:it.qty, price:it.price,
+            imgStyle: 'width:40px;height:40px;flex:0 0 auto;background:var(--sand) url("' + it.img + '") center/cover no-repeat'
+          })),
+          toggle: () => this.setState((s) => ({ openOrder: s.openOrder === i ? -1 : i }))
+        };
+      }),
+
+      subActions: [
+        { label:'Skip next', note:'Next delivery moved to 9 June 2026.' },
+        { label:'Delay 2 weeks', note:'Next delivery moved to 28 April 2026.' },
+        { label:'Cancel', note:'Subscription cancelled. Nothing further will be charged.' }
+      ].map((a) => ({
+        label:a.label,
+        style: 'background:var(--cream);border:1px solid var(--ink);cursor:pointer;padding:11px 15px;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink)',
+        act: () => this.setState({ subNote:a.note })
+      })),
+      subNote: st.subNote,
+      subNoteStyle: 'font-size:13px;color:var(--terra);margin-top:16px;transition:opacity .2s ease;opacity:' + (st.subNote ? 1 : 0)
+    };
+  }
+}
+</script>
+</body>
+</html>

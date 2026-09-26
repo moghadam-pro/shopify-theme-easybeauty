@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-accent-2:#94513C; --color-accent-2-500:#94513C; --color-accent-2-600:#82472F;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+@media (max-width:760px){
+  header > div{height:58px !important;padding:0 16px !important}
+  header nav{display:none !important}
+}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip;min-height:100vh">
+
+  <header style="position:sticky;top:0;z-index:40;background:var(--cream);border-bottom:2px solid var(--ink)">
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;padding:0 24px;height:70px;max-width:1600px;margin:0 auto">
+      <nav style="display:flex;gap:24px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase">
+        <a href="EasyBeauty Collection.dc.html">Shop</a>
+        <a href="EasyBeauty Blog.dc.html">Journal</a>
+      </nav>
+      <a href="EasyBeauty Landing.dc.html" style="font-family:var(--serif);font-size:24px;white-space:nowrap">EasyBeauty</a>
+      <div style="display:flex;justify-content:flex-end">
+        <a href="EasyBeauty Collection.dc.html" style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--t2)">Skip the quiz</a>
+      </div>
+    </div>
+    <div style="height:3px;background:var(--sand)">
+      <div style="{{ progressStyle }}"></div>
+    </div>
+  </header>
+
+  <sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+    <section style="display:grid;grid-template-columns:{{ introCols }};border-bottom:2px solid var(--ink)">
+      <div style="padding:clamp(40px,5.5vw,84px) 28px;display:flex;flex-direction:column;justify-content:center">
+        <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:20px">Six questions · about a minute</div>
+        <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.4vw,74px);line-height:0.98;margin:0 0 22px;max-width:18ch">Twelve products, narrowed to a routine.</h1>
+        <p style="font-size:16px;line-height:1.7;color:var(--t1);margin:0 0 32px;max-width:50ch">No email required, no account. Answer what your skin is doing right now — not what it did last winter — and we match formulas to it.</p>
+        <button type="button" onClick="{{ start }}" class="btn btn-primary" style="align-self:flex-start;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;padding:16px 22px">Start the quiz</button>
+        <div style="display:flex;gap:28px;flex-wrap:wrap;margin-top:34px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)">
+          <span>Reviewed by a dermatologist</span><span>No data sold</span>
+        </div>
+      </div>
+      <div role="img" aria-label="Skin close-up" style="min-height:300px;background:var(--sand) url('assets/skin.jpg') center/cover no-repeat;border-left:2px solid var(--ink)"></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isQuestion }}" hint-placeholder-val="{{ false }}">
+    <section style="border-bottom:2px solid var(--ink);padding:clamp(28px,4vw,56px) 28px clamp(36px,4.5vw,64px);max-width:900px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px">
+        <span style="font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--t2)">{{ stepLabel }}</span>
+        <button type="button" onClick="{{ back }}" style="{{ backStyle }}">Back</button>
+      </div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,4vw,50px);line-height:1.04;margin:0 0 12px;max-width:22ch">{{ question }}</h2>
+      <p style="font-size:14.5px;line-height:1.7;color:var(--t2);margin:0 0 30px;max-width:48ch">{{ hint }}</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border)">
+        <sc-for list="{{ options }}" as="o" hint-placeholder-count="4">
+          <button type="button" onClick="{{ o.pick }}" style="{{ o.style }}">
+            <span style="{{ o.dotStyle }}"><span style="{{ o.innerStyle }}"></span></span>
+            <span style="display:flex;flex-direction:column;gap:7px;text-align:left">
+              <span style="font-size:15.5px;font-weight:500">{{ o.label }}</span>
+              <span style="font-size:13px;line-height:1.6;color:var(--t2)">{{ o.note }}</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:28px">
+        <button type="button" onClick="{{ next }}" style="{{ nextStyle }}">{{ nextLabel }}</button>
+        <span style="font-size:12.5px;color:var(--t2)">{{ multiNote }}</span>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+    <section style="border-bottom:2px solid var(--ink);padding:clamp(32px,4vw,60px) 28px 30px">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--terra);margin-bottom:20px">Your routine</div>
+      <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.8vw,64px);line-height:1;margin:0 0 20px;max-width:20ch">{{ resultTitle }}</h1>
+      <p style="font-size:16px;line-height:1.7;color:var(--t1);margin:0 0 26px;max-width:56ch">{{ resultBody }}</p>
+      <div style="display:flex;gap:2px;flex-wrap:wrap">
+        <sc-for list="{{ resultTags }}" as="t" hint-placeholder-count="3">
+          <span style="border:1px solid var(--ink);background:var(--off);padding:8px 13px;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase">{{ t }}</span>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="border-bottom:2px solid var(--ink);background:var(--color-border);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px">
+      <sc-for list="{{ picks }}" as="p" hint-placeholder-count="3">
+        <div style="background:var(--off);display:flex;flex-direction:column">
+          <div style="position:relative;aspect-ratio:4/3;background:var(--sand)">
+            <div role="img" aria-label="{{ p.name }}" style="{{ p.imgStyle }}"></div>
+            <span style="position:absolute;top:12px;left:12px;background:var(--dark-bg);color:var(--off);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 11px">{{ p.step }}</span>
+          </div>
+          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;flex:1">
+            <div style="font-family:var(--serif);font-size:22px;line-height:1.16;margin-bottom:10px">{{ p.name }}</div>
+            <div style="font-size:13.5px;line-height:1.7;color:var(--t1);margin-bottom:18px">{{ p.why }}</div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:auto">
+              <span style="font-size:15px">{{ p.priceLabel }}</span>
+              <a href="EasyBeauty Product.dc.html" style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--ink);padding:10px 0;display:inline-flex;align-items:center;min-height:44px">Details</a>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <section style="border-bottom:2px solid var(--ink);padding:clamp(28px,3.4vw,48px) 28px;display:flex;align-items:center;gap:22px;flex-wrap:wrap">
+      <div style="min-width:180px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:10px">Routine total</div>
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <span style="font-family:var(--serif);font-size:32px;line-height:1">{{ bundleTotal }}</span>
+          <span style="font-size:13px;color:var(--t2);text-decoration:line-through">{{ bundleWas }}</span>
+        </div>
+      </div>
+      <a href="EasyBeauty Checkout.dc.html" onClick="{{ sendToBag }}" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px;padding:16px 22px">{{ bundleCta }}</a>
+      <button type="button" onClick="{{ restart }}" style="background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--ink);font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink)">Retake the quiz</button>
+      <a href="EasyBeauty Collection.dc.html" style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--t2);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);padding:10px 0;display:inline-flex;align-items:center;min-height:44px">Browse everything instead</a>
+    </section>
+
+    <section style="border-bottom:2px solid var(--ink);padding:clamp(28px,3.4vw,48px) 28px">
+      <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--t2);margin-bottom:20px">What you told us</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border)">
+        <sc-for list="{{ recap }}" as="r" hint-placeholder-count="6">
+          <div style="background:var(--cream);padding:20px 18px">
+            <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:9px">{{ r.q }}</div>
+            <div style="font-size:14px;line-height:1.6">{{ r.a }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <footer style="padding:30px 28px 40px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--t2)">
+    <span>© 2026 EasyBeauty</span>
+    <span style="display:flex;gap:20px">
+      <a href="EasyBeauty Contact.dc.html" style="color:var(--t2)">Ask a formulator</a>
+      <a href="EasyBeauty Blog.dc.html" style="color:var(--t2)">Journal</a>
+      <a href="EasyBeauty FAQ.dc.html" style="color:var(--t2)">Help</a>
+      <a href="EasyBeauty Legal.dc.html" style="color:var(--t2)">Legal</a>
+    </span>
+  </footer>
+
+  <dc-import name="MobileDock" active="shop" hint-size="100%,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#94513C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#94513C&quot;,&quot;#82472F&quot;,&quot;#3F4A3D&quot;,&quot;#7A4A55&quot;],&quot;section&quot;:&quot;Theme&quot;}}">
+const Q = [
+  { key:'type', q:'How does your skin feel two hours after cleansing?', hint:'Bare skin, no products on top.', multi:false,
+    options:[
+      { label:'Tight and dry', note:'Flaking at the cheeks or around the nose.', v:'Dry' },
+      { label:'Shiny all over', note:'Especially the forehead and nose.', v:'Oily' },
+      { label:'Oily centre, dry edges', note:'The classic combination pattern.', v:'Combination' },
+      { label:'Comfortable', note:'Neither tight nor shiny.', v:'Normal' }
+    ] },
+  { key:'concern', q:'What would you fix first?', hint:'Pick up to two — we weight the first one heavier.', multi:true,
+    options:[
+      { label:'Dullness and uneven tone', note:'Marks left by old spots, grey cast.', v:'Brightening' },
+      { label:'Dehydration', note:'Fine lines that disappear after moisturiser.', v:'Hydration' },
+      { label:'Breakouts', note:'Congestion, blackheads, active spots.', v:'Acne' },
+      { label:'Early lines and laxity', note:'Texture around the eyes and mouth.', v:'Anti-aging' }
+    ] },
+  { key:'react', q:'How reactive is your skin?', hint:'Stinging, flushing or itching counts as reactive.', multi:false,
+    options:[
+      { label:'Very — most actives sting', note:'We will keep the routine fragrance-free and low-dose.', v:'High' },
+      { label:'Sometimes', note:'Certain acids or retinoids only.', v:'Some' },
+      { label:'Rarely', note:'I can use most things without trouble.', v:'Low' }
+    ] },
+  { key:'routine', q:'How many steps will you actually do?', hint:'Be honest — an unused product is a wasted one.', multi:false,
+    options:[
+      { label:'Two', note:'Cleanse and one more thing.', v:'2' },
+      { label:'Three', note:'Cleanse, treat, moisturise.', v:'3' },
+      { label:'Four or more', note:'I enjoy the ritual.', v:'4' }
+    ] },
+  { key:'actives', q:'Anything you already use and want to keep?', hint:'We avoid doubling up on the same active.', multi:true,
+    options:[
+      { label:'Retinoid', note:'Retinol, retinal or tretinoin.', v:'Retinoid' },
+      { label:'Vitamin C', note:'Morning brightening step.', v:'Vitamin C' },
+      { label:'Exfoliating acid', note:'AHA or BHA, any frequency.', v:'Acid' },
+      { label:'Nothing yet', note:'Starting from scratch.', v:'None' }
+    ] },
+  { key:'sun', q:'Do you wear sunscreen every morning?', hint:'It decides how fast anything else will work.', multi:false,
+    options:[
+      { label:'Every day', note:'Rain or shine.', v:'Always' },
+      { label:'Sunny days only', note:'Summer and holidays.', v:'Sometimes' },
+      { label:'Not yet', note:'We will put it in the routine.', v:'Never' }
+    ] }
+];
+
+const P = {
+  cleanser: { name:'Gentle Cleansing Milk', step:'Step 1 · Cleanse', price:42, img:'assets/p3.jpg' },
+  serum:    { name:'Radiance Serum No.3',   step:'Step 2 · Treat',   price:68, img:'assets/p4.jpg' },
+  cvit:     { name:'Vitamin C 12% Drops',   step:'Step 2 · Treat',   price:59, img:'assets/p3.jpg' },
+  retinal:  { name:'Retinal 0.05 Night Oil',step:'Step 2 · Treat',   price:78, img:'assets/p4.jpg' },
+  acid:     { name:'Overnight Acid Peel',   step:'Step 2 · Treat',   price:64, img:'assets/p3.jpg' },
+  cream:    { name:'Barrier Repair Cream',  step:'Step 3 · Seal',    price:58, img:'assets/p2.jpg' },
+  mist:     { name:'Mineral Mist Toner',    step:'Step 2 · Hydrate', price:36, img:'assets/p2.jpg' },
+  spf:      { name:'Everyday Fluid SPF 50', step:'Step 4 · Protect', price:44, img:'assets/p1.jpg' }
+};
+
+const money = (n) => '$' + (Math.round(n * 100) / 100).toFixed(2).replace(/\.00$/, '');
+
+class Component extends DCLogic {
+  state = { view:'intro', i:0, answers:{}, wide:true };
+
+  componentDidMount() {
+    this.applyAccent();
+    this.onResize = () => {
+      const wide = window.innerWidth >= 900;
+      if (wide !== this.state.wide) this.setState({ wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentDidUpdate() { this.applyAccent(); }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (!a || String(a).indexOf('var(') === 0 || String(a).toUpperCase() === '#94513C') return;
+    document.documentElement.style.setProperty('--accent-fill', a);
+    const r = document.documentElement.style;
+    r.setProperty('--terra', a);
+    r.setProperty('--color-accent', a);
+    r.setProperty('--color-accent-500', a);
+  }
+
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+
+  choose(q, v) {
+    this.setState((s) => {
+      const cur = s.answers[q.key];
+      if (!q.multi) return { answers: Object.assign({}, s.answers, { [q.key]:[v] }) };
+      const list = cur || [];
+      const nextList = list.indexOf(v) >= 0 ? list.filter((x) => x !== v) : list.concat([v]).slice(-2);
+      return { answers: Object.assign({}, s.answers, { [q.key]:nextList }) };
+    });
+  }
+
+  advance() {
+    this.setState((s) => (s.i >= Q.length - 1 ? { view:'result' } : { i:s.i + 1 }));
+    if (typeof window !== 'undefined') window.scrollTo(0, 0);
+  }
+
+  routine() {
+    const a = this.state.answers;
+    const has = (k, v) => (a[k] || []).indexOf(v) >= 0;
+    const concerns = a.concern || [];
+    const react = (a.react || ['Some'])[0];
+    const steps = Number((a.routine || ['3'])[0]);
+
+    const picks = [P.cleanser];
+    let treat = P.serum;
+    if (concerns[0] === 'Acne' && react !== 'High') treat = P.acid;
+    else if (concerns[0] === 'Anti-aging' && react !== 'High' && !has('actives', 'Retinoid')) treat = P.retinal;
+    else if (concerns[0] === 'Brightening' && !has('actives', 'Vitamin C') && react === 'Low') treat = P.cvit;
+    else if (concerns[0] === 'Hydration' && steps <= 2) treat = P.mist;
+    picks.push(treat);
+    picks.push(P.cream);
+    if (steps >= 4 || (a.sun || [])[0] !== 'Always') picks.push(P.spf);
+
+    const why = {
+      [P.cleanser.name]: react === 'High' ? 'Fragrance-free and non-foaming, so the barrier stays intact.' : 'Removes SPF without stripping, which keeps the next step working.',
+      [P.serum.name]: '4% niacinamide with ceramides — the dose that suits reactive skin.',
+      [P.cvit.name]: 'Brightening at a concentration that does not need a tolerance build-up.',
+      [P.retinal.name]: 'One conversion step fewer than retinol, so results come faster.',
+      [P.acid.name]: 'Weekly AHA/BHA for congestion, not nightly — that is where skin gets damaged.',
+      [P.mist.name]: 'Multi-weight hyaluronic acid for a two-step routine that still hydrates.',
+      [P.cream.name]: 'Ceramides and squalane to seal in everything above it.',
+      [P.spf.name]: 'The step that protects the results of every other step.'
+    };
+    return { picks: picks.slice(0, 4), why };
+  }
+
+  renderVals() {
+    const st = this.state;
+    const q = Q[st.i];
+    const answered = (st.answers[q.key] || []).length > 0;
+    const done = st.view === 'result';
+    const pct = st.view === 'intro' ? 0 : done ? 100 : ((st.i) / Q.length) * 100;
+    const { picks, why } = this.routine();
+    const subtotal = picks.reduce((a, p) => a + p.price, 0);
+    const a = st.answers;
+    const label = (k) => {
+      const vals = a[k] || [];
+      const opts = Q.find((x) => x.key === k).options;
+      return vals.map((v) => (opts.find((o) => o.v === v) || {}).label || v).join(', ') || '—';
+    };
+    const concerns = a.concern || [];
+    const react = (a.react || ['Some'])[0];
+
+    return {
+      progressStyle: 'height:100%;background:var(--terra);transition:width .4s ease;width:' + pct + '%',
+      introCols: st.wide ? 'minmax(0,1.1fr) minmax(0,1fr)' : 'minmax(0,1fr)',
+
+      isIntro: st.view === 'intro',
+      isQuestion: st.view === 'quiz',
+      isResult: done,
+      start: () => this.setState({ view:'quiz', i:0 }),
+
+      stepLabel: 'Question ' + (st.i + 1) + ' of ' + Q.length,
+      question: q.q,
+      hint: q.hint,
+      back: () => this.setState((s) => (s.i === 0 ? { view:'intro' } : { i:s.i - 1 })),
+      backStyle: 'background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--t2)',
+      options: q.options.map((o) => {
+        const on = (st.answers[q.key] || []).indexOf(o.v) >= 0;
+        return {
+          label:o.label, note:o.note,
+          style: 'display:flex;align-items:flex-start;gap:14px;background:' + (on ? 'var(--off)' : 'var(--cream)') + ';border:0;border-left:3px solid ' + (on ? 'var(--terra)' : 'transparent') + ';cursor:pointer;padding:22px 20px;color:var(--ink);text-align:left;transition:background .2s ease,border-color .2s ease',
+          dotStyle: 'width:18px;height:18px;flex:0 0 auto;margin-top:2px;border-radius:' + (q.multi ? '0' : '50%') + ';border:2px solid ' + (on ? 'var(--terra)' : 'var(--t5)') + ';display:flex;align-items:center;justify-content:center',
+          innerStyle: 'width:8px;height:8px;border-radius:' + (q.multi ? '0' : '50%') + ';background:var(--terra);transition:transform .2s ease;transform:scale(' + (on ? 1 : 0) + ')',
+          pick: () => { this.choose(q, o.v); if (!q.multi) setTimeout(() => this.advance(), 160); }
+        };
+      }),
+      next: () => { if (answered) this.advance(); },
+      nextLabel: st.i === Q.length - 1 ? 'See my routine' : 'Next question',
+      nextStyle: 'background:' + (answered ? 'var(--terra)' : 'var(--sand)') + ';color:' + (answered ? 'var(--off)' : 'var(--t4)') + ';border:0;cursor:' + (answered ? 'pointer' : 'not-allowed') + ';padding:15px 22px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;transition:background .2s ease',
+      multiNote: q.multi ? 'Pick one or two.' : 'Tap an answer to continue.',
+
+      resultTitle: react === 'High'
+        ? 'A low-irritation routine, built around the barrier.'
+        : concerns[0] === 'Acne' ? 'A congestion routine that does not strip.'
+        : concerns[0] === 'Anti-aging' ? 'A firming routine with one real active.'
+        : concerns[0] === 'Brightening' ? 'A brightening routine, paced for tolerance.'
+        : 'A hydration routine with nothing wasted.',
+      resultBody: picks.length + ' products, ' + money(subtotal) + ' as a set. Everything here is fragrance-free, and the treat step is the only active — that is deliberate, because stacking them is what breaks skin.',
+      resultTags: [label('type') + ' skin', concerns.length ? label('concern') : 'No stated concern', react === 'High' ? 'Reactive' : react === 'Some' ? 'Occasionally reactive' : 'Tolerant'],
+      picks: picks.map((p) => ({
+        name:p.name, step:p.step, priceLabel: money(p.price), why: why[p.name] || '',
+        imgStyle: 'position:absolute;inset:0;background:var(--sand) url("' + p.img + '") center/cover no-repeat'
+      })),
+      sendToBag: () => {
+        try {
+          localStorage.setItem('eb-cart', JSON.stringify(picks.map((p, i) => ({
+            id:'quiz-' + i, name:p.name, meta:p.step.replace(/^Step \d+ · /, '') + ' · quiz routine',
+            price: Math.round(p.price * 0.9 * 100) / 100, img:p.img, qty:1
+          }))));
+        } catch (e) {}
+      },
+      bundleCta: 'Add all ' + ({2:'two',3:'three',4:'four'}[picks.length] || picks.length) + ' — save 10%',
+      bundleTotal: money(subtotal * 0.9),
+      bundleWas: money(subtotal),
+      restart: () => { this.setState({ view:'intro', i:0, answers:{} }); if (typeof window !== 'undefined') window.scrollTo(0, 0); },
+      recap: Q.map((x) => ({ q: x.q.replace(/\?$/, ''), a: label(x.key) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

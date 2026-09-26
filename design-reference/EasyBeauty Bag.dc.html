@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-500:#94513C; --color-accent-600:#82472F; --color-accent-700:#6E3B27;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+input{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip">
+  <dc-import name="SiteHeader" active="shop" count="{{ count }}" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+
+  <section style="border-bottom:2px solid var(--ink);padding:36px 28px 32px">
+    <nav style="font-size:12px;letter-spacing:0.06em;color:var(--t2);margin-bottom:22px">
+      <a href="EasyBeauty Landing.dc.html" style="color:var(--t2)">Home</a> / <span style="color:var(--ink)">Bag</span>
+    </nav>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap">
+      <div style="max-width:620px">
+        <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(34px,4.6vw,62px);line-height:1.02;margin:0 0 14px">Your bag</h1>
+        <p style="font-size:15.5px;line-height:1.7;color:var(--t1);margin:0">{{ intro }}</p>
+      </div>
+      <div style="display:flex;gap:26px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)">
+        <span>60-day returns</span>
+        <span>Ships in 24h</span>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+    <section style="border-bottom:2px solid var(--ink);padding:clamp(56px,9vw,110px) 28px">
+      <div style="max-width:560px">
+        <div style="font-family:var(--serif);font-size:clamp(28px,3.6vw,44px);line-height:1.08;margin-bottom:14px">Nothing in the bag yet.</div>
+        <p style="font-size:15px;line-height:1.7;color:var(--t1);margin:0 0 28px">Twelve formulas, six concerns. The quiz narrows it to three in about a minute.</p>
+        <div style="display:flex;gap:2px;flex-wrap:wrap">
+          <a href="EasyBeauty Collection.dc.html" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Browse all products</a>
+          <a href="EasyBeauty Quiz.dc.html" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Take the skin quiz</a>
+        </div>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ hasLines }}" hint-placeholder-val="{{ true }}">
+    <section style="display:grid;grid-template-columns:{{ shellCols }};border-bottom:2px solid var(--ink)">
+      <div style="min-width:0;border-right:{{ splitRule }}">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 28px;border-bottom:2px solid var(--ink);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2)">
+          <span>{{ countLabel }}</span>
+          <span>{{ freeShipLabel }}</span>
+        </div>
+        <div style="height:4px;background:var(--sand)">
+          <div style="{{ progressStyle }}"></div>
+        </div>
+
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
+          <div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;padding:26px 28px;border-bottom:1px solid var(--color-border)">
+            <a href="EasyBeauty Product.dc.html" role="img" aria-label="{{ l.name }}" style="{{ l.imgStyle }}"></a>
+            <div style="min-width:0;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:18px">
+                <div style="min-width:0">
+                  <a href="EasyBeauty Product.dc.html" style="font-size:16px;font-weight:500;display:block;margin-bottom:6px">{{ l.name }}</a>
+                  <div style="font-size:12.5px;color:var(--t3)">{{ l.meta }}</div>
+                </div>
+                <div style="text-align:right;flex:0 0 auto">
+                  <div style="font-size:15px">{{ l.lineTotal }}</div>
+                  <div style="font-size:12px;color:var(--t3)">{{ l.unitLabel }}</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:4px">
+                <div style="display:flex;align-items:center;border:2px solid var(--ink)">
+                  <button type="button" onClick="{{ l.dec }}" aria-label="{{ l.decLabel }}" style="background:none;border:0;cursor:pointer;padding:0 14px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;line-height:1;color:var(--ink)">−</button>
+                  <span style="min-width:34px;text-align:center;font-size:14px">{{ l.qty }}</span>
+                  <button type="button" onClick="{{ l.inc }}" aria-label="{{ l.incLabel }}" style="background:none;border:0;cursor:pointer;padding:0 14px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;line-height:1;color:var(--ink)">+</button>
+                </div>
+                <button type="button" onClick="{{ l.save }}" aria-label="{{ l.saveAria }}" style="background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--ink);font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink)">{{ l.saveLabel }}</button>
+                <button type="button" onClick="{{ l.remove }}" aria-label="{{ l.removeLabel }}" style="background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)" aria-label="{{ l.removeLabel }}">Remove</button>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:24px 28px">
+          <a href="EasyBeauty Collection.dc.html" style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--ink);padding:10px 0;display:inline-flex;align-items:center;min-height:44px">Continue shopping</a>
+          <span style="font-size:12.5px;color:var(--t2)">Prices include VAT</span>
+        </div>
+      </div>
+
+      <aside style="{{ asideStyle }}">
+        <div style="padding:26px 28px;border-bottom:2px solid var(--ink)">
+          <div style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">Summary</div>
+          <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+            <div style="display:flex;justify-content:space-between;gap:14px"><span>Subtotal</span><span>{{ subtotalLabel }}</span></div>
+            <sc-if value="{{ hasDiscount }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;justify-content:space-between;gap:14px;color:var(--terra)"><span>{{ discountLabel }}</span><span>{{ discountAmount }}</span></div>
+            </sc-if>
+            <div style="display:flex;justify-content:space-between;gap:14px"><span>Delivery</span><span>{{ shippingLabel }}</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;gap:14px;margin-top:20px;padding-top:18px;border-top:2px solid var(--ink);font-size:17px">
+            <span>Total</span><span>{{ totalLabel }}</span>
+          </div>
+        </div>
+
+        <div style="padding:24px 28px;border-bottom:2px solid var(--ink)">
+          <div style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:14px">Promo code</div>
+          <div style="display:flex;gap:2px">
+            <input type="text" placeholder="EASY10" value="{{ promo }}" onChange="{{ setPromo }}" aria-label="Promo code" style="flex:1;min-width:0;border:2px solid var(--ink);background:var(--off);padding:13px 14px;font-size:14px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);outline:none">
+            <button type="button" onClick="{{ applyPromo }}" style="flex:0 0 auto;background:var(--dark-bg);color:var(--off);border:0;cursor:pointer;padding:0 18px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase">Apply code</button>
+          </div>
+          <div role="status" aria-live="polite" style="{{ promoNoteStyle }}">{{ promoNote }}</div>
+        </div>
+
+        <div style="padding:26px 28px">
+          <a href="EasyBeauty Checkout.dc.html" class="btn btn-primary btn-block" style="justify-content:space-between;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;padding:17px 20px">
+            <span>Continue to checkout</span><span>{{ totalLabel }}</span>
+          </a>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--color-border);border:1px solid var(--color-border);margin-top:18px">
+            <span style="background:var(--off);padding:12px 8px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">Secure</span>
+            <span style="background:var(--off);padding:12px 8px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">60-day</span>
+            <span style="background:var(--off);padding:12px 8px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">Carbon neutral</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ hasSaved }}" hint-placeholder-val="{{ false }}">
+    <section style="border-bottom:2px solid var(--ink);padding:clamp(34px,4vw,56px) 28px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:26px">
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(24px,3vw,36px);line-height:1.1;margin:0">Saved for later</h2>
+        <a href="EasyBeauty Account.dc.html" style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--ink);padding:10px 0;display:inline-flex;align-items:center;min-height:44px">Manage in account</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,260px));gap:2px">
+        <sc-for list="{{ savedItems }}" as="s" hint-placeholder-count="2">
+          <div style="background:var(--off);border:1px solid var(--color-border);display:flex;flex-direction:column">
+            <a href="EasyBeauty Product.dc.html" role="img" aria-label="{{ s.name }}" style="{{ s.imgStyle }}"></a>
+            <div style="padding:16px 18px 18px;display:flex;flex-direction:column;gap:7px;flex:1 1 auto">
+              <a href="EasyBeauty Product.dc.html" style="font-size:15px;font-weight:500">{{ s.name }}</a>
+              <span style="font-size:12px;color:var(--t3)">{{ s.meta }}</span>
+              <span style="font-size:14px;margin-top:2px">{{ s.priceLabel }}</span>
+              <button type="button" onClick="{{ s.moveToBag }}" class="btn btn-primary" style="justify-content:flex-start;text-transform:uppercase;letter-spacing:0.1em;font-size:11px;padding:11px 13px;margin-top:12px">Move to bag</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="bag" bag-count="{{ count }}" hint-size="100%,72px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SAVED_KEY = 'eb-saved';
+function readSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY)) || []; } catch (e) { return []; } }
+function writeSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list)); } catch (e) {} }
+
+const money = (n) => '$' + n.toFixed(2);
+const FREE_OVER = 75;
+
+const START = [
+  { id:'serum-30-duo', name:'Radiance Serum No.3', meta:'Serum · 30 ml · Duo pack', img:'assets/p4.jpg', price:61.20, qty:1 },
+  { id:'cream-50',     name:'Barrier Repair Cream', meta:'Moisturizer · 50 ml',      img:'assets/p2.jpg', price:58.00, qty:1 }
+];
+
+class Component extends DCLogic {
+  state = { lines: START.map((l) => Object.assign({}, l)), promo:'', promoApplied:false, promoNote:'', savedItems:[], wide:true };
+
+  componentDidMount() {
+    this.onResize = () => {
+      const wide = window.innerWidth >= 960;
+      if (wide !== this.state.wide) this.setState({ wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+    this.setState({ savedItems: readSaved() });
+    this.onStore = (e) => { if (!e || !e.key || e.key === SAVED_KEY) this.setState({ savedItems: readSaved() }); };
+    window.addEventListener('storage', this.onStore);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('storage', this.onStore);
+  }
+
+  bump(id, d) {
+    this.setState((s) => ({
+      lines: s.lines
+        .map((l) => l.id === id ? Object.assign({}, l, { qty: Math.max(0, l.qty + d) }) : l)
+        .filter((l) => l.qty > 0)
+    }));
+  }
+
+  renderVals() {
+    const st = this.state;
+    const subtotal = st.lines.reduce((t, l) => t + l.price * l.qty, 0);
+    const count = st.lines.reduce((t, l) => t + l.qty, 0);
+    const discount = st.promoApplied ? subtotal * 0.1 : 0;
+    const shipping = (subtotal - discount) >= FREE_OVER || subtotal === 0 ? 0 : 4.90;
+    const total = subtotal - discount + shipping;
+    const remaining = Math.max(0, FREE_OVER - (subtotal - discount));
+    const pct = Math.min(100, ((subtotal - discount) / FREE_OVER) * 100);
+
+    return {
+      count,
+      isEmpty: st.lines.length === 0,
+      hasLines: st.lines.length > 0,
+      intro: st.lines.length
+        ? 'Review quantities, then checkout. Anything you are unsure about can move to saved and wait.'
+        : 'Your bag is empty — saved items are kept in your account.',
+      countLabel: count === 1 ? '1 item' : count + ' items',
+      freeShipLabel: remaining > 0 ? money(remaining) + ' to free delivery' : 'Free delivery unlocked',
+      progressStyle: 'height:4px;background:var(--terra);transition:width .3s ease;width:' + pct + '%',
+
+      shellCols: st.wide ? 'minmax(0,1fr) minmax(0,380px)' : 'minmax(0,1fr)',
+      splitRule: st.wide ? '2px solid var(--ink)' : '0',
+      asideStyle: st.wide
+        ? 'align-self:start;position:sticky;top:120px;background:var(--off)'
+        : 'background:var(--off);border-top:2px solid var(--ink)',
+
+      lines: st.lines.map((l) => ({
+        name:l.name, meta:l.meta, qty:l.qty,
+        incLabel: 'Add one more ' + l.name, decLabel: 'Remove one ' + l.name, removeLabel: 'Remove ' + l.name + ' from your bag',
+        unitLabel: money(l.price) + ' each',
+        lineTotal: money(l.price * l.qty),
+        imgStyle: 'display:block;width:110px;height:110px;flex:0 0 auto;background:var(--imgbg) url("' + l.img + '") center/cover no-repeat',
+        inc: () => this.bump(l.id, 1),
+        dec: () => this.bump(l.id, -1),
+        remove: () => this.setState((s) => ({ lines: s.lines.filter((x) => x.id !== l.id) })),
+        saveLabel: 'Move to saved',
+        saveAria: 'Move ' + l.name + ' to saved for later',
+        save: () => {
+          const list = readSaved();
+          if (!list.some((x) => x.id === l.id)) {
+            writeSaved(list.concat([{ id:l.id, name:l.name, cat:l.meta, img:l.img, price:l.price, stock:true }]));
+          }
+          this.setState((s) => ({ lines: s.lines.filter((x) => x.id !== l.id), savedItems: readSaved() }));
+        }
+      })),
+
+      subtotalLabel: money(subtotal),
+      hasDiscount: discount > 0,
+      discountLabel: 'Promo EASY10',
+      discountAmount: '−' + money(discount),
+      shippingLabel: shipping === 0 ? 'Free' : money(shipping),
+      totalLabel: money(total),
+
+      promo: st.promo,
+      setPromo: (e) => this.setState({ promo: e.target.value.toUpperCase().slice(0, 12), promoNote:'' }),
+      applyPromo: () => {
+        if (st.promo.trim() === 'EASY10') this.setState({ promoApplied:true, promoNote:'10% off applied to this order.' });
+        else this.setState({ promoApplied:false, promoNote: st.promo.trim() ? 'That code is not valid or has expired.' : 'Enter a code first.' });
+      },
+      promoNote: st.promoNote,
+      promoNoteStyle: 'font-size:12.5px;margin-top:10px;min-height:16px;color:' + (st.promoApplied ? 'var(--moss)' : 'var(--terra)') + ';transition:opacity .2s ease;opacity:' + (st.promoNote ? 1 : 0),
+
+      hasSaved: st.savedItems.length > 0,
+      savedItems: st.savedItems.map((it) => ({
+        name: it.name,
+        meta: [it.cat, it.size].filter(Boolean).join(' · '),
+        priceLabel: money(Number(it.price)),
+        imgStyle: 'display:block;width:100%;aspect-ratio:1/1;background:var(--imgbg) url("' + it.img + '") center/cover no-repeat',
+        moveToBag: () => {
+          const next = readSaved().filter((x) => x.id !== it.id);
+          writeSaved(next);
+          this.setState((s) => {
+            const has = s.lines.some((x) => x.id === it.id);
+            return {
+              savedItems: next,
+              lines: has
+                ? s.lines.map((x) => x.id === it.id ? Object.assign({}, x, { qty:x.qty + 1 }) : x)
+                : s.lines.concat([{ id:it.id, name:it.name, meta:[it.cat, it.size].filter(Boolean).join(' · '), img:it.img, price:Number(it.price), qty:1 }])
+            };
+          });
+        }
+      }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

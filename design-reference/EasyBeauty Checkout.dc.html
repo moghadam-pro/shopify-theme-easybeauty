@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-accent-2:#94513C; --color-accent-2-500:#94513C; --color-accent-2-600:#82472F;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+input,select{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+@keyframes ebspin{to{transform:rotate(360deg)}}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip;min-height:100vh">
+
+  <header style="border-bottom:2px solid var(--ink);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;padding:0 24px;height:70px">
+    <a href="EasyBeauty Collection.dc.html" style="display:flex;align-items:center;gap:9px;min-height:44px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19 12H6M11 6l-6 6 6 6"></path></svg>
+      <span>Back to shop</span>
+    </a>
+    <a href="EasyBeauty Landing.dc.html" style="font-family:var(--serif);font-size:24px;white-space:nowrap">EasyBeauty</a>
+    <div style="display:flex;align-items:center;gap:9px;justify-content:flex-end;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--t2)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="10" width="16" height="10"></rect><path d="M8 10V7a4 4 0 018 0v3"></path></svg>
+      <span>Secure checkout</span>
+    </div>
+  </header>
+
+  <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+    <section style="padding:clamp(60px,10vh,120px) 28px;max-width:640px">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:20px">Your bag</div>
+      <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.6vw,56px);line-height:1.02;margin:0 0 18px">Nothing in the bag yet.</h1>
+      <p style="font-size:15.5px;line-height:1.7;color:var(--t1);margin:0 0 30px">Twelve formulas, six concerns. The quiz narrows it to three in about a minute.</p>
+      <div style="display:flex;gap:2px;flex-wrap:wrap">
+        <a href="EasyBeauty Collection.dc.html" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Browse all products</a>
+        <a href="EasyBeauty Quiz.dc.html" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Take the skin quiz</a>
+      </div>
+      <button type="button" onClick="{{ refillCart }}" style="margin-top:36px;background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--ink);font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink)">Restore my last bag</button>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isPlaced }}" hint-placeholder-val="{{ false }}">
+    <section style="display:grid;grid-template-columns:{{ placedCols }};border-bottom:2px solid var(--ink)">
+      <div style="padding:clamp(40px,5vw,72px) 28px">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px">
+          <span style="width:34px;height:34px;background:var(--moss);color:var(--off);display:flex;align-items:center;justify-content:center">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"></path></svg>
+          </span>
+          <span style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--t2)">Order confirmed</span>
+        </div>
+        <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(32px,4.6vw,58px);line-height:1.02;margin:0 0 18px">Thank you, {{ firstName }}.</h1>
+        <p style="font-size:15.5px;line-height:1.75;color:var(--t1);margin:0 0 34px;max-width:52ch">Order {{ orderId }} is paid and packing starts this afternoon. A confirmation went to {{ smsLabel }} with the tracking link.</p>
+
+        <div style="border:2px solid var(--ink);background:var(--off);display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))">
+          <sc-for list="{{ placedFacts }}" as="f" hint-placeholder-count="3">
+            <div style="padding:22px 20px;border-right:1px solid var(--color-border)">
+              <div style="font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:10px">{{ f.k }}</div>
+              <div style="font-size:14.5px;line-height:1.6">{{ f.v }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ createdAccount }}" hint-placeholder-val="{{ false }}">
+          <div style="background:var(--dark-bg);color:var(--off);padding:26px 24px;margin-top:2px">
+            <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(251,250,248,0.6);margin-bottom:12px">Account created</div>
+            <p style="font-size:14.5px;line-height:1.75;margin:0 0 18px;color:rgba(251,250,248,0.9)">We saved this address and your number, so next time checkout is one tap. Sign in with the same phone — no password.</p>
+            <a href="EasyBeauty Account.dc.html" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Open your panel</a>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;gap:2px;flex-wrap:wrap;margin-top:34px">
+          <a href="EasyBeauty Account.dc.html" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Track this order</a>
+          <a href="EasyBeauty Collection.dc.html" class="btn btn-ghost" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Keep shopping</a>
+        </div>
+      </div>
+      <div role="img" aria-label="Packed order" style="min-height:300px;background:var(--sand) url('assets/apply.jpg') center/cover no-repeat;border-left:2px solid var(--ink)"></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ true }}">
+  <section style="display:grid;grid-template-columns:{{ shellCols }};border-bottom:2px solid var(--ink)">
+
+    <div style="min-width:0;border-right:{{ mainBorder }}">
+      <div style="padding:clamp(26px,3vw,44px) 28px clamp(36px,4vw,56px)">
+
+        <div style="border-bottom:1px solid var(--color-border);padding-bottom:26px;margin-bottom:26px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:{{ contactGap }}">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="{{ s1DotStyle }}">1</span>
+              <h2 style="font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.1;margin:0">Contact</h2>
+            </div>
+            <button type="button" onClick="{{ editContact }}" aria-label="Change your contact number" style="{{ editContactStyle }}">Change</button>
+          </div>
+
+          <sc-if value="{{ contactDone }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:14px;font-size:14px;color:var(--t1);padding-left:32px">
+              <span>{{ contactLabel }}</span>
+              <span style="{{ memberTagStyle }}">{{ memberTag }}</span>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ true }}">
+            <div style="padding-left:32px">
+              <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+                <div style="border:2px solid var(--ink);background:var(--off);padding:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                  <div style="width:40px;height:40px;background:var(--accent-fill);color:var(--off);display:flex;align-items:center;justify-content:center;font-size:13px">{{ initials }}</div>
+                  <div style="flex:1;min-width:140px">
+                    <div style="font-size:14.5px;font-weight:500;margin-bottom:4px">{{ userName }}</div>
+                    <div style="font-size:12.5px;color:var(--t2)">{{ userMeta }}</div>
+                  </div>
+                  <button type="button" onClick="{{ logout }}" style="background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)">Use another number</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ guest }}" hint-placeholder-val="{{ true }}">
+                <div>
+                  <p style="font-size:14px;line-height:1.7;color:var(--t1);margin:0 0 20px;max-width:52ch">Enter your number to get a code. We create your account with this order, so the next one is one tap — no password, ever.</p>
+                  <div style="display:flex;gap:2px;flex-wrap:wrap;align-items:stretch">
+                    <div style="display:flex;border:2px solid var(--ink);background:var(--off);flex:1 1 240px">
+                      <span style="display:flex;align-items:center;padding:0 13px;border-right:1px solid var(--color-border);font-size:14px;color:var(--t2)">+351</span>
+                      <input type="tel" inputmode="numeric" aria-label="Mobile number, Portugal +351" autocomplete="tel-national" placeholder="912 340 118" value="{{ phone }}" onChange="{{ setPhone }}" style="flex:1;min-width:0;border:0;background:none;outline:none;padding:14px;font-size:15.5px;letter-spacing:0.05em;color:var(--ink)">
+                    </div>
+                    <button type="button" onClick="{{ sendCode }}" style="{{ sendBtnStyle }}">{{ sendLabel }}</button>
+                  </div>
+
+                  <sc-if value="{{ codeSent }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:18px;border:2px solid var(--ink);background:var(--off);padding:20px">
+                      <div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:12px">Code sent to {{ phoneFull }}</div>
+                      <div style="display:flex;gap:2px;flex-wrap:wrap">
+                        <input type="text" inputmode="numeric" maxlength="6" aria-label="Six-digit code from your text message" autocomplete="one-time-code" placeholder="······" value="{{ code }}" onChange="{{ setCode }}" style="flex:1 1 160px;border:2px solid var(--ink);background:var(--cream);padding:12px 16px;font-family:var(--serif);font-size:24px;letter-spacing:0.36em;text-align:center;color:var(--ink);outline:none">
+                        <button type="button" onClick="{{ verify }}" style="{{ verifyBtnStyle }}">Verify code</button>
+                      </div>
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;font-size:12px;color:var(--t2)">
+                        <span>{{ resendLabel }}</span>
+                        <button type="button" onClick="{{ resend }}" style="{{ resendBtnStyle }}">Send a new code</button>
+                      </div>
+                    </div>
+                  </sc-if>
+
+                  <button type="button" onClick="{{ skipVerify }}" style="margin-top:18px;background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)">Continue as guest without an account</button>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="border-bottom:1px solid var(--color-border);padding-bottom:26px;margin-bottom:26px;transition:opacity .25s ease;opacity:{{ s2Opacity }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:{{ addrGap }}">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="{{ s2DotStyle }}">{{ s2Num }}</span>
+              <h2 style="font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.1;margin:0">Delivery address</h2>
+            </div>
+            <button type="button" onClick="{{ editAddress }}" aria-label="Change the delivery address" style="{{ editAddressStyle }}">Change</button>
+          </div>
+
+          <sc-if value="{{ addrDone }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:14px;line-height:1.7;color:var(--t1);padding-left:32px;white-space:pre-line">{{ addressSummary }}</div>
+          </sc-if>
+
+          <sc-if value="{{ addrOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="padding-left:32px">
+              <sc-if value="{{ hasSaved }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:20px">
+                  <sc-for list="{{ savedAddresses }}" as="a" hint-placeholder-count="2">
+                    <button type="button" onClick="{{ a.pick }}" style="{{ a.style }}">
+                      <span style="{{ a.dotStyle }}"><span style="{{ a.innerStyle }}"></span></span>
+                      <span style="display:flex;flex-direction:column;gap:5px;text-align:left">
+                        <span style="font-size:13.5px;font-weight:500">{{ a.label }}</span>
+                        <span style="font-size:12.5px;color:var(--t2);white-space:pre-line">{{ a.lines }}</span>
+                      </span>
+                    </button>
+                  </sc-for>
+                </div>
+                <button type="button" onClick="{{ newAddress }}" style="{{ newAddrStyle }}">{{ newAddrLabel }}</button>
+              </sc-if>
+
+              <sc-if value="{{ addrFormOpen }}" hint-placeholder-val="{{ true }}">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:{{ formTop }}">
+                  <sc-for list="{{ addrFields }}" as="f" hint-placeholder-count="6">
+                    <label style="{{ f.wrapStyle }}">
+                      <span style="display:block;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:9px">{{ f.label }}</span>
+                      <input type="text" aria-label="{{ f.label }}" autocomplete="{{ f.autocomplete }}" placeholder="{{ f.placeholder }}" value="{{ f.value }}" onChange="{{ f.set }}" style="{{ f.inputStyle }}">
+                    </label>
+                  </sc-for>
+                </div>
+                <label style="display:flex;align-items:flex-start;gap:12px;margin-top:20px;cursor:pointer">
+                  <button type="button" onClick="{{ toggleSaveAddr }}" style="{{ saveAddrBoxStyle }}">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FBFAF8" stroke-width="3" style="{{ saveAddrTickStyle }}"><path d="M5 13l4 4L19 7"></path></svg>
+                  </button>
+                  <span style="font-size:13px;line-height:1.6;color:var(--t1)">{{ saveAddrLabel }}</span>
+                </label>
+              </sc-if>
+
+              <div role="alert" aria-live="assertive" style="{{ addrErrStyle }}">{{ addrErr }}</div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="border-bottom:1px solid var(--color-border);padding-bottom:26px;margin-bottom:26px;transition:opacity .25s ease;opacity:{{ s3Opacity }}">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:{{ shipGap }}">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="{{ s3DotStyle }}">{{ s3Num }}</span>
+              <h2 style="font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.1;margin:0">Delivery method</h2>
+            </div>
+            <button type="button" onClick="{{ editShip }}" aria-label="Change the delivery method" style="{{ editShipStyle }}">Change</button>
+          </div>
+
+          <sc-if value="{{ shipDone }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:14px;color:var(--t1);padding-left:32px">{{ shipSummary }}</div>
+          </sc-if>
+
+          <sc-if value="{{ shipOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="padding-left:32px">
+              <div style="display:flex;flex-direction:column;gap:2px">
+                <sc-for list="{{ shipOptions }}" as="o" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ o.pick }}" style="{{ o.style }}">
+                    <span style="{{ o.dotStyle }}"><span style="{{ o.innerStyle }}"></span></span>
+                    <span style="display:flex;flex-direction:column;gap:5px;text-align:left;min-width:0">
+                      <span style="font-size:14px;font-weight:500">{{ o.label }}</span>
+                      <span style="font-size:12.5px;color:var(--t2)">{{ o.note }}</span>
+                    </span>
+                    <span style="margin-left:auto;font-size:14px;white-space:nowrap">{{ o.priceLabel }}</span>
+                  </button>
+                </sc-for>
+              </div>
+              <button type="button" onClick="{{ confirmDetails }}" style="{{ addrNextStyle }}">Continue to payment</button>
+              <div role="alert" aria-live="assertive" style="{{ addrErrStyle }}">{{ addrErr }}</div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="transition:opacity .25s ease;opacity:{{ s4Opacity }}">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px">
+            <span style="{{ s4DotStyle }}">{{ s4Num }}</span>
+            <h2 style="font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.1;margin:0">Payment</h2>
+          </div>
+
+          <sc-if value="{{ payOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="padding-left:32px">
+              <div style="display:flex;gap:2px;flex-wrap:wrap;margin-bottom:22px">
+                <sc-for list="{{ payMethods }}" as="m" hint-placeholder-count="3">
+                  <button type="button" onClick="{{ m.pick }}" style="{{ m.style }}">{{ m.label }}</button>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ payCard }}" hint-placeholder-val="{{ true }}">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px">
+                  <sc-for list="{{ cardFields }}" as="f" hint-placeholder-count="4">
+                    <label style="{{ f.wrapStyle }}">
+                      <span style="display:block;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:9px">{{ f.label }}</span>
+                      <input type="text" inputmode="numeric" aria-label="{{ f.label }}" autocomplete="{{ f.autocomplete }}" placeholder="{{ f.placeholder }}" value="{{ f.value }}" onChange="{{ f.set }}" style="{{ f.inputStyle }}">
+                    </label>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ payAlt }}" hint-placeholder-val="{{ false }}">
+                <div style="border:2px solid var(--ink);background:var(--off);padding:22px;font-size:14px;line-height:1.7;color:var(--t1)">{{ altNote }}</div>
+              </sc-if>
+
+              <div role="alert" aria-live="assertive" style="{{ payErrStyle }}">{{ payErr }}</div>
+
+              <button type="button" onClick="{{ placeOrder }}" style="{{ placeBtnStyle }}">
+                <span style="{{ spinnerStyle }}"></span>
+                <span>{{ placeLabel }}</span>
+                <span style="margin-left:auto">{{ totalLabel }}</span>
+              </button>
+              <p style="font-size:12px;line-height:1.7;color:var(--t2);margin:16px 0 0;max-width:52ch">{{ termsNote }}</p>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ payLocked }}" hint-placeholder-val="{{ true }}">
+            <div style="font-size:13.5px;color:var(--t4);padding-left:32px">Payment opens once your contact, address and delivery are set.</div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+
+    <aside style="{{ summaryStyle }}">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:20px 22px;border-bottom:2px solid var(--ink)">
+        <span style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase">Your bag ({{ count }})</span>
+        <button type="button" onClick="{{ toggleBag }}" style="{{ toggleBagStyle }}">{{ toggleBagLabel }}</button>
+      </div>
+
+      <div style="{{ linesStyle }}">
+        <sc-for list="{{ lines }}" as="l" hint-placeholder-count="2">
+          <div style="display:grid;grid-template-columns:70px 1fr auto;gap:14px;padding:18px 22px;border-bottom:1px solid var(--color-border)">
+            <div role="img" aria-label="{{ l.name }}" style="{{ l.imgStyle }}"></div>
+            <div style="min-width:0">
+              <div style="font-size:13.5px;font-weight:500;margin-bottom:4px">{{ l.name }}</div>
+              <div style="font-size:12px;color:var(--t2);margin-bottom:10px">{{ l.meta }}</div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="display:flex;align-items:center;border:1px solid var(--color-border)">
+                  <button type="button" onClick="{{ l.dec }}" aria-label="{{ l.decLabel }}" style="background:none;border:0;padding:0 14px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;line-height:1;color:var(--ink)">–</button>
+                  <span style="font-size:13px;min-width:20px;text-align:center">{{ l.qty }}</span>
+                  <button type="button" onClick="{{ l.inc }}" aria-label="{{ l.incLabel }}" style="background:none;border:0;padding:0 14px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;line-height:1;color:var(--ink)">+</button>
+                </div>
+                <button type="button" onClick="{{ l.remove }}" style="background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)" aria-label="{{ l.removeLabel }}">Remove</button>
+              </div>
+            </div>
+            <div style="font-size:13.5px;white-space:nowrap">{{ l.lineLabel }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border);background:var(--off)">
+        <div style="font-size:12.5px;margin-bottom:10px">{{ shipProgressLabel }}</div>
+        <div style="height:4px;background:var(--sand)">
+          <div style="{{ shipBarStyle }}"></div>
+        </div>
+      </div>
+
+      <div style="padding:18px 22px;border-bottom:1px solid var(--color-border)">
+        <div style="display:flex;gap:2px">
+          <input type="text" aria-label="Promo or gift code" placeholder="Promo code" value="{{ promo }}" onChange="{{ setPromo }}" style="flex:1;min-width:0;border:1px solid var(--ink);background:var(--off);padding:11px 13px;font-size:13px;letter-spacing:0.08em;color:var(--ink);outline:none">
+          <button type="button" onClick="{{ applyPromo }}" style="background:var(--dark-bg);color:var(--off);border:0;cursor:pointer;padding:0 18px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase">Apply code</button>
+        </div>
+        <div role="status" aria-live="polite" style="{{ promoNoteStyle }}">{{ promoNote }}</div>
+      </div>
+
+      <div style="{{ totalsStyle }}">
+        <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:var(--t2)">Subtotal</span><span>{{ subtotalLabel }}</span></div>
+        <div style="{{ discountRowStyle }}"><span style="color:var(--t2)">{{ discountLabel }}</span><span style="color:var(--terra)">−{{ discountAmount }}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px"><span style="color:var(--t2)">Delivery</span><span>{{ shipCostLabel }}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;border-top:2px solid var(--ink);padding-top:14px;margin-top:6px;font-size:16px">
+          <span>Total</span><span style="font-family:var(--serif);font-size:22px">{{ totalLabel }}</span>
+        </div>
+        <div style="font-size:11.5px;color:var(--t2)">Includes {{ vatLabel }} VAT · duties covered inside the EU</div>
+      </div>
+
+      <div style="border-top:1px solid var(--color-border);display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--color-border)">
+        <span style="background:var(--cream);padding:13px 8px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">60-day returns</span>
+        <span style="background:var(--cream);padding:13px 8px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">Ships in 24h</span>
+        <span style="background:var(--cream);padding:13px 8px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">Secure payment</span>
+      </div>
+    </aside>
+  </section>
+  </sc-if>
+
+  <footer style="padding:26px 28px 34px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--t2)">
+    <span>© 2026 EasyBeauty · Made in Portugal</span>
+    <span style="display:flex;gap:20px">
+      <a href="EasyBeauty Contact.dc.html" style="color:var(--t2);display:inline-flex;align-items:center;min-height:44px;padding:0 2px">Need help?</a>
+      <a href="EasyBeauty Legal.dc.html#terms" style="color:var(--t2);display:inline-flex;align-items:center;min-height:44px;padding:0 2px">Terms</a>
+    </span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;session&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Guest&quot;,&quot;options&quot;:[&quot;Guest&quot;,&quot;Signed in&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Flow&quot;},&quot;startState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Checkout&quot;,&quot;options&quot;:[&quot;Checkout&quot;,&quot;Empty bag&quot;,&quot;Order placed&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Flow&quot;},&quot;threshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:75,&quot;min&quot;:0,&quot;max&quot;:200,&quot;step&quot;:5,&quot;unit&quot;:&quot;$&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cart&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#94513C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#94513C&quot;,&quot;#82472F&quot;,&quot;#3F4A3D&quot;,&quot;#7A4A55&quot;],&quot;section&quot;:&quot;Theme&quot;}}">
+const CART = [
+  { id:'serum', name:'Radiance Serum No.3', meta:'30 ml · Duo pack', price:122.4, img:'assets/p4.jpg', qty:1 },
+  { id:'cream', name:'Barrier Repair Cream', meta:'50 ml', price:58, img:'assets/p2.jpg', qty:1 },
+  { id:'lip',   name:'Ceramide Lip Balm',    meta:'10 ml', price:18, img:'assets/p1.jpg', qty:2 }
+];
+
+const SAVED = [
+  { label:'Home · default', lines:'Lara Moreira\nRua das Amoreiras 22, 3º\n1250-096 Lisboa, Portugal' },
+  { label:'Studio', lines:'EasyBeauty c/o Lara\nAv. da Liberdade 180\n1250-146 Lisboa, Portugal' }
+];
+
+const SHIP = [
+  { id:'standard', label:'Standard · CTT', note:'2–4 working days, tracked', cost:0 },
+  { id:'express',  label:'Express · DHL',  note:'Next working day if ordered before 14:00', cost:9.5 },
+  { id:'pickup',   label:'Studio pickup',  note:'Sintra, Mon–Fri 10–18. Ready in 3 hours', cost:0 }
+];
+
+const PROMOS = { WELCOME10: { label:'WELCOME10', rate:0.1 }, JOURNAL15: { label:'JOURNAL15', rate:0.15 } };
+const VAT = 0.23;
+const money = (n) => '$' + (Math.round(n * 100) / 100).toFixed(2).replace(/\.00$/, '');
+
+class Component extends DCLogic {
+  state = {
+    view:'checkout', step:1, wide:true,
+    signedIn:false, userName:'Lara Moreira', phone:'', code:'', codeSent:false, secs:0, sending:false, guestOnly:false,
+    contactDone:false,
+    addrPick:0, addrNew:false, saveAddr:true, addrDone:false, addrErr:'',
+    a_name:'', a_street:'', a_extra:'', a_city:'', a_zip:'', a_country:'Portugal',
+    ship:'standard', shipDone:false,
+    pay:'Card', c_num:'', c_exp:'', c_cvc:'', c_name:'', payErr:'', placing:false,
+    cart:CART.map((l) => Object.assign({}, l)), promo:'', promoApplied:null, promoNote:'', bagOpen:true,
+    createdAccount:false, orderId:''
+  };
+
+  componentDidMount() {
+    this.applyAccent();
+    this.onResize = () => {
+      const wide = window.innerWidth >= 1000;
+      if (wide !== this.state.wide) this.setState({ wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+
+    let signedIn = false, phone = '';
+    try {
+      const raw = localStorage.getItem('eb-account');
+      if (raw) { const a = JSON.parse(raw); if (a && a.phone) { signedIn = true; phone = String(a.phone).replace(/^\+?351\s*/, '').trim(); } }
+    } catch (e) {}
+    const forced = this.props.session;
+    if (forced === 'Signed in') { signedIn = true; phone = phone || '912 340 118'; }
+    if (forced === 'Guest') { signedIn = false; }
+    this.setState({ signedIn, phone });
+
+    try {
+      const raw = localStorage.getItem('eb-cart');
+      if (raw) {
+        const items = JSON.parse(raw);
+        if (Array.isArray(items) && items.length) this.setState({ cart:items });
+      }
+    } catch (e) {}
+
+    const start = this.props.startState;
+    if (start === 'Empty bag') this.setState({ cart:[] });
+    if (start === 'Order placed') this.setState({ view:'placed', orderId:'EB-10' + (430 + Math.floor(Math.random() * 60)), contactDone:true, addrDone:true, shipDone:true, step:2 });
+  }
+
+  componentDidUpdate(prev) {
+    this.applyAccent();
+    if (prev.session !== this.props.session && this.props.session) {
+      const signed = this.props.session === 'Signed in';
+      this.setState({ signedIn:signed, phone: signed ? (this.state.phone || '912 340 118') : '', contactDone:false, addrDone:false, shipDone:false, step:1, view:'checkout' });
+    }
+  }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (!a || String(a).indexOf('var(') === 0 || String(a).toUpperCase() === '#94513C') return;
+    document.documentElement.style.setProperty('--accent-fill', a);
+    const r = document.documentElement.style;
+    r.setProperty('--terra', a);
+    r.setProperty('--color-accent', a);
+    r.setProperty('--color-accent-500', a);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+    clearInterval(this.resendTimer);
+    clearTimeout(this.payTimer);
+  }
+
+  startResend() {
+    clearInterval(this.resendTimer);
+    this.setState({ secs:30 });
+    this.resendTimer = setInterval(() => this.setState((s) => {
+      if (s.secs <= 1) { clearInterval(this.resendTimer); return { secs:0 }; }
+      return { secs:s.secs - 1 };
+    }), 1000);
+  }
+
+  field(key, label, placeholder, full) {
+    const AC = {
+      a_name:'name', a_street:'address-line1', a_extra:'address-line2', a_zip:'postal-code',
+      a_city:'address-level2', a_country:'country-name', a_phone:'tel',
+      c_num:'cc-number', c_exp:'cc-exp', c_cvc:'cc-csc', c_name:'cc-name'
+    };
+    return {
+      label, placeholder, value:this.state[key], autocomplete: AC[key] || 'on',
+      wrapStyle: 'display:block;' + (full ? 'grid-column:1/-1' : ''),
+      inputStyle: 'width:100%;border:2px solid var(--ink);background:var(--off);padding:13px 15px;font-size:14px;color:var(--ink);outline:none',
+      set: (e) => this.setState({ [key]:e.target.value, addrErr:'', payErr:'' })
+    };
+  }
+
+  bump(id, d) {
+    this.setState((s) => ({ cart: s.cart.map((l) => l.id === id ? Object.assign({}, l, { qty:l.qty + d }) : l).filter((l) => l.qty > 0) }));
+  }
+
+  renderVals() {
+    const st = this.state;
+    const threshold = this.props.threshold ?? 75;
+    const subtotal = st.cart.reduce((a, l) => a + l.price * l.qty, 0);
+    const count = st.cart.reduce((a, l) => a + l.qty, 0);
+    const ship = SHIP.find((s) => s.id === st.ship) || SHIP[0];
+    const baseShip = (o) => o.id === 'pickup' ? 0 : (o.cost || (subtotal >= threshold ? 0 : 4.5));
+    const shipCost = baseShip(ship);
+    const freeShip = shipCost === 0;
+    const discount = st.promoApplied ? subtotal * st.promoApplied.rate : 0;
+    const total = Math.max(0, subtotal - discount + shipCost);
+    const remaining = Math.max(0, threshold - subtotal);
+
+    const digits = st.phone.replace(/[^0-9]/g, '');
+    const phoneOk = digits.length >= 9;
+    const codeOk = st.code.length >= 4;
+    const verified = st.createdAccount || (st.signedIn && !st.createdAccount);
+    const fmtPhone = (p) => { const d = (p || '').replace(/[^0-9]/g, ''); return d ? d.replace(/(\d{3})(?=\d)/g, '$1 ').trim() : ''; };
+    const phoneDisplay = '+351 ' + (fmtPhone(st.phone) || '912 340 118');
+
+    const dot = (n) => {
+      const active = (n <= 3 && st.step === 1) || (n === 4 && st.step === 2) || st.shipDone;
+      return 'width:22px;height:22px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:11.5px;background:' + (active ? 'var(--terra)' : 'var(--sand)') + ';color:' + (active ? 'var(--off)' : 'var(--t4)') + ';transition:background .22s ease';
+    };
+    const subDot = (on) => 'width:9px;height:9px;flex:0 0 auto;margin:0 6px;background:' + (on ? 'var(--terra)' : 'var(--sand)') + ';transition:background .22s ease';
+    const editBtn = (show) => 'background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2);transition:opacity .2s ease;opacity:' + (show ? 1 : 0) + ';pointer-events:' + (show ? 'auto' : 'none');
+    const radio = (on) => 'display:flex;align-items:center;gap:13px;width:100%;cursor:pointer;padding:15px 16px;background:' + (on ? 'var(--off)' : 'transparent') + ';border:2px solid ' + (on ? 'var(--ink)' : 'var(--color-border)') + ';color:var(--ink);transition:border-color .2s ease,background .2s ease';
+    const radioDot = (on) => 'width:17px;height:17px;flex:0 0 auto;border-radius:50%;border:2px solid ' + (on ? 'var(--terra)' : 'var(--t5)') + ';display:flex;align-items:center;justify-content:center';
+    const radioInner = (on) => 'width:8px;height:8px;border-radius:50%;background:var(--terra);transition:transform .2s ease;transform:scale(' + (on ? 1 : 0) + ')';
+    const chip = (on) => 'background:' + (on ? 'var(--ink)' : 'var(--off)') + ';color:' + (on ? 'var(--off)' : 'var(--ink)') + ';border:1px solid ' + (on ? 'var(--ink)' : 'var(--color-border)') + ';cursor:pointer;padding:11px 16px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;transition:background .2s ease,color .2s ease';
+
+    const guestAddress = [st.a_name, st.a_street, st.a_extra, (st.a_zip + ' ' + st.a_city).trim(), st.a_country].filter(Boolean).join('\n');
+    const addressSummary = (st.signedIn && !st.addrNew) ? SAVED[st.addrPick].lines : guestAddress;
+
+    return {
+      isEmpty: st.cart.length === 0 && st.view === 'checkout',
+      isPlaced: st.view === 'placed',
+      isCheckout: st.view === 'checkout' && st.cart.length > 0,
+      refillCart: () => this.setState({ cart:CART.map((l) => Object.assign({}, l)) }),
+
+      shellCols: st.wide ? 'minmax(0,1fr) minmax(0,400px)' : 'minmax(0,1fr)',
+      mainBorder: st.wide ? '2px solid var(--ink)' : '0',
+      placedCols: st.wide ? 'minmax(0,1.2fr) minmax(0,1fr)' : 'minmax(0,1fr)',
+      summaryStyle: st.wide
+        ? 'align-self:start;position:sticky;top:0;max-height:100vh;overflow-y:auto;background:var(--cream)'
+        : 'border-top:2px solid var(--ink);background:var(--cream)',
+
+      crumbs: [
+        { n:1, label:'Your details' }, { n:2, label:'Payment' }
+      ].map((c) => {
+        const on = st.step === c.n;
+        const reach = c.n === 1 || st.shipDone;
+        return {
+          num: String(c.n), label: c.label,
+          style: 'display:flex;align-items:center;gap:10px;flex:1 0 auto;background:' + (on ? 'var(--off)' : 'transparent') + ';border:0;border-right:1px solid var(--color-border);border-bottom:2px solid ' + (on ? 'var(--terra)' : 'transparent') + ';cursor:' + (reach ? 'pointer' : 'default') + ';padding:15px 18px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:' + (reach ? 'var(--ink)' : 'var(--t5)') + ';transition:background .2s ease',
+          numStyle: 'width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;background:' + (reach ? 'var(--terra)' : 'var(--sand)') + ';color:' + (reach ? 'var(--off)' : 'var(--t4)'),
+          go: () => { if (reach) this.setState({ step:c.n }); }
+        };
+      }),
+
+      s1DotStyle: dot(1), s2DotStyle: subDot(st.step === 1 || st.shipDone), s3DotStyle: subDot(st.step === 1 || st.shipDone), s4DotStyle: dot(4),
+      s1Num: '1', s2Num: '', s3Num: '', s4Num: '2',
+      s2Opacity: '1',
+      s3Opacity: '1',
+      s4Opacity: st.shipDone ? '1' : '0.55',
+
+      signedIn: st.signedIn,
+      guest: !st.signedIn,
+      initials: (st.createdAccount ? (st.a_name || 'New account') : st.userName).trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase(),
+      userName: st.createdAccount ? (st.a_name || 'Your new account') : st.userName,
+      userMeta: phoneDisplay + (st.createdAccount ? ' · New account' : ' · 340 points'),
+      userPhone: phoneDisplay,
+      contactOpen: st.step === 1,
+      contactDone: st.step === 2,
+      contactGap: st.step === 2 ? '14px' : '20px',
+      contactLabel: st.createdAccount
+        ? ((st.a_name ? st.a_name + ' · ' : '') + phoneDisplay)
+        : (st.signedIn ? st.userName + ' · ' + phoneDisplay : (st.guestOnly ? 'Guest checkout · ' + phoneDisplay : phoneDisplay)),
+      memberTag: st.createdAccount ? 'Verified' : (st.signedIn ? 'Member' : 'Guest'),
+      memberTagStyle: 'font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 9px;background:' + (verified ? 'var(--terra)' : 'var(--sand)') + ';color:' + (verified ? 'var(--off)' : 'var(--t1)'),
+      editContact: () => this.setState({ step:1 }),
+      editContactStyle: editBtn(st.step === 2),
+      logout: () => { try { localStorage.removeItem('eb-account'); } catch (e) {} this.setState({ signedIn:false, phone:'', contactDone:false, addrDone:false, shipDone:false, step:1 }); },
+
+      phone: st.phone,
+      phoneFull: '+351 ' + fmtPhone(st.phone),
+      setPhone: (e) => this.setState({ phone: e.target.value.replace(/[^0-9 ]/g, '').slice(0, 13) }),
+      sendLabel: st.sending ? 'Sending…' : (st.codeSent ? 'Code sent' : 'Send code'),
+      sendBtnStyle: 'flex:0 0 auto;background:' + (phoneOk ? 'var(--terra)' : 'var(--sand)') + ';color:' + (phoneOk ? 'var(--off)' : 'var(--t4)') + ';border:0;cursor:' + (phoneOk ? 'pointer' : 'not-allowed') + ';padding:0 22px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;transition:background .2s ease',
+      sendCode: () => {
+        if (!phoneOk) return;
+        this.setState({ sending:true });
+        setTimeout(() => { this.setState({ sending:false, codeSent:true, code:'' }); this.startResend(); }, 450);
+      },
+      codeSent: st.codeSent,
+      code: st.code,
+      setCode: (e) => this.setState({ code:e.target.value.replace(/[^0-9]/g, '').slice(0, 6) }),
+      verifyBtnStyle: 'flex:0 0 auto;background:' + (codeOk ? 'var(--ink)' : 'var(--sand)') + ';color:' + (codeOk ? 'var(--off)' : 'var(--t4)') + ';border:0;cursor:' + (codeOk ? 'pointer' : 'not-allowed') + ';padding:0 24px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase',
+      verify: () => {
+        if (!codeOk) return;
+        clearInterval(this.resendTimer);
+        this.setState({ signedIn:true, createdAccount:true, contactDone:true, codeSent:false, code:'', userName:'New customer', addrNew:true });
+      },
+      skipVerify: () => this.setState({ guestOnly:true, contactDone:true, addrNew:true }),
+      resendLabel: st.secs ? 'Resend available in ' + st.secs + 's' : 'Did not arrive?',
+      resendBtnStyle: 'background:none;border:0;cursor:' + (st.secs ? 'default' : 'pointer') + ';padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:' + (st.secs ? 'transparent' : 'var(--ink)') + ';font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:' + (st.secs ? 'var(--t5)' : 'var(--ink)'),
+      resend: () => { if (!st.secs) { this.setState({ code:'' }); this.startResend(); } },
+
+      addrOpen: st.step === 1,
+      addrDone: st.step === 2,
+      addrGap: st.step === 2 ? '14px' : '20px',
+      addressSummary,
+      editAddress: () => this.setState({ step:1 }),
+      editAddressStyle: editBtn(st.step === 2),
+      hasSaved: st.signedIn && !st.createdAccount,
+      savedAddresses: SAVED.map((a, i) => {
+        const on = !st.addrNew && st.addrPick === i;
+        return {
+          label:a.label, lines:a.lines, style: radio(on), dotStyle: radioDot(on), innerStyle: radioInner(on),
+          pick: () => this.setState({ addrPick:i, addrNew:false })
+        };
+      }),
+      newAddress: () => this.setState((s) => ({ addrNew: !s.addrNew })),
+      newAddrLabel: st.addrNew ? 'Use a saved address' : 'Deliver somewhere else',
+      newAddrStyle: 'background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--ink);font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink)',
+      addrFormOpen: st.addrNew || !(st.signedIn && !st.createdAccount),
+      formTop: (st.signedIn && !st.createdAccount) ? '22px' : '0',
+      addrFields: [
+        this.field('a_name', 'Full name', 'Your name', true),
+        this.field('a_street', 'Street and number', 'Rua das Amoreiras 22', true),
+        this.field('a_extra', 'Floor / apartment', '3º Esq'),
+        this.field('a_zip', 'Postcode', '1250-096'),
+        this.field('a_city', 'City', 'Lisboa'),
+        this.field('a_country', 'Country', 'Portugal')
+      ],
+      toggleSaveAddr: () => this.setState((s) => ({ saveAddr: !s.saveAddr })),
+      saveAddrBoxStyle: 'width:20px;height:20px;flex:0 0 auto;margin-top:1px;border:2px solid ' + (st.saveAddr ? 'var(--terra)' : 'var(--t5)') + ';background:' + (st.saveAddr ? 'var(--terra)' : 'transparent') + ';display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:background .18s ease',
+      saveAddrTickStyle: 'transition:opacity .15s ease;opacity:' + (st.saveAddr ? 1 : 0),
+      saveAddrLabel: st.signedIn ? 'Save this address to my account for next time.' : 'Create my account with this number and address — no password needed.',
+      addrErr: st.addrErr,
+      addrErrStyle: 'font-size:12.5px;color:var(--terra);margin-top:12px;min-height:16px;transition:opacity .2s ease;opacity:' + (st.addrErr ? 1 : 0),
+      addrNextStyle: 'margin-top:22px;background:var(--accent-fill);color:var(--off);border:0;cursor:pointer;min-height:44px;padding:15px 22px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase',
+
+      shipOpen: st.step === 1,
+      shipDone: st.step === 2,
+      shipGap: st.step === 2 ? '14px' : '20px',
+      shipSummary: ship.label + ' · ' + ship.note + ' · ' + (shipCost === 0 ? 'Free' : money(shipCost)),
+      shipCostLabelX: '',
+      editShip: () => this.setState({ step:1 }),
+      editShipStyle: editBtn(st.step === 2),
+      shipOptions: SHIP.map((o) => {
+        const on = st.ship === o.id;
+        const c = baseShip(o);
+        return {
+          label:o.label, note:o.note, style: radio(on), dotStyle: radioDot(on), innerStyle: radioInner(on),
+          priceLabel: c === 0 ? 'Free' : money(c),
+          pick: () => this.setState({ ship:o.id })
+        };
+      }),
+      confirmDetails: () => {
+        const usingSaved = st.signedIn && !st.createdAccount && !st.addrNew;
+        if (!usingSaved && !(st.a_name.trim() && st.a_street.trim() && st.a_city.trim() && st.a_zip.trim())) {
+          this.setState({ addrErr:'Add a name, street, postcode and city to continue.' });
+          return;
+        }
+        this.setState({ contactDone:true, addrDone:true, shipDone:true, addrErr:'', step:2 });
+      },
+
+      payOpen: st.step === 2,
+      payLocked: st.step !== 2,
+      payMethods: ['Card', 'PayPal', 'Cash on delivery'].map((m) => ({
+        label:m, style: chip(st.pay === m), pick: () => this.setState({ pay:m, payErr:'' })
+      })),
+      payCard: st.pay === 'Card',
+      payAlt: st.pay !== 'Card',
+      altNote: st.pay === 'PayPal'
+        ? 'You will be taken to PayPal to approve the payment, then returned here to confirm the order.'
+        : 'Pay the courier on delivery. Cash on delivery adds €1.50 and is available in Portugal and Spain only.',
+      cardFields: [
+        this.field('c_num', 'Card number', '4242 4242 4242 4242', true),
+        this.field('c_exp', 'Expiry', 'MM / YY'),
+        this.field('c_cvc', 'CVC', '123'),
+        this.field('c_name', 'Name on card', 'As printed', true)
+      ],
+      payErr: st.payErr,
+      payErrStyle: 'font-size:12.5px;color:var(--terra);margin-top:16px;min-height:16px;transition:opacity .2s ease;opacity:' + (st.payErr ? 1 : 0),
+      placeLabel: st.placing ? 'Processing…' : 'Place order',
+      totalLabel: money(total),
+      spinnerStyle: 'width:14px;height:14px;border:2px solid rgba(251,250,248,0.4);border-top-color:var(--off);border-radius:50%;margin-right:10px;display:' + (st.placing ? 'inline-block' : 'none') + ';animation:ebspin .7s linear infinite',
+      placeBtnStyle: 'display:flex;align-items:center;width:100%;margin-top:22px;background:' + (st.placing ? 'var(--color-accent-700)' : 'var(--terra)') + ';color:var(--off);border:0;cursor:' + (st.placing ? 'progress' : 'pointer') + ';padding:18px 22px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;transition:background .2s ease',
+      termsNote: st.pay === 'Card'
+        ? 'By placing the order you agree to our terms. Card details are handled by our payment provider; we never see them.'
+        : 'By placing the order you agree to our terms and the refund policy.',
+      placeOrder: () => {
+        if (st.placing) return;
+        if (st.pay === 'Card') {
+          const n = st.c_num.replace(/[^0-9]/g, '');
+          if (n.length < 15 || !st.c_exp.trim() || st.c_cvc.replace(/[^0-9]/g, '').length < 3) {
+            this.setState({ payErr:'Check the card number, expiry and CVC.' });
+            return;
+          }
+          if (n.slice(-4) === '0002') {
+            this.setState({ payErr:'Your bank declined this card. Try another method.' });
+            return;
+          }
+        }
+        this.setState({ placing:true, payErr:'' });
+        this.payTimer = setTimeout(() => {
+          if (st.createdAccount || (!st.signedIn && st.saveAddr)) {
+            try { localStorage.setItem('eb-account', JSON.stringify({ phone: String(st.phone || '912 340 118').replace(/^\+?351\s*/, ''), name: st.a_name || 'New customer' })); } catch (e) {}
+          }
+          this.setState({ placing:false, view:'placed', orderId:'EB-10' + (430 + Math.floor(Math.random() * 60)) });
+        }, 1400);
+      },
+
+      firstName: ((st.createdAccount ? (st.a_name || st.userName) : (st.signedIn ? st.userName : st.a_name)) || 'there').split(' ')[0],
+      smsLabel: phoneDisplay,
+      orderId: st.orderId || 'EB-10442',
+      createdAccount: st.createdAccount || (!st.signedIn && st.saveAddr && !st.guestOnly),
+      placedFacts: [
+        { k:'Arriving', v: ship.id === 'express' ? 'Tomorrow before 18:00' : ship.id === 'pickup' ? 'Ready today from 15:00' : '2–4 working days' },
+        { k:'Delivering to', v: (addressSummary || 'Lisboa, Portugal').split('\n').slice(0, 2).join(', ') },
+        { k:'Paid', v: money(total) + ' · ' + st.pay }
+      ],
+
+      count,
+      toggleBag: () => this.setState((s) => ({ bagOpen: !s.bagOpen })),
+      toggleBagLabel: st.bagOpen ? 'Hide items' : 'Show items',
+      toggleBagStyle: 'background:none;border:0;cursor:pointer;padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:var(--color-border);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)',
+      linesStyle: 'overflow:hidden;transition:max-height .32s ease,opacity .25s ease;max-height:' + (st.bagOpen ? '520px' : '0') + ';opacity:' + (st.bagOpen ? 1 : 0) + ';overflow-y:' + (st.bagOpen ? 'auto' : 'hidden'),
+      lines: st.cart.map((l) => ({
+        name:l.name, meta:l.meta, qty:l.qty, lineLabel: money(l.price * l.qty),
+        imgStyle: 'width:70px;height:70px;background:var(--sand) url("' + l.img + '") center/cover no-repeat',
+        inc: () => this.bump(l.id, 1), dec: () => this.bump(l.id, -1),
+        remove: () => this.setState((s) => ({ cart: s.cart.filter((x) => x.id !== l.id) }))
+      })),
+
+      shipProgressLabel: freeShip || subtotal >= threshold ? 'Free standard shipping unlocked' : "You're " + money(remaining) + ' away from free shipping',
+      shipBarStyle: 'height:100%;background:var(--terra-tint);transition:width .4s ease;width:' + Math.min(100, threshold ? (subtotal / threshold) * 100 : 100) + '%',
+
+      promo: st.promo,
+      setPromo: (e) => this.setState({ promo:e.target.value.toUpperCase().slice(0, 12), promoNote:'' }),
+      applyPromo: () => {
+        const p = PROMOS[st.promo.trim()];
+        if (p) this.setState({ promoApplied:p, promoNote:p.label + ' applied — ' + Math.round(p.rate * 100) + '% off' });
+        else this.setState({ promoApplied:null, promoNote: st.promo.trim() ? 'That code is not valid or has expired.' : 'Enter a code first.' });
+      },
+      promoNote: st.promoNote,
+      promoNoteStyle: 'font-size:12px;margin-top:10px;min-height:15px;color:' + (st.promoApplied ? 'var(--moss)' : 'var(--terra)') + ';transition:opacity .2s ease;opacity:' + (st.promoNote ? 1 : 0),
+
+      totalsStyle: 'position:sticky;bottom:0;z-index:3;background:var(--cream);border-top:2px solid var(--ink);box-shadow:0 -10px 24px rgba(43,36,29,0.08);padding:20px 22px;display:flex;flex-direction:column;gap:11px;font-size:13.5px',
+      subtotalLabel: money(subtotal),
+      discountLabel: st.promoApplied ? 'Discount · ' + st.promoApplied.label : 'Discount',
+      discountAmount: money(discount),
+      discountRowStyle: 'display:flex;justify-content:space-between;gap:12px;transition:opacity .2s ease;opacity:' + (discount ? 1 : 0) + ';height:' + (discount ? 'auto' : '0') + ';overflow:hidden',
+      shipCostLabel: shipCost === 0 ? 'Free' : money(shipCost),
+      totalLabel2: money(total),
+      vatLabel: money(total - total / (1 + VAT))
+    };
+  }
+}
+</script>
+</body>
+</html>

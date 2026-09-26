@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-accent-2:#94513C; --color-accent-2-500:#94513C; --color-accent-2-600:#82472F;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+
+@media (max-width:760px){
+  header nav{display:none !important}
+  header > div{height:58px !important;padding:0 16px !important}
+  footer{padding-bottom:26px !important}
+}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip">
+
+  <dc-import name="SiteHeader" active="about" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+
+  <section style="border-bottom:2px solid var(--ink);padding:36px 28px 44px">
+    <div style="max-width:1600px;margin:0 auto">
+      <nav style="font-size:12px;letter-spacing:0.06em;color:var(--t2);margin-bottom:26px">
+        <a href="EasyBeauty Landing.dc.html" style="color:var(--t2)">Home</a> / <span style="color:var(--ink)">About</span>
+      </nav>
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--terra);margin-bottom:20px">Founded 2019 · Lisbon</div>
+      <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(38px,6.4vw,88px);line-height:0.98;margin:0 0 24px;max-width:20ch">Twelve formulas. No seasonal launches.</h1>
+      <p style="font-size:clamp(16px,1.6vw,20px);line-height:1.65;color:var(--t1);margin:0;max-width:58ch">We started because a friend with reactive skin could not find a cleanser that listed what was in it. Everything since has followed from that: short ingredient decks, published test data, and a range that only grows when a formula earns its place.</p>
+    </div>
+  </section>
+
+  <div role="img" aria-label="Lab photograph" style="height:clamp(300px,44vw,580px);background:var(--sand) url('assets/hero.jpg') center 30%/cover no-repeat;border-bottom:2px solid var(--ink)"></div>
+
+  <section style="border-bottom:2px solid var(--ink);background:var(--color-border);display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px">
+    <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+      <div style="background:var(--cream);padding:34px 26px">
+        <div style="font-family:var(--serif);font-size:clamp(34px,4vw,52px);line-height:1;margin-bottom:12px">{{ s.n }}</div>
+        <div style="font-size:13px;line-height:1.6;color:var(--t1)">{{ s.l }}</div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+    <div style="padding:clamp(40px,5vw,72px) 28px">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:20px">What we hold to</div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.6vw,48px);line-height:1.08;margin:0;max-width:18ch">Four rules that decide every formula we ship.</h2>
+    </div>
+    <div style="border-left:2px solid var(--ink)">
+      <sc-for list="{{ principles }}" as="p" hint-placeholder-count="4">
+        <div onMouseEnter="{{ p.enter }}" onMouseLeave="{{ p.leave }}" style="{{ p.style }}">
+          <div style="display:grid;grid-template-columns:52px 1fr;gap:20px;padding:28px 28px">
+            <div style="{{ p.numStyle }}">{{ p.n }}</div>
+            <div>
+              <div style="font-size:16px;font-weight:500;margin-bottom:9px">{{ p.t }}</div>
+              <div style="font-size:14.5px;line-height:1.72;color:var(--t1)">{{ p.b }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);padding:clamp(40px,5vw,68px) 28px">
+    <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:26px">How we got here</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px;background:var(--color-border);border-top:2px solid var(--ink)">
+      <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="5">
+        <div style="background:var(--cream);padding:28px 24px 34px">
+          <div style="font-size:12px;letter-spacing:0.14em;color:var(--terra);margin-bottom:16px">{{ t.y }}</div>
+          <div style="font-family:var(--serif);font-size:21px;line-height:1.2;margin-bottom:10px">{{ t.t }}</div>
+          <div style="font-size:13.5px;line-height:1.7;color:var(--t1)">{{ t.b }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div role="img" aria-label="Formulation photograph" style="min-height:clamp(280px,38vw,520px);background:var(--sand) url('assets/apply.jpg') center/cover no-repeat"></div>
+    <div style="padding:clamp(40px,5vw,72px) 28px;display:flex;flex-direction:column;justify-content:center;border-left:2px solid var(--ink)">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:20px">Where it is made</div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,42px);line-height:1.1;margin:0 0 22px;max-width:20ch">One lab outside Lisbon, batch-tested before it leaves.</h2>
+      <p style="font-size:15.5px;line-height:1.75;color:var(--t1);margin:0 0 18px;max-width:52ch">We produce in a single GMP-certified facility in Sintra. Every batch is tested for microbial load and active concentration, and the certificate of analysis is printed on the carton with the batch number.</p>
+      <p style="font-size:15.5px;line-height:1.75;color:var(--t1);margin:0 0 26px;max-width:52ch">Nothing is tested on animals, at any stage, in any market — including the ones that would require it. That decision costs us distribution and we are keeping it.</p>
+      <a href="EasyBeauty Blog.dc.html" class="btn btn-secondary" style="align-self:flex-start;text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Read the formulation notes</a>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink)">
+    <div style="padding:clamp(36px,4.5vw,60px) 28px 28px">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:20px">The people who sign the batch</div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,42px);line-height:1.1;margin:0;max-width:22ch">A team of nine, four of them chemists.</h2>
+    </div>
+    <div style="background:var(--color-border);display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:2px;border-top:2px solid var(--ink)">
+      <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
+        <div onMouseEnter="{{ m.enter }}" onMouseLeave="{{ m.leave }}" style="{{ m.cardStyle }}">
+          <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--sand)">
+            <div role="img" aria-label="{{ m.name }}" style="{{ m.imgStyle }}"></div>
+          </div>
+          <div style="padding:20px 22px 26px">
+            <div style="font-size:15px;font-weight:500;margin-bottom:6px">{{ m.name }}</div>
+            <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--terra);margin-bottom:12px">{{ m.role }}</div>
+            <div style="font-size:13.5px;line-height:1.7;color:var(--t1)">{{ m.bio }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);background:var(--dark-bg);color:var(--off);padding:clamp(48px,6vw,84px) 28px">
+    <div style="max-width:1600px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:end">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(251,250,248,0.6);margin-bottom:20px">Still deciding?</div>
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.8vw,52px);line-height:1.06;margin:0;max-width:20ch">Six questions, three products, no account needed.</h2>
+      </div>
+      <div style="display:flex;gap:2px;flex-wrap:wrap">
+        <a href="EasyBeauty Quiz.dc.html" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Take the skin quiz</a>
+        <a href="EasyBeauty Contact.dc.html" class="btn" style="background:transparent;border:2px solid rgba(251,250,248,0.5);color:var(--off);text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Talk to us</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="about" hint-size="100%,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#94513C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#94513C&quot;,&quot;#82472F&quot;,&quot;#3F4A3D&quot;,&quot;#7A4A55&quot;],&quot;section&quot;:&quot;Theme&quot;}}">
+const ANN = [
+  'Welcome offer — 10% off your first order',
+  'Free shipping on orders over $75',
+  'Ships in 24h from Lisbon'
+];
+
+const STATS = [
+  { n:'12', l:'Products in the whole range, after seven years' },
+  { n:'84', l:'Participants in our last twelve-week barrier study' },
+  { n:'1', l:'GMP-certified lab, outside Lisbon' },
+  { n:'0', l:'Animal testing, in any market' }
+];
+
+const PRINCIPLES = [
+  { n:'01', t:'Short decks, printed in full', b:'If an ingredient cannot be justified to a customer in one sentence, it does not go in. Every carton carries the complete list at its real percentage.' },
+  { n:'02', t:'Concentration follows the evidence', b:'We formulate to the dose the literature supports, not the number that sells. That is why our niacinamide is 4% and not 10%.' },
+  { n:'03', t:'Fragrance-free unless there is a reason', b:'Fragrance is the most common avoidable irritant in skincare. Leaving it out costs us a pleasant first impression and gains reactive skin a product it can keep using.' },
+  { n:'04', t:'We publish what we measure', b:'Test data goes in the Journal — including the studies where the effect was smaller than we hoped.' }
+];
+
+const TIMELINE = [
+  { y:'2019', t:'A cleanser, and nothing else', b:'Made in a rented lab in Almada for one friend with reactive skin, then for forty more.' },
+  { y:'2021', t:'The barrier cream', b:'Ceramides and squalane at a ratio we reformulated nine times. Still our second-best seller.' },
+  { y:'2023', t:'Moved to Sintra', b:'Our own GMP-certified line. Batch testing in-house from that point on.' },
+  { y:'2024', t:'Leaping Bunny certified', b:'Audited supply chain, no animal testing at any tier.' },
+  { y:'2026', t:'Twelve products', b:'Two launches a year at most. Anything that does not outperform what we already sell does not ship.' }
+];
+
+const TEAM = [
+  { name:'Maren Sousa',    role:'Head of formulation', bio:'Twelve years in barrier-first cosmetic chemistry. Signs off every batch.', img:'assets/skin.jpg' },
+  { name:'Dr. Inês Rocha', role:'Dermatology review',  bio:'Reviews all clinical claims and the Journal before it publishes.',        img:'assets/apply.jpg' },
+  { name:'Tomás Vieira',   role:'Supply & sourcing',   bio:'Traces every raw material to its origin. Left two suppliers over it.',    img:'assets/p3.jpg' },
+  { name:'Lena Haddad',    role:'Customer care',       bio:'Answers routine questions herself, usually within a day.',                img:'assets/p2.jpg' }
+];
+
+class Component extends DCLogic {
+  state = { ann:0, scrolled:false, hoverP:null, hoverT:null };
+
+  componentDidMount() {
+    this.applyAccent();
+    this.annTimer = setInterval(() => this.setState((s) => ({ ann:(s.ann + 1) % ANN.length })), 4000);
+    this.onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const next = y > 80;
+      if (next !== this.state.scrolled) this.setState({ scrolled:next });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+  }
+
+  componentDidUpdate() { this.applyAccent(); }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (!a || String(a).indexOf('var(') === 0 || String(a).toUpperCase() === '#94513C') return;
+    document.documentElement.style.setProperty('--accent-fill', a);
+    const r = document.documentElement.style;
+    r.setProperty('--terra', a);
+    r.setProperty('--color-accent', a);
+    r.setProperty('--color-accent-500', a);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.annTimer);
+    window.removeEventListener('scroll', this.onScroll);
+  }
+
+  renderVals() {
+    const st = this.state;
+    return {
+      ann: ANN[st.ann],
+      headerStyle: 'position:sticky;top:0;z-index:40;background:' + (st.scrolled ? 'rgba(245,240,234,0.96)' : 'var(--cream)') + ';backdrop-filter:blur(8px);border-bottom:2px solid var(--ink);box-shadow:' + (st.scrolled ? '0 6px 24px rgba(43,36,29,0.08)' : 'none') + ';transition:box-shadow .3s ease,background .3s ease',
+
+      stats: STATS.map((s) => ({ n:s.n, l:s.l })),
+
+      principles: PRINCIPLES.map((p, i) => {
+        const on = st.hoverP === i;
+        return {
+          n:p.n, t:p.t, b:p.b,
+          style: 'border-bottom:' + (i < PRINCIPLES.length - 1 ? '1px solid var(--color-border)' : '0') + ';background:' + (on ? 'var(--off)' : 'transparent') + ';transition:background .22s ease',
+          numStyle: 'font-family:var(--serif);font-size:22px;transition:color .22s ease;color:' + (on ? 'var(--terra)' : 'var(--t5)'),
+          enter: () => this.setState({ hoverP:i }),
+          leave: () => this.setState((s) => s.hoverP === i ? { hoverP:null } : null)
+        };
+      }),
+
+      timeline: TIMELINE.map((t) => ({ y:t.y, t:t.t, b:t.b })),
+
+      team: TEAM.map((m, i) => {
+        const on = st.hoverT === i;
+        return {
+          name:m.name, role:m.role, bio:m.bio,
+          cardStyle: 'background:var(--off);transition:transform .25s ease,box-shadow .25s ease;transform:translateY(' + (on ? '-4px' : '0') + ');box-shadow:' + (on ? '0 16px 34px rgba(43,36,29,0.14)' : 'none') + ';z-index:' + (on ? 2 : 1),
+          imgStyle: 'position:absolute;inset:0;background:var(--sand) url("' + m.img + '") center/cover no-repeat;transition:transform .5s ease;transform:scale(' + (on ? 1.05 : 1) + ')',
+          enter: () => this.setState({ hoverT:i }),
+          leave: () => this.setState((s) => s.hoverT === i ? { hoverT:null } : null)
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

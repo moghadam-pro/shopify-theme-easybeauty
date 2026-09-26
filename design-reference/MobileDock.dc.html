@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<style>
+@media (min-width:761px){ .eb-dock{display:none !important} }
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+</helmet>
+
+<nav class="eb-dock" aria-label="Main" style="{{ dockStyle }}">
+  <sc-for list="{{ items }}" as="i" hint-placeholder-count="4">
+    <a href="{{ i.href }}" style="{{ i.style }}">
+      <span style="{{ i.markStyle }}"></span>
+      <span style="position:relative;display:flex">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="{{ i.icon }}"></path></svg>
+        <span style="{{ i.badgeStyle }}">{{ i.badge }}</span>
+      </span>
+      <span style="{{ i.labelStyle }}">{{ i.label }}</span>
+    </a>
+  </sc-for>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:390,&quot;height&quot;:90},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;shop&quot;,&quot;options&quot;:[&quot;shop&quot;,&quot;search&quot;,&quot;journal&quot;,&quot;bag&quot;,&quot;account&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;bagCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:20,&quot;tsType&quot;:&quot;number&quot;}}">
+const ICONS = {
+  shop:     'M4 8h16l-1.2 12H5.2L4 8zM9 8V6.5a3 3 0 016 0V8',
+  search:   'M11 4a7 7 0 100 14 7 7 0 000-14zM20 20l-4-4',
+  journal:  'M5 4h9l5 5v11H5V4zM14 4v5h5M8.5 13h7M8.5 16.5h5',
+  bag:      'M6 9h12l-1 11H7L6 9zM9.5 9V7a2.5 2.5 0 015 0v2',
+  account:  'M12 4a4 4 0 100 8 4 4 0 000-8zM4.5 21c0-4.1 3.4-7.5 7.5-7.5s7.5 3.4 7.5 7.5'
+};
+
+const ITEMS = [
+  { key:'shop',    label:'Shop',    href:'EasyBeauty Collection.dc.html' },
+  { key:'search',  label:'Search',  href:'EasyBeauty Collection.dc.html#search' },
+  { key:'bag',     label:'Bag',     href:'EasyBeauty Bag.dc.html' },
+  { key:'account', label:'You',     href:'EasyBeauty Account.dc.html' }
+];
+
+class Component extends DCLogic {
+  state = { mobile:false };
+
+  componentDidMount() {
+    this.onResize = () => {
+      const mobile = window.innerWidth <= 760;
+      if (mobile !== this.state.mobile) this.setState({ mobile });
+      document.body.style.paddingBottom = mobile ? '78px' : '';
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+    document.body.style.paddingBottom = '';
+  }
+
+  renderVals() {
+    const active = this.props.active ?? 'shop';
+    const bag = this.props.bagCount ?? 0;
+
+    return {
+      dockStyle: 'position:fixed;left:0;right:0;bottom:0;z-index:46;display:grid;grid-template-columns:repeat(4,1fr);background:var(--plate);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:2px solid var(--ink);padding-bottom:env(safe-area-inset-bottom)',
+      items: ITEMS.map((it) => {
+        const on = it.key === active;
+        return {
+          label: it.label, href: it.href,
+          icon: ICONS[it.key],
+          style: 'position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:11px 4px 12px;color:' + (on ? 'var(--ink)' : 'var(--t4)') + ';text-decoration:none;-webkit-tap-highlight-color:transparent',
+          markStyle: 'position:absolute;top:0;left:14%;right:14%;height:2px;background:var(--terra);transition:opacity .2s ease;opacity:' + (on ? 1 : 0),
+          iconStyle: 'display:block;width:22px;height:22px',
+          labelStyle: 'font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;font-weight:' + (on ? 600 : 400),
+          badge: bag > 0 ? String(bag) : '',
+          badgeStyle: 'position:absolute;top:-5px;right:-8px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:var(--accent-fill);color:var(--off);font-size:9.5px;line-height:16px;text-align:center;transition:opacity .2s ease;opacity:' + (it.key === 'bag' && bag > 0 ? 1 : 0)
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

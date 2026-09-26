@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --rose:#E7A99B; --violet:#584B9E; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-accent-2:#94513C; --color-accent-2-100:#F7E8E2; --color-accent-2-200:#EFD3C9;
+  --color-accent-2-300:#DFB6A7; --color-accent-2-400:#C97B63; --color-accent-2-500:#94513C;
+  --color-accent-2-600:#82472F; --color-accent-2-700:#6E3B27; --color-accent-2-800:#5A301F;
+  --color-accent-2-900:#46251A;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+image-slot{display:block}
+
+@media (max-width:760px){
+  [data-sticky-bar]{bottom:78px !important}
+  header nav{display:none !important}
+  header > div{height:58px !important;padding:0 16px !important}
+  footer{padding-bottom:26px !important}
+}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip;padding-bottom:64px">
+
+  <dc-import name="SiteHeader" active="shop" count="{{ count }}" on-bag="{{ openCart }}" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+
+  <nav style="max-width:1600px;margin:0 auto;padding:18px 28px;font-size:12px;letter-spacing:0.06em;color:var(--t2);border-bottom:1px solid var(--color-border)">
+    <a href="EasyBeauty Landing.dc.html" style="color:var(--t2)">Home</a> / <a href="EasyBeauty Landing.dc.html#best" style="color:var(--t2)">Serum</a> / <span style="color:var(--ink)">Radiance Serum No.3</span>
+  </nav>
+
+  <sc-if value="{{ showDossier }}" hint-placeholder-val="{{ false }}">
+  <section style="background:var(--dark-bg);color:var(--off);border-bottom:2px solid var(--ink)">
+    <div style="display:grid;grid-template-columns:{{ dossierCols }}">
+
+      <div style="padding:clamp(34px,4.4vw,72px) clamp(24px,3vw,52px) clamp(30px,3.6vw,56px);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(251,250,248,0.55);margin-bottom:28px;flex-wrap:wrap">
+          <span style="color:var(--terra-tint)">No.3</span><span>Serum</span><span>·</span><span>Niacinamide 10%</span><span>·</span><span>pH 5.5</span>
+        </div>
+
+        <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(46px,7.4vw,112px);line-height:0.9;margin:0 0 30px;letter-spacing:-0.01em">Radiance<br>Serum</h1>
+
+        <p style="font-size:clamp(16px,1.5vw,20px);line-height:1.6;color:rgba(251,250,248,0.82);margin:0 0 40px;max-width:44ch">Twelve versions. One that stopped stinging. Skin looks lit from inside by week four — weightless, never tacky.</p>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--plate-soft);margin-bottom:auto">
+          <sc-for list="{{ specs }}" as="s" hint-placeholder-count="4">
+            <div style="background:var(--dark-bg);padding:20px 16px 22px">
+              <div style="font-family:var(--serif);font-size:30px;line-height:1;color:var(--off);margin-bottom:10px">{{ s.n }}</div>
+              <div style="font-size:11.5px;line-height:1.55;letter-spacing:0.04em;color:rgba(251,250,248,0.6)">{{ s.l }}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;gap:2px;flex-wrap:wrap;margin-top:44px">
+          <sc-for list="{{ dossierTabs }}" as="t" hint-placeholder-count="3">
+            <button type="button" onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+          </sc-for>
+        </div>
+        <div style="border-top:1px solid rgba(251,250,248,0.2);margin-top:2px;padding:24px 0 0;font-size:14.5px;line-height:1.8;color:rgba(251,250,248,0.78);max-width:58ch">{{ dossierBody }}</div>
+      </div>
+
+      <div style="{{ dossierMediaStyle }}">
+        <div style="{{ dossierShotStyle }}"></div>
+        <div style="{{ dossierRailStyle }}">
+          <sc-for list="{{ dossierShots }}" as="s" hint-placeholder-count="4">
+            <button type="button" onClick="{{ s.pick }}" aria-label="{{ s.label }}" style="{{ s.style }}"></button>
+          </sc-for>
+        </div>
+
+        <div style="{{ dossierPanelStyle }}">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:20px">
+            <span style="font-family:var(--serif);font-size:38px;line-height:1">{{ priceLabel }}</span>
+            <span style="font-size:12px;letter-spacing:0.08em;color:var(--t3);text-align:right">{{ perUnitLabel }}</span>
+          </div>
+          <div style="display:flex;gap:2px;margin-bottom:12px">
+            <sc-for list="{{ sizes }}" as="z" hint-placeholder-count="2">
+              <button type="button" onClick="{{ z.pick }}" style="{{ z.style }}">{{ z.label }}</button>
+            </sc-for>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:18px">
+            <sc-for list="{{ packsCompact }}" as="k" hint-placeholder-count="4">
+              <button type="button" onClick="{{ k.pick }}" style="{{ k.style }}">
+                <span>{{ k.title }}</span>
+                <span style="display:flex;align-items:center;gap:10px;margin-left:auto">
+                  <sc-if value="{{ k.hasTag }}" hint-placeholder-val="{{ false }}">
+                    <span style="{{ k.tagStyle }}">{{ k.tag }}</span>
+                  </sc-if>
+                  <span>{{ k.priceLabel }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+          <button type="button" onClick="{{ addMain }}" class="btn btn-primary btn-block" style="justify-content:space-between;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;padding:16px 18px">
+            <span>Add to bag</span><span>{{ priceLabel }}</span>
+          </button>
+          <button type="button" onClick="{{ toggleSave }}" style="{{ saveStyle }}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="{{ saveFill }}" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:0 0 auto"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+            <span>{{ saveLabel }}</span>
+          </button>
+          <div style="display:flex;justify-content:space-between;gap:10px;margin-top:14px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3)">
+            <span>4.9 ★ · 1,284</span><span>60-day returns</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid rgba(251,250,248,0.2);display:flex;overflow-x:auto;gap:0">
+      <sc-for list="{{ marquee }}" as="m" hint-placeholder-count="5">
+        <span style="flex:0 0 auto;padding:16px 26px;border-right:1px solid rgba(251,250,248,0.2);font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(251,250,248,0.62);white-space:nowrap">{{ m }}</span>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ showClassic }}" hint-placeholder-val="{{ true }}">
+  <section style="{{ pdpSectionStyle }}">
+    <div style="{{ galleryStyle }}">
+      <div style="{{ mainWrapStyle }}">
+        <div style="{{ mainShotStyle }}"></div>
+        <sc-if value="{{ isVideoShot }}" hint-placeholder-val="{{ false }}">
+          <span style="position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:8px;background:var(--plate);padding:7px 12px;font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg>
+            How to use · 0:12
+          </span>
+        </sc-if>
+      </div>
+      <div style="{{ thumbsStyle }}">
+        <sc-for list="{{ shots }}" as="s" hint-placeholder-count="0">
+          <button type="button" onClick="{{ s.pick }}" aria-label="{{ s.label }}" style="{{ s.style }}"></button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="{{ infoStyle }}">
+      <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.8vw,48px);line-height:1.08;margin:0 0 14px">Radiance Serum No.3</h1>
+      <a href="#reviews" style="display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--t3);margin-bottom:20px">
+        <span style="color:var(--terra);letter-spacing:0.1em">★★★★★</span>
+        <span style="border-bottom:1px solid var(--color-border)">4.9 · 1,284 reviews</span>
+      </a>
+      <p style="font-size:17px;line-height:1.6;color:var(--t1);margin:0 0 26px">Skin looks lit from inside by week four — weightless, never tacky, and it layers under everything.</p>
+
+      <div style="border-top:1px solid var(--color-border);padding-top:22px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:12px">Size</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <sc-for list="{{ sizes }}" as="z" hint-placeholder-count="0">
+            <button type="button" onClick="{{ z.pick }}" style="{{ z.style }}">{{ z.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:baseline;gap:12px;margin:26px 0 6px">
+        <span style="font-family:var(--serif);font-size:34px;line-height:1">{{ priceLabel }}</span>
+        <sc-if value="{{ hasSaving }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:14px;color:var(--t3);text-decoration:line-through">{{ wasLabel }}</span>
+        </sc-if>
+        <span style="font-size:12.5px;color:var(--t3)">{{ perUnitLabel }}</span>
+      </div>
+
+      <div style="margin-top:20px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:20px 0">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px">
+          <span style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2)">Choose your pack</span>
+          <span style="font-size:11.5px;color:var(--t2)">Cancel or skip anytime</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ packs }}" as="k" hint-placeholder-count="0">
+            <button type="button" onClick="{{ k.pick }}" style="{{ k.rowStyle }}">
+              <span style="{{ k.dotStyle }}"><span style="{{ k.innerDotStyle }}"></span></span>
+              <span style="display:flex;flex-direction:column;gap:4px;text-align:left;min-width:0">
+                <span style="font-size:14.5px;font-weight:500">{{ k.title }}</span>
+                <span style="font-size:12.5px;color:var(--t3)">{{ k.note }}</span>
+              </span>
+              <span style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;margin-left:auto;white-space:nowrap">
+                <span style="font-size:14.5px">{{ k.priceLabel }}</span>
+                <sc-if value="{{ k.hasTag }}" hint-placeholder-val="{{ false }}">
+                  <span style="{{ k.tagStyle }}">{{ k.tag }}</span>
+                </sc-if>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <button type="button" onClick="{{ addMain }}" class="btn btn-primary btn-block" style="justify-content:space-between;text-transform:uppercase;letter-spacing:0.1em;font-size:12px;margin-top:22px;padding:17px 20px">
+        <span>Add to bag</span><span>{{ priceLabel }}</span>
+      </button>
+      <button type="button" onClick="{{ toggleSave }}" style="{{ saveStyle }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="{{ saveFill }}" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="display:block;flex:0 0 auto"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+        <span>{{ saveLabel }}</span>
+      </button>
+
+      <div style="display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:12.5px;line-height:1.6;color:var(--t2)">
+        <span style="display:flex;align-items:center;gap:7px"><span style="width:7px;height:7px;background:var(--moss);flex:0 0 auto"></span>In stock — ships within 24h</span>
+        <span>Free delivery over $75</span>
+        <span>60-day returns, opened or not</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--color-border);border:1px solid var(--color-border);margin-top:20px">
+        <span style="background:var(--off);padding:13px 10px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">Cruelty-free</span>
+        <span style="background:var(--off);padding:13px 10px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">Vegan</span>
+        <span style="background:var(--off);padding:13px 10px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--t1)">Derm tested</span>
+      </div>
+
+      <ul style="list-style:none;padding:0;margin:30px 0 0;display:flex;flex-direction:column;gap:14px">
+        <li style="display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:14.5px;line-height:1.6">
+          <span style="color:var(--terra)">—</span><span><strong style="font-weight:600">10% niacinamide</strong> fades dark spots and evens tone over eight weeks.</span>
+        </li>
+        <li style="display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:14.5px;line-height:1.6">
+          <span style="color:var(--terra)">—</span><span><strong style="font-weight:600">Multi-weight hyaluronic acid</strong> floods skin with water, plumping fine lines on contact.</span>
+        </li>
+        <li style="display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:14.5px;line-height:1.6">
+          <span style="color:var(--terra)">—</span><span><strong style="font-weight:600">Ceramide NP</strong> rebuilds the barrier, so the glow holds through winter.</span>
+        </li>
+        <li style="display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:14.5px;line-height:1.6">
+          <span style="color:var(--terra)">—</span><span><strong style="font-weight:600">Silky, weightless finish</strong> that layers under SPF without pilling.</span>
+        </li>
+        <li style="display:grid;grid-template-columns:auto 1fr;gap:12px;font-size:14.5px;line-height:1.6">
+          <span style="color:var(--terra)">—</span><span><strong style="font-weight:600">Fragrance-free, pH 5.5</strong> — tested on sensitive and acne-prone skin.</span>
+        </li>
+      </ul>
+
+      <div style="margin-top:34px;border-top:2px solid var(--ink)">
+        <sc-for list="{{ accordion }}" as="a" hint-placeholder-count="0">
+          <div style="border-bottom:1px solid var(--color-border)">
+            <button type="button" onClick="{{ a.toggle }}" aria-expanded="{{ a.open }}" style="width:100%;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink)">
+              <span>{{ a.title }}</span>
+              <span style="{{ a.iconStyle }}">+</span>
+            </button>
+            <div style="{{ a.bodyStyle }}">
+              <p style="margin:0 0 18px;font-size:14px;line-height:1.75;color:var(--t1)">{{ a.body }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <section style="border-bottom:2px solid var(--ink);background:var(--off);padding:72px 28px">
+    <div style="max-width:1600px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border)">
+      <div style="background:var(--off);padding:34px 28px">
+        <div style="font-family:var(--serif);font-size:54px;line-height:1">87%</div>
+        <div style="font-size:13.5px;line-height:1.6;color:var(--t1);margin-top:12px">saw brighter, more even skin in two weeks</div>
+      </div>
+      <div style="background:var(--off);padding:34px 28px">
+        <div style="font-family:var(--serif);font-size:54px;line-height:1">92%</div>
+        <div style="font-size:13.5px;line-height:1.6;color:var(--t1);margin-top:12px">said it layered under SPF without pilling</div>
+      </div>
+      <div style="background:var(--off);padding:34px 28px">
+        <div style="font-family:var(--serif);font-size:54px;line-height:1">0</div>
+        <div style="font-size:13.5px;line-height:1.6;color:var(--t1);margin-top:12px">reported stinging across 42 sensitive-skin panellists</div>
+      </div>
+      <div style="background:var(--off);padding:34px 28px;display:flex;align-items:flex-end">
+        <div style="font-size:12px;line-height:1.7;color:var(--t2)">Independent consumer study, 120 participants, 8 weeks, 2025. Self-reported results.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);padding:78px 28px 86px">
+    <div style="max-width:1600px;margin:0 auto">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;padding-bottom:24px;border-bottom:2px solid var(--ink)">
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,40px);line-height:1.1;margin:0">Complete the routine</h2>
+        <button type="button" onClick="{{ addRoutine }}" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Add all three — {{ routineTotal }}</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border);border-top:0;margin-top:0">
+        <sc-for list="{{ related }}" as="p" hint-placeholder-count="0">
+          <div onMouseEnter="{{ p.enter }}" onMouseLeave="{{ p.leave }}" style="{{ p.cardStyle }}">
+            <div style="position:relative;overflow:hidden;aspect-ratio:1/1;background:var(--cream)">
+              <div role="img" aria-label="{{ p.name }}" style="{{ p.imgStyle }}"></div>
+              <div style="{{ p.img2Style }}"></div>
+              <button type="button" onClick="{{ p.add }}" style="{{ p.quickStyle }}">
+                <span>Quick add</span><span style="font-size:15px;line-height:1">+</span>
+              </button>
+            </div>
+            <div style="padding:18px 18px 22px;display:flex;flex-direction:column;gap:7px">
+              <span style="font-size:15px;font-weight:500">{{ p.name }}</span>
+              <span style="font-size:12px;color:var(--t3)">{{ p.step }}</span>
+              <span style="font-size:14px">{{ p.priceLabel }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr))">
+      <div style="position:relative;aspect-ratio:4/5;border-right:1px solid var(--color-border);background:var(--sand)">
+        <image-slot id="pdp-story" shape="rect" src="assets/skin.jpg" placeholder="Formulation or founder photograph"></image-slot>
+      </div>
+      <div style="padding:clamp(40px,5vw,80px) 28px;display:flex;flex-direction:column;justify-content:center;max-width:680px">
+        <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">Why No.3</div>
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,42px);line-height:1.12;margin:0 0 22px">The third formula was the one that stopped stinging.</h2>
+        <p style="font-size:15.5px;line-height:1.75;color:var(--t1);margin:0 0 30px">We put niacinamide at 10% and stopped there, because higher concentrations flushed half our test panel. Two years, twelve versions, one serum — and the number stayed in the name as a reminder.</p>
+        <a href="EasyBeauty Landing.dc.html#journal" style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:4px;align-self:flex-start">Read our story</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);padding:78px 28px 84px">
+    <div style="max-width:1600px;margin:0 auto">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:26px">From the community</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border)">
+        <sc-for list="{{ ugc }}" as="g" hint-placeholder-count="0">
+          <div style="aspect-ratio:1/1;background:var(--sand)">
+            <image-slot id="{{ g.slotId }}" shape="rect" src="{{ g.img }}" placeholder="UGC"></image-slot>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews" style="border-bottom:2px solid var(--ink);background:var(--off);padding:78px 28px 92px">
+    <div style="max-width:1600px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end;padding-bottom:28px;border-bottom:2px solid var(--ink)">
+        <div>
+          <div style="font-family:var(--serif);font-size:clamp(40px,5vw,68px);line-height:1">4.9 <span style="color:var(--terra)">★</span></div>
+          <div style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--t2);margin-top:12px">1,284 verified reviews</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+          <sc-for list="{{ filters }}" as="f" hint-placeholder-count="0">
+            <button type="button" onClick="{{ f.pick }}" style="{{ f.style }}">{{ f.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border);border-top:0">
+        <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="0">
+          <figure style="margin:0;background:var(--off);padding:30px 26px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+              <span style="color:var(--terra);font-size:13px;letter-spacing:0.14em">★★★★★</span>
+              <span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t2)">{{ r.skin }}</span>
+            </div>
+            <blockquote style="margin:0;font-size:15px;line-height:1.7;color:var(--t1)">“{{ r.text }}”</blockquote>
+            <figcaption style="font-size:12.5px;color:var(--t3);margin-top:auto">{{ r.name }} · {{ r.age }} · Verified purchase</figcaption>
+          </figure>
+        </sc-for>
+      </div>
+      <div style="font-size:12.5px;color:var(--t2);margin-top:22px">{{ reviewCountLabel }}</div>
+    </div>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+
+  <div data-sticky-bar="true" style="{{ stickyStyle }}">
+    <div style="max-width:1600px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 20px">
+      <div role="img" aria-label="Radiance Serum No.3" style="width:46px;height:46px;flex:0 0 auto;background:var(--imgbg) url('assets/p4.jpg') center/cover no-repeat"></div>
+      <div style="min-width:0;flex:1 1 auto">
+        <div style="font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Radiance Serum No.3</div>
+        <div style="font-size:12px;color:var(--t3)">{{ stickySummary }}</div>
+      </div>
+      <button type="button" onClick="{{ addMain }}" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:11.5px;white-space:nowrap">Add — {{ priceLabel }}</button>
+    </div>
+  </div>
+
+  <div onClick="{{ closeCart }}" style="{{ scrimStyle }}"></div>
+  <aside aria-label="Your bag" style="{{ drawerStyle }}">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:2px solid var(--ink)">
+      <span style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase">Your bag ({{ count }})</span>
+      <button type="button" onClick="{{ closeCart }}" aria-label="Close bag" style="background:none;border:0;cursor:pointer;color:var(--ink);display:flex;padding:4px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <div style="padding:18px 24px;border-bottom:1px solid var(--color-border);background:var(--off)">
+      <div style="font-size:12.5px;margin-bottom:10px">{{ shipLabel }}</div>
+      <div style="height:4px;background:var(--sand)">
+        <div style="{{ shipBarStyle }}"></div>
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto">
+      <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:48px 24px;font-size:14px;color:var(--t3);line-height:1.7">Your bag is empty. Pick a pack above to get started.</div>
+      </sc-if>
+      <sc-for list="{{ cart }}" as="l" hint-placeholder-count="0">
+        <div style="display:grid;grid-template-columns:72px 1fr auto;gap:14px;padding:18px 24px;border-bottom:1px solid var(--color-border)">
+          <div role="img" aria-label="{{ l.name }}" style="{{ l.imgStyle }}"></div>
+          <div style="min-width:0">
+            <div style="font-size:14px;font-weight:500;margin-bottom:4px">{{ l.name }}</div>
+            <div style="font-size:12.5px;color:var(--t3);margin-bottom:10px">{{ l.priceLabel }}</div>
+            <div style="display:flex;align-items:center;border:1px solid var(--color-border);width:max-content">
+              <button type="button" onClick="{{ l.dec }}" aria-label="{{ l.decLabel }}" style="background:none;border:0;padding:0 14px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--ink)">–</button>
+              <span style="font-size:13px;min-width:22px;text-align:center">{{ l.qty }}</span>
+              <button type="button" onClick="{{ l.inc }}" aria-label="{{ l.incLabel }}" style="background:none;border:0;padding:0 14px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--ink)">+</button>
+            </div>
+          </div>
+          <div style="font-size:13.5px;white-space:nowrap">{{ l.lineLabel }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="border-top:2px solid var(--ink);padding:20px 24px 26px;background:var(--off)">
+      <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:16px">
+        <span>Subtotal</span><span>{{ subtotalLabel }}</span>
+      </div>
+      <a href="EasyBeauty Checkout.dc.html" class="btn btn-primary btn-block" style="justify-content:space-between;text-transform:uppercase;letter-spacing:0.1em;font-size:12px">
+        <span>Checkout</span><span>{{ subtotalLabel }}</span>
+      </a>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3)">
+        <span>Visa</span><span>Mastercard</span><span>Amex</span><span>PayPal</span>
+      </div>
+    </div>
+  </aside>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="shop" bag-count="{{ count }}" hint-size="100%,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Gallery left&quot;,&quot;options&quot;:[&quot;Gallery left&quot;,&quot;Full-width hero&quot;,&quot;Info left, gallery right&quot;,&quot;Dark dossier&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#94513C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#94513C&quot;,&quot;#82472F&quot;,&quot;#3F4A3D&quot;,&quot;#7A4A55&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;threshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:75,&quot;min&quot;:0,&quot;max&quot;:200,&quot;step&quot;:5,&quot;unit&quot;:&quot;$&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cart&quot;}}">
+const ANN = [
+  'Welcome offer — 10% off your first order',
+  'Free shipping on orders over $75',
+  'Ships in 24h from Lisbon'
+];
+
+const SHOTS = [
+  { label:'Bottle', img:'assets/p4.jpg', video:false },
+  { label:'Texture macro', img:'assets/skin.jpg', video:false },
+  { label:'In use', img:'assets/apply.jpg', video:true },
+  { label:'Model', img:'assets/hero.jpg', video:false }
+];
+
+const SIZES = [
+  { label:'30 ml', mult:1 },
+  { label:'50 ml', mult:1.47 }
+];
+
+const PACKS = [
+  { id:'one',   title:'Single bottle',   note:'One bottle, delivered once.',            qty:1, off:0,    tag:'' },
+  { id:'duo',   title:'Duo pack',        note:'Two bottles — about four months.',        qty:2, off:0.10, tag:'Save 10%' },
+  { id:'trio',  title:'Trio pack',       note:'Three bottles — our best value.',         qty:3, off:0.18, tag:'Save 18%' },
+  { id:'refill',title:'Refill every 8 weeks', note:'One bottle, auto-delivered. Skip anytime.', qty:1, off:0.15, tag:'Save 15%' }
+];
+
+const ACC = [
+  { title:'Full ingredients (INCI)', body:'Aqua, Niacinamide, Glycerin, Propanediol, Sodium Hyaluronate, Hydroxyethyl Acrylate/Sodium Acryloyldimethyl Taurate Copolymer, Panthenol, Ceramide NP, Zinc PCA, Allantoin, Citric Acid, Sodium Benzoate, Potassium Sorbate. Fragrance-free, alcohol-free, essential-oil-free.' },
+  { title:'How to use', body:'Two to three drops on clean, damp skin, morning and night. Press in rather than rubbing, then follow with moisturiser. If you use a retinoid, apply this first and wait one minute. Sunscreen every morning.' },
+  { title:'FAQ', body:'Can I use it with vitamin C? Yes — apply the serum after. Will it pill under SPF? Not in our testing, provided skin is damp rather than wet. Pregnancy-safe? Niacinamide and hyaluronic acid are generally considered safe, but ask your doctor.' }
+];
+
+const RELATED = [
+  { id:'cleanser', name:'Gentle Cleansing Milk', step:'Step 1 · Cleanse', img:'assets/p3.jpg', img2:'assets/skin.jpg', price:42 },
+  { id:'cream',    name:'Barrier Repair Cream',  step:'Step 3 · Seal',    img:'assets/p2.jpg', img2:'assets/apply.jpg', price:58 },
+  { id:'oil',      name:'Glow Body Oil',         step:'Step 4 · Body',    img:'assets/p1.jpg', img2:'assets/skin.jpg', price:38 }
+];
+
+const REVIEWS = [
+  { name:'Maya R.', age:'34', skin:'Sensitive', text:'The first niacinamide that did not flush me. Eight weeks in, the patch on my jaw has genuinely faded.' },
+  { name:'Dilan A.', age:'41', skin:'Combination', text:'Layers under SPF with no pilling, which is the only reason I kept it. The glow is a bonus.' },
+  { name:'Priya S.', age:'27', skin:'Acne-prone', text:'No breakouts, no sting, no perfume. My dermatologist had no notes on the ingredient list.' },
+  { name:'Noor K.', age:'52', skin:'Dry', text:'I use it under the cream at night and wake up looking rested rather than tight.' },
+  { name:'Elif T.', age:'23', skin:'Combination', text:'Bought the duo after the first bottle. Cheaper per ml and I never run out mid-routine.' },
+  { name:'Sara B.', age:'38', skin:'Sensitive', text:'Rosacea-prone and fine with it, which is rare. I patch-tested for a week out of habit — nothing.' }
+];
+
+const UGC = ['assets/skin.jpg','assets/apply.jpg','assets/hero.jpg','assets/p4.jpg','assets/skin.jpg','assets/apply.jpg'];
+
+const BASE = 68;
+const money = (n) => '$' + (Math.round(n * 100) / 100).toFixed(2).replace(/\.00$/, '');
+
+const SAVED_KEY = 'eb-saved';
+function readSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY)) || []; } catch (e) { return []; } }
+function writeSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list)); } catch (e) {} }
+const THIS_PRODUCT = { id:'serum', name:'Radiance Serum No.3', cat:'Serum', size:'30 ml', img:'assets/p4.jpg', price:68, stock:true };
+
+class Component extends DCLogic {
+  state = { isSaved:false, ann:0, scrolled:false, shot:0, size:0, pack:'duo', acc:1, filter:'All', cart:[], cartOpen:false, sticky:false, wide:true };
+
+  componentDidMount() {
+    this.applyAccent();
+    this.annTimer = setInterval(() => this.setState((s) => ({ ann:(s.ann + 1) % ANN.length })), 4000);
+    this.onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const next = y > 80, sticky = y > 720;
+      if (next !== this.state.scrolled || sticky !== this.state.sticky) this.setState({ scrolled:next, sticky });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+    this.onResize = () => {
+      const wide = window.innerWidth >= 960;
+      if (wide !== this.state.wide) this.setState({ wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+    this.setState({ isSaved: readSaved().some((x) => x.id === THIS_PRODUCT.id) });
+    this.onStore = (e) => {
+      if (!e.key || e.key === SAVED_KEY) this.setState({ isSaved: readSaved().some((x) => x.id === THIS_PRODUCT.id) });
+    };
+    window.addEventListener('storage', this.onStore);
+  }
+
+  toggleSave() {
+    const list = readSaved();
+    const has = list.some((x) => x.id === THIS_PRODUCT.id);
+    writeSaved(has ? list.filter((x) => x.id !== THIS_PRODUCT.id) : list.concat([THIS_PRODUCT]));
+    this.setState({ isSaved: !has });
+  }
+
+  componentDidUpdate() { this.applyAccent(); }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (!a || String(a).indexOf('var(') === 0 || String(a).toUpperCase() === '#94513C') return;
+    document.documentElement.style.setProperty('--accent-fill', a);
+    const r = document.documentElement.style;
+    r.setProperty('--terra', a);
+    r.setProperty('--color-accent', a);
+    r.setProperty('--color-accent-500', a);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('storage', this.onStore);
+    clearInterval(this.annTimer);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  addLine(line) {
+    this.setState((s) => {
+      const cart = s.cart.slice();
+      const i = cart.findIndex((l) => l.id === line.id);
+      if (i >= 0) cart[i] = Object.assign({}, cart[i], { qty: cart[i].qty + 1 });
+      else cart.push(Object.assign({ qty:1 }, line));
+      return { cart, cartOpen:true };
+    });
+  }
+
+  bump(id, d) {
+    this.setState((s) => ({ cart: s.cart.map((l) => l.id === id ? Object.assign({}, l, { qty:l.qty + d }) : l).filter((l) => l.qty > 0) }));
+  }
+
+  renderVals() {
+    const st = this.state;
+    const threshold = this.props.threshold ?? 75;
+    const size = SIZES[st.size];
+    const pack = PACKS.find((p) => p.id === st.pack) || PACKS[0];
+    const unit = BASE * size.mult;
+    const full = unit * pack.qty;
+    const price = full * (1 - pack.off);
+    const subtotal = st.cart.reduce((a, l) => a + l.price * l.qty, 0);
+    const count = st.cart.reduce((a, l) => a + l.qty, 0);
+    const remaining = Math.max(0, threshold - subtotal);
+    const pct = Math.min(100, threshold ? (subtotal / threshold) * 100 : 100);
+    const shot = SHOTS[st.shot];
+    const stickyTop = st.wide ? 72 : 58;
+
+    const chip = (on) => 'background:' + (on ? 'var(--ink)' : 'var(--off)') + ';color:' + (on ? 'var(--off)' : 'var(--ink)') + ';border:1px solid ' + (on ? 'var(--ink)' : 'var(--color-border)') + ';padding:9px 15px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:background .2s ease,color .2s ease';
+
+    const reviews = REVIEWS.filter((r) => st.filter === 'All' || r.skin === st.filter);
+
+    const layout = this.props.layout ?? 'Gallery left';
+    const dossier = layout === 'Dark dossier';
+    const L = { showDossier: dossier, showClassic: !dossier };
+    if (dossier) {
+      const tab = st.acc < 0 ? 0 : st.acc;
+      Object.assign(L, {
+        dossierCols: st.wide ? 'minmax(0,1fr) minmax(0,1.05fr)' : 'minmax(0,1fr)',
+        specs: [
+          { n:'10%', l:'Niacinamide, the dose that stopped flushing our panel' },
+          { n:'87%', l:'Saw brighter, more even skin in two weeks' },
+          { n:'0', l:'Reported stinging across 42 sensitive-skin panellists' },
+          { n:'13', l:'Ingredients, printed in full on the carton' }
+        ],
+        dossierTabs: ACC.map((a, i) => ({
+          label: a.title,
+          style: 'background:' + (tab === i ? 'var(--off)' : 'transparent') + ';color:' + (tab === i ? 'var(--ink)' : 'var(--plate-soft)') + ';border:1px solid ' + (tab === i ? 'var(--off)' : 'var(--plate-soft)') + ';cursor:pointer;padding:10px 15px;font-size:11.5px;letter-spacing:0.1em;text-transform:uppercase;transition:background .2s ease,color .2s ease',
+          pick: () => this.setState({ acc:i })
+        })),
+        dossierBody: ACC[tab].body,
+        dossierMediaStyle: st.wide
+          ? 'position:relative;min-height:clamp(420px,58vw,760px);background:var(--sand);border-left:1px solid rgba(251,250,248,0.2)'
+          : 'position:relative;background:var(--sand);display:flex;flex-direction:column',
+        dossierShotStyle: st.wide
+          ? 'position:absolute;inset:0;background:var(--imgbg) url("' + shot.img + '") center/cover no-repeat'
+          : 'position:relative;width:100%;aspect-ratio:4/3;background:var(--imgbg) url("' + shot.img + '") center/cover no-repeat',
+        dossierRailStyle: st.wide
+          ? 'position:absolute;top:0;left:0;bottom:0;display:flex;flex-direction:column;gap:2px;padding:18px;z-index:2'
+          : 'position:relative;display:flex;gap:2px;flex-wrap:wrap;padding:14px 20px;z-index:2;background:var(--dark-bg)',
+        dossierShots: SHOTS.map((s, i) => ({
+          label: s.label,
+          style: 'width:56px;height:56px;border:0;cursor:pointer;padding:0;background:var(--imgbg) url("' + s.img + '") center/cover no-repeat;outline:' + (st.shot === i ? '2px solid var(--off)' : '1px solid rgba(251,250,248,0.45)') + ';outline-offset:-1px;transition:opacity .2s ease;opacity:' + (st.shot === i ? 1 : 0.6),
+          pick: () => this.setState({ shot:i })
+        })),
+        dossierPanelStyle: st.wide
+          ? 'position:absolute;right:28px;bottom:28px;z-index:3;width:min(360px,calc(100% - 150px));background:var(--off);color:var(--ink);border:2px solid var(--ink);padding:24px 22px 26px;box-shadow:0 24px 60px rgba(43,36,29,0.32)'
+          : 'position:relative;z-index:3;margin:0 20px 24px;background:var(--off);color:var(--ink);border:2px solid var(--ink);padding:24px 22px 26px',
+        packsCompact: PACKS.map((p) => {
+          const on = st.pack === p.id;
+          const pp = unit * p.qty * (1 - p.off);
+          return {
+            title: p.title, tag: p.tag, hasTag: !!p.tag, priceLabel: money(pp),
+            style: 'display:flex;align-items:center;gap:10px;width:100%;text-align:left;cursor:pointer;padding:11px 13px;font-size:13px;background:' + (on ? 'var(--ink)' : 'transparent') + ';color:' + (on ? 'var(--off)' : 'var(--ink)') + ';border:1px solid ' + (on ? 'var(--ink)' : 'var(--color-border)') + ';transition:background .2s ease,color .2s ease',
+            tagStyle: 'font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:3px 7px;background:' + (on ? 'var(--terra-tint)' : 'var(--color-accent-100)') + ';color:' + (on ? 'var(--ink)' : 'var(--terra-700)'),
+            pick: () => this.setState({ pack:p.id })
+          };
+        }),
+        marquee: ['Fragrance-free', 'Vegan', 'Cruelty-free', 'Derm tested', 'Made in Portugal', 'Batch-tested', '60-day returns']
+      });
+    }
+    if (layout === 'Full-width hero') {
+      L.pdpSectionStyle = 'display:grid;grid-template-columns:minmax(0,1fr);border-bottom:2px solid var(--ink)';
+      L.galleryStyle = 'display:flex;flex-direction:column;gap:14px;border-bottom:2px solid var(--ink);padding:0 0 22px';
+      L.mainWrapStyle = 'position:relative;aspect-ratio:16/9;min-height:320px;background:var(--sand)';
+      L.thumbsStyle = 'display:flex;gap:10px;flex-wrap:wrap;padding:0 28px';
+      L.infoStyle = 'padding:clamp(34px,4vw,60px) 28px;display:flex;flex-direction:column;width:100%;max-width:840px;margin:0 auto';
+    } else if (layout === 'Info left, gallery right') {
+      L.pdpSectionStyle = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));border-bottom:2px solid var(--ink)';
+      L.galleryStyle = 'order:2;border-left:1px solid var(--color-border);padding:28px;display:flex;flex-direction:column;gap:14px;position:sticky;top:' + stickyTop + 'px;align-self:start';
+      L.mainWrapStyle = 'position:relative;aspect-ratio:1/1;background:var(--sand)';
+      L.thumbsStyle = 'display:flex;gap:10px;flex-wrap:wrap';
+      L.infoStyle = 'order:1;padding:clamp(28px,3.4vw,48px) 28px;display:flex;flex-direction:column;max-width:720px;justify-self:end;width:100%';
+    } else {
+      L.pdpSectionStyle = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));border-bottom:2px solid var(--ink)';
+      L.galleryStyle = 'border-right:1px solid var(--color-border);padding:28px;display:flex;flex-direction:column;gap:14px;position:sticky;top:' + stickyTop + 'px;align-self:start';
+      L.mainWrapStyle = 'position:relative;aspect-ratio:4/5;background:var(--sand)';
+      L.thumbsStyle = 'display:flex;gap:10px;flex-wrap:wrap';
+      L.infoStyle = 'padding:clamp(28px,3.4vw,48px) 28px;display:flex;flex-direction:column;max-width:720px';
+    }
+
+    return Object.assign(L, {
+      ann: ANN[st.ann],
+      headerStyle: 'position:sticky;top:0;z-index:40;background:' + (st.scrolled ? 'rgba(245,240,234,0.96)' : 'var(--cream)') + ';backdrop-filter:blur(8px);border-bottom:2px solid var(--ink);box-shadow:' + (st.scrolled ? '0 6px 24px rgba(43,36,29,0.08)' : 'none') + ';transition:box-shadow .3s ease,background .3s ease',
+      count, countStyle: 'min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:' + (count ? 'var(--terra)' : 'var(--sand)') + ';color:' + (count ? 'var(--off)' : 'var(--t3)') + ';font-size:11px;display:flex;align-items:center;justify-content:center;transition:background .2s ease',
+
+      mainShotStyle: 'position:absolute;inset:0;background:var(--imgbg) url("' + shot.img + '") center/cover no-repeat',
+      isVideoShot: shot.video,
+      shots: SHOTS.map((s, i) => ({
+        label:s.label,
+        style: 'width:78px;height:78px;border:' + (st.shot === i ? '2px solid var(--ink)' : '1px solid var(--color-border)') + ';cursor:pointer;padding:0;background:var(--imgbg) url("' + s.img + '") center/cover no-repeat',
+        pick: () => this.setState({ shot:i })
+      })),
+
+      sizes: SIZES.map((z, i) => ({ label:z.label, style: chip(st.size === i), pick: () => this.setState({ size:i }) })),
+
+      saveFill: st.isSaved ? 'var(--terra)' : 'none',
+      saveLabel: st.isSaved ? 'Saved' : 'Save for later',
+      saveStyle: 'display:flex;align-items:center;justify-content:flex-start;gap:10px;width:100%;margin-top:2px;background:var(--off);border:2px solid ' + (st.isSaved ? 'var(--terra)' : 'var(--ink)') + ';cursor:pointer;padding:15px 20px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:' + (st.isSaved ? 'var(--terra)' : 'var(--ink)') + ';transition:border-color .2s ease,color .2s ease',
+      toggleSave: () => this.toggleSave(),
+      priceLabel: money(price),
+      hasSaving: pack.off > 0,
+      wasLabel: money(full),
+      perUnitLabel: pack.qty > 1 ? money(price / pack.qty) + ' each' : money(price / (size.mult * 30)) + ' per ml',
+
+      packs: PACKS.map((p) => {
+        const on = st.pack === p.id;
+        const pp = unit * p.qty * (1 - p.off);
+        return {
+          title:p.title, note:p.note, tag:p.tag, hasTag: !!p.tag, priceLabel: money(pp),
+          rowStyle: 'display:flex;align-items:center;gap:14px;width:100%;text-align:left;cursor:pointer;padding:15px 16px;background:' + (on ? 'var(--off)' : 'transparent') + ';border:2px solid ' + (on ? 'var(--ink)' : 'var(--color-border)') + ';color:var(--ink);transition:border-color .2s ease,background .2s ease',
+          dotStyle: 'width:18px;height:18px;border-radius:50%;border:2px solid ' + (on ? 'var(--terra)' : 'var(--t5)') + ';display:flex;align-items:center;justify-content:center;flex:0 0 auto',
+          innerDotStyle: 'width:8px;height:8px;border-radius:50%;background:var(--terra);transition:transform .2s ease;transform:scale(' + (on ? 1 : 0) + ')',
+          tagStyle: 'font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;background:' + (on ? 'var(--terra)' : 'var(--color-accent-100)') + ';color:' + (on ? 'var(--off)' : 'var(--terra-700)') + ';padding:3px 8px',
+          pick: () => this.setState({ pack:p.id })
+        };
+      }),
+      addMain: () => this.addLine({ id:'serum-' + size.label + '-' + pack.id, name:'Radiance Serum No.3 — ' + size.label + ' · ' + pack.title, img:'assets/p4.jpg', price }),
+
+      accordion: ACC.map((a, i) => {
+        const on = st.acc === i;
+        return {
+          title:a.title, body:a.body,
+          iconStyle: 'font-size:17px;line-height:1;transition:transform .25s ease;transform:rotate(' + (on ? '45deg' : '0deg') + ')',
+          bodyStyle: 'overflow:hidden;transition:max-height .3s ease,opacity .25s ease;max-height:' + (on ? '340px' : '0') + ';opacity:' + (on ? 1 : 0),
+          toggle: () => this.setState((s) => ({ acc: s.acc === i ? -1 : i }))
+        };
+      }),
+
+      related: RELATED.map((p, i) => {
+        const on = st.hover === i;
+        return {
+          name:p.name, step:p.step, priceLabel: money(p.price),
+          imgStyle: 'position:absolute;inset:0;background:var(--cream) url("' + p.img + '") center/cover no-repeat',
+          img2Style: 'position:absolute;inset:0;background:var(--cream) url("' + p.img2 + '") center/cover no-repeat;transition:opacity .3s ease;opacity:' + (on ? 1 : 0),
+          cardStyle: 'position:relative;background:var(--off);transition:transform .25s ease,box-shadow .25s ease;transform:translateY(' + (on ? '-4px' : '0') + ');box-shadow:' + (on ? '0 16px 34px rgba(43,36,29,0.14)' : 'none') + ';z-index:' + (on ? 2 : 1),
+          quickStyle: 'position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--dark-bg);color:var(--off);border:0;cursor:pointer;padding:13px 16px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;transition:transform .25s ease;transform:translateY(' + (on ? '0' : '101%') + ')',
+          enter: () => this.setState({ hover:i }),
+          leave: () => this.setState((s) => s.hover === i ? { hover:null } : null),
+          add: () => this.addLine({ id:p.id, name:p.name, img:p.img, price:p.price })
+        };
+      }),
+      routineTotal: money(RELATED.reduce((a, p) => a + p.price, 0) * 0.9),
+      addRoutine: () => RELATED.forEach((p) => this.addLine({ id:p.id, name:p.name, img:p.img, price:p.price * 0.9 })),
+
+      ugc: UGC.map((img, i) => ({ img, slotId:'pdp-ugc-' + i })),
+
+      filters: ['All', 'Sensitive', 'Combination', 'Acne-prone', 'Dry'].map((f) => ({
+        label:f, style: chip(st.filter === f), pick: () => this.setState({ filter:f })
+      })),
+      reviews,
+      reviewCountLabel: 'Showing ' + reviews.length + ' of ' + REVIEWS.length + ' highlighted reviews' + (st.filter === 'All' ? '' : ' · ' + st.filter + ' skin'),
+
+      stickyStyle: 'position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--plate);border-top:2px solid var(--ink);backdrop-filter:blur(8px);transition:transform .3s ease;transform:translateY(' + (st.sticky ? '0' : '110%') + ')',
+      stickySummary: SIZES[st.size].label + ' · ' + pack.title,
+
+      openCart: () => this.setState({ cartOpen:true }),
+      closeCart: () => this.setState({ cartOpen:false }),
+      cartEmpty: st.cart.length === 0,
+      cart: st.cart.map((l) => ({
+        name:l.name, qty:l.qty,
+        incLabel: 'Add one more ' + l.name, decLabel: 'Remove one ' + l.name, priceLabel: money(l.price), lineLabel: money(l.price * l.qty),
+        imgStyle: 'width:72px;height:72px;background:var(--imgbg) url("' + l.img + '") center/cover no-repeat',
+        inc: () => this.bump(l.id, 1), dec: () => this.bump(l.id, -1)
+      })),
+      subtotalLabel: money(subtotal),
+      shipLabel: remaining > 0 ? "You're " + money(remaining) + ' away from free shipping' : 'Free shipping unlocked',
+      shipBarStyle: 'height:100%;background:var(--terra-tint);transition:width .4s ease;width:' + pct + '%',
+      scrimStyle: 'position:fixed;inset:0;z-index:50;background:rgba(43,36,29,0.42);transition:opacity .3s ease,visibility .3s;opacity:' + (st.cartOpen ? 1 : 0) + ';visibility:' + (st.cartOpen ? 'visible' : 'hidden'),
+      drawerStyle: 'position:fixed;top:0;right:0;bottom:0;z-index:51;width:min(420px,100vw);background:var(--cream);border-left:2px solid var(--ink);display:flex;flex-direction:column;transition:transform .36s cubic-bezier(.22,.61,.36,1);transform:translateX(' + (st.cartOpen ? '0' : '100%') + ')'
+    });
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --color-border:#D8CDBE; --radius-md:0px;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;text-wrap:pretty}
+button{font-family:inherit}
+input{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+</helmet>
+
+<div>
+  <div onClick="{{ close }}" style="{{ scrimStyle }}"></div>
+  <div role="dialog" aria-modal="true" aria-label="Sign in" style="{{ sheetStyle }}">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:2px solid var(--ink)">
+      <span style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--t2)">{{ kicker }}</span>
+      <button type="button" onClick="{{ close }}" aria-label="Close" style="background:none;border:0;cursor:pointer;color:var(--ink);display:flex;padding:4px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+
+    <div style="padding:28px 24px 30px">
+      <sc-if value="{{ stepPhone }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,34px);line-height:1.1;margin:0 0 12px">Sign in with your phone</h2>
+          <p style="font-size:14px;line-height:1.7;color:var(--t2);margin:0 0 26px">We send a six-digit code by SMS. No password to remember.</p>
+          <div style="display:flex;border:2px solid var(--ink);background:var(--off)">
+            <span style="display:flex;align-items:center;padding:0 14px;border-right:1px solid var(--color-border);font-size:14.5px;color:var(--t2)">+351</span>
+            <input type="tel" inputmode="numeric" aria-label="Mobile number, Portugal +351" autocomplete="tel-national" placeholder="912 340 118" value="{{ phone }}" onChange="{{ setPhone }}" style="flex:1;min-width:0;border:0;background:none;outline:none;padding:15px 14px;font-size:16px;letter-spacing:0.06em;color:var(--ink)">
+          </div>
+          <button type="button" onClick="{{ sendCode }}" style="{{ sendBtnStyle }}">{{ sendLabel }}</button>
+
+          <div style="display:flex;align-items:center;gap:14px;margin:24px 0 20px">
+            <span style="flex:1;height:1px;background:var(--color-border)"></span>
+            <span style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t4)">or</span>
+            <span style="flex:1;height:1px;background:var(--color-border)"></span>
+          </div>
+
+          <button type="button" onClick="{{ google }}" style="display:flex;align-items:center;justify-content:flex-start;gap:12px;width:100%;background:var(--off);border:2px solid var(--ink);cursor:pointer;padding:14px 18px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink)">
+            <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true" style="display:block;flex:0 0 auto"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.8 6.1C12.3 13.2 17.6 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-2.8-.4-4.1H24v8.1h12.6c-.3 2.1-1.6 5.2-4.6 7.3l7.6 5.9c4.5-4.2 6.5-10.3 6.5-17.2z"></path><path fill="#FBBC05" d="M10.4 28.7c-.5-1.5-.8-3-.8-4.7s.3-3.2.8-4.7l-7.8-6.1C1 16.3 0 20 0 24s1 7.7 2.6 10.8l7.8-6.1z"></path><path fill="#34A853" d="M24 48c6.2 0 11.5-2 15.6-5.6l-7.6-5.9c-2 1.4-4.7 2.4-8 2.4-6.4 0-11.7-3.7-13.6-9l-7.8 6.1C6.5 42.6 14.6 48 24 48z"></path></svg>
+            <span>Continue with Google</span>
+          </button>
+
+          <p style="font-size:12px;line-height:1.7;color:var(--t2);margin:18px 0 0">By continuing you agree to our <a href="EasyBeauty Legal.dc.html#terms" style="color:var(--ink);border-bottom:1px solid var(--color-border)">terms</a> and <a href="EasyBeauty Legal.dc.html#privacy" style="color:var(--ink);border-bottom:1px solid var(--color-border)">privacy notice</a>. We never sell your number.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ stepCode }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,34px);line-height:1.1;margin:0 0 12px">Enter the code</h2>
+          <p style="font-size:14px;line-height:1.7;color:var(--t2);margin:0 0 26px">Sent to {{ phoneFull }} · <button type="button" onClick="{{ editPhone }}" style="background:none;border:0;border-bottom:1px solid var(--ink);cursor:pointer;padding:0;font-size:14px;color:var(--ink)">change</button></p>
+          <input type="text" inputmode="numeric" maxlength="6" aria-label="Six-digit code from your text message" autocomplete="one-time-code" placeholder="······" value="{{ code }}" onChange="{{ setCode }}" style="width:100%;border:2px solid var(--ink);background:var(--off);padding:15px 18px;font-family:var(--serif);font-size:30px;letter-spacing:0.42em;text-align:center;color:var(--ink);outline:none">
+          <div role="alert" aria-live="assertive" style="{{ codeErrStyle }}">{{ codeErr }}</div>
+          <button type="button" onClick="{{ verify }}" style="{{ verifyBtnStyle }}">Verify and sign in</button>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:18px;font-size:12.5px;color:var(--t2)">
+            <span>{{ resendLabel }}</span>
+            <button type="button" onClick="{{ resend }}" style="{{ resendBtnStyle }}">Resend code</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ stepDone }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,34px);line-height:1.1;margin:0 0 12px">You are signed in.</h2>
+          <p style="font-size:14px;line-height:1.7;color:var(--t2);margin:0 0 26px">{{ doneNote }}</p>
+          <div style="display:flex;gap:2px;flex-wrap:wrap">
+            <a href="EasyBeauty Account.dc.html" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Open your panel</a>
+            <button type="button" onClick="{{ close }}" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Keep shopping</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:640},&quot;forceOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { open:false, step:'phone', phone:'', code:'', codeErr:'', sending:false, secs:0, via:'phone', mobile:false };
+
+  componentDidMount() {
+    this.onOpen = () => this.setState({ open:true, step:'phone', code:'', codeErr:'' });
+    window.addEventListener('eb-auth-open', this.onOpen);
+    this.onKey = (e) => { if (e.key === 'Escape' && this.state.open) this.setState({ open:false }); };
+    window.addEventListener('keydown', this.onKey);
+    this.onResize = () => {
+      const mobile = window.innerWidth < 640;
+      if (mobile !== this.state.mobile) this.setState({ mobile });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('eb-auth-open', this.onOpen);
+    window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('resize', this.onResize);
+    clearInterval(this.resendTimer);
+  }
+
+  startResend() {
+    clearInterval(this.resendTimer);
+    this.setState({ secs:30 });
+    this.resendTimer = setInterval(() => this.setState((s) => {
+      if (s.secs <= 1) { clearInterval(this.resendTimer); return { secs:0 }; }
+      return { secs:s.secs - 1 };
+    }), 1000);
+  }
+
+  signIn(account, via) {
+    try { localStorage.setItem('eb-account', JSON.stringify(account)); } catch (e) {}
+    window.dispatchEvent(new CustomEvent('eb-account-change'));
+    clearInterval(this.resendTimer);
+    this.setState({ step:'done', via, code:'', codeErr:'', secs:0 });
+  }
+
+  renderVals() {
+    const st = this.state;
+    const digits = st.phone.replace(/[^0-9]/g, '');
+    const phoneOk = digits.length >= 9;
+    const codeOk = st.code.length === 6;
+    const sheetMobile = st.mobile;
+    const open = this.props.forceOpen === true || st.open;
+
+    return {
+      kicker: st.step === 'done' ? 'Welcome back' : 'EasyBeauty account',
+      stepPhone: open && st.step === 'phone',
+      stepCode: open && st.step === 'code',
+      stepDone: open && st.step === 'done',
+      close: () => this.setState({ open:false }),
+      scrimStyle: 'position:fixed;inset:0;z-index:64;background:rgba(28,23,19,0.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);transition:opacity .28s ease,visibility .28s;opacity:' + (open ? 1 : 0) + ';visibility:' + (open ? 'visible' : 'hidden'),
+      sheetStyle: sheetMobile
+        ? 'position:fixed;left:0;right:0;bottom:0;z-index:65;max-height:92vh;overflow-y:auto;background:var(--cream);border-top:2px solid var(--ink);transition:transform .34s cubic-bezier(.22,.61,.36,1),visibility .34s;visibility:' + (open ? 'visible' : 'hidden') + ';transform:translateY(' + (open ? '0' : '101%') + ')'
+        : 'position:fixed;top:50%;left:50%;z-index:65;width:min(460px,calc(100vw - 40px));max-height:90vh;overflow-y:auto;background:var(--cream);border:2px solid var(--ink);box-shadow:0 30px 70px rgba(28,23,19,0.36);transition:opacity .26s ease,transform .26s ease,visibility .26s;visibility:' + (open ? 'visible' : 'hidden') + ';opacity:' + (open ? 1 : 0) + ';transform:translate(-50%,-50%) scale(' + (open ? 1 : 0.97) + ')',
+
+      phone: st.phone,
+      phoneFull: '+351 ' + st.phone,
+      setPhone: (e) => this.setState({ phone: e.target.value.replace(/[^0-9 ]/g, '').slice(0, 12) }),
+      sendLabel: st.sending ? 'Sending…' : 'Send code',
+      sendBtnStyle: 'width:100%;margin-top:16px;background:' + (phoneOk ? 'var(--terra)' : 'var(--sand)') + ';color:' + (phoneOk ? 'var(--off)' : 'var(--t4)') + ';border:0;cursor:' + (phoneOk ? 'pointer' : 'default') + ';padding:16px 20px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;text-align:left;transition:background .2s ease,color .2s ease',
+      sendCode: () => {
+        if (!phoneOk) return;
+        this.setState({ sending:true });
+        setTimeout(() => { this.setState({ sending:false, step:'code', code:'', codeErr:'' }); this.startResend(); }, 500);
+      },
+
+      google: () => this.signIn({ phone:'912 340 118', name:'Lara Moreira', email:'lara@email.com', via:'google' }, 'google'),
+
+      code: st.code,
+      setCode: (e) => this.setState({ code: e.target.value.replace(/[^0-9]/g, '').slice(0, 6), codeErr:'' }),
+      codeErr: st.codeErr,
+      codeErrStyle: 'font-size:12.5px;color:var(--terra);margin-top:10px;min-height:16px;transition:opacity .2s ease;opacity:' + (st.codeErr ? 1 : 0),
+      verifyBtnStyle: 'width:100%;margin-top:14px;background:' + (codeOk ? 'var(--terra)' : 'var(--sand)') + ';color:' + (codeOk ? 'var(--off)' : 'var(--t4)') + ';border:0;cursor:' + (codeOk ? 'pointer' : 'default') + ';padding:16px 20px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;text-align:left;transition:background .2s ease,color .2s ease',
+      verify: () => {
+        if (!codeOk) { this.setState({ codeErr:'Enter the six digits we sent.' }); return; }
+        this.signIn({ phone: st.phone.replace(/^\+?351\s*/, ''), name:'Lara Moreira', email:'lara@email.com', via:'phone' }, 'phone');
+      },
+      editPhone: () => this.setState({ step:'phone', code:'', codeErr:'' }),
+      resendLabel: st.secs ? 'Code sent · resend in ' + st.secs + 's' : 'Did not get it?',
+      resendBtnStyle: 'background:none;border:0;cursor:' + (st.secs ? 'default' : 'pointer') + ';padding:12px 0;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;text-decoration-color:' + (st.secs ? 'transparent' : 'var(--ink)') + ';font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:' + (st.secs ? 'var(--t5)' : 'var(--ink)'),
+      resend: () => { if (!st.secs) { this.setState({ code:'', codeErr:'' }); this.startResend(); } },
+
+      doneNote: st.via === 'google'
+        ? 'Signed in with Google as lara@email.com. Your saved items and addresses are on this device.'
+        : 'Signed in as +351 ' + st.phone + '. Checkout is one tap from here.'
+    };
+  }
+}
+
+</script>
+</body>
+</html>
