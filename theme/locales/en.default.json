@@ -48,7 +48,15 @@
       "search": "Search",
       "account": "Account",
       "cart": "Bag",
-      "menu": "Menu"
+      "menu": "Menu",
+      "account_orders": "Orders",
+      "account_addresses": "Addresses",
+      "account_saved": "Saved",
+      "log_out": "Log out",
+      "view_all": "View all",
+      "dock_shop": "Shop",
+      "dock_bag": "Bag",
+      "dock_account": "You"
     },
     "cart": {
       "title": "Your bag",
@@ -62,7 +70,39 @@
       "quantity": "Quantity",
       "free_shipping_reached": "You've unlocked free shipping",
       "free_shipping_remaining_html": "Add {{ amount }} more for free shipping",
-      "update": "Update"
+      "update": "Update",
+      "intro": {
+        "one": "One product, ready when you are.",
+        "other": "{{ count }} products, ready when you are."
+      },
+      "intro_empty": "Nothing here yet.",
+      "empty_title": "Nothing in the bag yet.",
+      "browse": "Browse all products",
+      "take_quiz": "Take the skin quiz",
+      "item_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      },
+      "each": "{{ price }} each",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity",
+      "save_for_later": "Save for later",
+      "summary": "Summary",
+      "delivery": "Delivery",
+      "free": "Free",
+      "at_checkout": "At checkout",
+      "total": "Total",
+      "promo": "Promo code",
+      "apply": "Apply",
+      "promo_note": "Codes are checked and applied at checkout.",
+      "continue_to_checkout": "Continue to checkout",
+      "payment_methods": "Accepted payment methods",
+      "drawer_title": {
+        "one": "Your cart ({{ count }})",
+        "other": "Your cart ({{ count }})"
+      },
+      "add": "Add",
+      "view_bag": "View bag"
     },
     "featured-collection": {
       "view_all": "View all"
@@ -139,7 +179,20 @@
       "complete_the_routine": "Complete the routine",
       "sale_price": "Sale price",
       "regular_price": "Regular price",
-      "unit_price": "Unit price"
+      "unit_price": "Unit price",
+      "save": "Save for later",
+      "saved": "Saved",
+      "move_to_bag": "Move to bag",
+      "in_stock": "In stock",
+      "saved_empty": "Nothing saved yet — tap “Save for later” on any product.",
+      "reviews_count": {
+        "one": "{{ rating }} · {{ count }} review",
+        "other": "{{ rating }} · {{ count }} reviews"
+      },
+      "choose_pack": "Choose your pack",
+      "one_time": "One-time purchase",
+      "one_time_note": "Delivered once.",
+      "cancel_anytime": "Cancel or skip anytime"
     }
   },
   "blogs": {

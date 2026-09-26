@@ -21,7 +21,15 @@
       "block_order": [
         "accordion-1",
         "accordion-2"
-      ]
+      ],
+      "settings": {
+        "show_vendor": false,
+        "lead_words": 26,
+        "show_quantity": false,
+        "show_save": true,
+        "badges": "Cruelty-free | Vegan | Derm tested",
+        "show_description": true
+      }
     },
     "recommendations": {
       "type": "product-recommendations",

@@ -31,7 +31,59 @@
       ]
     },
     "header": {
-      "type": "header"
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "logo_text": "EasyBeauty",
+        "sticky": true,
+        "saved_link": "/pages/saved"
+      },
+      "blocks": {
+        "mega-shop": {
+          "type": "mega",
+          "settings": {
+            "menu_item": "Shop",
+            "all_label_1": "All products",
+            "all_label_2": "Take the quiz",
+            "all_label_3": "Formulation notes",
+            "feature_fallback_image": "sample-product-4.jpg",
+            "feature_kicker": "Best seller",
+            "feature_title": "Radiance Serum No.3",
+            "feature_text": "Niacinamide at 10%, the third formula — the one that stopped stinging. 1,284 reviews at 4.9.",
+            "feature_button": "View the serum",
+            "feature_link": "/collections/all",
+            "footnote": "Twelve formulas · nine fragrance-free · free delivery over $75",
+            "footnote_link_label_1": "Skin quiz",
+            "footnote_link_1": "/pages/quiz",
+            "footnote_link_label_2": "Shipping & returns",
+            "footnote_link_2": "/pages/faq"
+          }
+        },
+        "mega-collections": {
+          "type": "mega",
+          "settings": {
+            "menu_item": "Collections",
+            "all_label_1": "All collections",
+            "all_label_2": "Find your set",
+            "all_label_3": "Gift guide",
+            "feature_fallback_image": "lifestyle-apply.jpg",
+            "feature_kicker": "New set",
+            "feature_title": "The Barrier Repair Four",
+            "feature_text": "Cleansing milk, mineral toner, ceramide cream and No.3 — eight weeks of a full routine, $32 below the individual prices.",
+            "feature_button": "See the set",
+            "feature_link": "/pages/lookbook",
+            "footnote": "Sets are priced below the sum of their parts · swap any product before checkout",
+            "footnote_link_label_1": "Skin quiz",
+            "footnote_link_1": "/pages/quiz",
+            "footnote_link_label_2": "Shipping & returns",
+            "footnote_link_2": "/pages/faq"
+          }
+        }
+      },
+      "block_order": [
+        "mega-shop",
+        "mega-collections"
+      ]
     }
   },
   "order": [

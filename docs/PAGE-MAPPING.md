@@ -9,9 +9,9 @@ relevant entry in `DECISIONS.md`.
 | `EasyBeauty Landing.html` | `templates/index.json` | `hero` (3 hotspots), `perk-bar`, `category-showcase`, `collection-tabs`, `image-product-tiles`, `statement`, `bundle`, `media-carousel`, `testimonials`, `image-text` (our story), `cta-banner`, `newsletter` | Same order and copy as the mockup. The popup/announcement rotator were not ported |
 | `EasyBeauty Product.html` | `templates/product.json` (all products) + `templates/product.serum.json` (Radiance Serum) | `main-product`, `multicolumn` (study results), `product-recommendations`, `image-text` (Why No.3), `image-gallery` (community), `testimonials` | Serum-specific copy lives in the alternate template so it never shows on other products. Assign it in Admin → Products → Theme template. Live reviews need a reviews app |
 | `EasyBeauty Collection.html` | `templates/collection.json` | `collection-banner`, `collection-links` (category chips), `main-collection`, `image-text` (quiz prompt) | Real `collection.filters` + `paginate`, not mock data |
-| `EasyBeauty Bag.html` | `templates/cart.json` + cart drawer | `main-cart` / `cart-drawer` (section, in every layout) | Both the full cart page and the header drawer are real, AJAX-driven |
+| `EasyBeauty Bag.html` | `templates/cart.json` + cart drawer | `main-cart` (lines, save for later, summary, promo code, trust badges), `saved-items`; `cart-drawer` (free-shipping bar, suggestions, payment icons) | Promo codes go through Shopify's `/discount/CODE` route and apply at checkout |
 | `EasyBeauty Checkout.html` | *(none — see Decisions)* | — | Checkout isn't a theme file on non-Plus stores |
-| `EasyBeauty Account.html` | `templates/customers/account.json` | `main-customer-account` | Real `customer`/`customer.orders` objects |
+| `EasyBeauty Account.html` | Shopify customer accounts + `templates/page.saved.json` | header account dropdown, `saved-items` | New customer accounts are Shopify-hosted (styled in the checkout editor); `customers/*` templates serve classic accounts |
 | `EasyBeauty Blog.html` | `templates/blog.json` | `main-blog` (featured newest article + card grid), `newsletter` | Real `blog.articles` + pagination |
 | `EasyBeauty Blog Post.html` | `templates/article.json` | `main-article`, `blog-posts` (keep reading), `newsletter` | Real `article.content`, optional native comments |
 | `EasyBeauty About.html` | `templates/page.about.json` | `page-intro`, `multicolumn` (stats), `about-values`, `multicolumn` (timeline), `image-text`, `team-grid`, `cta-banner` | |
@@ -22,8 +22,8 @@ relevant entry in `DECISIONS.md`.
 | `EasyBeauty Quiz.html` | `templates/page.quiz.json` | `quiz` | Real tag-based product matching against a merchant-chosen collection — see Decisions |
 | `EasyBeauty 404.html` | `templates/404.json` | `main-404` (with search), `multicolumn` (shortcuts) | |
 | `index.html` (bundler loader stub) | — | — | Not a real page in the mockup either; no theme equivalent needed |
-| `SiteHeader.dc.html` | *(every template, via `header-group.json`)* | `sections/header.liquid` | Nav now reads a real Shopify menu (`linklist`), editable in Admin → Navigation |
-| `SiteFooter.dc.html` | *(every template, via `footer-group.json`)* | `sections/footer.liquid` | Newsletter block posts to Shopify's real customer-tagging endpoint |
+| `SiteHeader.dc.html` | *(every template, via `header-group.json`)* | `sections/header.liquid` | Mega menu from a 3-level menu + "Mega menu" blocks (feature card, footnote); account dropdown; scroll shadow |
+| `SiteFooter.dc.html` | *(every template, via `footer-group.json`)* | `sections/footer.liquid` | Shop / Company / Help menus (`footer-shop`, `footer-company`, `footer-help`) + Certified text column |
 | `MobileDock.dc.html` | *(every template, rendered from `theme.liquid`)* | `snippets/mobile-dock.liquid` | |
 | `AuthModal.dc.html` | *(not ported — see Decisions)* | — | Replaced by Shopify's native `/account/login`, `/account/register` |
 

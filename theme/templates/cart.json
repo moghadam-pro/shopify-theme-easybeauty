@@ -1,10 +1,28 @@
 {
   "sections": {
     "main": {
-      "type": "main-cart"
+      "type": "main-cart",
+      "settings": {
+        "badges": "60-day returns | Ships in 24h",
+        "empty_text": "Twelve formulas, six concerns. The quiz narrows it to three in about a minute.",
+        "quiz_link": "/pages/quiz",
+        "tax_note": "Prices include VAT",
+        "show_promo": true,
+        "promo_placeholder": "EASY10",
+        "trust_badges": "Secure | 60-day | Carbon neutral"
+      }
+    },
+    "saved": {
+      "type": "saved-items",
+      "settings": {
+        "heading": "Saved for later",
+        "text": "Move anything back to the bag when you are ready.",
+        "hide_when_empty": true
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "saved"
   ]
 }

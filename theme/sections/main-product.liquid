@@ -1,8 +1,19 @@
+{%- comment -%}
+  Product page: gallery + info column following the design — title, rating
+  (from the standard reviews.rating / reviews.rating_count metafields that
+  review apps write), lead text, option pills, large price with compare-at
+  and unit price, "Choose your pack" (the product's native selling plans,
+  when it has any), add-to-bag with price, save for later, badge row,
+  highlight list and accordions.
+{%- endcomment -%}
 {%- liquid
-  assign main_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image
+  assign current_variant = product.selected_or_first_available_variant
+  assign main_image = current_variant.featured_image | default: product.featured_image
   assign add_text = 'products.product.add_to_bag' | t
   assign soldout_text = 'products.product.sold_out' | t
   assign unavailable_text = 'products.product.unavailable' | t
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value
 -%}
 <section class="section container">
   <div class="product" data-product-root>
@@ -13,7 +24,7 @@
             src="{{ main_image | image_url: width: 1200 }}"
             alt="{{ product.featured_image.alt | default: product.title | escape }}"
             width="1200"
-            height="{{ 1200 | divided_by: main_image.aspect_ratio | default: 1500 }}"
+            height="{{ 1200 | divided_by: main_image.aspect_ratio | round }}"
             loading="eager"
             data-product-main-image
           >
@@ -31,7 +42,7 @@
               class="{% if forloop.first %}is-active{% endif %}"
               alt="{{ image.alt | escape }}"
               width="200"
-              height="{{ 200 | divided_by: image.aspect_ratio | default: 250 }}"
+              height="{{ 200 | divided_by: image.aspect_ratio | round }}"
               loading="lazy"
             >
           {%- endfor -%}
@@ -40,27 +51,28 @@
     </div>
 
     <div class="product__info">
-      {%- if product.vendor != blank -%}<div class="eyebrow">{{ product.vendor }}</div>{%- endif -%}
-      <h1>{{ product.title }}</h1>
+      {%- if section.settings.show_vendor and product.vendor != blank -%}<div class="eyebrow">{{ product.vendor }}</div>{%- endif -%}
+      <h1 class="product__title">{{ product.title }}</h1>
 
-      <div class="product__price">
-        <span data-product-price>{{ product.selected_or_first_available_variant.price | money }}</span>
-        <s data-product-compare-price {% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}hidden{% endunless %}>
-          {{ product.selected_or_first_available_variant.compare_at_price | money }}
-        </s>
-      </div>
+      {%- if rating != blank and rating_count > 0 -%}
+        {%- assign rating_rounded = rating.rating | round: 1 -%}
+        <a href="#reviews" class="product__rating">
+          <span class="product__stars" aria-hidden="true">★★★★★</span>
+          <span>{{ 'products.product.reviews_count' | t: rating: rating_rounded, count: rating_count }}</span>
+        </a>
+      {%- endif -%}
 
       {%- if product.description != blank -%}
-        <div class="rte" style="margin-bottom:var(--space-6)">{{ product.description | strip_html | truncatewords: 40 }}</div>
+        <p class="product__lead">{{ product.description | strip_html | truncatewords: section.settings.lead_words }}</p>
       {%- endif -%}
 
       {%- form 'product', product, data-product-form: true, data-add-text: add_text, data-soldout-text: soldout_text, data-unavailable-text: unavailable_text -%}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
 
         {%- unless product.has_only_default_variant -%}
           {%- for option in product.options_with_values -%}
-            <div class="product__variants field">
-              <label>{{ option.name }}</label>
+            <div class="product__variants">
+              <div class="product__label">{{ option.name }}</div>
               <div class="swatch-list">
                 {%- for value in option.values -%}
                   <label class="swatch">
@@ -79,35 +91,111 @@
           {%- endfor -%}
         {%- endunless -%}
 
-        <div class="field">
-          <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
-          <div class="quantity-selector" data-quantity-selector>
-            <button type="button" data-quantity-step="decrease" aria-label="Decrease quantity">−</button>
-            <input type="number" name="quantity" id="Quantity" value="1" min="1">
-            <button type="button" data-quantity-step="increase" aria-label="Increase quantity">+</button>
-          </div>
+        <div class="product__price">
+          <span class="product__price-now" data-product-price>{{ current_variant.price | money }}</span>
+          <s data-product-compare-price {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}>{{ current_variant.compare_at_price | money }}</s>
+          {%- if current_variant.unit_price_measurement -%}
+            {%- capture unit_label -%}
+              {{ current_variant.unit_price | money }} / {% if current_variant.unit_price_measurement.reference_value != 1 %}{{ current_variant.unit_price_measurement.reference_value }}{% endif %}{{ current_variant.unit_price_measurement.reference_unit }}
+            {%- endcapture -%}
+            <span class="product__unit-price">{{ unit_label | strip }}</span>
+          {%- endif -%}
         </div>
+
+        {%- if product.selling_plan_groups.size > 0 -%}
+          <div class="product__packs">
+            <div class="product__packs-head">
+              <span class="product__label">{{ 'products.product.choose_pack' | t }}</span>
+              <span class="product__packs-note">{{ 'products.product.cancel_anytime' | t }}</span>
+            </div>
+            <div class="product__packs-list">
+              {%- unless product.requires_selling_plan -%}
+                <label class="pack-option">
+                  <input type="radio" name="selling_plan" value="" {% unless current_variant.selected_selling_plan_allocation %}checked{% endunless %}>
+                  <span class="pack-option__dot"></span>
+                  <span class="pack-option__text">
+                    <span class="pack-option__title">{{ 'products.product.one_time' | t }}</span>
+                    <span class="pack-option__note">{{ 'products.product.one_time_note' | t }}</span>
+                  </span>
+                  <span class="pack-option__price">{{ current_variant.price | money }}</span>
+                </label>
+              {%- endunless -%}
+              {%- for group in product.selling_plan_groups -%}
+                {%- for plan in group.selling_plans -%}
+                  {%- assign allocation = current_variant.selling_plan_allocations | where: 'selling_plan_id', plan.id | first -%}
+                  <label class="pack-option">
+                    <input type="radio" name="selling_plan" value="{{ plan.id }}" {% if product.requires_selling_plan and forloop.first %}checked{% endif %}>
+                    <span class="pack-option__dot"></span>
+                    <span class="pack-option__text">
+                      <span class="pack-option__title">{{ plan.name }}</span>
+                      {%- if plan.description != blank -%}<span class="pack-option__note">{{ plan.description }}</span>{%- else -%}<span class="pack-option__note">{{ group.name }}</span>{%- endif -%}
+                    </span>
+                    <span class="pack-option__price">
+                      {%- if allocation -%}{{ allocation.price | money }}{%- endif -%}
+                      {%- for adjustment in plan.price_adjustments limit: 1 -%}
+                        {%- if adjustment.value_type == 'percentage' and adjustment.value > 0 -%}<span class="pack-option__tag">−{{ adjustment.value }}%</span>{%- endif -%}
+                      {%- endfor -%}
+                    </span>
+                  </label>
+                {%- endfor -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_quantity -%}
+          <div class="field product__quantity">
+            <label class="product__label" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+            <div class="quantity-selector" data-quantity-selector>
+              <button type="button" data-quantity-step="decrease" aria-label="{{ 'sections.cart.decrease' | t }}">−</button>
+              <input type="number" name="quantity" id="Quantity-{{ section.id }}" value="1" min="1">
+              <button type="button" data-quantity-step="increase" aria-label="{{ 'sections.cart.increase' | t }}">+</button>
+            </div>
+          </div>
+        {%- endif -%}
 
         <p class="field-error" data-form-error hidden></p>
 
-        <button type="submit" class="btn btn-primary btn-block" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-          {%- if product.selected_or_first_available_variant.available -%}
-            {{ 'products.product.add_to_bag' | t }}
-          {%- else -%}
-            {{ 'products.product.sold_out' | t }}
-          {%- endif -%}
+        <button type="submit" class="btn btn-primary btn-block product__add" {% unless current_variant.available %}disabled{% endunless %}>
+          <span data-add-label>
+            {%- if current_variant.available -%}{{ add_text }}{%- else -%}{{ soldout_text }}{%- endif -%}
+          </span>
+          <span data-add-price>{{ current_variant.price | money }}</span>
         </button>
       {%- endform -%}
 
+      {%- if section.settings.show_save -%}
+        {% render 'save-button', product: product, class: 'product__save' %}
+      {%- endif -%}
+
+      {%- if section.settings.badges != blank -%}
+        <div class="product__badges">
+          {%- assign badges = section.settings.badges | split: '|' -%}
+          {%- for badge in badges -%}<span>{{ badge | strip }}</span>{%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- assign highlight_blocks = section.blocks | where: 'type', 'highlight' -%}
+      {%- if highlight_blocks.size > 0 -%}
+        <ul class="product__highlights">
+          {%- for block in highlight_blocks -%}
+            <li {{ block.shopify_attributes }}>
+              <span aria-hidden="true">—</span>
+              <span>{%- if block.settings.title != blank -%}<strong>{{ block.settings.title }}</strong> {% endif -%}{{ block.settings.text }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
       <div class="product__accordion" data-accordion-single>
-        {%- if product.description != blank -%}
+        {%- if section.settings.show_description and product.description != blank -%}
           <div class="product__accordion-item" data-accordion-item>
             <button type="button" class="product__accordion-trigger" data-accordion-trigger>
               {{ 'products.product.description' | t }}
               <span class="icon-plus">{% render 'icon', icon: 'plus', size: 14 %}</span>
               <span class="icon-minus">{% render 'icon', icon: 'minus', size: 14 %}</span>
             </button>
-            <div class="product__accordion-panel">{{ product.description }}</div>
+            <div class="product__accordion-panel rte">{{ product.description }}</div>
           </div>
         {%- endif -%}
 
@@ -119,7 +207,7 @@
                 <span class="icon-plus">{% render 'icon', icon: 'plus', size: 14 %}</span>
                 <span class="icon-minus">{% render 'icon', icon: 'minus', size: 14 %}</span>
               </button>
-              <div class="product__accordion-panel">{{ block.settings.content }}</div>
+              <div class="product__accordion-panel rte">{{ block.settings.content }}</div>
             </div>
           {%- endif -%}
         {%- endfor -%}
@@ -135,7 +223,66 @@
 {% schema %}
 {
   "name": "t:sections.main-product.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:sections.main-product.settings.show_vendor.label",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "lead_words",
+      "label": "t:sections.main-product.settings.lead_words.label",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 26
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity",
+      "label": "t:sections.main-product.settings.show_quantity.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_save",
+      "label": "t:sections.main-product.settings.show_save.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badges",
+      "label": "t:sections.main-product.settings.badges.label",
+      "info": "t:sections.main-product.settings.badges.info",
+      "default": "Cruelty-free | Vegan | Derm tested"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "t:sections.main-product.settings.show_description.label",
+      "default": true
+    }
+  ],
   "blocks": [
+    {
+      "type": "highlight",
+      "name": "t:sections.main-product.blocks.highlight.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.main-product.blocks.highlight.settings.title.label",
+          "info": "t:sections.main-product.blocks.highlight.settings.title.info"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.main-product.blocks.highlight.settings.text.label"
+        }
+      ]
+    },
     {
       "type": "accordion",
       "name": "t:sections.faq-accordion.blocks.question.name",

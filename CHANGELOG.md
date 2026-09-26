@@ -5,6 +5,28 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.2.0] — 2026-09-26
+
+Header, cart, product and account chrome brought in line with `design-reference/`.
+
+### Added
+- Mega menu with the design's layout: columns from a three-level menu (collection item
+  counts as notes), featured card, footnote bar, scrim; "Mega menu" header blocks.
+- Account dropdown for signed-in customers (initials, orders, addresses, saved, log out).
+- Save for later: `save-button` snippet, `saved-items` section, `page.saved` template,
+  "Save for later" on cart lines and "Move to bag" on saved items (kept in the browser).
+- Cart page promo code (via `/discount/CODE`), summary with discounts/delivery/total,
+  trust badges and payment icons; cart drawer suggestions ("Complete your routine").
+- Product page: rating line from `reviews.rating` metafields, lead text, large price with
+  unit price, "Choose your pack" for native selling plans, price in the add button, save
+  button, badges and highlight blocks.
+- Footer: Shop / Company / Help / Certified columns; mobile dock labels Shop / Search / Bag / You.
+- `tools/preview/shoot-states.mjs` for open mega menu and cart drawer screenshots.
+
+### Changed
+- `main-cart` and `cart-drawer` rebuilt to the design (`free-shipping-bar` snippet removed).
+- Header styles moved from an inline block into `theme.css.liquid`; scroll shadow.
+
 ## [1.1.0] — 2026-09-26
 
 Every page brought in line with the original design in `design-reference/` (#7).

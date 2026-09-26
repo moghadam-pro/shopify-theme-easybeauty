@@ -5,24 +5,40 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "column-1": {
+        "column-shop": {
           "type": "link_list",
           "settings": {
             "title": "Shop",
-            "menu": "main-menu"
+            "menu": "footer-shop"
           }
         },
-        "column-3": {
+        "column-company": {
+          "type": "link_list",
+          "settings": {
+            "title": "Company",
+            "menu": "footer-company"
+          }
+        },
+        "column-help": {
           "type": "link_list",
           "settings": {
             "title": "Help",
-            "menu": "footer"
+            "menu": "footer-help"
+          }
+        },
+        "column-certified": {
+          "type": "text",
+          "settings": {
+            "title": "Certified",
+            "content": "<p>Cruelty-free (Leaping Bunny)<br>Vegan formulas<br>Secure checkout</p>"
           }
         }
       },
       "block_order": [
-        "column-1",
-        "column-3"
+        "column-shop",
+        "column-company",
+        "column-help",
+        "column-certified"
       ]
     }
   },

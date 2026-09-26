@@ -1,0 +1,18 @@
+{%- comment -%}
+  "Save for later" toggle. Saved products are kept in this browser
+  (localStorage, see [data-save-toggle] in theme.js) — no account needed,
+  matching the design's saved list.
+  Usage: {% render 'save-button', product: product, class: 'product__save' %}
+{%- endcomment -%}
+<button
+  type="button"
+  class="save-button {{ class }}"
+  data-save-toggle
+  data-product-handle="{{ product.handle }}"
+  aria-pressed="false"
+  data-label-save="{{ 'products.product.save' | t | escape }}"
+  data-label-saved="{{ 'products.product.saved' | t | escape }}"
+>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.6-7 10-7 10z"/></svg>
+  <span data-save-label>{{ 'products.product.save' | t }}</span>
+</button>
