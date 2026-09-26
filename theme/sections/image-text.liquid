@@ -9,6 +9,20 @@
           height="{{ 1000 | divided_by: section.settings.image.aspect_ratio | default: 1250 }}"
           loading="lazy"
         >
+      {%- elsif section.settings.fallback_image != blank -%}
+        {%- comment -%}
+          shopify://shop_images/... only resolves against a file already in
+          the shop's Files library — it doesn't auto-copy theme assets there
+          — so a freshly installed theme falls back to its own bundled photo
+          via asset_url instead.
+        {%- endcomment -%}
+        <img
+          src="{{ section.settings.fallback_image | asset_url }}"
+          alt="{{ section.settings.heading | escape }}"
+          width="880"
+          height="1100"
+          loading="lazy"
+        >
       {%- else -%}
         {{ 'lifestyle-2' | placeholder_svg_tag: class: 'placeholder-svg' }}
       {%- endif -%}
@@ -32,6 +46,12 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.image-text.settings.image.label"
+    },
+    {
+      "type": "text",
+      "id": "fallback_image",
+      "label": "t:sections.image-text.settings.fallback_image.label",
+      "info": "t:sections.image-text.settings.fallback_image.info"
     },
     {
       "type": "select",

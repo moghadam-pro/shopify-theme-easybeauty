@@ -15,6 +15,20 @@
             height="{{ 800 | divided_by: block.settings.image.aspect_ratio | default: 1000 }}"
             loading="lazy"
           >
+        {%- elsif block.settings.fallback_image != blank -%}
+          {%- comment -%}
+            shopify://shop_images/... only resolves against a file already in
+            the shop's Files library — it doesn't auto-copy theme assets
+            there — so a freshly installed theme falls back to its own
+            bundled photo via asset_url instead.
+          {%- endcomment -%}
+          <img
+            src="{{ block.settings.fallback_image | asset_url }}"
+            alt="{{ block.settings.title | escape }}"
+            width="760"
+            height="760"
+            loading="lazy"
+          >
         {%- else -%}
           {{ 'lifestyle-3' | placeholder_svg_tag: class: 'placeholder-svg' }}
         {%- endif -%}
@@ -52,6 +66,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.lookbook-grid.blocks.look.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "t:sections.lookbook-grid.blocks.look.settings.fallback_image.label",
+          "info": "t:sections.lookbook-grid.blocks.look.settings.fallback_image.info"
         },
         {
           "type": "text",

@@ -10,7 +10,21 @@
         loading="eager"
       >
     {%- else -%}
-      {{ 'lifestyle-1' | placeholder_svg_tag: class: 'placeholder-svg' }}
+      {%- comment -%}
+        No merchant-picked image yet: fall back to the theme's own bundled
+        photo via asset_url. A shopify://shop_images/... reference would be
+        cleaner but only resolves against a file already uploaded to the
+        shop's Files library — it does NOT auto-copy theme assets there, so
+        it silently (or not so silently) fails to render on a fresh install.
+      {%- endcomment -%}
+      <img
+        src="{{ 'hero-banner.jpg' | asset_url }}"
+        alt="{{ section.settings.heading | escape }}"
+        width="1500"
+        height="795"
+        fetchpriority="high"
+        loading="eager"
+      >
     {%- endif -%}
 
     <div class="hero__copy">
@@ -41,6 +55,8 @@
           <div class="hotspot__card">
             {%- if block.settings.image -%}
               <img src="{{ block.settings.image | image_url: width: 120 }}" alt="" width="120" height="120" loading="lazy" style="width:48px;height:48px;object-fit:cover;flex:none">
+            {%- elsif block.settings.fallback_image != blank -%}
+              <img src="{{ block.settings.fallback_image | asset_url }}" alt="" width="120" height="120" loading="lazy" style="width:48px;height:48px;object-fit:cover;flex:none">
             {%- endif -%}
             <div>
               <div style="font-size:13px;font-weight:600;margin-bottom:4px">{{ block.settings.title }}</div>
@@ -132,6 +148,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "t:sections.hero.blocks.hotspot.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "t:sections.hero.blocks.hotspot.settings.fallback_image.label",
+          "info": "t:sections.hero.blocks.hotspot.settings.fallback_image.info"
         },
         {
           "type": "text",
