@@ -24,7 +24,7 @@
   {%- render 'meta-tags' -%}
 
   <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
-  {{ 'theme.css.liquid' | asset_url | stylesheet_tag }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
 
   {{ 'archivo-400-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
   {{ 'bodoni-moda-400-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
