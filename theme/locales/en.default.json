@@ -114,8 +114,10 @@
   "templates": {
     "404": {
       "title": "This page is not part of the routine.",
-      "subtext": "The page you're looking for doesn't exist or has moved.",
-      "link": "Back to shop"
+      "subtext": "The link may be old, or the product may have been retired — we keep twelve formulas and retire one when a better version replaces it.",
+      "link": "Back to home",
+      "browse": "Browse all products",
+      "search": "Or search the shop"
     },
     "search": {
       "title": "Search"
@@ -145,7 +147,16 @@
       "read_more": "Keep reading",
       "back_to_journal": "Back to the Journal",
       "by_author": "By {{ author }}",
-      "share": "Share this article"
+      "share": "Share this article",
+      "read_article": "Read article"
+    },
+    "blog": {
+      "featured": "Featured",
+      "read_featured": "Read the article",
+      "count": {
+        "one": "{{ count }} article",
+        "other": "{{ count }} articles"
+      }
     }
   },
   "customer": {

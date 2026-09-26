@@ -2,9 +2,60 @@
   "sections": {
     "main": {
       "type": "main-404"
+    },
+    "shortcuts": {
+      "type": "multicolumn",
+      "settings": {
+        "style": "cards"
+      },
+      "blocks": {
+        "col-1": {
+          "type": "column",
+          "settings": {
+            "kicker": "Shop",
+            "title": "All products",
+            "text": "Twelve formulas, filtered by concern",
+            "link": "/collections/all"
+          }
+        },
+        "col-2": {
+          "type": "column",
+          "settings": {
+            "kicker": "Quiz",
+            "title": "Skin quiz",
+            "text": "Six questions, three products",
+            "link": "/pages/quiz"
+          }
+        },
+        "col-3": {
+          "type": "column",
+          "settings": {
+            "kicker": "Journal",
+            "title": "Formulation notes",
+            "text": "What the data actually says",
+            "link": "/blogs/news"
+          }
+        },
+        "col-4": {
+          "type": "column",
+          "settings": {
+            "kicker": "Help",
+            "title": "Shipping and returns",
+            "text": "Sixty days, opened or not",
+            "link": "/pages/faq"
+          }
+        }
+      },
+      "block_order": [
+        "col-1",
+        "col-2",
+        "col-3",
+        "col-4"
+      ]
     }
   },
   "order": [
-    "main"
+    "main",
+    "shortcuts"
   ]
 }

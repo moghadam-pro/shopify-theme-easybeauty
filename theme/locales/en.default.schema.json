@@ -349,7 +349,15 @@
       "name": "404"
     },
     "main-blog": {
-      "name": "Blog"
+      "name": "Blog",
+      "settings": {
+        "intro": {
+          "label": "Intro text"
+        },
+        "show_featured": {
+          "label": "Feature the newest article"
+        }
+      }
     },
     "main-article": {
       "name": "Article"
@@ -358,7 +366,12 @@
       "name": "Page"
     },
     "legal-links": {
-      "name": "Legal links"
+      "name": "Legal links",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        }
+      }
     },
     "about-values": {
       "name": "Values grid",
@@ -1091,6 +1104,27 @@
       },
       "presets": {
         "name": "Shoppable look"
+      }
+    },
+    "blog-posts": {
+      "name": "Blog posts",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        },
+        "blog": {
+          "label": "Blog",
+          "info": "Defaults to the current article's blog."
+        },
+        "limit": {
+          "label": "Articles to show"
+        },
+        "view_all_label": {
+          "label": "View all label"
+        }
+      },
+      "presets": {
+        "name": "Blog posts"
       }
     }
   }

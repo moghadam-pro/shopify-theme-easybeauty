@@ -1,42 +1,84 @@
-<section class="section container">
-  <h1>{{ blog.title }}</h1>
-
-  {%- paginate blog.articles by 9 -%}
-    <div class="grid grid-3">
-      {%- for article in blog.articles -%}
-        <a href="{{ article.url }}" class="card">
-          {%- if article.image -%}
-            <div class="product-card__media" style="aspect-ratio:4/3">
-              <img
-                src="{{ article.image | image_url: width: 700 }}"
-                alt="{{ article.image.alt | escape }}"
-                width="700"
-                height="{{ 700 | divided_by: article.image.aspect_ratio | default: 525 }}"
-                loading="lazy"
-              >
-            </div>
-          {%- endif -%}
-          <div class="card-title">{{ article.title }}</div>
-          <p class="card-body">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
-          <div class="card-meta">{{ article.published_at | date: '%B %d, %Y' }}</div>
-        </a>
-      {%- endfor -%}
+{%- comment -%}
+  Journal listing: header (breadcrumb, title, intro text, article count),
+  the newest article as a large "featured" split on the first page, then
+  the rest as a bordered card grid with pagination.
+{%- endcomment -%}
+<div class="blog-header">
+  <div class="container">
+    <nav class="page-intro__breadcrumb" aria-label="{{ 'sections.page-intro.breadcrumb' | t }}">
+      <a href="{{ routes.root_url }}">{{ 'sections.page-intro.home' | t }}</a> / <span aria-current="page">{{ blog.title }}</span>
+    </nav>
+    <div class="blog-header__row">
+      <div>
+        <h1>{{ blog.title }}</h1>
+        {%- if section.settings.intro != blank -%}<div class="blog-header__intro">{{ section.settings.intro }}</div>{%- endif -%}
+      </div>
+      <div class="blog-header__count">{{ 'blogs.blog.count' | t: count: blog.articles_count }}</div>
     </div>
+  </div>
+</div>
 
-    {%- if paginate.pages > 1 -%}
-      <nav style="display:flex;gap:8px;justify-content:center;margin-top:var(--space-8)">
-        {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn-secondary">&larr;</a>{%- endif -%}
-        {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn-secondary">&rarr;</a>{%- endif -%}
-      </nav>
-    {%- endif -%}
-  {%- endpaginate -%}
-</section>
+{%- paginate blog.articles by 9 -%}
+  {%- liquid
+    assign show_featured = false
+    if section.settings.show_featured and paginate.current_page == 1 and blog.articles.size > 0
+      assign show_featured = true
+    endif
+  -%}
+  {%- if show_featured -%}
+    {%- assign featured = blog.articles.first -%}
+    <div class="blog-featured">
+      <a href="{{ featured.url }}" class="blog-featured__media" aria-label="{{ featured.title | escape }}">
+        {%- if featured.image -%}
+          <img src="{{ featured.image | image_url: width: 1400 }}" alt="{{ featured.image.alt | escape }}" width="1400" height="{{ 1400 | divided_by: featured.image.aspect_ratio | round }}" loading="eager">
+        {%- else -%}
+          <img src="{{ 'lifestyle-skin.jpg' | asset_url }}" alt="" width="1200" height="900">
+        {%- endif -%}
+        <span class="blog-featured__tag">{{ 'blogs.blog.featured' | t }}</span>
+      </a>
+      <div class="blog-featured__body">
+        <div class="blog-featured__meta">
+          {%- if featured.tags.size > 0 -%}<span class="blog-featured__category">{{ featured.tags.first }}</span><span>·</span>{%- endif -%}
+          <span>{{ featured.published_at | date: '%-d %B %Y' }}</span>
+        </div>
+        <h2>{{ featured.title }}</h2>
+        <p>{{ featured.excerpt_or_content | strip_html | truncatewords: 40 }}</p>
+        {%- if featured.author != blank -%}<div class="blog-featured__author">{{ 'blogs.article.by_author' | t: author: featured.author }}</div>{%- endif -%}
+        <a href="{{ featured.url }}" class="btn btn-primary">{{ 'blogs.blog.read_featured' | t }}</a>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="article-grid">
+    {%- for article in blog.articles -%}
+      {%- if show_featured and forloop.first -%}{%- continue -%}{%- endif -%}
+      {% render 'article-card', article: article %}
+    {%- endfor -%}
+  </div>
+
+  {%- if paginate.pages > 1 -%}
+    <nav class="container blog-pagination">
+      {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn-secondary">&larr;</a>{%- endif -%}
+      {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn-secondary">&rarr;</a>{%- endif -%}
+    </nav>
+  {%- endif -%}
+{%- endpaginate -%}
 
 {% schema %}
 {
   "name": "t:sections.main-blog.name",
   "settings": [
-
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "t:sections.main-blog.settings.intro.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured",
+      "label": "t:sections.main-blog.settings.show_featured.label",
+      "default": true
+    }
   ]
 }
 {% endschema %}

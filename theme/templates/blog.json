@@ -1,10 +1,22 @@
 {
   "sections": {
     "main": {
-      "type": "main-blog"
+      "type": "main-blog",
+      "settings": {
+        "intro": "<p>Ingredient explainers, routine order, and what the clinical data actually says. Written by our formulators, reviewed by a dermatologist.</p>",
+        "show_featured": true
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "One letter, every other Thursday",
+        "text": "New research, plainly summarised. No launches, no urgency."
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "newsletter"
   ]
 }

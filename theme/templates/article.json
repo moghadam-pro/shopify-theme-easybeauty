@@ -2,9 +2,26 @@
   "sections": {
     "main": {
       "type": "main-article"
+    },
+    "related": {
+      "type": "blog-posts",
+      "settings": {
+        "heading": "Keep reading",
+        "limit": 3,
+        "view_all_label": "All articles"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "One letter, every other Thursday",
+        "text": "New research, plainly summarised. No launches, no urgency."
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "related",
+    "newsletter"
   ]
 }
