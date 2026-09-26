@@ -87,6 +87,19 @@
       "message": "Message",
       "submit": "Send message",
       "success": "Thanks — we usually reply within 6 hours."
+    },
+    "collection-tabs": {
+      "example_product": "Example product"
+    },
+    "media-carousel": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "testimonials": {
+      "stars": {
+        "one": "{{ count }} star",
+        "other": "{{ count }} stars"
+      }
     }
   },
   "templates": {

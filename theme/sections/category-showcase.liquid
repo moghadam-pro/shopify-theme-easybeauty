@@ -1,0 +1,134 @@
+{%- comment -%}
+  "Shop by category": full-bleed photo per category, names listed large on
+  the left. Hovering/focusing a name swaps the background photo and the note
+  underneath (see [data-category-showcase] in theme.js). Without JS the first
+  category stays visible and every name is still a plain link.
+{%- endcomment -%}
+<section class="category-showcase" data-category-showcase>
+  <div class="category-showcase__stage">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign cat_image = block.settings.image
+        if cat_image == blank and block.settings.collection != blank
+          assign cat_image = block.settings.collection.featured_image
+        endif
+      -%}
+      <div class="category-showcase__layer{% if forloop.first %} is-active{% endif %}" data-category-layer="{{ forloop.index0 }}">
+        {%- if cat_image != blank -%}
+          <img
+            src="{{ cat_image | image_url: width: 2000 }}"
+            alt=""
+            width="2000"
+            height="{{ 2000 | divided_by: cat_image.aspect_ratio | round }}"
+            loading="lazy"
+          >
+        {%- else -%}
+          <img src="{{ block.settings.fallback_image | default: 'lifestyle-apply.jpg' | asset_url }}" alt="" width="1600" height="1000" loading="lazy">
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+    <div class="category-showcase__scrim"></div>
+    <div class="category-showcase__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="category-showcase__eyebrow">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign cat_title = block.settings.title
+          if cat_title == blank and block.settings.collection != blank
+            assign cat_title = block.settings.collection.title
+          endif
+          assign cat_url = block.settings.collection.url | default: block.settings.link | default: routes.all_products_collection_url
+        -%}
+        <a
+          href="{{ cat_url }}"
+          class="category-showcase__link{% if forloop.first %} is-active{% endif %}"
+          data-category-link="{{ forloop.index0 }}"
+          data-category-note="{{ block.settings.note | escape }}"
+          {{ block.shopify_attributes }}
+        >{{ cat_title }}</a>
+      {%- endfor -%}
+      <p class="category-showcase__note" data-category-note-target aria-live="polite">{{ section.blocks.first.settings.note }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.category-showcase.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.category-showcase.settings.eyebrow.label",
+      "default": "Shop by category"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "t:sections.category-showcase.blocks.category.name",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.category-showcase.blocks.category.settings.collection.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.category-showcase.blocks.category.settings.title.label",
+          "info": "t:sections.category-showcase.blocks.category.settings.title.info"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.category-showcase.blocks.category.settings.link.label",
+          "info": "t:sections.category-showcase.blocks.category.settings.link.info"
+        },
+        {
+          "type": "textarea",
+          "id": "note",
+          "label": "t:sections.category-showcase.blocks.category.settings.note.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.category-showcase.blocks.category.settings.image.label",
+          "info": "t:sections.category-showcase.blocks.category.settings.image.info"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "t:sections.category-showcase.blocks.category.settings.fallback_image.label",
+          "info": "t:sections.category-showcase.blocks.category.settings.fallback_image.info"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "t:sections.category-showcase.presets.name",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Serum",
+            "note": "Three actives, one dropper. Built for visible change in four weeks.",
+            "fallback_image": "lifestyle-apply.jpg"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Recovery",
+            "note": "Overnight repair for skin that has had too much sun, wind or retinol.",
+            "fallback_image": "lifestyle-skin.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

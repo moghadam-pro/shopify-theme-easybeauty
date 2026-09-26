@@ -427,6 +427,113 @@
     }
   });
 
+  /* ---------- category showcase: hover/focus swaps photo + note ---------- */
+  qsa('[data-category-showcase]').forEach((root) => {
+    const noteEl = qs('[data-category-note-target]', root);
+    function activate(index) {
+      qsa('[data-category-layer]', root).forEach((el) => el.classList.toggle('is-active', el.getAttribute('data-category-layer') === index));
+      qsa('[data-category-link]', root).forEach((el) => {
+        const on = el.getAttribute('data-category-link') === index;
+        el.classList.toggle('is-active', on);
+        if (on && noteEl) noteEl.textContent = el.getAttribute('data-category-note') || '';
+      });
+    }
+    qsa('[data-category-link]', root).forEach((link) => {
+      const index = link.getAttribute('data-category-link');
+      link.addEventListener('mouseenter', () => activate(index));
+      link.addEventListener('focus', () => activate(index));
+    });
+  });
+
+  /* ---------- tabs ---------- */
+  qsa('[data-tabs]').forEach((root) => {
+    const tabs = qsa('[data-tab]', root);
+    const panels = qsa('[data-tab-panel]', root);
+    function select(i) {
+      tabs.forEach((t, j) => t.setAttribute('aria-selected', String(i === j)));
+      panels.forEach((p, j) => { p.hidden = i !== j; });
+    }
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const next = (i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+        select(next);
+        tabs[next].focus();
+      });
+    });
+  });
+
+  /* ---------- media carousel: prev/next + hover-to-play videos ---------- */
+  qsa('[data-carousel]').forEach((root) => {
+    const track = qs('[data-carousel-track]', root);
+    if (!track) return;
+    const step = () => {
+      const item = track.firstElementChild;
+      return item ? item.getBoundingClientRect().width + 20 : 260;
+    };
+    const prev = qs('[data-carousel-prev]', root);
+    const next = qs('[data-carousel-next]', root);
+    if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    if (next) next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    qsa('video', track).forEach((video) => {
+      const media = video.closest('.media-carousel__media') || video;
+      media.addEventListener('mouseenter', () => { video.play().catch(() => {}); });
+      media.addEventListener('mouseleave', () => { video.pause(); });
+    });
+  });
+
+  /* ---------- bundle: live total + add every step in one request ---------- */
+  qsa('[data-bundle]').forEach((root) => {
+    const addBtn = qs('[data-bundle-add]', root);
+    const totalEl = qs('[data-bundle-total]', root);
+    const errorEl = qs('[data-bundle-error]', root);
+    const inputs = qsa('[data-bundle-variant]', root);
+    function priceOf(input) {
+      const opt = input.tagName === 'SELECT' ? input.options[input.selectedIndex] : input;
+      return parseInt(opt.getAttribute('data-price'), 10) || 0;
+    }
+    function refresh() {
+      let total = 0;
+      inputs.forEach((input) => {
+        const price = priceOf(input);
+        total += price;
+        const priceEl = qs('[data-bundle-price]', input.closest('.bundle__step'));
+        if (priceEl) priceEl.textContent = formatMoney(price);
+      });
+      if (totalEl) totalEl.textContent = formatMoney(total);
+    }
+    inputs.forEach((input) => input.addEventListener('change', refresh));
+    if (!addBtn) return;
+    addBtn.addEventListener('click', async () => {
+      addBtn.disabled = true;
+      if (errorEl) errorEl.hidden = true;
+      try {
+        const items = inputs.map((input) => ({ id: parseInt(input.value, 10), quantity: 1 }));
+        const res = await fetch(settings.cartAddUrl + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          if (errorEl) { errorEl.textContent = data.description || data.message; errorEl.hidden = false; }
+          return;
+        }
+        if (settings.cartType === 'page') {
+          window.location.href = settings.cartUrl;
+          return;
+        }
+        await refreshCartDrawer();
+        openCartDrawer();
+      } catch (err) {
+        console.error('[bundle] add failed', err);
+      } finally {
+        addBtn.disabled = false;
+      }
+    });
+  });
+
   /* ---------- free shipping progress bar in cart ---------- */
   updateCartCount();
 })();

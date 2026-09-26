@@ -508,6 +508,312 @@
     },
     "main-customer-reset-password": {
       "name": "Reset password"
+    },
+    "category-showcase": {
+      "name": "Category showcase",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        }
+      },
+      "blocks": {
+        "category": {
+          "name": "Category",
+          "settings": {
+            "collection": {
+              "label": "Collection"
+            },
+            "title": {
+              "label": "Title",
+              "info": "Defaults to the collection title."
+            },
+            "link": {
+              "label": "Link",
+              "info": "Used only when no collection is picked."
+            },
+            "note": {
+              "label": "Note"
+            },
+            "image": {
+              "label": "Image",
+              "info": "Defaults to the collection image."
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)",
+              "info": "Used only if no image or collection image exists, e.g. lifestyle-apply.jpg."
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Category showcase"
+      }
+    },
+    "collection-tabs": {
+      "name": "Collection tabs",
+      "settings": {
+        "products_to_show": {
+          "label": "Products per tab"
+        },
+        "columns_desktop": {
+          "label": "Columns on desktop"
+        },
+        "view_all_label": {
+          "label": "View all label"
+        },
+        "view_all_link": {
+          "label": "View all link"
+        }
+      },
+      "blocks": {
+        "tab": {
+          "name": "Tab",
+          "settings": {
+            "label": {
+              "label": "Label"
+            },
+            "collection": {
+              "label": "Collection",
+              "info": "Defaults to all products."
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Collection tabs"
+      }
+    },
+    "image-product-tiles": {
+      "name": "Image product tiles",
+      "blocks": {
+        "tile": {
+          "name": "Tile",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)",
+              "info": "Used only if no image is picked, e.g. lifestyle-skin.jpg."
+            },
+            "product": {
+              "label": "Product"
+            },
+            "eyebrow": {
+              "label": "Eyebrow"
+            },
+            "fallback_title": {
+              "label": "Fallback product title",
+              "info": "Shown when no product is picked."
+            },
+            "fallback_price": {
+              "label": "Fallback price text"
+            },
+            "fallback_thumbnail": {
+              "label": "Fallback thumbnail (theme asset filename)"
+            },
+            "link": {
+              "label": "Fallback link"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Image product tiles"
+      }
+    },
+    "statement": {
+      "name": "Statement",
+      "blocks": {
+        "text": {
+          "name": "Text",
+          "settings": {
+            "text": {
+              "label": "Text"
+            }
+          }
+        },
+        "image": {
+          "name": "Inline image",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Statement"
+      }
+    },
+    "bundle": {
+      "name": "Bundle",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "save_note": {
+          "label": "Savings note",
+          "info": "Display text only. Create an automatic discount in Admin → Discounts for the saving to apply."
+        },
+        "fallback_button_label": {
+          "label": "Button label when products are missing"
+        },
+        "fallback_link": {
+          "label": "Link when products are missing"
+        }
+      },
+      "blocks": {
+        "step": {
+          "name": "Step",
+          "settings": {
+            "product": {
+              "label": "Product"
+            },
+            "fallback_title": {
+              "label": "Fallback title"
+            },
+            "fallback_price": {
+              "label": "Fallback price text"
+            },
+            "fallback_sizes": {
+              "label": "Fallback size text"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Bundle"
+      }
+    },
+    "media-carousel": {
+      "name": "Media carousel",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        }
+      },
+      "blocks": {
+        "item": {
+          "name": "Card",
+          "settings": {
+            "video": {
+              "label": "Video",
+              "info": "Vertical (9:16) clips work best. Plays muted on hover."
+            },
+            "image": {
+              "label": "Image",
+              "info": "Used when no video is picked."
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)"
+            },
+            "product": {
+              "label": "Product"
+            },
+            "fallback_title": {
+              "label": "Fallback product title"
+            },
+            "fallback_price": {
+              "label": "Fallback price text"
+            },
+            "fallback_thumbnail": {
+              "label": "Fallback thumbnail (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Media carousel"
+      }
+    },
+    "testimonials": {
+      "name": "Testimonials",
+      "settings": {
+        "rating": {
+          "label": "Average rating"
+        },
+        "rating_label": {
+          "label": "Rating label"
+        },
+        "press": {
+          "label": "Press names",
+          "info": "Comma-separated, e.g. Vogue, Allure, Byrdie"
+        }
+      },
+      "blocks": {
+        "quote": {
+          "name": "Quote",
+          "settings": {
+            "quote": {
+              "label": "Quote"
+            },
+            "author": {
+              "label": "Author"
+            },
+            "meta": {
+              "label": "Details",
+              "info": "e.g. skin type and age"
+            },
+            "stars": {
+              "label": "Stars"
+            },
+            "image": {
+              "label": "Photo"
+            },
+            "fallback_image": {
+              "label": "Fallback photo (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Testimonials"
+      }
+    },
+    "cta-banner": {
+      "name": "Call to action",
+      "settings": {
+        "color_scheme": {
+          "label": "Colors"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link"
+        },
+        "button_label_2": {
+          "label": "Second button label"
+        },
+        "button_link_2": {
+          "label": "Second button link"
+        }
+      },
+      "presets": {
+        "name": "Call to action"
+      }
     }
   }
 }

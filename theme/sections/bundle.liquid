@@ -1,0 +1,197 @@
+{%- comment -%}
+  "Build your routine" bundle: numbered product steps, a variant (size)
+  picker per step, and one button that adds every step to the cart in a
+  single /cart/add.js call ([data-bundle] in theme.js). The "save" note is
+  display copy only — the actual discount has to be an automatic discount
+  set up in Admin → Discounts.
+  Steps without a picked product fall back to text + a bundled asset photo,
+  and the add-to-cart button is replaced by a link until every step has a
+  real product.
+{%- endcomment -%}
+{%- liquid
+  assign all_products_set = true
+  assign bundle_total = 0
+  for block in section.blocks
+    if block.settings.product == blank
+      assign all_products_set = false
+    else
+      assign bundle_total = bundle_total | plus: block.settings.product.selected_or_first_available_variant.price
+    endif
+  endfor
+-%}
+<section class="bundle" data-bundle>
+  <div class="bundle__media">
+    {%- for block in section.blocks -%}
+      <div class="bundle__media-item">
+        {%- if block.settings.product.featured_image != blank -%}
+          <img src="{{ block.settings.product.featured_image | image_url: width: 500 }}" alt="{{ block.settings.product.title | escape }}" width="500" height="{{ 500 | divided_by: block.settings.product.featured_image.aspect_ratio | round }}" loading="lazy">
+        {%- else -%}
+          <img src="{{ block.settings.fallback_image | default: 'sample-product-3.jpg' | asset_url }}" alt="{{ block.settings.fallback_title | escape }}" width="500" height="625" loading="lazy">
+        {%- endif -%}
+        <span class="bundle__step-badge">{{ forloop.index }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <div class="bundle__content">
+    {%- if section.settings.eyebrow != blank -%}<div class="bundle__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+
+    <div class="bundle__steps">
+      {%- for block in section.blocks -%}
+        {%- assign step_product = block.settings.product -%}
+        <div class="bundle__step" {{ block.shopify_attributes }}>
+          <span class="bundle__step-num">{{ forloop.index }}</span>
+          {%- if step_product.featured_image != blank -%}
+            <img src="{{ step_product.featured_image | image_url: width: 128 }}" alt="" width="64" height="64" loading="lazy">
+          {%- else -%}
+            <img src="{{ block.settings.fallback_image | default: 'sample-product-3.jpg' | asset_url }}" alt="" width="64" height="64" loading="lazy">
+          {%- endif -%}
+          <div class="bundle__step-info">
+            <div class="bundle__step-title">{{ step_product.title | default: block.settings.fallback_title }}</div>
+            {%- if step_product != blank -%}
+              {%- if step_product.has_only_default_variant -%}
+                <input type="hidden" value="{{ step_product.selected_or_first_available_variant.id }}" data-price="{{ step_product.selected_or_first_available_variant.price }}" data-bundle-variant>
+              {%- else -%}
+                <select class="bundle__select" aria-label="{{ step_product.title | escape }}" data-bundle-variant>
+                  {%- for variant in step_product.variants -%}
+                    <option value="{{ variant.id }}" data-price="{{ variant.price }}" {% if variant == step_product.selected_or_first_available_variant %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
+                  {%- endfor -%}
+                </select>
+              {%- endif -%}
+            {%- elsif block.settings.fallback_sizes != blank -%}
+              <div class="bundle__step-meta">{{ block.settings.fallback_sizes }}</div>
+            {%- endif -%}
+          </div>
+          <div class="bundle__step-price" data-bundle-price>
+            {%- if step_product != blank -%}{{ step_product.selected_or_first_available_variant.price | money }}{%- else -%}{{ block.settings.fallback_price }}{%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="bundle__actions">
+      {%- if all_products_set and section.blocks.size > 0 -%}
+        <button type="button" class="btn btn-primary" data-bundle-add data-label="{{ section.settings.button_label | escape }}">
+          {{ section.settings.button_label }} — <span data-bundle-total>{{ bundle_total | money }}</span>
+        </button>
+      {%- else -%}
+        <a href="{{ section.settings.fallback_link | default: routes.all_products_collection_url }}" class="btn btn-primary">{{ section.settings.fallback_button_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.save_note != blank -%}<span class="tag tag-outline">{{ section.settings.save_note }}</span>{%- endif -%}
+    </div>
+    <p class="bundle__error" data-bundle-error hidden></p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.bundle.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.bundle.settings.eyebrow.label",
+      "default": "Build your routine"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.bundle.settings.heading.label",
+      "default": "Level up your routine with the bundle"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.bundle.settings.button_label.label",
+      "default": "Add bundle to cart"
+    },
+    {
+      "type": "text",
+      "id": "save_note",
+      "label": "t:sections.bundle.settings.save_note.label",
+      "info": "t:sections.bundle.settings.save_note.info",
+      "default": "Save 10% as a set"
+    },
+    {
+      "type": "text",
+      "id": "fallback_button_label",
+      "label": "t:sections.bundle.settings.fallback_button_label.label",
+      "default": "Shop the routine"
+    },
+    {
+      "type": "url",
+      "id": "fallback_link",
+      "label": "t:sections.bundle.settings.fallback_link.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "t:sections.bundle.blocks.step.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.bundle.blocks.step.settings.product.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_title",
+          "label": "t:sections.bundle.blocks.step.settings.fallback_title.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_price",
+          "label": "t:sections.bundle.blocks.step.settings.fallback_price.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_sizes",
+          "label": "t:sections.bundle.blocks.step.settings.fallback_sizes.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "t:sections.bundle.blocks.step.settings.fallback_image.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "t:sections.bundle.presets.name",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "fallback_title": "Gentle Cleansing Milk",
+            "fallback_price": "$42",
+            "fallback_sizes": "50 ml",
+            "fallback_image": "sample-product-3.jpg"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "fallback_title": "Radiance Serum No.3",
+            "fallback_price": "$68",
+            "fallback_sizes": "30 ml",
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "fallback_title": "Barrier Repair Cream",
+            "fallback_price": "$58",
+            "fallback_sizes": "50 ml",
+            "fallback_image": "sample-product-2.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
