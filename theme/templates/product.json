@@ -24,11 +24,111 @@
       ]
     },
     "recommendations": {
-      "type": "product-recommendations"
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Complete the routine",
+        "products_to_show": 4
+      }
+    },
+    "community": {
+      "type": "image-gallery",
+      "settings": {
+        "eyebrow": "From the community"
+      },
+      "blocks": {
+        "ugc-1": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-skin.jpg"
+          }
+        },
+        "ugc-2": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-apply.jpg"
+          }
+        },
+        "ugc-3": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "hero-banner.jpg"
+          }
+        },
+        "ugc-4": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        "ugc-5": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-skin.jpg"
+          }
+        },
+        "ugc-6": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-apply.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "ugc-1",
+        "ugc-2",
+        "ugc-3",
+        "ugc-4",
+        "ugc-5",
+        "ugc-6"
+      ]
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": {
+        "rating": "4.8",
+        "rating_label": "12,400+ verified reviews",
+        "press": ""
+      },
+      "blocks": {
+        "q-1": {
+          "type": "quote",
+          "settings": {
+            "quote": "The first moisturiser in four years that did not sting. Three months in and my barrier is finally quiet.",
+            "author": "Maya R.",
+            "meta": "Sensitive, 34",
+            "stars": 5
+          }
+        },
+        "q-2": {
+          "type": "quote",
+          "settings": {
+            "quote": "I bought the bundle to try it and now I cannot use anything else in the morning. The oil is the surprise.",
+            "author": "Dilan A.",
+            "meta": "Combination, 41",
+            "stars": 5
+          }
+        },
+        "q-3": {
+          "type": "quote",
+          "settings": {
+            "quote": "Short ingredient lists, no perfume, no drama. My dermatologist had no notes.",
+            "author": "Priya S.",
+            "meta": "Acne-prone, 27",
+            "stars": 5
+          }
+        }
+      },
+      "block_order": [
+        "q-1",
+        "q-2",
+        "q-3"
+      ]
     }
   },
   "order": [
     "main",
-    "recommendations"
+    "recommendations",
+    "community",
+    "reviews"
   ]
 }

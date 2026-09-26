@@ -1,0 +1,26 @@
+{%- comment -%}
+  Journal article card: image with first-tag label, date, title, excerpt.
+  Usage: {% render 'article-card', article: article %}
+{%- endcomment -%}
+<a href="{{ article.url }}" class="article-card">
+  <div class="article-card__media">
+    {%- if article.image -%}
+      <img
+        src="{{ article.image | image_url: width: 800 }}"
+        alt="{{ article.image.alt | escape }}"
+        width="800"
+        height="{{ 800 | divided_by: article.image.aspect_ratio | round }}"
+        loading="lazy"
+      >
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+    {%- if article.tags.size > 0 -%}<span class="article-card__tag">{{ article.tags.first }}</span>{%- endif -%}
+  </div>
+  <div class="article-card__body">
+    <div class="article-card__meta">{{ article.published_at | date: '%-d %B %Y' }}</div>
+    <h3 class="article-card__title">{{ article.title }}</h3>
+    <p class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+    <span class="article-card__link">{{ 'blogs.article.read_article' | t }} &rarr;</span>
+  </div>
+</a>

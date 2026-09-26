@@ -1,24 +1,54 @@
 {
   "sections": {
     "intro": {
-      "type": "rich-text",
+      "type": "page-intro",
+      "settings": {
+        "show_breadcrumb": true,
+        "eyebrow": "Founded 2019 · Lisbon",
+        "heading": "Twelve formulas. No seasonal launches.",
+        "text": "<p>We started because a friend with reactive skin could not find a cleanser that listed what was in it. Everything since has followed from that: short ingredient decks, published test data, and a range that only grows when a formula earns its place.</p>"
+      }
+    },
+    "stats": {
+      "type": "multicolumn",
+      "settings": {
+        "style": "stats"
+      },
       "blocks": {
-        "h": {
-          "type": "heading",
+        "col-1": {
+          "type": "column",
           "settings": {
-            "heading": "Twelve formulas. No seasonal launches."
+            "title": "12",
+            "text": "Products in the whole range, after seven years"
           }
         },
-        "t": {
-          "type": "text",
+        "col-2": {
+          "type": "column",
           "settings": {
-            "content": "<p>We ship the same twelve products, continuously improved, instead of chasing trend launches.</p>"
+            "title": "84",
+            "text": "Participants in our last twelve-week barrier study"
+          }
+        },
+        "col-3": {
+          "type": "column",
+          "settings": {
+            "title": "1",
+            "text": "GMP-certified lab, outside Lisbon"
+          }
+        },
+        "col-4": {
+          "type": "column",
+          "settings": {
+            "title": "0",
+            "text": "Animal testing, in any market"
           }
         }
       },
       "block_order": [
-        "h",
-        "t"
+        "col-1",
+        "col-2",
+        "col-3",
+        "col-4"
       ]
     },
     "values": {
@@ -37,7 +67,7 @@
           "settings": {
             "number": "02",
             "title": "Concentration follows the evidence",
-            "text": "We formulate to the dose the literature supports, not the number that sells."
+            "text": "We formulate to the dose the literature supports, not the number that sells. That is why our niacinamide is 4% and not 10%."
           }
         },
         "value-3": {
@@ -45,7 +75,7 @@
           "settings": {
             "number": "03",
             "title": "Fragrance-free unless there is a reason",
-            "text": "Fragrance is the most common avoidable irritant in skincare. Leaving it out gives reactive skin a product it can keep using."
+            "text": "Fragrance is the most common avoidable irritant in skincare. Leaving it out costs us a pleasant first impression and gains reactive skin a product it can keep using."
           }
         },
         "value-4": {
@@ -64,45 +94,115 @@
         "value-4"
       ]
     },
+    "timeline": {
+      "type": "multicolumn",
+      "settings": {
+        "style": "timeline",
+        "eyebrow": "How we got here"
+      },
+      "blocks": {
+        "col-1": {
+          "type": "column",
+          "settings": {
+            "kicker": "2019",
+            "title": "A cleanser, and nothing else",
+            "text": "Made in a rented lab in Almada for one friend with reactive skin, then for forty more."
+          }
+        },
+        "col-2": {
+          "type": "column",
+          "settings": {
+            "kicker": "2021",
+            "title": "The barrier cream",
+            "text": "Ceramides and squalane at a ratio we reformulated nine times. Still our second-best seller."
+          }
+        },
+        "col-3": {
+          "type": "column",
+          "settings": {
+            "kicker": "2023",
+            "title": "Moved to Sintra",
+            "text": "Our own GMP-certified line. Batch testing in-house from that point on."
+          }
+        },
+        "col-4": {
+          "type": "column",
+          "settings": {
+            "kicker": "2024",
+            "title": "Leaping Bunny certified",
+            "text": "Audited supply chain, no animal testing at any tier."
+          }
+        },
+        "col-5": {
+          "type": "column",
+          "settings": {
+            "kicker": "2026",
+            "title": "Twelve products",
+            "text": "Two launches a year at most. Anything that does not outperform what we already sell does not ship."
+          }
+        }
+      },
+      "block_order": [
+        "col-1",
+        "col-2",
+        "col-3",
+        "col-4",
+        "col-5"
+      ]
+    },
     "lab": {
       "type": "image-text",
       "settings": {
         "fallback_image": "lifestyle-skin.jpg",
         "layout": "left",
-        "eyebrow": "The lab",
+        "eyebrow": "Where it is made",
         "heading": "One lab outside Lisbon, batch-tested before it leaves.",
-        "text": "<p>Every batch is checked in-house before it ships — nothing is outsourced past formulation.</p>"
+        "text": "<p>We produce in a single GMP-certified facility in Sintra. Every batch is tested for microbial load and active concentration, and the certificate of analysis is printed on the carton with the batch number.</p><p>Nothing is tested on animals, at any stage, in any market — including the ones that would require it. That decision costs us distribution and we are keeping it.</p>",
+        "button_label": "Read the formulation notes",
+        "button_link": "/blogs/news"
       }
     },
     "team": {
       "type": "team-grid",
+      "settings": {
+        "eyebrow": "The people who sign the batch",
+        "heading": "A team of nine, four of them chemists."
+      },
       "blocks": {
         "member-1": {
           "type": "member",
           "settings": {
             "name": "Maren Sousa",
-            "role": "Head of formulation"
+            "role": "Head of formulation",
+            "bio": "Twelve years in barrier-first cosmetic chemistry. Signs off every batch.",
+            "fallback_image": "lifestyle-skin.jpg"
           }
         },
         "member-2": {
           "type": "member",
           "settings": {
             "name": "Dr. Inês Rocha",
-            "role": "Dermatology review"
+            "role": "Dermatology review",
+            "bio": "Reviews all clinical claims and the Journal before it publishes.",
+            "fallback_image": "lifestyle-apply.jpg"
           }
         },
         "member-3": {
           "type": "member",
           "settings": {
             "name": "Tomás Vieira",
-            "role": "Supply & sourcing"
+            "role": "Supply & sourcing",
+            "bio": "Traces every raw material to its origin. Left two suppliers over it.",
+            "fallback_image": "sample-product-3.jpg"
           }
         },
         "member-4": {
           "type": "member",
           "settings": {
             "name": "Lena Haddad",
-            "role": "Customer care"
+            "role": "Customer care",
+            "bio": "Answers routine questions herself, usually within a day.",
+            "fallback_image": "sample-product-2.jpg"
           }
         }
       },
@@ -113,23 +213,26 @@
         "member-4"
       ]
     },
-    "quiz-cta": {
-      "type": "image-text",
+    "cta": {
+      "type": "cta-banner",
       "settings": {
-        "fallback_image": "lifestyle-apply.jpg",
-        "layout": "right",
-        "eyebrow": "Skin quiz",
+        "color_scheme": "dark",
+        "eyebrow": "Still deciding?",
         "heading": "Six questions, three products, no account needed.",
-        "button_label": "Take the quiz",
-        "button_link": "/pages/quiz"
+        "button_label": "Take the skin quiz",
+        "button_link": "/pages/quiz",
+        "button_label_2": "Talk to us",
+        "button_link_2": "/pages/contact"
       }
     }
   },
   "order": [
     "intro",
+    "stats",
     "values",
+    "timeline",
     "lab",
     "team",
-    "quiz-cta"
+    "cta"
   ]
 }

@@ -327,7 +327,20 @@
       "name": "Collection"
     },
     "collection-banner": {
-      "name": "Collection quiz banner"
+      "name": "Collection banner",
+      "settings": {
+        "fallback_description": {
+          "label": "Fallback description",
+          "info": "Shown when the collection has no description of its own."
+        },
+        "badges": {
+          "label": "Badges",
+          "info": "Separate with |, e.g. Fragrance-free | Vegan | Derm tested"
+        }
+      },
+      "presets": {
+        "name": "Collection banner"
+      }
     },
     "main-cart": {
       "name": "Cart"
@@ -336,7 +349,15 @@
       "name": "404"
     },
     "main-blog": {
-      "name": "Blog"
+      "name": "Blog",
+      "settings": {
+        "intro": {
+          "label": "Intro text"
+        },
+        "show_featured": {
+          "label": "Feature the newest article"
+        }
+      }
     },
     "main-article": {
       "name": "Article"
@@ -345,7 +366,12 @@
       "name": "Page"
     },
     "legal-links": {
-      "name": "Legal links"
+      "name": "Legal links",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        }
+      }
     },
     "about-values": {
       "name": "Values grid",
@@ -380,8 +406,22 @@
             },
             "role": {
               "label": "Role"
+            },
+            "fallback_image": {
+              "label": "Fallback photo (theme asset filename)"
+            },
+            "bio": {
+              "label": "Bio"
             }
           }
+        }
+      },
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
         }
       }
     },
@@ -393,6 +433,10 @@
           "settings": {
             "title": {
               "label": "Group title"
+            },
+            "kicker": {
+              "label": "Kicker",
+              "info": "Short label for the navigation, e.g. Shipping."
             }
           }
         },
@@ -407,6 +451,15 @@
             }
           }
         }
+      },
+      "settings": {
+        "show_title": {
+          "label": "Show page title",
+          "info": "Turn off when a page intro section already shows the title."
+        },
+        "show_nav": {
+          "label": "Show group navigation"
+        }
       }
     },
     "contact-form": {
@@ -417,6 +470,36 @@
         },
         "text": {
           "label": "Text"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "topics": {
+          "label": "Topics",
+          "info": "Comma-separated. Shown as choices above the form; leave empty to hide."
+        },
+        "show_order_number": {
+          "label": "Show order number field"
+        },
+        "aside_content": {
+          "label": "Side column text",
+          "info": "e.g. studio address, direct emails, phone."
+        },
+        "faq_heading": {
+          "label": "Q&A heading"
+        }
+      },
+      "blocks": {
+        "question": {
+          "name": "Question",
+          "settings": {
+            "question": {
+              "label": "Question"
+            },
+            "answer": {
+              "label": "Answer"
+            }
+          }
         }
       }
     },
@@ -508,6 +591,541 @@
     },
     "main-customer-reset-password": {
       "name": "Reset password"
+    },
+    "category-showcase": {
+      "name": "Category showcase",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        }
+      },
+      "blocks": {
+        "category": {
+          "name": "Category",
+          "settings": {
+            "collection": {
+              "label": "Collection"
+            },
+            "title": {
+              "label": "Title",
+              "info": "Defaults to the collection title."
+            },
+            "link": {
+              "label": "Link",
+              "info": "Used only when no collection is picked."
+            },
+            "note": {
+              "label": "Note"
+            },
+            "image": {
+              "label": "Image",
+              "info": "Defaults to the collection image."
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)",
+              "info": "Used only if no image or collection image exists, e.g. lifestyle-apply.jpg."
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Category showcase"
+      }
+    },
+    "collection-tabs": {
+      "name": "Collection tabs",
+      "settings": {
+        "products_to_show": {
+          "label": "Products per tab"
+        },
+        "columns_desktop": {
+          "label": "Columns on desktop"
+        },
+        "view_all_label": {
+          "label": "View all label"
+        },
+        "view_all_link": {
+          "label": "View all link"
+        }
+      },
+      "blocks": {
+        "tab": {
+          "name": "Tab",
+          "settings": {
+            "label": {
+              "label": "Label"
+            },
+            "collection": {
+              "label": "Collection",
+              "info": "Defaults to all products."
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Collection tabs"
+      }
+    },
+    "image-product-tiles": {
+      "name": "Image product tiles",
+      "blocks": {
+        "tile": {
+          "name": "Tile",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)",
+              "info": "Used only if no image is picked, e.g. lifestyle-skin.jpg."
+            },
+            "product": {
+              "label": "Product"
+            },
+            "eyebrow": {
+              "label": "Eyebrow"
+            },
+            "fallback_title": {
+              "label": "Fallback product title",
+              "info": "Shown when no product is picked."
+            },
+            "fallback_price": {
+              "label": "Fallback price text"
+            },
+            "fallback_thumbnail": {
+              "label": "Fallback thumbnail (theme asset filename)"
+            },
+            "link": {
+              "label": "Fallback link"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Image product tiles"
+      }
+    },
+    "statement": {
+      "name": "Statement",
+      "blocks": {
+        "text": {
+          "name": "Text",
+          "settings": {
+            "text": {
+              "label": "Text"
+            }
+          }
+        },
+        "image": {
+          "name": "Inline image",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Statement"
+      }
+    },
+    "bundle": {
+      "name": "Bundle",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "save_note": {
+          "label": "Savings note",
+          "info": "Display text only. Create an automatic discount in Admin → Discounts for the saving to apply."
+        },
+        "fallback_button_label": {
+          "label": "Button label when products are missing"
+        },
+        "fallback_link": {
+          "label": "Link when products are missing"
+        }
+      },
+      "blocks": {
+        "step": {
+          "name": "Step",
+          "settings": {
+            "product": {
+              "label": "Product"
+            },
+            "fallback_title": {
+              "label": "Fallback title"
+            },
+            "fallback_price": {
+              "label": "Fallback price text"
+            },
+            "fallback_sizes": {
+              "label": "Fallback size text"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Bundle"
+      }
+    },
+    "media-carousel": {
+      "name": "Media carousel",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        }
+      },
+      "blocks": {
+        "item": {
+          "name": "Card",
+          "settings": {
+            "video": {
+              "label": "Video",
+              "info": "Vertical (9:16) clips work best. Plays muted on hover."
+            },
+            "image": {
+              "label": "Image",
+              "info": "Used when no video is picked."
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)"
+            },
+            "product": {
+              "label": "Product"
+            },
+            "fallback_title": {
+              "label": "Fallback product title"
+            },
+            "fallback_price": {
+              "label": "Fallback price text"
+            },
+            "fallback_thumbnail": {
+              "label": "Fallback thumbnail (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Media carousel"
+      }
+    },
+    "testimonials": {
+      "name": "Testimonials",
+      "settings": {
+        "rating": {
+          "label": "Average rating"
+        },
+        "rating_label": {
+          "label": "Rating label"
+        },
+        "press": {
+          "label": "Press names",
+          "info": "Comma-separated, e.g. Vogue, Allure, Byrdie"
+        }
+      },
+      "blocks": {
+        "quote": {
+          "name": "Quote",
+          "settings": {
+            "quote": {
+              "label": "Quote"
+            },
+            "author": {
+              "label": "Author"
+            },
+            "meta": {
+              "label": "Details",
+              "info": "e.g. skin type and age"
+            },
+            "stars": {
+              "label": "Stars"
+            },
+            "image": {
+              "label": "Photo"
+            },
+            "fallback_image": {
+              "label": "Fallback photo (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Testimonials"
+      }
+    },
+    "cta-banner": {
+      "name": "Call to action",
+      "settings": {
+        "color_scheme": {
+          "label": "Colors"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link"
+        },
+        "button_label_2": {
+          "label": "Second button label"
+        },
+        "button_link_2": {
+          "label": "Second button link"
+        }
+      },
+      "presets": {
+        "name": "Call to action"
+      }
+    },
+    "page-intro": {
+      "name": "Page intro",
+      "settings": {
+        "show_breadcrumb": {
+          "label": "Show breadcrumb"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading",
+          "info": "Defaults to the page title."
+        },
+        "text": {
+          "label": "Text"
+        },
+        "meta": {
+          "label": "Tags",
+          "info": "Short notes shown as tags. Separate with |, e.g. Mon–Fri · 9–18 WET | Replies in ~6h"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link"
+        },
+        "button_label_2": {
+          "label": "Second button label"
+        },
+        "button_link_2": {
+          "label": "Second button link"
+        }
+      },
+      "presets": {
+        "name": "Page intro"
+      }
+    },
+    "multicolumn": {
+      "name": "Multicolumn",
+      "settings": {
+        "style": {
+          "label": "Style"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "caption": {
+          "label": "Caption",
+          "info": "Small print under the grid, e.g. study details."
+        }
+      },
+      "blocks": {
+        "column": {
+          "name": "Column",
+          "settings": {
+            "kicker": {
+              "label": "Kicker",
+              "info": "Small label above the title, e.g. a year or channel name."
+            },
+            "title": {
+              "label": "Title",
+              "info": "Shown as a large figure in the Stats style."
+            },
+            "text": {
+              "label": "Text"
+            },
+            "link_label": {
+              "label": "Link label"
+            },
+            "link": {
+              "label": "Link"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Multicolumn"
+      }
+    },
+    "image-gallery": {
+      "name": "Image gallery",
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        }
+      },
+      "blocks": {
+        "image": {
+          "name": "Image",
+          "settings": {
+            "image": {
+              "label": "Image"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Image gallery"
+      }
+    },
+    "collection-links": {
+      "name": "Collection links",
+      "blocks": {
+        "link": {
+          "name": "Collection",
+          "settings": {
+            "collection": {
+              "label": "Collection",
+              "info": "Leave empty for an \"All products\" chip."
+            },
+            "label": {
+              "label": "Label",
+              "info": "Defaults to the collection title."
+            },
+            "image": {
+              "label": "Thumbnail",
+              "info": "Defaults to the collection image."
+            },
+            "fallback_image": {
+              "label": "Fallback thumbnail (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Collection links"
+      }
+    },
+    "shoppable-look": {
+      "name": "Shoppable look",
+      "settings": {
+        "anchor": {
+          "label": "Anchor",
+          "info": "Lets other links jump here, e.g. look-1 → /pages/lookbook#look-1"
+        },
+        "image": {
+          "label": "Image"
+        },
+        "fallback_image": {
+          "label": "Fallback image (theme asset filename)"
+        },
+        "layout": {
+          "label": "Image position"
+        },
+        "caption": {
+          "label": "Image caption"
+        },
+        "number": {
+          "label": "Number"
+        },
+        "kicker": {
+          "label": "Kicker"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_label": {
+          "label": "Add-all button label"
+        },
+        "fallback_button_label": {
+          "label": "Button label when products are missing"
+        },
+        "note": {
+          "label": "Note next to the button"
+        }
+      },
+      "blocks": {
+        "product": {
+          "name": "Product",
+          "settings": {
+            "product": {
+              "label": "Product"
+            },
+            "step": {
+              "label": "Step label",
+              "info": "e.g. Step one, 30 ml"
+            },
+            "horizontal_position": {
+              "label": "Hotspot horizontal position"
+            },
+            "vertical_position": {
+              "label": "Hotspot vertical position"
+            },
+            "fallback_title": {
+              "label": "Fallback title"
+            },
+            "fallback_price": {
+              "label": "Fallback price text"
+            },
+            "fallback_image": {
+              "label": "Fallback thumbnail (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Shoppable look"
+      }
+    },
+    "blog-posts": {
+      "name": "Blog posts",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        },
+        "blog": {
+          "label": "Blog",
+          "info": "Defaults to the current article's blog."
+        },
+        "limit": {
+          "label": "Articles to show"
+        },
+        "view_all_label": {
+          "label": "View all label"
+        }
+      },
+      "presets": {
+        "name": "Blog posts"
+      }
     }
   }
 }

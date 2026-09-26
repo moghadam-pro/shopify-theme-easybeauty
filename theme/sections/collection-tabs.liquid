@@ -1,0 +1,146 @@
+{%- comment -%}
+  Tabbed product grid ("What's hot / Best sellers / Sale"). Each tab block
+  points at a collection; tabs switch client-side ([data-tabs] in theme.js).
+  An unset collection falls back to collections.all so a fresh install shows
+  real products instead of an empty grid.
+{%- endcomment -%}
+<section class="section container collection-tabs" data-tabs>
+  <div class="section__head">
+    <div class="tabs" role="tablist">
+      {%- for block in section.blocks -%}
+        <button
+          type="button"
+          class="tabs__tab"
+          role="tab"
+          id="Tab-{{ section.id }}-{{ forloop.index }}"
+          aria-controls="Panel-{{ section.id }}-{{ forloop.index }}"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          data-tab
+          {{ block.shopify_attributes }}
+        >{{ block.settings.label }}</button>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.view_all_label != blank -%}
+      <a href="{{ section.settings.view_all_link | default: routes.all_products_collection_url }}" class="btn-ghost">{{ section.settings.view_all_label }} &rarr;</a>
+    {%- endif -%}
+  </div>
+
+  {%- for block in section.blocks -%}
+    {%- assign source_collection = block.settings.collection | default: collections.all -%}
+    <div
+      class="grid grid--products grid-{{ section.settings.columns_desktop }}"
+      role="tabpanel"
+      id="Panel-{{ section.id }}-{{ forloop.index }}"
+      aria-labelledby="Tab-{{ section.id }}-{{ forloop.index }}"
+      data-tab-panel
+      {% unless forloop.first %}hidden{% endunless %}
+    >
+      {%- if source_collection == blank or source_collection.products.size == 0 -%}
+        {%- for i in (1..section.settings.products_to_show) -%}
+          <div class="product-card">
+            <div class="product-card__media">{{ 'product-1' | placeholder_svg_tag: class: 'placeholder-svg' }}</div>
+            <div class="product-card__title">{{ 'sections.collection-tabs.example_product' | t }}</div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for product in source_collection.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.collection-tabs.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "t:sections.collection-tabs.settings.products_to_show.label",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "t:sections.collection-tabs.settings.columns_desktop.label",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "t:sections.collection-tabs.settings.view_all_label.label",
+      "default": "Shop all products"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "t:sections.collection-tabs.settings.view_all_link.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "t:sections.collection-tabs.blocks.tab.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.collection-tabs.blocks.tab.settings.label.label",
+          "default": "Best sellers"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.collection-tabs.blocks.tab.settings.collection.label",
+          "info": "t:sections.collection-tabs.blocks.tab.settings.collection.info"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "t:sections.collection-tabs.presets.name",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "label": "What's hot"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Best sellers"
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "label": "Sale"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

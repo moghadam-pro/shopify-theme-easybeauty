@@ -237,6 +237,7 @@ engine.registerTag('sections', class extends Tag {
 const PAGES = {
   index: { page_type: 'index', title: 'EasyBeauty' },
   product: { page_type: 'product', title: mock.products[0].title },
+  'product.serum': { page_type: 'product', title: mock.products[0].title },
   collection: { page_type: 'collection', title: mock.collection.title },
   'list-collections': { page_type: 'list-collections', title: 'Collections' },
   cart: { page_type: 'cart', title: 'Your bag' },

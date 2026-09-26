@@ -1,0 +1,95 @@
+{%- comment -%}
+  Full-width call-to-action band: eyebrow, heading, optional text and up to
+  two buttons. Reused for the quiz prompt on the homepage/collection/about
+  pages and the "still stuck" / "behind the shoot" bands elsewhere.
+{%- endcomment -%}
+<section class="cta-banner cta-banner--{{ section.settings.color_scheme }}">
+  <div class="container cta-banner__inner">
+    <div class="cta-banner__copy">
+      {%- if section.settings.eyebrow != blank -%}<div class="cta-banner__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="rte cta-banner__text">{{ section.settings.text }}</div>{%- endif -%}
+    </div>
+    {%- if section.settings.button_label != blank or section.settings.button_label_2 != blank -%}
+      <div class="cta-banner__actions">
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: '#' }}" class="btn cta-banner__btn">{{ section.settings.button_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.button_label_2 != blank -%}
+          <a href="{{ section.settings.button_link_2 | default: '#' }}" class="btn cta-banner__btn cta-banner__btn--secondary">{{ section.settings.button_label_2 }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.cta-banner.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "t:sections.cta-banner.settings.color_scheme.label",
+      "options": [
+        {
+          "value": "accent",
+          "label": "Accent"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "light",
+          "label": "Light"
+        }
+      ],
+      "default": "accent"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.cta-banner.settings.eyebrow.label",
+      "default": "Find your routine"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.cta-banner.settings.heading.label",
+      "default": "Not sure where to start? Take the 60-second skin quiz."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.cta-banner.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.cta-banner.settings.button_label.label",
+      "default": "Start the quiz"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.cta-banner.settings.button_link.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "t:sections.cta-banner.settings.button_label_2.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "t:sections.cta-banner.settings.button_link_2.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.cta-banner.presets.name"
+    }
+  ]
+}
+{% endschema %}

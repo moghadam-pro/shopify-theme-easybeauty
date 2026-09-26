@@ -1,0 +1,64 @@
+{%- comment -%}
+  Latest articles from a blog ("Keep reading"). Defaults to the blog of the
+  article being viewed; the current article is skipped.
+{%- endcomment -%}
+{%- liquid
+  assign source_blog = section.settings.blog | default: blog
+  assign shown = 0
+-%}
+{%- if source_blog != blank and source_blog.articles_count > 0 -%}
+  <section class="blog-posts">
+    <div class="container section__head">
+      <h2>{{ section.settings.heading }}</h2>
+      <a href="{{ source_blog.url }}" class="btn-ghost">{{ section.settings.view_all_label }} &rarr;</a>
+    </div>
+    <div class="article-grid">
+      {%- for post in source_blog.articles -%}
+        {%- if post.id == article.id -%}{%- continue -%}{%- endif -%}
+        {%- if shown >= section.settings.limit -%}{%- break -%}{%- endif -%}
+        {% render 'article-card', article: post %}
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.blog-posts.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.blog-posts.settings.heading.label",
+      "default": "Keep reading"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "t:sections.blog-posts.settings.blog.label",
+      "info": "t:sections.blog-posts.settings.blog.info"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "t:sections.blog-posts.settings.limit.label",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "t:sections.blog-posts.settings.view_all_label.label",
+      "default": "All articles"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.blog-posts.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -1,6 +1,6 @@
 {%- comment -%} Sticky bottom nav shown on small screens only (see .mobile-dock in theme.css.liquid). {%- endcomment -%}
 <nav class="mobile-dock" aria-label="{{ 'sections.header.menu' | t }}">
-  <a href="/collections/all" {% if request.page_type == 'collection' or request.page_type == 'list-collections' %}aria-current="page"{% endif %}>
+  <a href="{{ routes.all_products_collection_url }}" {% if request.page_type == 'collection' or request.page_type == 'list-collections' %}aria-current="page"{% endif %}>
     {% render 'icon', icon: 'grid', size: 21 %}
     <span>Shop</span>
   </a>

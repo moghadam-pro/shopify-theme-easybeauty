@@ -1,7 +1,20 @@
-<section class="section container error-page">
-  <h1>{{ 'templates.404.title' | t }}</h1>
-  <p class="text-muted">{{ 'templates.404.subtext' | t }}</p>
-  <a href="{{ routes.root_url }}" class="btn btn-primary">{{ 'templates.404.link' | t }}</a>
+<section class="error-page">
+  <div class="container">
+    <div class="error-page__code">404</div>
+    <h1>{{ 'templates.404.title' | t }}</h1>
+    <p class="error-page__text">{{ 'templates.404.subtext' | t }}</p>
+    <div class="error-page__actions">
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ 'templates.404.browse' | t }}</a>
+      <a href="{{ routes.root_url }}" class="btn btn-secondary">{{ 'templates.404.link' | t }}</a>
+    </div>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="error-page__search">
+      <label for="NotFoundSearch">{{ 'templates.404.search' | t }}</label>
+      <div class="error-page__search-row">
+        <input type="search" class="input" id="NotFoundSearch" name="q">
+        <button type="submit" class="btn btn-secondary">{{ 'templates.search.title' | t }}</button>
+      </div>
+    </form>
+  </div>
 </section>
 
 {% schema %}

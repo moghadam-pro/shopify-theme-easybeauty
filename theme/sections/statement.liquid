@@ -1,0 +1,109 @@
+{%- comment -%}
+  One large sentence with small pill-shaped photos set inline between the
+  words. Built from alternating "text" and "image" blocks so merchants can
+  reorder/replace either without editing HTML.
+{%- endcomment -%}
+<section class="statement">
+  <p class="statement__text">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'text' -%}
+          <span {{ block.shopify_attributes }}>{{ block.settings.text | escape }} </span>
+        {%- when 'image' -%}
+          <span class="statement__chip" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 240 }}" alt="" width="240" height="134" loading="lazy">
+            {%- else -%}
+              <img src="{{ block.settings.fallback_image | default: 'hero-banner.jpg' | asset_url }}" alt="" width="240" height="134" loading="lazy">
+            {%- endif -%}
+          </span>
+      {%- endcase -%}
+    {%- endfor -%}
+  </p>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.statement.name",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "t:sections.statement.blocks.text.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.statement.blocks.text.settings.text.label"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "t:sections.statement.blocks.image.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.statement.blocks.image.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "t:sections.statement.blocks.image.settings.fallback_image.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.statement.presets.name",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "text": "Make you look"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_image": "hero-banner.jpg"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "and feel glowy"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "and healthy"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-skin.jpg"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "every single morning."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

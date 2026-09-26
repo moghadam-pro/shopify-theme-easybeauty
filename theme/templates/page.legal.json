@@ -1,10 +1,64 @@
 {
   "sections": {
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "show_breadcrumb": true,
+        "heading": "Legal",
+        "text": "<p>Privacy notice, terms of sale and cookie use. Written to be read, not to be skipped.</p>"
+      }
+    },
     "main": {
-      "type": "legal-links"
+      "type": "legal-links",
+      "settings": {
+        "heading": "Policies"
+      }
+    },
+    "details": {
+      "type": "multicolumn",
+      "settings": {
+        "style": "cards"
+      },
+      "blocks": {
+        "col-1": {
+          "type": "column",
+          "settings": {
+            "kicker": "Company",
+            "title": "EasyBeauty Lda",
+            "text": "Rua da Fábrica 14, 2710 Sintra, Portugal · VAT PT512 448 019"
+          }
+        },
+        "col-2": {
+          "type": "column",
+          "settings": {
+            "kicker": "Data requests",
+            "title": "Your data, on request",
+            "text": "Ask for a copy of your data, or its deletion, and we answer within thirty days.",
+            "link_label": "Write to us",
+            "link": "/pages/contact"
+          }
+        },
+        "col-3": {
+          "type": "column",
+          "settings": {
+            "kicker": "Also useful",
+            "title": "Shipping times and returns",
+            "text": "Delivery windows, the sixty-day return policy and how to start a return.",
+            "link_label": "Read the FAQ",
+            "link": "/pages/faq"
+          }
+        }
+      },
+      "block_order": [
+        "col-1",
+        "col-2",
+        "col-3"
+      ]
     }
   },
   "order": [
-    "main"
+    "intro",
+    "main",
+    "details"
   ]
 }

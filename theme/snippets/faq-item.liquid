@@ -1,0 +1,10 @@
+{%- comment -%}
+  One FAQ question/answer row. Usage: {% render 'faq-item', block: block %}
+{%- endcomment -%}
+<div class="faq-item" data-accordion-item {{ block.shopify_attributes }}>
+  <button type="button" class="faq-item__trigger" data-accordion-trigger>
+    <span>{{ block.settings.question }}</span>
+    {% render 'icon', icon: 'plus', size: 16 %}
+  </button>
+  <div class="faq-item__panel">{{ block.settings.answer }}</div>
+</div>

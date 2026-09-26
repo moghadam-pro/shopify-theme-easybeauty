@@ -1,0 +1,138 @@
+{%- comment -%}
+  Bordered grid of columns in three looks, chosen per section:
+  - stats:    big serif figure (title) + caption
+  - timeline: small accent label (kicker) + serif title + text
+  - cards:    kicker + title + text + link (contact channels, 404 shortcuts)
+{%- endcomment -%}
+<section class="multicolumn multicolumn--{{ section.settings.style }}">
+  {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+    <div class="multicolumn__head">
+      {%- if section.settings.eyebrow != blank -%}<div class="kicker">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+    </div>
+  {%- endif -%}
+  <div class="multicolumn__grid">
+    {%- for block in section.blocks -%}
+      {%- capture column_content -%}
+        {%- if block.settings.kicker != blank -%}<div class="multicolumn__kicker">{{ block.settings.kicker }}</div>{%- endif -%}
+        {%- if block.settings.title != blank -%}<div class="multicolumn__title">{{ block.settings.title }}</div>{%- endif -%}
+        {%- if block.settings.text != blank -%}<div class="multicolumn__text">{{ block.settings.text }}</div>{%- endif -%}
+        {%- if block.settings.link_label != blank -%}<div class="multicolumn__link">{{ block.settings.link_label }} &rarr;</div>{%- endif -%}
+      {%- endcapture -%}
+      {%- if block.settings.link != blank -%}
+        <a href="{{ block.settings.link }}" class="multicolumn__item" {{ block.shopify_attributes }}>{{ column_content }}</a>
+      {%- else -%}
+        <div class="multicolumn__item" {{ block.shopify_attributes }}>{{ column_content }}</div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- if section.settings.caption != blank -%}<p class="multicolumn__caption">{{ section.settings.caption }}</p>{%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.multicolumn.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:sections.multicolumn.settings.style.label",
+      "options": [
+        {
+          "value": "stats",
+          "label": "Stats"
+        },
+        {
+          "value": "timeline",
+          "label": "Timeline"
+        },
+        {
+          "value": "cards",
+          "label": "Cards"
+        }
+      ],
+      "default": "cards"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.multicolumn.settings.eyebrow.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.multicolumn.settings.heading.label"
+    },
+    {
+      "type": "textarea",
+      "id": "caption",
+      "label": "t:sections.multicolumn.settings.caption.label",
+      "info": "t:sections.multicolumn.settings.caption.info"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "t:sections.multicolumn.blocks.column.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "t:sections.multicolumn.blocks.column.settings.kicker.label",
+          "info": "t:sections.multicolumn.blocks.column.settings.kicker.info"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.multicolumn.blocks.column.settings.title.label",
+          "info": "t:sections.multicolumn.blocks.column.settings.title.info"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "t:sections.multicolumn.blocks.column.settings.text.label"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "t:sections.multicolumn.blocks.column.settings.link_label.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.multicolumn.blocks.column.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.multicolumn.presets.name",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "title": "12",
+            "text": "Products in the whole range"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "1",
+            "text": "GMP-certified lab"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "title": "0",
+            "text": "Animal testing, in any market"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

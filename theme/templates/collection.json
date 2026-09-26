@@ -1,10 +1,101 @@
 {
   "sections": {
+    "banner": {
+      "type": "collection-banner",
+      "settings": {
+        "fallback_description": "Twelve formulas, six concerns, no seasonal launches. Filter by what your skin is actually doing this month.",
+        "badges": "Fragrance-free | Vegan | Derm tested"
+      }
+    },
+    "chips": {
+      "type": "collection-links",
+      "blocks": {
+        "chip-1": {
+          "type": "link",
+          "settings": {
+            "label": "All"
+          }
+        },
+        "chip-2": {
+          "type": "link",
+          "settings": {
+            "label": "Serum",
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        "chip-3": {
+          "type": "link",
+          "settings": {
+            "label": "Moisturizer",
+            "fallback_image": "sample-product-2.jpg"
+          }
+        },
+        "chip-4": {
+          "type": "link",
+          "settings": {
+            "label": "Cleanser",
+            "fallback_image": "sample-product-3.jpg"
+          }
+        },
+        "chip-5": {
+          "type": "link",
+          "settings": {
+            "label": "Treatment",
+            "fallback_image": "sample-product-3.jpg"
+          }
+        },
+        "chip-6": {
+          "type": "link",
+          "settings": {
+            "label": "Eye care",
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        "chip-7": {
+          "type": "link",
+          "settings": {
+            "label": "Sun care",
+            "fallback_image": "sample-product-1.jpg"
+          }
+        },
+        "chip-8": {
+          "type": "link",
+          "settings": {
+            "label": "Body",
+            "fallback_image": "sample-product-1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "chip-1",
+        "chip-2",
+        "chip-3",
+        "chip-4",
+        "chip-5",
+        "chip-6",
+        "chip-7",
+        "chip-8"
+      ]
+    },
     "main": {
       "type": "main-collection"
+    },
+    "quiz-cta": {
+      "type": "image-text",
+      "settings": {
+        "fallback_image": "lifestyle-skin.jpg",
+        "layout": "left",
+        "eyebrow": "Too many options?",
+        "heading": "Answer six questions and we will narrow twelve products to three.",
+        "button_label": "Take the skin quiz",
+        "button_link": "/pages/quiz"
+      }
     }
   },
   "order": [
-    "main"
+    "banner",
+    "chips",
+    "main",
+    "quiz-cta"
   ]
 }

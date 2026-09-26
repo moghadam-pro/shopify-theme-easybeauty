@@ -77,7 +77,11 @@
       "add_routine_to_bag": "Add routine to bag"
     },
     "faq": {
-      "title": "Help"
+      "title": "Help",
+      "answers": {
+        "one": "{{ count }} answer",
+        "other": "{{ count }} answers"
+      }
     },
     "contact": {
       "title": "Talk to us",
@@ -86,14 +90,34 @@
       "topic": "Topic",
       "message": "Message",
       "submit": "Send message",
-      "success": "Thanks — we usually reply within 6 hours."
+      "success": "Thanks — we usually reply within 6 hours.",
+      "order_number": "Order number (optional)"
+    },
+    "collection-tabs": {
+      "example_product": "Example product"
+    },
+    "media-carousel": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "testimonials": {
+      "stars": {
+        "one": "{{ count }} star",
+        "other": "{{ count }} stars"
+      }
+    },
+    "page-intro": {
+      "breadcrumb": "Breadcrumb",
+      "home": "Home"
     }
   },
   "templates": {
     "404": {
       "title": "This page is not part of the routine.",
-      "subtext": "The page you're looking for doesn't exist or has moved.",
-      "link": "Back to shop"
+      "subtext": "The link may be old, or the product may have been retired — we keep twelve formulas and retire one when a better version replaces it.",
+      "link": "Back to home",
+      "browse": "Browse all products",
+      "search": "Or search the shop"
     },
     "search": {
       "title": "Search"
@@ -123,7 +147,16 @@
       "read_more": "Keep reading",
       "back_to_journal": "Back to the Journal",
       "by_author": "By {{ author }}",
-      "share": "Share this article"
+      "share": "Share this article",
+      "read_article": "Read article"
+    },
+    "blog": {
+      "featured": "Featured",
+      "read_featured": "Read the article",
+      "count": {
+        "one": "{{ count }} article",
+        "other": "{{ count }} articles"
+      }
     }
   },
   "customer": {

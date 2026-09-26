@@ -1,8 +1,4 @@
 <section class="section container">
-  <div style="margin-bottom:var(--space-6)">
-    <h1>{{ collection.title }}</h1>
-    {%- if collection.description != blank -%}<div class="rte text-muted">{{ collection.description }}</div>{%- endif -%}
-  </div>
 
   {%- comment -%}
     Filters and sort share one GET form so changing the sort order doesn't
@@ -74,8 +70,6 @@
 {% schema %}
 {
   "name": "t:sections.main-collection.name",
-  "settings": [
-
-  ]
+  "settings": []
 }
 {% endschema %}

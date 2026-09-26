@@ -1,38 +1,301 @@
 {
   "sections": {
-    "main": {
-      "type": "lookbook-grid",
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "show_breadcrumb": true,
+        "eyebrow": "Spring 2026 · Four routines",
+        "heading": "The formulas, in use.",
+        "text": "<p>Photographed over two days in Sintra, on four people who already used the products. No retouching on skin, no filters, no colour — the formulas do not photograph differently than they behave.</p>",
+        "button_label": "Start with morning",
+        "button_link": "/pages/lookbook#look-1",
+        "button_label_2": "Shop all products",
+        "button_link_2": "/collections/all"
+      }
+    },
+    "index": {
+      "type": "multicolumn",
+      "settings": {
+        "style": "cards"
+      },
       "blocks": {
         "look-1": {
-          "type": "look",
+          "type": "column",
           "settings": {
-            "fallback_image": "sample-product-1.jpg",
-            "title": "Morning routine"
+            "kicker": "01",
+            "title": "Morning",
+            "text": "3 products · $168",
+            "link": "/pages/lookbook#look-1"
           }
         },
         "look-2": {
-          "type": "look",
+          "type": "column",
           "settings": {
-            "fallback_image": "sample-product-2.jpg",
-            "title": "Night routine"
+            "kicker": "02",
+            "title": "After treatment",
+            "text": "2 products · $86",
+            "link": "/pages/lookbook#look-2"
           }
         },
         "look-3": {
-          "type": "look",
+          "type": "column",
           "settings": {
-            "fallback_image": "sample-product-3.jpg",
-            "title": "Barrier repair"
+            "kicker": "03",
+            "title": "Travel",
+            "text": "3 products · $128",
+            "link": "/pages/lookbook#look-3"
+          }
+        },
+        "look-4": {
+          "type": "column",
+          "settings": {
+            "kicker": "04",
+            "title": "Night",
+            "text": "3 products · $157",
+            "link": "/pages/lookbook#look-4"
           }
         }
       },
       "block_order": [
         "look-1",
         "look-2",
-        "look-3"
+        "look-3",
+        "look-4"
       ]
+    },
+    "look-1": {
+      "type": "shoppable-look",
+      "settings": {
+        "anchor": "look-1",
+        "fallback_image": "lifestyle-apply.jpg",
+        "layout": "left",
+        "caption": "Ana · Lisbon · eight weeks on No.3",
+        "number": "01",
+        "kicker": "Morning · 4 minutes",
+        "heading": "Cleanse, serum, moisturiser. Nothing else before ten.",
+        "text": "Ana has combination skin that turns oily by midday. The milk goes on dry skin, the serum on damp, and the cream only where it tightens — cheeks, never the T-zone.",
+        "button_label": "Add all 3 to bag",
+        "fallback_button_label": "Shop all products",
+        "note": "3 products · $168"
+      },
+      "blocks": {
+        "p-1": {
+          "type": "product",
+          "settings": {
+            "step": "Step one",
+            "horizontal_position": 26,
+            "vertical_position": 34,
+            "fallback_title": "Gentle Cleansing Milk",
+            "fallback_price": "$42",
+            "fallback_image": "sample-product-3.jpg"
+          }
+        },
+        "p-2": {
+          "type": "product",
+          "settings": {
+            "step": "Step two",
+            "horizontal_position": 58,
+            "vertical_position": 52,
+            "fallback_title": "Radiance Serum No.3",
+            "fallback_price": "$68",
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        "p-3": {
+          "type": "product",
+          "settings": {
+            "step": "Step three",
+            "horizontal_position": 74,
+            "vertical_position": 72,
+            "fallback_title": "Barrier Repair Cream",
+            "fallback_price": "$58",
+            "fallback_image": "sample-product-2.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "p-1",
+        "p-2",
+        "p-3"
+      ]
+    },
+    "look-2": {
+      "type": "shoppable-look",
+      "settings": {
+        "anchor": "look-2",
+        "fallback_image": "lifestyle-skin.jpg",
+        "layout": "right",
+        "caption": "Marta · four days post-peel",
+        "number": "02",
+        "kicker": "After treatment · barrier first",
+        "heading": "The week after a peel, the routine gets shorter.",
+        "text": "No actives for seven days. Mineral mist while the skin is still damp, then the cream in two thin layers rather than one thick one. Redness settled by day four.",
+        "button_label": "Add all 2 to bag",
+        "fallback_button_label": "Shop all products",
+        "note": "2 products · $86"
+      },
+      "blocks": {
+        "p-1": {
+          "type": "product",
+          "settings": {
+            "step": "Step one",
+            "horizontal_position": 38,
+            "vertical_position": 30,
+            "fallback_title": "Mineral Mist Toner",
+            "fallback_price": "$28",
+            "fallback_image": "sample-product-2.jpg"
+          }
+        },
+        "p-2": {
+          "type": "product",
+          "settings": {
+            "step": "Step two",
+            "horizontal_position": 64,
+            "vertical_position": 62,
+            "fallback_title": "Barrier Repair Cream",
+            "fallback_price": "$58",
+            "fallback_image": "sample-product-1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "p-1",
+        "p-2"
+      ]
+    },
+    "look-3": {
+      "type": "shoppable-look",
+      "settings": {
+        "anchor": "look-3",
+        "fallback_image": "sample-product-1.jpg",
+        "layout": "left",
+        "caption": "Packed for six days in Porto",
+        "number": "03",
+        "kicker": "Travel · three bottles",
+        "heading": "Thirty millilitres each, one pouch, no decanting.",
+        "text": "The trio that clears cabin rules and still covers a week: the milk doubles as a makeup remover, the balm covers lips and cuticles, and No.3 stands in for anything brightening.",
+        "button_label": "Add all 3 to bag",
+        "fallback_button_label": "Shop all products",
+        "note": "3 products · $128"
+      },
+      "blocks": {
+        "p-1": {
+          "type": "product",
+          "settings": {
+            "step": "30 ml",
+            "horizontal_position": 30,
+            "vertical_position": 44,
+            "fallback_title": "Gentle Cleansing Milk",
+            "fallback_price": "$42",
+            "fallback_image": "sample-product-3.jpg"
+          }
+        },
+        "p-2": {
+          "type": "product",
+          "settings": {
+            "step": "30 ml",
+            "horizontal_position": 52,
+            "vertical_position": 36,
+            "fallback_title": "Radiance Serum No.3",
+            "fallback_price": "$68",
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        "p-3": {
+          "type": "product",
+          "settings": {
+            "step": "10 ml",
+            "horizontal_position": 70,
+            "vertical_position": 58,
+            "fallback_title": "Ceramide Lip Balm",
+            "fallback_price": "$18",
+            "fallback_image": "sample-product-1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "p-1",
+        "p-2",
+        "p-3"
+      ]
+    },
+    "look-4": {
+      "type": "shoppable-look",
+      "settings": {
+        "anchor": "look-4",
+        "fallback_image": "hero-banner.jpg",
+        "layout": "right",
+        "caption": "Sofia · Tuesday and Friday nights",
+        "number": "04",
+        "kicker": "Night · the long version",
+        "heading": "Ten minutes, twice a week, and the mask does the work.",
+        "text": "Clay on the chin and nose only, fifteen minutes, never to dry. Everything after it is the morning routine in reverse order, with the serum left on longer.",
+        "button_label": "Add all 3 to bag",
+        "fallback_button_label": "Shop all products",
+        "note": "3 products · $157"
+      },
+      "blocks": {
+        "p-1": {
+          "type": "product",
+          "settings": {
+            "step": "Twice weekly",
+            "horizontal_position": 34,
+            "vertical_position": 38,
+            "fallback_title": "Clay Balance Mask",
+            "fallback_price": "$31",
+            "fallback_image": "sample-product-2.jpg"
+          }
+        },
+        "p-2": {
+          "type": "product",
+          "settings": {
+            "step": "After rinsing",
+            "horizontal_position": 56,
+            "vertical_position": 60,
+            "fallback_title": "Radiance Serum No.3",
+            "fallback_price": "$68",
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        "p-3": {
+          "type": "product",
+          "settings": {
+            "step": "Seal",
+            "horizontal_position": 72,
+            "vertical_position": 44,
+            "fallback_title": "Barrier Repair Cream",
+            "fallback_price": "$58",
+            "fallback_image": "sample-product-1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "p-1",
+        "p-2",
+        "p-3"
+      ]
+    },
+    "behind": {
+      "type": "cta-banner",
+      "settings": {
+        "color_scheme": "dark",
+        "eyebrow": "Behind the shoot",
+        "heading": "Four people, eight weeks on the same routine.",
+        "text": "<p>Everyone photographed here had used their routine for at least eight weeks before the camera came out. We list what each of them used, in order, with nothing left off.</p>",
+        "button_label": "Find your routine",
+        "button_link": "/pages/quiz",
+        "button_label_2": "Read the notes",
+        "button_link_2": "/blogs/news"
+      }
     }
   },
   "order": [
-    "main"
+    "intro",
+    "index",
+    "look-1",
+    "look-2",
+    "look-3",
+    "look-4",
+    "behind"
   ]
 }
