@@ -48,7 +48,7 @@
     {%- if collection.products.size == 0 -%}
       <p>{{ 'general.search.no_results_html' | t: terms: collection.title }}</p>
     {%- else -%}
-      <div class="grid grid-4">
+      <div class="grid grid--products grid-4">
         {%- for product in collection.products -%}
           {% render 'product-card', product: product %}
         {%- endfor -%}

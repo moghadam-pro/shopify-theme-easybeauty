@@ -22,7 +22,47 @@
       ]
     },
     "values": {
-      "type": "about-values"
+      "type": "about-values",
+      "blocks": {
+        "value-1": {
+          "type": "value",
+          "settings": {
+            "number": "01",
+            "title": "Short decks, printed in full",
+            "text": "If an ingredient cannot be justified to a customer in one sentence, it does not go in. Every carton carries the complete list at its real percentage."
+          }
+        },
+        "value-2": {
+          "type": "value",
+          "settings": {
+            "number": "02",
+            "title": "Concentration follows the evidence",
+            "text": "We formulate to the dose the literature supports, not the number that sells."
+          }
+        },
+        "value-3": {
+          "type": "value",
+          "settings": {
+            "number": "03",
+            "title": "Fragrance-free unless there is a reason",
+            "text": "Fragrance is the most common avoidable irritant in skincare. Leaving it out gives reactive skin a product it can keep using."
+          }
+        },
+        "value-4": {
+          "type": "value",
+          "settings": {
+            "number": "04",
+            "title": "We publish what we measure",
+            "text": "Test data goes in the Journal — including the studies where the effect was smaller than we hoped."
+          }
+        }
+      },
+      "block_order": [
+        "value-1",
+        "value-2",
+        "value-3",
+        "value-4"
+      ]
     },
     "lab": {
       "type": "image-text",
@@ -35,7 +75,43 @@
       }
     },
     "team": {
-      "type": "team-grid"
+      "type": "team-grid",
+      "blocks": {
+        "member-1": {
+          "type": "member",
+          "settings": {
+            "name": "Maren Sousa",
+            "role": "Head of formulation"
+          }
+        },
+        "member-2": {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Inês Rocha",
+            "role": "Dermatology review"
+          }
+        },
+        "member-3": {
+          "type": "member",
+          "settings": {
+            "name": "Tomás Vieira",
+            "role": "Supply & sourcing"
+          }
+        },
+        "member-4": {
+          "type": "member",
+          "settings": {
+            "name": "Lena Haddad",
+            "role": "Customer care"
+          }
+        }
+      },
+      "block_order": [
+        "member-1",
+        "member-2",
+        "member-3",
+        "member-4"
+      ]
     },
     "quiz-cta": {
       "type": "image-text",

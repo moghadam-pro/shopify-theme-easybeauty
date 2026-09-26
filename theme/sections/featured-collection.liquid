@@ -6,9 +6,9 @@
     {%- endif -%}
   </div>
 
-  <div class="grid grid-{{ section.settings.columns_desktop }}">
-    {%- assign source_collection = section.settings.collection -%}
-    {%- if source_collection == blank -%}
+  <div class="grid grid--products grid-{{ section.settings.columns_desktop }}">
+    {%- assign source_collection = section.settings.collection | default: collections.all -%}
+    {%- if source_collection == blank or source_collection.products.size == 0 -%}
       {%- for i in (1..section.settings.products_to_show) -%}
         <div class="product-card">
           <div class="product-card__media">{{ 'product-1' | placeholder_svg_tag: class: 'placeholder-svg' }}</div>

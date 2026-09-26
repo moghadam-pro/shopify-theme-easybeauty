@@ -24,7 +24,20 @@
           loading="lazy"
         >
       {%- else -%}
-        {{ 'lifestyle-2' | placeholder_svg_tag: class: 'placeholder-svg' }}
+        {%- liquid
+          if section.settings.layout == 'right'
+            assign fallback_image = 'lifestyle-apply.jpg'
+          else
+            assign fallback_image = 'lifestyle-skin.jpg'
+          endif
+        -%}
+        <img
+          src="{{ fallback_image | asset_url }}"
+          alt="{{ section.settings.heading | escape }}"
+          width="880"
+          height="1100"
+          loading="lazy"
+        >
       {%- endif -%}
     </div>
     <div>

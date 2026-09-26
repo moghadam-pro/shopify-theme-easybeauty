@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero hero--copy-{{ section.settings.copy_position }}">
   <div class="hero__media">
     {%- if section.settings.image -%}
       <img
@@ -10,13 +10,6 @@
         loading="eager"
       >
     {%- else -%}
-      {%- comment -%}
-        No merchant-picked image yet: fall back to the theme's own bundled
-        photo via asset_url. A shopify://shop_images/... reference would be
-        cleaner but only resolves against a file already uploaded to the
-        shop's Files library — it does NOT auto-copy theme assets there, so
-        it silently (or not so silently) fails to render on a fresh install.
-      {%- endcomment -%}
       <img
         src="{{ 'hero-banner.jpg' | asset_url }}"
         alt="{{ section.settings.heading | escape }}"
@@ -26,20 +19,6 @@
         loading="eager"
       >
     {%- endif -%}
-
-    <div class="hero__copy">
-      {%- if section.settings.eyebrow != blank -%}<div class="eyebrow" style="color:#5E5347">{{ section.settings.eyebrow }}</div>{%- endif -%}
-      <h1>{{ section.settings.heading }}</h1>
-      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
-      <div class="hero__actions">
-        {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn-primary">{{ section.settings.button_label }}</a>
-        {%- endif -%}
-        {%- if section.settings.button_label_2 != blank -%}
-          <a href="{{ section.settings.button_link_2 | default: '#' }}" class="btn btn-secondary">{{ section.settings.button_label_2 }}</a>
-        {%- endif -%}
-      </div>
-    </div>
 
     {%- for block in section.blocks -%}
       {%- if block.type == 'hotspot' -%}
@@ -57,6 +36,8 @@
               <img src="{{ block.settings.image | image_url: width: 120 }}" alt="" width="120" height="120" loading="lazy" style="width:48px;height:48px;object-fit:cover;flex:none">
             {%- elsif block.settings.fallback_image != blank -%}
               <img src="{{ block.settings.fallback_image | asset_url }}" alt="" width="120" height="120" loading="lazy" style="width:48px;height:48px;object-fit:cover;flex:none">
+            {%- else -%}
+              <img src="{{ 'sample-product-4.jpg' | asset_url }}" alt="" width="120" height="120" loading="lazy" style="width:48px;height:48px;object-fit:cover;flex:none">
             {%- endif -%}
             <div>
               <div style="font-size:13px;font-weight:600;margin-bottom:4px">{{ block.settings.title }}</div>
@@ -66,6 +47,20 @@
         </div>
       {%- endif -%}
     {%- endfor -%}
+  </div>
+
+  <div class="hero__copy">
+    {%- if section.settings.eyebrow != blank -%}<div class="eyebrow" style="color:#5E5347">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    <h1>{{ section.settings.heading }}</h1>
+    {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    <div class="hero__actions">
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn-primary">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.button_label_2 != blank -%}
+        <a href="{{ section.settings.button_link_2 | default: '#' }}" class="btn btn-secondary">{{ section.settings.button_label_2 }}</a>
+      {%- endif -%}
+    </div>
   </div>
 </section>
 
@@ -77,6 +72,22 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.hero.settings.image.label"
+    },
+    {
+      "type": "select",
+      "id": "copy_position",
+      "label": "t:sections.hero.settings.copy_position.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.hero.settings.copy_position.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.hero.settings.copy_position.options__2.label"
+        }
+      ],
+      "default": "left"
     },
     {
       "type": "text",

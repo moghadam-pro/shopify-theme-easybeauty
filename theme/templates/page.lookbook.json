@@ -25,7 +25,11 @@
           }
         }
       },
-      "block_order": ["look-1", "look-2", "look-3"]
+      "block_order": [
+        "look-1",
+        "look-2",
+        "look-3"
+      ]
     }
   },
   "order": [

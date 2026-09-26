@@ -28,6 +28,31 @@ This starts a local preview server with hot reload against your store's real dat
 collections, etc. must already exist in that store/dev store for pages like `product.json` or
 `collection.json` to show real content instead of the theme editor's placeholders).
 
+## Store-less preview (design review)
+
+`tools/preview/` renders every template to static HTML with [liquidjs](https://liquidjs.com),
+a set of Shopify tag/filter shims, and mock data (12 products, a cart, a blog), then takes
+desktop (1440px) and mobile (390px) full-page screenshots. Use it to review design changes
+without a store or Shopify login:
+
+```bash
+cd tools/preview
+npm install
+npm run preview          # render + screenshots → out/*.html, out/shots/*.png
+node render.mjs index    # render only some pages
+```
+
+To preview another revision without touching your checkout, export it and point the tool at it:
+
+```bash
+git archive <commit> theme | tar -x -C /tmp/old
+THEME_DIR=/tmp/old/theme OUT_DIR=/tmp/old/out node render.mjs
+```
+
+It is an approximation: admin-uploaded images, real filters, predictive search, and Shopify's
+own scripts don't exist there. Mock data lives in `tools/preview/mock-data.mjs`. The real check
+is still `shopify theme dev`.
+
 ## Linting (theme-check)
 
 Shopify's official linter catches broken schemas, missing translation keys, missing required
