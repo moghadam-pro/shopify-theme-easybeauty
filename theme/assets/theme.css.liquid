@@ -572,6 +572,7 @@ textarea.input { min-height: 120px; resize: vertical; }
   display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px;
   background: var(--color-border); border: 1px solid var(--color-border);
 }
+@media (min-width: 980px) { .testimonials__grid[style*="--cols"] { grid-template-columns: repeat(var(--cols), 1fr); } }
 .testimonials__quote { margin: 0; background: var(--cream); padding: 34px 28px; display: flex; flex-direction: column; gap: 20px; }
 .testimonials__stars { color: var(--terra); font-size: 13px; letter-spacing: 0.14em; }
 .testimonials__quote blockquote { margin: 0; font-family: var(--font-heading); font-size: 20px; line-height: 1.45; }
@@ -645,6 +646,14 @@ a.multicolumn__item:hover { background: var(--off); }
 .team-grid__name { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
 .team-grid__role { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); margin-bottom: 12px; }
 .team-grid__bio { font-size: 13.5px; line-height: 1.7; color: #463C31; }
+
+/* Multicolumn caption + image gallery */
+.multicolumn__caption { max-width: var(--page-width); margin: 0 auto; padding: 18px 28px 24px; font-size: 12px; line-height: 1.7; color: #655B4F; }
+.image-gallery { border-bottom: 2px solid var(--ink); padding: clamp(56px, 6vw, 78px) 0 clamp(60px, 6vw, 84px); }
+.image-gallery__eyebrow { margin-bottom: 26px; }
+.image-gallery__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2px; background: var(--color-border); border: 1px solid var(--color-border); }
+.image-gallery__item { aspect-ratio: 1/1; background: var(--sand); overflow: hidden; }
+.image-gallery__item img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ═══════════ 404 / misc ═══════════ */
 .error-page { text-align: center; padding: clamp(64px,10vw,120px) 0; }

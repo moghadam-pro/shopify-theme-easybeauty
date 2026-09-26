@@ -1,0 +1,84 @@
+{%- comment -%}
+  Square photo grid with an eyebrow ("From the community"). Each block is one
+  photo; unset photos fall back to a bundled theme asset.
+{%- endcomment -%}
+<section class="image-gallery">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}<div class="kicker image-gallery__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    <div class="image-gallery__grid">
+      {%- for block in section.blocks -%}
+        <div class="image-gallery__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt | escape }}" width="600" height="600" loading="lazy">
+          {%- else -%}
+            <img src="{{ block.settings.fallback_image | default: 'lifestyle-skin.jpg' | asset_url }}" alt="" width="600" height="600" loading="lazy">
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.image-gallery.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.image-gallery.settings.eyebrow.label",
+      "default": "From the community"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.image-gallery.blocks.image.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.image-gallery.blocks.image.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "t:sections.image-gallery.blocks.image.settings.fallback_image.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.image-gallery.presets.name",
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-skin.jpg"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-apply.jpg"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_image": "hero-banner.jpg"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "fallback_image": "sample-product-4.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

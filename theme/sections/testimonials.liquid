@@ -17,7 +17,18 @@
       </div>
     {%- endif -%}
 
-    <div class="testimonials__grid">
+    {%- liquid
+      assign quote_count = section.blocks.size
+      assign cols = 0
+      assign mod3 = quote_count | modulo: 3
+      assign mod4 = quote_count | modulo: 4
+      if mod3 == 0
+        assign cols = 3
+      elsif mod4 == 0
+        assign cols = 4
+      endif
+    -%}
+    <div class="testimonials__grid"{% if cols > 0 %} style="--cols: {{ cols }}"{% endif %}>
       {%- for block in section.blocks -%}
         <figure class="testimonials__quote" {{ block.shopify_attributes }}>
           <div class="testimonials__stars" aria-label="{{ 'sections.testimonials.stars' | t: count: block.settings.stars }}">
