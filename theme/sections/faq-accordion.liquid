@@ -1,24 +1,59 @@
-<section class="section container" style="max-width:760px">
-  <h1>{{ 'sections.faq.title' | t }}</h1>
-
-  
+{%- comment -%}
+  FAQ: "group" blocks start a titled group; the "question" blocks after it
+  (until the next group) belong to it. Questions before the first group
+  render in an untitled group. Optional left-hand navigation lists the
+  groups with their answer counts. Accordion behaviour: theme.js
+  ([data-accordion-*]).
+{%- endcomment -%}
+{%- capture faq_items -%}
   {%- for block in section.blocks -%}
-    {%- if block.type == 'group' -%}
-      {%- unless forloop.first -%}</div>{%- endunless -%}
-      <div class="faq-group" data-accordion-single {{ block.shopify_attributes }}>
-        <h2 style="font-size:20px;margin-bottom:var(--space-4)">{{ block.settings.title }}</h2>
+    {%- if forloop.first and block.type == 'question' -%}
+      <div class="faq-group" data-accordion-single>
+        <div class="faq-group__items">
+          {%- for question in section.blocks -%}
+            {%- if question.type == 'group' -%}{%- break -%}{%- endif -%}
+            {%- render 'faq-item', block: question -%}
+          {%- endfor -%}
+        </div>
+      </div>
     {%- endif -%}
-    {%- if block.type == 'question' -%}
-      <div class="faq-item" data-accordion-item {{ block.shopify_attributes }}>
-        <button type="button" class="faq-item__trigger" data-accordion-trigger>
-          {{ block.settings.question }}
-          {% render 'icon', icon: 'chevron-down', size: 16 %}
-        </button>
-        <div class="faq-item__panel">{{ block.settings.answer }}</div>
+    {%- if block.type == 'group' -%}
+      <div class="faq-group" id="faq-{{ block.id }}" data-accordion-single {{ block.shopify_attributes }}>
+        {%- if block.settings.kicker != blank -%}<div class="faq-group__kicker">{{ block.settings.kicker }}</div>{%- endif -%}
+        <h2 class="faq-group__title">{{ block.settings.title }}</h2>
+        <div class="faq-group__items">
+          {%- for question in section.blocks offset: forloop.index -%}
+            {%- if question.type == 'group' -%}{%- break -%}{%- endif -%}
+            {%- render 'faq-item', block: question -%}
+          {%- endfor -%}
+        </div>
       </div>
     {%- endif -%}
   {%- endfor -%}
-  {%- unless section.blocks.size == 0 -%}</div>{%- endunless -%}
+{%- endcapture -%}
+
+<section class="faq{% if section.settings.show_nav %} faq--with-nav{% endif %}">
+  {%- if section.settings.show_nav -%}
+    <nav class="faq__nav" aria-label="{{ 'sections.faq.title' | t }}">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'group' -%}
+          {%- assign answer_count = 0 -%}
+          {%- for question in section.blocks offset: forloop.index -%}
+            {%- if question.type == 'group' -%}{%- break -%}{%- endif -%}
+            {%- assign answer_count = answer_count | plus: 1 -%}
+          {%- endfor -%}
+          <a href="#faq-{{ block.id }}">
+            <span>{{ block.settings.kicker | default: block.settings.title }}</span>
+            <span class="faq__nav-count">{{ 'sections.faq.answers' | t: count: answer_count }}</span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+  <div class="faq__groups">
+    {%- if section.settings.show_title -%}<h1 class="faq__title">{{ 'sections.faq.title' | t }}</h1>{%- endif -%}
+    {{ faq_items }}
+  </div>
 </section>
 
 {% schema %}
@@ -29,6 +64,12 @@
       "type": "group",
       "name": "t:sections.faq-accordion.blocks.group.name",
       "settings": [
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "t:sections.faq-accordion.blocks.group.settings.kicker.label",
+          "info": "t:sections.faq-accordion.blocks.group.settings.kicker.info"
+        },
         {
           "type": "text",
           "id": "title",
@@ -89,6 +130,21 @@
         }
       }
     ]
-  }
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "t:sections.faq-accordion.settings.show_title.label",
+      "info": "t:sections.faq-accordion.settings.show_title.info",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_nav",
+      "label": "t:sections.faq-accordion.settings.show_nav.label",
+      "default": true
+    }
+  ]
 }
 {% endschema %}

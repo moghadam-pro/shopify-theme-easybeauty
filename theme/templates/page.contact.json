@@ -1,10 +1,109 @@
 {
   "sections": {
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "show_breadcrumb": true,
+        "heading": "Talk to us",
+        "text": "<p>Routine questions go to our formulation team, not a script. We answer every message within one working day, usually sooner.</p>",
+        "meta": "Mon–Fri · 9–18 WET | Replies in ~6h"
+      }
+    },
+    "channels": {
+      "type": "multicolumn",
+      "settings": {
+        "style": "cards"
+      },
+      "blocks": {
+        "c-1": {
+          "type": "column",
+          "settings": {
+            "kicker": "Routine advice",
+            "title": "Ask a formulator",
+            "text": "Send what you use now and what your skin does with it. Maren or Inês answers in person.",
+            "link_label": "hello@easybeauty.co",
+            "link": "mailto:hello@easybeauty.co"
+          }
+        },
+        "c-2": {
+          "type": "column",
+          "settings": {
+            "kicker": "Orders & returns",
+            "title": "Order support",
+            "text": "Unopened or not — 60 days, return shipping paid, no questions about why.",
+            "link_label": "Track or return an order",
+            "link": "/account"
+          }
+        },
+        "c-3": {
+          "type": "column",
+          "settings": {
+            "kicker": "Press & stockists",
+            "title": "Partnerships",
+            "text": "Sample requests, stockist enquiries and interviews go to one inbox.",
+            "link_label": "press@easybeauty.co",
+            "link": "mailto:press@easybeauty.co"
+          }
+        }
+      },
+      "block_order": [
+        "c-1",
+        "c-2",
+        "c-3"
+      ]
+    },
     "main": {
-      "type": "contact-form"
+      "type": "contact-form",
+      "settings": {
+        "eyebrow": "Send a message",
+        "heading": "Tell us what your skin is doing and we will answer properly.",
+        "text": "",
+        "topics": "Routine advice, An order, Returns, Press, Something else",
+        "show_order_number": true,
+        "aside_content": "<p><strong>Studio</strong><br>Rua da Fábrica 14<br>2710 Sintra<br>Portugal</p><p><strong>Direct</strong><br><a href=\"mailto:hello@easybeauty.co\">hello@easybeauty.co</a><br><a href=\"mailto:press@easybeauty.co\">press@easybeauty.co</a><br>+351 21 000 0000</p>",
+        "faq_heading": "Before you write"
+      },
+      "blocks": {
+        "q-1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>EU orders ship in 24h from Lisbon and arrive in two to four working days. Rest of world, five to nine.</p>"
+          }
+        },
+        "q-2": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return window?",
+            "answer": "<p>Sixty days, opened or not. We pay return shipping inside the EU.</p>"
+          }
+        },
+        "q-3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I use two actives together?",
+            "answer": "<p>Usually yes, on alternate days. Write to us with both products and we will give you an order.</p>"
+          }
+        },
+        "q-4": {
+          "type": "question",
+          "settings": {
+            "question": "Are you certified cruelty-free?",
+            "answer": "<p>Leaping Bunny certified since 2024, with an audited supply chain at every tier.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q-1",
+        "q-2",
+        "q-3",
+        "q-4"
+      ]
     }
   },
   "order": [
+    "intro",
+    "channels",
     "main"
   ]
 }

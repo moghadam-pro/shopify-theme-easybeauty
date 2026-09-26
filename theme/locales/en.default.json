@@ -77,7 +77,11 @@
       "add_routine_to_bag": "Add routine to bag"
     },
     "faq": {
-      "title": "Help"
+      "title": "Help",
+      "answers": {
+        "one": "{{ count }} answer",
+        "other": "{{ count }} answers"
+      }
     },
     "contact": {
       "title": "Talk to us",
@@ -86,7 +90,8 @@
       "topic": "Topic",
       "message": "Message",
       "submit": "Send message",
-      "success": "Thanks — we usually reply within 6 hours."
+      "success": "Thanks — we usually reply within 6 hours.",
+      "order_number": "Order number (optional)"
     },
     "collection-tabs": {
       "example_product": "Example product"

@@ -1,51 +1,102 @@
-<section class="section container" style="max-width:600px">
-  <h1>{{ section.settings.heading }}</h1>
-  {%- if section.settings.text != blank -%}<p class="text-muted">{{ section.settings.text }}</p>{%- endif -%}
+{%- comment -%}
+  Shopify contact form ({% form 'contact' %} → the store's contact email),
+  with an optional side column: free-form details (address, direct emails)
+  and short "before you write" Q&A blocks.
+{%- endcomment -%}
+{%- liquid
+  assign has_aside = false
+  if section.settings.aside_content != blank or section.blocks.size > 0
+    assign has_aside = true
+  endif
+  assign topics = section.settings.topics | split: ','
+-%}
+<section class="contact-form{% if has_aside %} contact-form--split{% endif %}">
+  <div class="contact-form__main">
+    {%- if section.settings.eyebrow != blank -%}<div class="kicker contact-form__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}<p class="contact-form__lead">{{ section.settings.text }}</p>{%- endif -%}
 
-  {%- form 'contact' -%}
-    {%- if form.posted_successfully? -%}
-      <p class="form-message form-message--success">{{ 'sections.contact.success' | t }}</p>
-    {%- endif -%}
+    {%- form 'contact' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="form-message form-message--success">{{ 'sections.contact.success' | t }}</p>
+      {%- endif -%}
 
-    {%- if form.errors -%}
-      <div class="form-message form-message--error">
-        <ul style="margin:0;padding-left:18px">
-          {%- for field in form.errors -%}
-            <li>{{ form.errors.translated_fields[field] }} {{ form.errors.messages[field] }}</li>
+      {%- if form.errors -%}
+        <div class="form-message form-message--error">
+          <ul style="margin:0;padding-left:18px">
+            {%- for field in form.errors -%}
+              <li>{{ form.errors.translated_fields[field] }} {{ form.errors.messages[field] }}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.topics != blank -%}
+        <fieldset class="contact-form__topics">
+          <legend>{{ 'sections.contact.topic' | t }}</legend>
+          {%- for topic in topics -%}
+            {%- assign topic_label = topic | strip -%}
+            <label class="contact-form__topic">
+              <input type="radio" name="contact[{{ 'sections.contact.topic' | t }}]" value="{{ topic_label | escape }}" {% if forloop.first %}checked{% endif %}>
+              <span>{{ topic_label }}</span>
+            </label>
           {%- endfor -%}
-        </ul>
-      </div>
-    {%- endif -%}
+        </fieldset>
+      {%- endif -%}
 
-    <div class="field">
-      <label for="ContactName">{{ 'sections.contact.name' | t }}</label>
-      <input type="text" class="input" id="ContactName" name="contact[{{ 'sections.contact.name' | t }}]" value="{{ form.name }}">
-    </div>
-    <div class="field">
-      <label for="ContactEmail">{{ 'sections.contact.email' | t }}</label>
-      <input type="email" class="input" id="ContactEmail" name="contact[email]" value="{{ form.email }}" required>
-    </div>
-    <div class="field">
-      <label for="ContactTopic">{{ 'sections.contact.topic' | t }}</label>
-      <select class="input" id="ContactTopic" name="contact[{{ 'sections.contact.topic' | t }}]">
-        <option>Order question</option>
-        <option>Formulation / ingredients</option>
-        <option>Skin concern</option>
-        <option>Press &amp; partnerships</option>
-      </select>
-    </div>
-    <div class="field">
-      <label for="ContactMessage">{{ 'sections.contact.message' | t }}</label>
-      <textarea class="input" id="ContactMessage" name="contact[body]" required>{{ form.body }}</textarea>
-    </div>
-    <button type="submit" class="btn btn-primary btn-block">{{ 'sections.contact.submit' | t }}</button>
-  {%- endform -%}
+      <div class="contact-form__row">
+        <div class="field">
+          <label for="ContactName-{{ section.id }}">{{ 'sections.contact.name' | t }}</label>
+          <input type="text" class="input" id="ContactName-{{ section.id }}" name="contact[{{ 'sections.contact.name' | t }}]" value="{{ form.name }}" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="ContactEmail-{{ section.id }}">{{ 'sections.contact.email' | t }}</label>
+          <input type="email" class="input" id="ContactEmail-{{ section.id }}" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
+        </div>
+      </div>
+      {%- if section.settings.show_order_number -%}
+        <div class="field">
+          <label for="ContactOrder-{{ section.id }}">{{ 'sections.contact.order_number' | t }}</label>
+          <input type="text" class="input" id="ContactOrder-{{ section.id }}" name="contact[{{ 'sections.contact.order_number' | t }}]">
+        </div>
+      {%- endif -%}
+      <div class="field">
+        <label for="ContactMessage-{{ section.id }}">{{ 'sections.contact.message' | t }}</label>
+        <textarea class="input" id="ContactMessage-{{ section.id }}" name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">{{ 'sections.contact.submit' | t }}</button>
+    {%- endform -%}
+  </div>
+
+  {%- if has_aside -%}
+    <aside class="contact-form__aside">
+      {%- if section.settings.aside_content != blank -%}
+        <div class="rte contact-form__details">{{ section.settings.aside_content }}</div>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="contact-form__faq">
+          {%- if section.settings.faq_heading != blank -%}<div class="kicker">{{ section.settings.faq_heading }}</div>{%- endif -%}
+          {%- for block in section.blocks -%}
+            <details {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.question }}</summary>
+              <div class="rte">{{ block.settings.answer }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </aside>
+  {%- endif -%}
 </section>
 
 {% schema %}
 {
   "name": "t:sections.contact-form.name",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.contact-form.settings.eyebrow.label"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -57,8 +108,52 @@
       "id": "text",
       "label": "t:sections.contact-form.settings.text.label",
       "default": "Tell us what your skin is doing and we will answer properly."
+    },
+    {
+      "type": "text",
+      "id": "topics",
+      "label": "t:sections.contact-form.settings.topics.label",
+      "info": "t:sections.contact-form.settings.topics.info",
+      "default": "Routine advice, An order, Returns, Press, Something else"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_order_number",
+      "label": "t:sections.contact-form.settings.show_order_number.label",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "aside_content",
+      "label": "t:sections.contact-form.settings.aside_content.label",
+      "info": "t:sections.contact-form.settings.aside_content.info"
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "t:sections.contact-form.settings.faq_heading.label",
+      "default": "Before you write"
     }
   ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "t:sections.contact-form.blocks.question.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "t:sections.contact-form.blocks.question.settings.question.label"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "t:sections.contact-form.blocks.question.settings.answer.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
   "presets": [
     {
       "name": "t:sections.contact-form.name"

@@ -420,6 +420,10 @@
           "settings": {
             "title": {
               "label": "Group title"
+            },
+            "kicker": {
+              "label": "Kicker",
+              "info": "Short label for the navigation, e.g. Shipping."
             }
           }
         },
@@ -434,6 +438,15 @@
             }
           }
         }
+      },
+      "settings": {
+        "show_title": {
+          "label": "Show page title",
+          "info": "Turn off when a page intro section already shows the title."
+        },
+        "show_nav": {
+          "label": "Show group navigation"
+        }
       }
     },
     "contact-form": {
@@ -444,6 +457,36 @@
         },
         "text": {
           "label": "Text"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "topics": {
+          "label": "Topics",
+          "info": "Comma-separated. Shown as choices above the form; leave empty to hide."
+        },
+        "show_order_number": {
+          "label": "Show order number field"
+        },
+        "aside_content": {
+          "label": "Side column text",
+          "info": "e.g. studio address, direct emails, phone."
+        },
+        "faq_heading": {
+          "label": "Q&A heading"
+        }
+      },
+      "blocks": {
+        "question": {
+          "name": "Question",
+          "settings": {
+            "question": {
+              "label": "Question"
+            },
+            "answer": {
+              "label": "Answer"
+            }
+          }
         }
       }
     },
