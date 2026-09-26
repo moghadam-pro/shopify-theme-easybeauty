@@ -67,7 +67,6 @@
     "lab": {
       "type": "image-text",
       "settings": {
-        "image": "shopify://shop_images/lifestyle-skin.jpg",
         "layout": "left",
         "eyebrow": "The lab",
         "heading": "One lab outside Lisbon, batch-tested before it leaves.",
@@ -116,7 +115,6 @@
     "quiz-cta": {
       "type": "image-text",
       "settings": {
-        "image": "shopify://shop_images/lifestyle-apply.jpg",
         "layout": "right",
         "eyebrow": "Skin quiz",
         "heading": "Six questions, three products, no account needed.",

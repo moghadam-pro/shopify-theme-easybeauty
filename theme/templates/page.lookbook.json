@@ -6,26 +6,27 @@
         "look-1": {
           "type": "look",
           "settings": {
-            "image": "shopify://shop_images/sample-product-1.jpg",
             "title": "Morning routine"
           }
         },
         "look-2": {
           "type": "look",
           "settings": {
-            "image": "shopify://shop_images/sample-product-2.jpg",
             "title": "Night routine"
           }
         },
         "look-3": {
           "type": "look",
           "settings": {
-            "image": "shopify://shop_images/sample-product-3.jpg",
             "title": "Barrier repair"
           }
         }
       },
-      "block_order": ["look-1", "look-2", "look-3"]
+      "block_order": [
+        "look-1",
+        "look-2",
+        "look-3"
+      ]
     }
   },
   "order": [
