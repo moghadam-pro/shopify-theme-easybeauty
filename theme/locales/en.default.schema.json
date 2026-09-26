@@ -380,8 +380,22 @@
             },
             "role": {
               "label": "Role"
+            },
+            "fallback_image": {
+              "label": "Fallback photo (theme asset filename)"
+            },
+            "bio": {
+              "label": "Bio"
             }
           }
+        }
+      },
+      "settings": {
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
         }
       }
     },
@@ -813,6 +827,84 @@
       },
       "presets": {
         "name": "Call to action"
+      }
+    },
+    "page-intro": {
+      "name": "Page intro",
+      "settings": {
+        "show_breadcrumb": {
+          "label": "Show breadcrumb"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading",
+          "info": "Defaults to the page title."
+        },
+        "text": {
+          "label": "Text"
+        },
+        "meta": {
+          "label": "Tags",
+          "info": "Short notes shown as tags. Separate with |, e.g. Mon–Fri · 9–18 WET | Replies in ~6h"
+        },
+        "button_label": {
+          "label": "Button label"
+        },
+        "button_link": {
+          "label": "Button link"
+        },
+        "button_label_2": {
+          "label": "Second button label"
+        },
+        "button_link_2": {
+          "label": "Second button link"
+        }
+      },
+      "presets": {
+        "name": "Page intro"
+      }
+    },
+    "multicolumn": {
+      "name": "Multicolumn",
+      "settings": {
+        "style": {
+          "label": "Style"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        }
+      },
+      "blocks": {
+        "column": {
+          "name": "Column",
+          "settings": {
+            "kicker": {
+              "label": "Kicker",
+              "info": "Small label above the title, e.g. a year or channel name."
+            },
+            "title": {
+              "label": "Title",
+              "info": "Shown as a large figure in the Stats style."
+            },
+            "text": {
+              "label": "Text"
+            },
+            "link_label": {
+              "label": "Link label"
+            },
+            "link": {
+              "label": "Link"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Multicolumn"
       }
     }
   }
