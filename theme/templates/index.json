@@ -3,6 +3,7 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "image": "shopify://shop_images/hero-banner.jpg",
         "eyebrow": "EasyBeauty — Clean skincare",
         "heading": "Love your skin from within",
         "text": "Twelve weightless formulas, dermatologist tested, built for the barrier you already have.",
@@ -18,6 +19,7 @@
           "settings": {
             "horizontal_position": 34,
             "vertical_position": 72,
+            "image": "shopify://shop_images/sample-product-4.jpg",
             "title": "Radiance Serum No.3",
             "text": "Niacinamide at 10% — the formula that stopped stinging."
           }
@@ -78,6 +80,7 @@
     "ingredient-highlight": {
       "type": "image-text",
       "settings": {
+        "image": "shopify://shop_images/lifestyle-skin.jpg",
         "layout": "left",
         "eyebrow": "The lab",
         "heading": "One lab outside Lisbon, batch-tested before it leaves.",
@@ -89,6 +92,7 @@
     "quiz-teaser": {
       "type": "image-text",
       "settings": {
+        "image": "shopify://shop_images/lifestyle-apply.jpg",
         "layout": "right",
         "eyebrow": "Skin quiz",
         "heading": "Six questions, three products, no account needed.",
