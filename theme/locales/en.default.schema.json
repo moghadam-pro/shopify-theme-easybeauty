@@ -173,6 +173,10 @@
             },
             "image": {
               "label": "Thumbnail"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)",
+              "info": "Used only if no thumbnail is picked above. Must be a filename already in Assets, e.g. sample-product-1.jpg."
             }
           }
         }
@@ -228,6 +232,10 @@
       "settings": {
         "image": {
           "label": "Image"
+        },
+        "fallback_image": {
+          "label": "Fallback image (theme asset filename)",
+          "info": "Used only if no image is picked above. Must be a filename already in Assets, e.g. lifestyle-skin.jpg."
         },
         "layout": {
           "label": "Image position"
@@ -420,6 +428,10 @@
           "settings": {
             "image": {
               "label": "Image"
+            },
+            "fallback_image": {
+              "label": "Fallback image (theme asset filename)",
+              "info": "Used only if no image is picked above. Must be a filename already in Assets, e.g. sample-product-1.jpg."
             },
             "title": {
               "label": "Title"
