@@ -1,0 +1,244 @@
+{%- comment -%}
+  One lookbook "look": a photo with numbered hotspots for each product, and
+  a panel with number/kicker/title/body, the product list and an
+  "add all to bag" button. Add-all reuses the bundle JS ([data-bundle]), so
+  it only appears once every product block has a real product picked.
+  The anchor setting gives the section a stable id for in-page links such
+  as /pages/lookbook#look-1.
+{%- endcomment -%}
+{%- liquid
+  assign all_products_set = true
+  for block in section.blocks
+    if block.settings.product == blank
+      assign all_products_set = false
+    endif
+  endfor
+-%}
+<section class="shoppable-look{% if section.settings.layout == 'right' %} is-reversed{% endif %}" {% if section.settings.anchor != blank %}id="{{ section.settings.anchor | handleize }}"{% endif %} data-bundle>
+  <div class="shoppable-look__media">
+    {%- if section.settings.image != blank -%}
+      <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.image.alt | escape }}" width="1400" height="{{ 1400 | divided_by: section.settings.image.aspect_ratio | round }}" loading="lazy">
+    {%- else -%}
+      <img src="{{ section.settings.fallback_image | default: 'lifestyle-apply.jpg' | asset_url }}" alt="" width="1200" height="1500" loading="lazy">
+    {%- endif -%}
+    {%- for block in section.blocks -%}
+      {%- assign spot_title = block.settings.product.title | default: block.settings.fallback_title -%}
+      <span class="shoppable-look__spot" style="left: {{ block.settings.horizontal_position }}%; top: {{ block.settings.vertical_position }}%" title="{{ spot_title | escape }}">
+        <span class="visually-hidden">{{ spot_title }}</span>{{ forloop.index }}
+      </span>
+    {%- endfor -%}
+    {%- if section.settings.caption != blank -%}<div class="shoppable-look__caption">{{ section.settings.caption }}</div>{%- endif -%}
+  </div>
+
+  <div class="shoppable-look__panel">
+    <div class="shoppable-look__head">
+      {%- if section.settings.number != blank -%}<span class="shoppable-look__number">{{ section.settings.number }}</span>{%- endif -%}
+      {%- if section.settings.kicker != blank -%}<span class="kicker">{{ section.settings.kicker }}</span>{%- endif -%}
+    </div>
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}<div class="shoppable-look__text">{{ section.settings.text }}</div>{%- endif -%}
+
+    <div class="shoppable-look__products">
+      {%- for block in section.blocks -%}
+        {%- assign look_product = block.settings.product -%}
+        <div class="shoppable-look__product" data-bundle-row {{ block.shopify_attributes }}>
+          <a href="{{ look_product.url | default: routes.all_products_collection_url }}" class="shoppable-look__thumb">
+            {%- if look_product.featured_image != blank -%}
+              <img src="{{ look_product.featured_image | image_url: width: 112 }}" alt="" width="56" height="56" loading="lazy">
+            {%- elsif block.settings.fallback_image != blank -%}
+              <img src="{{ block.settings.fallback_image | asset_url }}" alt="" width="56" height="56" loading="lazy">
+            {%- endif -%}
+          </a>
+          <div class="shoppable-look__product-info">
+            <a href="{{ look_product.url | default: routes.all_products_collection_url }}" class="shoppable-look__product-title">{{ look_product.title | default: block.settings.fallback_title }}</a>
+            <div class="shoppable-look__product-meta">
+              {%- if block.settings.step != blank -%}{{ block.settings.step }} · {% endif -%}
+              <span data-bundle-price>{%- if look_product != blank -%}{{ look_product.selected_or_first_available_variant.price | money }}{%- else -%}{{ block.settings.fallback_price }}{%- endif -%}</span>
+            </div>
+          </div>
+          {%- if look_product != blank -%}
+            <input type="hidden" value="{{ look_product.selected_or_first_available_variant.id }}" data-price="{{ look_product.selected_or_first_available_variant.price }}" data-bundle-variant>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="shoppable-look__actions">
+      {%- if all_products_set and section.blocks.size > 0 -%}
+        <button type="button" class="btn btn-primary" data-bundle-add>{{ section.settings.button_label }}</button>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">{{ section.settings.fallback_button_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.note != blank -%}<span class="shoppable-look__note">{{ section.settings.note }}</span>{%- endif -%}
+    </div>
+    <p class="bundle__error" data-bundle-error hidden></p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.shoppable-look.name",
+  "settings": [
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "t:sections.shoppable-look.settings.anchor.label",
+      "info": "t:sections.shoppable-look.settings.anchor.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.shoppable-look.settings.image.label"
+    },
+    {
+      "type": "text",
+      "id": "fallback_image",
+      "label": "t:sections.shoppable-look.settings.fallback_image.label"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.shoppable-look.settings.layout.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "Image left"
+        },
+        {
+          "value": "right",
+          "label": "Image right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:sections.shoppable-look.settings.caption.label"
+    },
+    {
+      "type": "text",
+      "id": "number",
+      "label": "t:sections.shoppable-look.settings.number.label",
+      "default": "01"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "t:sections.shoppable-look.settings.kicker.label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.shoppable-look.settings.heading.label",
+      "default": "Cleanse, serum, moisturiser."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "t:sections.shoppable-look.settings.text.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.shoppable-look.settings.button_label.label",
+      "default": "Add the routine to bag"
+    },
+    {
+      "type": "text",
+      "id": "fallback_button_label",
+      "label": "t:sections.shoppable-look.settings.fallback_button_label.label",
+      "default": "Shop all products"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "t:sections.shoppable-look.settings.note.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.shoppable-look.blocks.product.name",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.shoppable-look.blocks.product.settings.product.label"
+        },
+        {
+          "type": "text",
+          "id": "step",
+          "label": "t:sections.shoppable-look.blocks.product.settings.step.label",
+          "info": "t:sections.shoppable-look.blocks.product.settings.step.info"
+        },
+        {
+          "type": "range",
+          "id": "horizontal_position",
+          "label": "t:sections.shoppable-look.blocks.product.settings.horizontal_position.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "vertical_position",
+          "label": "t:sections.shoppable-look.blocks.product.settings.vertical_position.label",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "text",
+          "id": "fallback_title",
+          "label": "t:sections.shoppable-look.blocks.product.settings.fallback_title.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_price",
+          "label": "t:sections.shoppable-look.blocks.product.settings.fallback_price.label"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "t:sections.shoppable-look.blocks.product.settings.fallback_image.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "t:sections.shoppable-look.presets.name",
+      "blocks": [
+        {
+          "type": "product",
+          "settings": {
+            "fallback_title": "Gentle Cleansing Milk",
+            "step": "Step one",
+            "fallback_price": "$42",
+            "fallback_image": "sample-product-3.jpg",
+            "horizontal_position": 26,
+            "vertical_position": 34
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "fallback_title": "Radiance Serum No.3",
+            "step": "Step two",
+            "fallback_price": "$68",
+            "fallback_image": "sample-product-4.jpg",
+            "horizontal_position": 58,
+            "vertical_position": 52
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

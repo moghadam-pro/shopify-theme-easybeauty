@@ -498,7 +498,8 @@
       inputs.forEach((input) => {
         const price = priceOf(input);
         total += price;
-        const priceEl = qs('[data-bundle-price]', input.closest('.bundle__step'));
+        const row = input.closest('[data-bundle-row]');
+        const priceEl = row && qs('[data-bundle-price]', row);
         if (priceEl) priceEl.textContent = formatMoney(price);
       });
       if (totalEl) totalEl.textContent = formatMoney(total);

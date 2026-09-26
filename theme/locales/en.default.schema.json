@@ -975,6 +975,80 @@
       "presets": {
         "name": "Collection links"
       }
+    },
+    "shoppable-look": {
+      "name": "Shoppable look",
+      "settings": {
+        "anchor": {
+          "label": "Anchor",
+          "info": "Lets other links jump here, e.g. look-1 → /pages/lookbook#look-1"
+        },
+        "image": {
+          "label": "Image"
+        },
+        "fallback_image": {
+          "label": "Fallback image (theme asset filename)"
+        },
+        "layout": {
+          "label": "Image position"
+        },
+        "caption": {
+          "label": "Image caption"
+        },
+        "number": {
+          "label": "Number"
+        },
+        "kicker": {
+          "label": "Kicker"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "button_label": {
+          "label": "Add-all button label"
+        },
+        "fallback_button_label": {
+          "label": "Button label when products are missing"
+        },
+        "note": {
+          "label": "Note next to the button"
+        }
+      },
+      "blocks": {
+        "product": {
+          "name": "Product",
+          "settings": {
+            "product": {
+              "label": "Product"
+            },
+            "step": {
+              "label": "Step label",
+              "info": "e.g. Step one, 30 ml"
+            },
+            "horizontal_position": {
+              "label": "Hotspot horizontal position"
+            },
+            "vertical_position": {
+              "label": "Hotspot vertical position"
+            },
+            "fallback_title": {
+              "label": "Fallback title"
+            },
+            "fallback_price": {
+              "label": "Fallback price text"
+            },
+            "fallback_image": {
+              "label": "Fallback thumbnail (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Shoppable look"
+      }
     }
   }
 }

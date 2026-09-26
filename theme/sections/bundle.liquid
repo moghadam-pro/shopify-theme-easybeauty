@@ -40,7 +40,7 @@
     <div class="bundle__steps">
       {%- for block in section.blocks -%}
         {%- assign step_product = block.settings.product -%}
-        <div class="bundle__step" {{ block.shopify_attributes }}>
+        <div class="bundle__step" data-bundle-row {{ block.shopify_attributes }}>
           <span class="bundle__step-num">{{ forloop.index }}</span>
           {%- if step_product.featured_image != blank -%}
             <img src="{{ step_product.featured_image | image_url: width: 128 }}" alt="" width="64" height="64" loading="lazy">
