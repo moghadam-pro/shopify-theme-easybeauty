@@ -26,6 +26,9 @@ Every page brought in line with the original design in `design-reference/` (#7).
 ### Fixed
 - `theme check` back to 0 offenses (hardcoded `/collections/all` routes,
   unclosed elements in the FAQ).
+- Found in the store preview of the 1.1.0 draft: contact section border now
+  spans wide screens; no grey bar after the last category chip; carousel
+  arrows hidden when every card fits; empty-journal message.
 
 ## [1.0.1] — 2026-09-26
 

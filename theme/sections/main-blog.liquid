@@ -49,6 +49,9 @@
     </div>
   {%- endif -%}
 
+  {%- if blog.articles_count == 0 -%}
+    <p class="container blog-empty">{{ 'blogs.blog.empty' | t }}</p>
+  {%- endif -%}
   <div class="article-grid">
     {%- for article in blog.articles -%}
       {%- if show_featured and forloop.first -%}{%- continue -%}{%- endif -%}

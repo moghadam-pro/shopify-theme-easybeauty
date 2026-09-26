@@ -474,6 +474,10 @@
     };
     const prev = qs('[data-carousel-prev]', root);
     const next = qs('[data-carousel-next]', root);
+    const nav = (prev || next) && (prev || next).parentElement;
+    const syncNav = () => { if (nav) nav.hidden = track.scrollWidth <= track.clientWidth + 1; };
+    syncNav();
+    window.addEventListener('resize', syncNav);
     if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
     if (next) next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
     qsa('video', track).forEach((video) => {
