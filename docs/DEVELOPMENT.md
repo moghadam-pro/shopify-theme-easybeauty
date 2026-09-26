@@ -113,8 +113,9 @@ setting IDs or sections).
    the CHANGELOG entry is missing, or the tag points elsewhere. Shopify names an uploaded
    theme after the ZIP file, which is why the file is always `EasyBeauty.zip`.
 5. Admin → Online Store → Themes → Import → Upload zip file. It lands as an unpublished
-   "EasyBeauty" draft with the new version; preview every template, then **Publish**.
-   Older drafts can be deleted once the new version is live.
+   draft showing the new version. Shopify lowercases the file name ("easybeauty"), so open
+   the draft's **⋯ → Rename** and set it back to **EasyBeauty**. Preview every template,
+   then **Publish**. Older drafts can be deleted once the new version is live.
 
 Shopify's ZIP import silently drops files it rejects (e.g. a section schema with both
 `default` and `presets`, or an invalid setting value in a template) — `theme check` does
