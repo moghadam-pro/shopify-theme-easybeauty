@@ -1,7 +1,89 @@
 {
   "sections": {
     "main": {
-      "type": "quiz"
+      "type": "quiz",
+      "blocks": {
+        "question-1": {
+          "type": "question",
+          "settings": {
+            "question": "How does your skin feel two hours after cleansing?",
+            "option_1": "Tight and dry",
+            "tag_1": "dry",
+            "option_2": "Shiny all over",
+            "tag_2": "oily",
+            "option_3": "Comfortable",
+            "tag_3": "balanced"
+          }
+        },
+        "question-2": {
+          "type": "question",
+          "settings": {
+            "question": "What would you fix first?",
+            "option_1": "Dullness and uneven tone",
+            "tag_1": "brightening",
+            "option_2": "Breakouts",
+            "tag_2": "acne",
+            "option_3": "Early lines",
+            "tag_3": "anti-aging"
+          }
+        },
+        "question-3": {
+          "type": "question",
+          "settings": {
+            "question": "How reactive is your skin?",
+            "option_1": "Very — most actives sting",
+            "tag_1": "sensitive",
+            "option_2": "Sometimes",
+            "tag_2": "sensitive",
+            "option_3": "Rarely",
+            "tag_3": "resilient"
+          }
+        },
+        "question-4": {
+          "type": "question",
+          "settings": {
+            "question": "How many steps will you actually do?",
+            "option_1": "Two",
+            "tag_1": "minimal",
+            "option_2": "Three",
+            "tag_2": "full",
+            "option_3": "Four or more",
+            "tag_3": "full"
+          }
+        },
+        "question-5": {
+          "type": "question",
+          "settings": {
+            "question": "Anything you already use and want to keep?",
+            "option_1": "A retinoid",
+            "tag_1": "retinoid",
+            "option_2": "Vitamin C",
+            "tag_2": "vitamin-c",
+            "option_3": "Nothing yet",
+            "tag_3": "starter"
+          }
+        },
+        "question-6": {
+          "type": "question",
+          "settings": {
+            "question": "Do you wear sunscreen every morning?",
+            "option_1": "Every day",
+            "tag_1": "spf-daily",
+            "option_2": "Sunny days only",
+            "tag_2": "spf",
+            "option_3": "Not yet",
+            "tag_3": "spf"
+          }
+        }
+      },
+      "block_order": [
+        "question-1",
+        "question-2",
+        "question-3",
+        "question-4",
+        "question-5",
+        "question-6"
+      ]
     }
   },
   "order": [

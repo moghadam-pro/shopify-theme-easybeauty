@@ -1,7 +1,27 @@
 {
   "sections": {
     "main": {
-      "type": "main-product"
+      "type": "main-product",
+      "blocks": {
+        "accordion-1": {
+          "type": "accordion",
+          "settings": {
+            "title": "How to use",
+            "content": "<p>Apply morning and night after cleansing, before moisturiser.</p>"
+          }
+        },
+        "accordion-2": {
+          "type": "accordion",
+          "settings": {
+            "title": "Ingredients",
+            "content": "<p>Aqua, Niacinamide, Glycerin, Panthenol.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion-1",
+        "accordion-2"
+      ]
     },
     "recommendations": {
       "type": "product-recommendations"

@@ -3,7 +3,27 @@
   "name": "t:sections.footer.name",
   "sections": {
     "footer": {
-      "type": "footer"
+      "type": "footer",
+      "blocks": {
+        "column-1": {
+          "type": "link_list",
+          "settings": {
+            "title": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "column-3": {
+          "type": "link_list",
+          "settings": {
+            "title": "Help",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "column-1",
+        "column-3"
+      ]
     }
   },
   "order": [

@@ -2,7 +2,7 @@
   <div class="section__head">
     <h2>{{ section.settings.heading }}</h2>
   </div>
-  <div class="grid grid-4" data-product-recommendations-grid>
+  <div class="grid grid--products grid-4" data-product-recommendations-grid>
     {%- for recommended in recommendations.products -%}
       {% render 'product-card', product: recommended %}
     {%- endfor -%}

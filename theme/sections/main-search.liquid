@@ -12,7 +12,7 @@
       <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
     {%- else -%}
       <p class="text-muted">{{ 'general.search.results_for_html' | t: terms: search.terms }} ({{ search.results_count }})</p>
-      <div class="grid grid-4">
+      <div class="grid grid--products grid-4">
         {%- for item in search.results -%}
           {%- if item.object_type == 'product' -%}
             {% render 'product-card', product: item %}

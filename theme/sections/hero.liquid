@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero hero--copy-{{ section.settings.copy_position }}">
   <div class="hero__media">
     {%- if section.settings.image -%}
       <img
@@ -10,22 +10,15 @@
         loading="eager"
       >
     {%- else -%}
-      {{ 'lifestyle-1' | placeholder_svg_tag: class: 'placeholder-svg' }}
+      <img
+        src="{{ 'hero-banner.jpg' | asset_url }}"
+        alt="{{ section.settings.heading | escape }}"
+        width="1500"
+        height="795"
+        fetchpriority="high"
+        loading="eager"
+      >
     {%- endif -%}
-
-    <div class="hero__copy">
-      {%- if section.settings.eyebrow != blank -%}<div class="eyebrow" style="color:#5E5347">{{ section.settings.eyebrow }}</div>{%- endif -%}
-      <h1>{{ section.settings.heading }}</h1>
-      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
-      <div class="hero__actions">
-        {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn-primary">{{ section.settings.button_label }}</a>
-        {%- endif -%}
-        {%- if section.settings.button_label_2 != blank -%}
-          <a href="{{ section.settings.button_link_2 | default: '#' }}" class="btn btn-secondary">{{ section.settings.button_label_2 }}</a>
-        {%- endif -%}
-      </div>
-    </div>
 
     {%- for block in section.blocks -%}
       {%- if block.type == 'hotspot' -%}
@@ -51,6 +44,20 @@
       {%- endif -%}
     {%- endfor -%}
   </div>
+
+  <div class="hero__copy">
+    {%- if section.settings.eyebrow != blank -%}<div class="eyebrow" style="color:#5E5347">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    <h1>{{ section.settings.heading }}</h1>
+    {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    <div class="hero__actions">
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn-primary">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.button_label_2 != blank -%}
+        <a href="{{ section.settings.button_link_2 | default: '#' }}" class="btn btn-secondary">{{ section.settings.button_label_2 }}</a>
+      {%- endif -%}
+    </div>
+  </div>
 </section>
 
 {% schema %}
@@ -61,6 +68,22 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.hero.settings.image.label"
+    },
+    {
+      "type": "select",
+      "id": "copy_position",
+      "label": "t:sections.hero.settings.copy_position.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.hero.settings.copy_position.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.hero.settings.copy_position.options__2.label"
+        }
+      ],
+      "default": "left"
     },
     {
       "type": "text",
