@@ -6,3 +6,6 @@ Thumbs.db
 # store-less preview tool
 tools/preview/node_modules/
 tools/preview/out/
+
+# release package (tools/package.sh)
+dist/

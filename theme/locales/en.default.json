@@ -156,7 +156,8 @@
       "count": {
         "one": "{{ count }} article",
         "other": "{{ count }} articles"
-      }
+      },
+      "empty": "No articles yet — the first formulation notes are on their way."
     }
   },
   "customer": {
