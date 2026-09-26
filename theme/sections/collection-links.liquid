@@ -1,0 +1,101 @@
+{%- comment -%}
+  Horizontal strip of category chips (thumbnail + label) linking to real
+  collections. The chip for the collection being viewed is highlighted.
+  A block without a collection links to all products ("All" chip).
+{%- endcomment -%}
+<section class="collection-links">
+  {%- assign all_chip_marked = false -%}
+  <div class="collection-links__track">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign chip_collection = block.settings.collection
+        if chip_collection != blank
+          assign chip_url = chip_collection.url
+          assign chip_label = block.settings.label | default: chip_collection.title
+          assign chip_active = false
+          if collection.handle == chip_collection.handle
+            assign chip_active = true
+          endif
+        else
+          assign chip_url = routes.all_products_collection_url
+          assign chip_label = block.settings.label | default: 'All'
+          assign chip_active = false
+          if collection.handle == 'all' and all_chip_marked == false
+            assign chip_active = true
+            assign all_chip_marked = true
+          endif
+        endif
+        assign chip_image = block.settings.image | default: chip_collection.featured_image
+      -%}
+      <a href="{{ chip_url }}" class="collection-links__chip{% if chip_active %} is-active{% endif %}" {% if chip_active %}aria-current="page"{% endif %} {{ block.shopify_attributes }}>
+        <span class="collection-links__thumb">
+          {%- if chip_image != blank -%}
+            <img src="{{ chip_image | image_url: width: 76 }}" alt="" width="38" height="38" loading="lazy">
+          {%- elsif block.settings.fallback_image != blank -%}
+            <img src="{{ block.settings.fallback_image | asset_url }}" alt="" width="38" height="38" loading="lazy">
+          {%- endif -%}
+        </span>
+        <span>{{ chip_label }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:sections.collection-links.name",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "t:sections.collection-links.blocks.link.name",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.collection-links.blocks.link.settings.collection.label",
+          "info": "t:sections.collection-links.blocks.link.settings.collection.info"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.collection-links.blocks.link.settings.label.label",
+          "info": "t:sections.collection-links.blocks.link.settings.label.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.collection-links.blocks.link.settings.image.label",
+          "info": "t:sections.collection-links.blocks.link.settings.image.info"
+        },
+        {
+          "type": "text",
+          "id": "fallback_image",
+          "label": "t:sections.collection-links.blocks.link.settings.fallback_image.label"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "t:sections.collection-links.presets.name",
+      "blocks": [
+        {
+          "type": "link",
+          "settings": {
+            "label": "All"
+          }
+        },
+        {
+          "type": "link",
+          "settings": {
+            "label": "Serum",
+            "fallback_image": "sample-product-4.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

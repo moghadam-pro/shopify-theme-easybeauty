@@ -327,7 +327,20 @@
       "name": "Collection"
     },
     "collection-banner": {
-      "name": "Collection quiz banner"
+      "name": "Collection banner",
+      "settings": {
+        "fallback_description": {
+          "label": "Fallback description",
+          "info": "Shown when the collection has no description of its own."
+        },
+        "badges": {
+          "label": "Badges",
+          "info": "Separate with |, e.g. Fragrance-free | Vegan | Derm tested"
+        }
+      },
+      "presets": {
+        "name": "Collection banner"
+      }
     },
     "main-cart": {
       "name": "Cart"
@@ -933,6 +946,34 @@
       },
       "presets": {
         "name": "Image gallery"
+      }
+    },
+    "collection-links": {
+      "name": "Collection links",
+      "blocks": {
+        "link": {
+          "name": "Collection",
+          "settings": {
+            "collection": {
+              "label": "Collection",
+              "info": "Leave empty for an \"All products\" chip."
+            },
+            "label": {
+              "label": "Label",
+              "info": "Defaults to the collection title."
+            },
+            "image": {
+              "label": "Thumbnail",
+              "info": "Defaults to the collection image."
+            },
+            "fallback_image": {
+              "label": "Fallback thumbnail (theme asset filename)"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Collection links"
       }
     }
   }
