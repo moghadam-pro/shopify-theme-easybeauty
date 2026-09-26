@@ -2,7 +2,7 @@
 <nav class="mobile-dock" aria-label="{{ 'sections.header.menu' | t }}">
   <a href="{{ routes.all_products_collection_url }}" {% if request.page_type == 'collection' or request.page_type == 'list-collections' %}aria-current="page"{% endif %}>
     {% render 'icon', icon: 'grid', size: 21 %}
-    <span>Shop</span>
+    <span>{{ 'sections.header.dock_shop' | t }}</span>
   </a>
   <a href="#" data-search-drawer-open>
     {% render 'icon', icon: 'search', size: 21 %}
@@ -11,10 +11,10 @@
   <a href="{{ routes.cart_url }}" {% if request.page_type == 'cart' %}aria-current="page"{% endif %}>
     {% render 'icon', icon: 'bag', size: 21 %}
     <span data-cart-count>{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
-    <span>{{ 'sections.header.cart' | t }}</span>
+    <span>{{ 'sections.header.dock_bag' | t }}</span>
   </a>
   <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" {% if request.page_type contains 'customers' %}aria-current="page"{% endif %}>
     {% render 'icon', icon: 'account', size: 21 %}
-    <span>{{ 'sections.header.account' | t }}</span>
+    <span>{{ 'sections.header.dock_account' | t }}</span>
   </a>
 </nav>

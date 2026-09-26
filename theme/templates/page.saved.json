@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "show_breadcrumb": true,
+        "heading": "Saved",
+        "text": "<p>Products you saved for later — kept on this device until you move them to the bag.</p>"
+      }
+    },
+    "main": {
+      "type": "saved-items",
+      "settings": {
+        "heading": "Your saved products",
+        "text": "",
+        "hide_when_empty": false
+      }
+    }
+  },
+  "order": [
+    "intro",
+    "main"
+  ]
+}

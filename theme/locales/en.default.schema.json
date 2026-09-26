@@ -44,13 +44,21 @@
       "name": "Header",
       "settings": {
         "menu": {
-          "label": "Menu"
+          "label": "Menu",
+          "info": "Three levels: header links → mega menu columns → column items."
         },
         "logo_text": {
           "label": "Logo text"
         },
         "sticky": {
           "label": "Sticky header"
+        },
+        "logo": {
+          "label": "Logo image"
+        },
+        "saved_link": {
+          "label": "Saved items page link",
+          "info": "A page using the \"saved\" template, e.g. /pages/saved. Leave empty to hide it from the account menu."
         }
       },
       "blocks": {
@@ -62,6 +70,63 @@
             },
             "link": {
               "label": "Link"
+            }
+          }
+        },
+        "mega": {
+          "name": "Mega menu",
+          "settings": {
+            "menu_item": {
+              "label": "Menu item",
+              "info": "Title of the header link this applies to, e.g. Shop"
+            },
+            "all_label_1": {
+              "label": "Column 1 link label"
+            },
+            "all_label_2": {
+              "label": "Column 2 link label"
+            },
+            "all_label_3": {
+              "label": "Column 3 link label"
+            },
+            "all_label_4": {
+              "label": "Column 4 link label"
+            },
+            "feature_image": {
+              "label": "Featured image"
+            },
+            "feature_fallback_image": {
+              "label": "Featured fallback image (theme asset filename)"
+            },
+            "feature_kicker": {
+              "label": "Featured kicker"
+            },
+            "feature_title": {
+              "label": "Featured title"
+            },
+            "feature_text": {
+              "label": "Featured text"
+            },
+            "feature_button": {
+              "label": "Featured button label"
+            },
+            "feature_link": {
+              "label": "Featured link"
+            },
+            "footnote": {
+              "label": "Footnote"
+            },
+            "footnote_link_label_1": {
+              "label": "Footnote link 1 label"
+            },
+            "footnote_link_1": {
+              "label": "Footnote link 1"
+            },
+            "footnote_link_label_2": {
+              "label": "Footnote link 2 label"
+            },
+            "footnote_link_2": {
+              "label": "Footnote link 2"
             }
           }
         }
@@ -310,7 +375,48 @@
       }
     },
     "main-product": {
-      "name": "Product information"
+      "name": "Product information",
+      "settings": {
+        "show_vendor": {
+          "label": "Show vendor"
+        },
+        "lead_words": {
+          "label": "Lead text length (words)"
+        },
+        "show_quantity": {
+          "label": "Show quantity selector"
+        },
+        "show_save": {
+          "label": "Show \"Save for later\""
+        },
+        "badges": {
+          "label": "Badges",
+          "info": "Separate with |"
+        },
+        "show_description": {
+          "label": "Show full description as an accordion"
+        }
+      },
+      "blocks": {
+        "highlight": {
+          "name": "Highlight",
+          "settings": {
+            "title": {
+              "label": "Bold start",
+              "info": "e.g. 10% niacinamide"
+            },
+            "text": {
+              "label": "Text"
+            }
+          }
+        },
+        "accordion": {
+          "settings": {
+            "title": {},
+            "content": {}
+          }
+        }
+      }
     },
     "product-recommendations": {
       "name": "Complete the routine",
@@ -343,7 +449,32 @@
       }
     },
     "main-cart": {
-      "name": "Cart"
+      "name": "Cart",
+      "settings": {
+        "badges": {
+          "label": "Header badges",
+          "info": "Separate with |"
+        },
+        "empty_text": {
+          "label": "Empty bag text"
+        },
+        "quiz_link": {
+          "label": "Quiz link (empty bag)"
+        },
+        "tax_note": {
+          "label": "Note under the lines"
+        },
+        "show_promo": {
+          "label": "Show promo code field"
+        },
+        "promo_placeholder": {
+          "label": "Promo code placeholder"
+        },
+        "trust_badges": {
+          "label": "Trust badges",
+          "info": "Separate with |"
+        }
+      }
     },
     "main-404": {
       "name": "404"
@@ -1125,6 +1256,47 @@
       },
       "presets": {
         "name": "Blog posts"
+      }
+    },
+    "cart-drawer": {
+      "name": "Cart drawer",
+      "settings": {
+        "show_upsell": {
+          "label": "Show suggestions"
+        },
+        "upsell_heading": {
+          "label": "Suggestions heading"
+        },
+        "upsell_collection": {
+          "label": "Suggestions collection",
+          "info": "Defaults to all products. Products already in the cart are skipped."
+        },
+        "upsell_count": {
+          "label": "Suggestions to show"
+        },
+        "empty_link_label": {
+          "label": "Empty cart link label"
+        },
+        "empty_link": {
+          "label": "Empty cart link"
+        }
+      }
+    },
+    "saved-items": {
+      "name": "Saved items",
+      "settings": {
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "hide_when_empty": {
+          "label": "Hide when nothing is saved"
+        }
+      },
+      "presets": {
+        "name": "Saved items"
       }
     }
   }

@@ -3,6 +3,41 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "highlight-1": {
+          "type": "highlight",
+          "settings": {
+            "title": "10% niacinamide",
+            "text": "fades dark spots and evens tone over eight weeks."
+          }
+        },
+        "highlight-2": {
+          "type": "highlight",
+          "settings": {
+            "title": "Multi-weight hyaluronic acid",
+            "text": "floods skin with water, plumping fine lines on contact."
+          }
+        },
+        "highlight-3": {
+          "type": "highlight",
+          "settings": {
+            "title": "Ceramide NP",
+            "text": "rebuilds the barrier, so the glow holds through winter."
+          }
+        },
+        "highlight-4": {
+          "type": "highlight",
+          "settings": {
+            "title": "Silky, weightless finish",
+            "text": "that layers under SPF without pilling."
+          }
+        },
+        "highlight-5": {
+          "type": "highlight",
+          "settings": {
+            "title": "Fragrance-free, pH 5.5",
+            "text": "— tested on sensitive and acne-prone skin."
+          }
+        },
         "accordion-1": {
           "type": "accordion",
           "settings": {
@@ -19,9 +54,22 @@
         }
       },
       "block_order": [
+        "highlight-1",
+        "highlight-2",
+        "highlight-3",
+        "highlight-4",
+        "highlight-5",
         "accordion-1",
         "accordion-2"
-      ]
+      ],
+      "settings": {
+        "show_vendor": false,
+        "lead_words": 26,
+        "show_quantity": false,
+        "show_save": true,
+        "badges": "Cruelty-free | Vegan | Derm tested",
+        "show_description": true
+      }
     },
     "results": {
       "type": "multicolumn",

@@ -1,57 +1,131 @@
+{%- comment -%}
+  Slide-in cart (rendered on every page from theme.liquid and re-fetched via
+  the Section Rendering API after cart changes). Free-shipping progress,
+  lines, "Complete your routine" suggestions from a collection (products
+  already in the cart are skipped), subtotal, checkout, payment icons.
+{%- endcomment -%}
+{%- liquid
+  assign threshold_cents = settings.cart_free_shipping_threshold | times: 100
+  assign remaining_cents = threshold_cents | minus: cart.total_price
+  if remaining_cents < 0
+    assign remaining_cents = 0
+  endif
+  if threshold_cents > 0
+    assign ship_percent = cart.total_price | times: 100.0 | divided_by: threshold_cents
+    if ship_percent > 100
+      assign ship_percent = 100
+    endif
+  endif
+  assign in_cart = ','
+  for item in cart.items
+    assign in_cart = in_cart | append: item.product.id | append: ','
+  endfor
+  assign upsell_source = section.settings.upsell_collection | default: collections.all
+-%}
 <div class="cart-drawer" data-cart-drawer aria-hidden="true">
   <div class="cart-drawer__scrim" data-cart-drawer-close></div>
   <div class="cart-drawer__panel" role="dialog" aria-label="{{ 'sections.cart.title' | t }}">
     <div class="cart-drawer__head">
-      <h2 style="margin:0;font-size:20px">{{ 'sections.cart.title' | t }} ({{ cart.item_count }})</h2>
-      <button type="button" class="btn-icon" data-cart-drawer-close aria-label="{{ 'general.accessibility.close' | t }}">
-        {% render 'icon', icon: 'close' %}
+      <span class="cart-drawer__title">{{ 'sections.cart.drawer_title' | t: count: cart.item_count }}</span>
+      <button type="button" class="cart-drawer__close" data-cart-drawer-close aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'icon', icon: 'close', size: 18 %}
       </button>
     </div>
 
+    {%- if settings.cart_show_free_shipping_bar and threshold_cents > 0 -%}
+      <div class="cart-drawer__ship">
+        <div>
+          {%- if remaining_cents == 0 -%}
+            {{ 'sections.cart.free_shipping_reached' | t }}
+          {%- else -%}
+            {%- assign remaining_money = remaining_cents | money -%}
+            {{ 'sections.cart.free_shipping_remaining_html' | t: amount: remaining_money }}
+          {%- endif -%}
+        </div>
+        <div class="cart-progress"><div class="cart-progress__fill" style="width: {{ ship_percent }}%"></div></div>
+      </div>
+    {%- endif -%}
+
     <div class="cart-drawer__body">
       {%- if cart.item_count == 0 -%}
-        <p style="padding:32px 0">{{ 'sections.cart.empty' | t }}</p>
-        <a href="{{ routes.all_products_collection_url }}" class="btn btn-secondary" data-cart-drawer-close>{{ 'sections.cart.empty_link' | t }}</a>
+        <p class="cart-drawer__empty">
+          {{ 'sections.cart.empty' | t }}.
+          <a href="{{ section.settings.empty_link | default: routes.all_products_collection_url }}" data-cart-drawer-close>{{ section.settings.empty_link_label }}</a>
+        </p>
       {%- else -%}
-        {%- if settings.cart_show_free_shipping_bar -%}
-          {%- render 'free-shipping-bar' -%}
-        {%- endif -%}
         {%- for item in cart.items -%}
-          <div class="cart-line" data-cart-line="{{ item.key }}">
-            <a href="{{ item.url }}">
-              <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" width="200" height="{{ 200 | divided_by: item.image.aspect_ratio | default: 250 }}" loading="lazy">
-            </a>
-            <div>
-              <a href="{{ item.url }}" style="font-family:var(--font-heading);font-size:15px">{{ item.product.title }}</a>
-              {%- if item.variant.title != 'Default Title' -%}
-                <div class="text-muted" style="font-size:12.5px">{{ item.variant.title }}</div>
+          <div class="cart-drawer__line" data-cart-line="{{ item.key }}">
+            <a href="{{ item.url }}" class="cart-drawer__thumb">
+              {%- if item.image -%}
+                <img src="{{ item.image | image_url: width: 144 }}" alt="{{ item.title | escape }}" width="72" height="{{ 72 | divided_by: item.image.aspect_ratio | round }}" loading="lazy">
               {%- endif -%}
-              <div class="quantity-selector" data-quantity-selector style="margin-top:8px">
-                <button type="button" data-cart-qty-step="-1" aria-label="Decrease quantity">−</button>
+            </a>
+            <div class="cart-drawer__info">
+              <a href="{{ item.url }}" class="cart-drawer__name">{{ item.product.title }}</a>
+              <div class="cart-drawer__meta">
+                {%- unless item.product.has_only_default_variant -%}{{ item.variant.title }} · {% endunless -%}
+                {{ item.final_price | money }}
+              </div>
+              <div class="cart-qty cart-qty--small">
+                <button type="button" data-cart-qty-step="-1" aria-label="{{ 'sections.cart.decrease' | t }}">−</button>
                 <input type="number" min="0" value="{{ item.quantity }}" data-cart-qty-input aria-label="{{ 'sections.cart.quantity' | t }}">
-                <button type="button" data-cart-qty-step="1" aria-label="Increase quantity">+</button>
+                <button type="button" data-cart-qty-step="1" aria-label="{{ 'sections.cart.increase' | t }}">+</button>
               </div>
             </div>
-            <div style="text-align:right">
-              <div>{{ item.final_line_price | money }}</div>
-              <button type="button" class="btn-ghost" data-cart-remove="{{ item.key }}" style="margin-top:8px">{{ 'sections.cart.remove' | t }}</button>
-            </div>
+            <div class="cart-drawer__line-total">{{ item.final_line_price | money }}</div>
           </div>
         {%- endfor -%}
+      {%- endif -%}
+
+      {%- if section.settings.show_upsell and upsell_source.products_count > 0 -%}
+        {%- capture upsell_items -%}
+          {%- assign shown = 0 -%}
+          {%- for product in upsell_source.products -%}
+            {%- assign product_marker = ',' | append: product.id | append: ',' -%}
+            {%- if in_cart contains product_marker or product.available == false -%}{%- continue -%}{%- endif -%}
+            {%- if shown >= section.settings.upsell_count -%}{%- break -%}{%- endif -%}
+            <div class="cart-drawer__upsell">
+              <a href="{{ product.url }}" class="cart-drawer__upsell-thumb">
+                {%- if product.featured_image -%}<img src="{{ product.featured_image | image_url: width: 108 }}" alt="" width="54" height="54" loading="lazy">{%- endif -%}
+              </a>
+              <div>
+                <a href="{{ product.url }}" class="cart-drawer__upsell-name">{{ product.title }}</a>
+                <div class="cart-drawer__meta">{{ product.price | money }}</div>
+              </div>
+              {%- form 'product', product, data-quick-add: true, class: 'cart-drawer__upsell-form' -%}
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="cart-drawer__add">{{ 'sections.cart.add' | t }}</button>
+              {%- endform -%}
+            </div>
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- if upsell_items != blank -%}
+          <div class="cart-drawer__upsells">
+            <div class="cart-drawer__label">{{ section.settings.upsell_heading }}</div>
+            {{ upsell_items }}
+          </div>
+        {%- endif -%}
       {%- endif -%}
     </div>
 
     {%- if cart.item_count > 0 -%}
       <div class="cart-drawer__foot">
-        <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+        <div class="cart-drawer__subtotal">
           <span>{{ 'sections.cart.subtotal' | t }}</span>
-          <strong>{{ cart.total_price | money }}</strong>
+          <span>{{ cart.total_price | money }}</span>
         </div>
-        <p class="text-muted" style="font-size:12px;margin-bottom:16px">{{ 'sections.cart.shipping_at_checkout' | t }}</p>
-        <a href="{{ routes.cart_url }}" class="btn btn-secondary btn-block" style="margin-bottom:8px">{{ 'sections.cart.title' | t }}</a>
-        {%- form 'cart' -%}
-          <button type="submit" name="checkout" class="btn btn-primary btn-block">{{ 'sections.cart.checkout' | t }}</button>
+        {%- form 'cart', cart, data-cart-checkout-form: true -%}
+          <button type="submit" name="checkout" class="btn btn-primary btn-block cart-summary__checkout">
+            <span>{{ 'sections.cart.checkout' | t }}</span><span>{{ cart.total_price | money }}</span>
+          </button>
         {%- endform -%}
+        <a href="{{ routes.cart_url }}" class="cart-drawer__view">{{ 'sections.cart.view_bag' | t }}</a>
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          <div class="payment-icons" aria-label="{{ 'sections.cart.payment_methods' | t }}">
+            {%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'payment-icon' }}{%- endfor -%}
+          </div>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>
@@ -59,9 +133,46 @@
 
 {% schema %}
 {
-  "name": "Cart drawer",
+  "name": "t:sections.cart-drawer.name",
   "settings": [
-
+    {
+      "type": "checkbox",
+      "id": "show_upsell",
+      "label": "t:sections.cart-drawer.settings.show_upsell.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "upsell_heading",
+      "label": "t:sections.cart-drawer.settings.upsell_heading.label",
+      "default": "Complete your routine"
+    },
+    {
+      "type": "collection",
+      "id": "upsell_collection",
+      "label": "t:sections.cart-drawer.settings.upsell_collection.label",
+      "info": "t:sections.cart-drawer.settings.upsell_collection.info"
+    },
+    {
+      "type": "range",
+      "id": "upsell_count",
+      "label": "t:sections.cart-drawer.settings.upsell_count.label",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "text",
+      "id": "empty_link_label",
+      "label": "t:sections.cart-drawer.settings.empty_link_label.label",
+      "default": "Start with the three-step routine."
+    },
+    {
+      "type": "url",
+      "id": "empty_link",
+      "label": "t:sections.cart-drawer.settings.empty_link.label"
+    }
   ]
 }
 {% endschema %}

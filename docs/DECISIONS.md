@@ -30,15 +30,22 @@ account icon links to `/account` or `/account/login` depending on `customer` bei
 matching the mockup's intent (a compact account affordance in the header) without
 reimplementing auth in JavaScript.
 
-## Mega menu → linklist-driven dropdown
+Stores on **new customer accounts** (Shopify-hosted, the default for new stores) never use
+the `customers/*` templates: login, orders, addresses and profile are rendered by Shopify and
+styled in **Settings → Checkout → Customize** (logo, colours, fonts). The header still shows the
+design's account dropdown (initials, orders, addresses, saved, log out) for signed-in customers.
+The design's "Saved" list is a theme page (`page.saved`) backed by the browser, as in the mockup.
 
-The mockup's header mega menu was three hand-curated columns plus a feature image, entirely
-hardcoded in JavaScript (`const MEGA = {...}` in `SiteHeader.dc.html`) — a merchant could not
-change a single link without editing code. `sections/header.liquid` instead reads a real
-Shopify navigation menu (`link_list` setting, defaulting to `main-menu`) and renders nested
-links as a dropdown panel. This means less visual flourish (no feature image column) but a
-merchant can now add/remove/reorder every nav item from **Online Store → Navigation** — which
-is the point of a theme built for a real store rather than a single fixed prototype.
+## Mega menu → the design's layout, driven by a real menu
+
+The mockup's mega menu (three columns with per-item notes, a featured product card, a
+footnote bar, a scrim) was hardcoded in JavaScript (`const MEGA = {...}` in
+`SiteHeader.dc.html`). Since 1.2.0 `sections/header.liquid` reproduces that layout but reads
+a three-level Shopify menu (**Online Store → Navigation**, default `main-menu`): level 1 =
+header links, level 2 = columns, level 3 = items. Collection links show their product count
+as the item note. The featured card, footnote bar and each column's "all" label come from
+"Mega menu" blocks in the header section, matched to a header link by its title — so every
+link stays merchant-editable and the look matches the mockup.
 
 ## Quiz → real tag-based matching
 

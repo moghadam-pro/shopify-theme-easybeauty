@@ -95,22 +95,29 @@ export const collections = { all: collection, 'best-sellers': { ...collection, h
 const link = (title, url, links = []) => ({ title, url, links, active: false, handle: title.toLowerCase() });
 
 export const linklists = {
+  // Mirrors the design's header (design-reference/pages/SiteHeader.dc.html):
+  // level 1 = nav, level 2 = mega menu columns, level 3 = column items.
   'main-menu': {
     handle: 'main-menu',
     title: 'Main menu',
     links: [
       link('Shop', 'collection.html', [
-        link('All skincare', 'collection.html'),
-        link('Serums', 'collection.html'),
-        link('Moisturizers', 'collection.html'),
-        link('Cleansers', 'collection.html'),
+        link('By category', 'collection.html', [link('Cleansers', 'collection.html'), link('Serums', 'collection.html'), link('Moisturisers', 'collection.html'), link('Masks', 'collection.html'), link('Lip care', 'collection.html')]),
+        link('By concern', 'page.quiz.html', [link('Brightening', 'collection.html'), link('Hydration', 'collection.html'), link('Sensitivity', 'collection.html'), link('Acne-prone', 'collection.html'), link('Anti-aging', 'collection.html')]),
+        link('By ingredient', 'blog.html', [link('Niacinamide 10%', 'product.html'), link('Ceramides', 'collection.html'), link('Squalane', 'collection.html'), link('Azelaic acid', 'collection.html'), link('Mineral SPF', 'collection.html')]),
       ]),
-      link('Skin quiz', 'page.quiz.html'),
-      link('Lookbook', 'page.lookbook.html'),
+      link('Collections', 'collection.html', [
+        link('Routines', 'collection.html', [link('Lookbook', 'page.lookbook.html'), link('Morning routine', 'collection.html'), link('Night routine', 'collection.html'), link('Minimal three', 'collection.html'), link('Barrier repair set', 'collection.html'), link('Travel trio', 'collection.html')]),
+        link('For skin that is', 'page.quiz.html', [link('Reactive', 'collection.html'), link('Dry through winter', 'collection.html'), link('Oily by midday', 'collection.html'), link('Post-treatment', 'collection.html'), link('New to actives', 'collection.html')]),
+        link('Gifting', 'collection.html', [link('Duo pack', 'product.html'), link('The full twelve', 'collection.html'), link('Under $60', 'collection.html'), link('Plain packaging', 'page.faq.html')]),
+      ]),
       link('Journal', 'blog.html'),
       link('About', 'page.about.html'),
     ],
   },
+  'footer-shop': { handle: 'footer-shop', title: 'Shop', links: [link('All products', 'collection.html'), link('Bundles', 'index.html'), link('Lookbook', 'page.lookbook.html'), link('Skin quiz', 'page.quiz.html'), link('Your bag', 'cart.html')] },
+  'footer-company': { handle: 'footer-company', title: 'Company', links: [link('About us', 'page.about.html'), link('The Journal', 'blog.html'), link('Contact', 'page.contact.html'), link('Your account', 'customers.account.html')] },
+  'footer-help': { handle: 'footer-help', title: 'Help', links: [link('FAQ', 'page.faq.html'), link('Shipping', 'page.faq.html'), link('Returns', 'page.faq.html'), link('Legal', 'page.legal.html')] },
   footer: {
     handle: 'footer',
     title: 'Footer',

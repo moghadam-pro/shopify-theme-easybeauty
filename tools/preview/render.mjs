@@ -250,6 +250,7 @@ const PAGES = {
   'page.faq': { page_type: 'page', title: 'FAQ' },
   'page.legal': { page_type: 'page', title: 'Legal' },
   'page.lookbook': { page_type: 'page', title: 'Lookbook' },
+  'page.saved': { page_type: 'page', title: 'Saved' },
   'page.quiz': { page_type: 'page', title: 'Skin quiz' },
   404: { page_type: '404', title: 'Page not found' },
   'customers/login': { page_type: 'customers/login', title: 'Log in', guest: true },
