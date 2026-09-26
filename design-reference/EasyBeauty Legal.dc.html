@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-500:#94513C; --color-accent-600:#82472F; --color-accent-700:#6E3B27;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip">
+  <dc-import name="SiteHeader" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+
+  <section style="border-bottom:2px solid var(--ink);padding:36px 28px 42px">
+    <nav style="font-size:12px;letter-spacing:0.06em;color:var(--t2);margin-bottom:26px">
+      <a href="EasyBeauty Landing.dc.html" style="color:var(--t2)">Home</a> / <span style="color:var(--ink)">Legal</span>
+    </nav>
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap">
+      <div style="max-width:640px">
+        <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.4vw,74px);line-height:1;margin:0 0 18px">Legal</h1>
+        <p style="font-size:15.5px;line-height:1.7;color:var(--t1);margin:0">Privacy notice, terms of sale and cookie use. Written to be read, not to be skipped.</p>
+      </div>
+      <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--t2)">Last updated 4 March 2026</div>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);display:flex;flex-wrap:wrap">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+      <button type="button" onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+    </sc-for>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);display:grid;grid-template-columns:{{ shellCols }}">
+    <div style="min-width:0;padding:clamp(34px,4vw,60px) 28px">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--terra);margin-bottom:18px">{{ docKicker }}</div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,44px);line-height:1.08;margin:0 0 30px;max-width:22ch">{{ docTitle }}</h2>
+      <div style="border-top:2px solid var(--ink)">
+        <sc-for list="{{ clauses }}" as="c" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:{{ clauseCols }};gap:clamp(16px,3vw,44px);padding:26px 0;border-bottom:1px solid var(--color-border)">
+            <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2)">{{ c.n }} — {{ c.h }}</div>
+            <div style="min-width:0">
+              <sc-for list="{{ c.paras }}" as="p" hint-placeholder-count="2">
+                <p style="font-size:14.5px;line-height:1.85;color:var(--t1);margin:0 0 16px;max-width:70ch">{{ p }}</p>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <aside style="{{ asideStyle }}">
+      <div style="padding:26px 24px;border-bottom:1px solid var(--color-border)">
+        <div style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:14px">Company</div>
+        <p style="font-size:13.5px;line-height:1.8;color:var(--t1);margin:0">EasyBeauty Lda · Rua da Fábrica 14, 2710 Sintra, Portugal · VAT PT512 448 019</p>
+      </div>
+      <div style="padding:26px 24px;border-bottom:1px solid var(--color-border)">
+        <div style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:14px">Data requests</div>
+        <p style="font-size:13.5px;line-height:1.8;color:var(--t1);margin:0 0 16px">Ask for a copy of your data, or its deletion, and we answer within thirty days.</p>
+        <a href="EasyBeauty Contact.dc.html" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:11.5px">Write to us</a>
+      </div>
+      <div style="padding:26px 24px">
+        <div style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:14px">Also useful</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:13.5px">
+          <a href="EasyBeauty FAQ.dc.html#shipping">Shipping times</a>
+          <a href="EasyBeauty FAQ.dc.html#returns">Return policy</a>
+          <a href="EasyBeauty Account.dc.html">Your account data</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="" hint-size="100%,72px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const DOCS = {
+  privacy: {
+    label:'Privacy', kicker:'Privacy notice', title:'What we hold, why, and for how long.',
+    clauses:[
+      { n:'01', h:'What we collect', paras:[
+        'To ship an order we need a name, a delivery address and a phone number. If you sign in with Google we receive your email address and display name, nothing else from your Google account.',
+        'The quiz answers, saved items and skin profile you enter are stored so the shop can filter itself for you. They are never used to set a different price.'
+      ] },
+      { n:'02', h:'Why we hold it', paras:[
+        'Order and invoice records are kept because Portuguese tax law requires ten years. Everything else — quiz answers, saved items, marketing consent — is kept because you asked us to, and is deleted on request.'
+      ] },
+      { n:'03', h:'Who sees it', paras:[
+        'Our carrier receives the address and phone number needed to deliver. Our payment provider handles card data; we never see the full number. No one else receives your details, and we do not sell or rent any of it.'
+      ] },
+      { n:'04', h:'Your rights', paras:[
+        'You can ask for a copy of your data, correct it, or have it deleted. Write to us and we answer within thirty days. You can also complain to the CNPD, the Portuguese data protection authority.'
+      ] }
+    ]
+  },
+  terms: {
+    label:'Terms', kicker:'Terms of sale', title:'The agreement when you buy from us.',
+    clauses:[
+      { n:'01', h:'Prices and currency', paras:[
+        'Prices shown include VAT at the Portuguese rate and are charged in US dollars. Delivery is added at checkout unless the order qualifies as free.'
+      ] },
+      { n:'02', h:'Orders and stock', paras:[
+        'A contract begins when we send the shipping confirmation, not at payment. If a batch fails testing after you ordered, we cancel, refund in full and tell you why.'
+      ] },
+      { n:'03', h:'Returns and refunds', paras:[
+        'You may return any product within sixty days of delivery, opened or not, and we pay the return postage. Refunds go to the original payment method within five working days of the parcel reaching our warehouse.'
+      ] },
+      { n:'04', h:'Subscriptions', paras:[
+        'A subscription renews at the interval you chose until you skip, delay or cancel it. There is no notice period, and changes made before the cut-off date shown in your account apply to the next shipment.'
+      ] },
+      { n:'05', h:'Claims and law', paras:[
+        'Nothing here limits the statutory rights you have as a consumer in the EU. These terms are governed by Portuguese law, and the courts of Lisbon have jurisdiction.'
+      ] }
+    ]
+  },
+  cookies: {
+    label:'Cookies', kicker:'Cookie use', title:'Three that are needed, one you can refuse.',
+    clauses:[
+      { n:'01', h:'Strictly necessary', paras:[
+        'A session cookie keeps your bag and your sign-in valid while you browse. It carries no identifier we can link to a person and cannot be switched off without breaking checkout.'
+      ] },
+      { n:'02', h:'Preferences', paras:[
+        'Local storage on your device holds saved items, quiz answers and your skin profile. It never leaves the device until you sign in, and clearing your browser data removes it.'
+      ] },
+      { n:'03', h:'Analytics', paras:[
+        'We count page views and checkout steps with a self-hosted, cookie-free tool. No third-party analytics, no advertising pixels, no cross-site tracking.'
+      ] },
+      { n:'04', h:'Changing your mind', paras:[
+        'Because we set no marketing or advertising cookies, there is no consent banner to dismiss. If that changes we will ask first, and the choice will live in your account.'
+      ] }
+    ]
+  }
+};
+
+const ORDER = ['privacy', 'terms', 'cookies'];
+
+class Component extends DCLogic {
+  state = { doc:'privacy', wide:true };
+
+  componentDidMount() {
+    this.onResize = () => {
+      const wide = window.innerWidth >= 900;
+      if (wide !== this.state.wide) this.setState({ wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+    this.onHash = () => {
+      const h = (window.location.hash || '').replace('#', '');
+      if (ORDER.indexOf(h) >= 0) this.setState({ doc:h });
+    };
+    this.onHash();
+    window.addEventListener('hashchange', this.onHash);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('hashchange', this.onHash);
+  }
+
+  renderVals() {
+    const st = this.state;
+    const doc = DOCS[st.doc] || DOCS.privacy;
+
+    return {
+      tabs: ORDER.map((k) => {
+        const on = st.doc === k;
+        return {
+          label: DOCS[k].label,
+          style: 'flex:1 1 160px;background:' + (on ? 'var(--ink)' : 'transparent') + ';color:' + (on ? 'var(--off)' : 'var(--ink)') + ';border:0;border-right:1px solid var(--color-border);cursor:pointer;padding:18px 24px;font-size:12.5px;letter-spacing:0.12em;text-transform:uppercase;text-align:left;transition:background .2s ease,color .2s ease',
+          pick: () => { this.setState({ doc:k }); try { history.replaceState(null, '', '#' + k); } catch (e) {} }
+        };
+      }),
+      docKicker: doc.kicker,
+      docTitle: doc.title,
+      clauses: doc.clauses,
+      clauseCols: st.wide ? 'minmax(0,200px) minmax(0,1fr)' : 'minmax(0,1fr)',
+      shellCols: st.wide ? 'minmax(0,1fr) minmax(0,320px)' : 'minmax(0,1fr)',
+      asideStyle: st.wide
+        ? 'border-left:2px solid var(--ink);background:var(--off);align-self:start;position:sticky;top:120px'
+        : 'border-top:2px solid var(--ink);background:var(--off)'
+    };
+  }
+}
+
+</script>
+</body>
+</html>

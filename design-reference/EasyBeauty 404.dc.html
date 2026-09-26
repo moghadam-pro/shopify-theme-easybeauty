@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-500:#94513C; --color-accent-600:#82472F;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+input{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip">
+  <dc-import name="SiteHeader" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+
+  <section style="border-bottom:2px solid var(--ink);display:grid;grid-template-columns:{{ heroCols }}">
+    <div style="padding:clamp(48px,7vw,104px) 28px">
+      <div style="font-family:var(--serif);font-size:clamp(84px,14vw,200px);line-height:0.86;letter-spacing:-0.02em;margin-bottom:26px">404</div>
+      <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.6vw,48px);line-height:1.06;margin:0 0 18px;max-width:22ch">This page is not part of the routine.</h1>
+      <p style="font-size:15.5px;line-height:1.75;color:var(--t1);margin:0 0 30px;max-width:52ch">The link may be old, or the product may have been retired — we keep twelve formulas and retire one when a better version replaces it.</p>
+      <div style="display:flex;gap:2px;flex-wrap:wrap">
+        <a href="EasyBeauty Collection.dc.html" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Browse all products</a>
+        <a href="EasyBeauty Landing.dc.html" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Back to home</a>
+      </div>
+      <div style="margin-top:38px;max-width:420px">
+        <div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:12px">Or search the shop</div>
+        <form onSubmit="{{ submit }}" style="display:flex;gap:2px">
+          <input type="text" placeholder="Serum, ceramide, sensitive…" value="{{ q }}" onChange="{{ setQ }}" aria-label="Search" style="flex:1;min-width:0;border:2px solid var(--ink);background:var(--off);padding:14px 15px;font-size:14px;color:var(--ink);outline:none">
+          <button type="submit" style="flex:0 0 auto;background:var(--dark-bg);color:var(--off);border:0;cursor:pointer;padding:14px 18px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase">Search</button>
+        </form>
+      </div>
+    </div>
+    <div style="{{ artStyle }}"></div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);background:var(--color-border);display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px">
+    <sc-for list="{{ shortcuts }}" as="s" hint-placeholder-count="4">
+      <a href="{{ s.href }}" style="background:var(--off);padding:26px 24px 28px;display:flex;flex-direction:column;gap:10px;min-height:150px">
+        <span style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--terra)">{{ s.kicker }}</span>
+        <span style="font-family:var(--serif);font-size:22px;line-height:1.15">{{ s.title }}</span>
+        <span style="font-size:13px;line-height:1.65;color:var(--t2);margin-top:auto">{{ s.note }}</span>
+      </a>
+    </sc-for>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="shop" hint-size="100%,72px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SHORTCUTS = [
+  { kicker:'Shop', title:'All products', note:'Twelve formulas, filtered by concern', href:'EasyBeauty Collection.dc.html' },
+  { kicker:'Quiz', title:'Skin quiz', note:'Six questions, three products', href:'EasyBeauty Quiz.dc.html' },
+  { kicker:'Journal', title:'Formulation notes', note:'What the data actually says', href:'EasyBeauty Blog.dc.html' },
+  { kicker:'Help', title:'Shipping and returns', note:'Sixty days, opened or not', href:'EasyBeauty FAQ.dc.html' }
+];
+
+class Component extends DCLogic {
+  state = { q:'', wide:true };
+
+  componentDidMount() {
+    this.onResize = () => {
+      const wide = window.innerWidth >= 900;
+      if (wide !== this.state.wide) this.setState({ wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+
+  renderVals() {
+    return {
+      heroCols: this.state.wide ? 'minmax(0,1fr) minmax(0,42%)' : 'minmax(0,1fr)',
+      artStyle: this.state.wide
+        ? 'border-left:2px solid var(--ink);background:var(--imgbg) url("assets/skin.jpg") center/cover no-repeat;filter:grayscale(1);min-height:420px'
+        : 'border-top:2px solid var(--ink);background:var(--imgbg) url("assets/skin.jpg") center/cover no-repeat;filter:grayscale(1);min-height:220px',
+      shortcuts: SHORTCUTS,
+      q: this.state.q,
+      setQ: (e) => this.setState({ q:e.target.value }),
+      submit: (e) => { e.preventDefault(); window.location.href = 'EasyBeauty Collection.dc.html#search'; }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

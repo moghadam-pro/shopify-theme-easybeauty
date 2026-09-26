@@ -17,7 +17,7 @@ theme template you can freely author:
 
 Building a `checkout.liquid` into this theme would either not run on most stores, or actively
 break once Plus finishes deprecating it. The mockup's thank-you-page copy and delivery-method
-labels are preserved in `/design-reference/pages/EasyBeauty_Checkout.html` if a Plus merchant
+labels are preserved in `/design-reference/EasyBeauty Checkout.dc.html` if a Plus merchant
 wants to hand them to a checkout extension later.
 
 ## Auth modal → native customer accounts

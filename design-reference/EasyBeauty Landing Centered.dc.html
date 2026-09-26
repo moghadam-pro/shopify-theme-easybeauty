@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --rose:#E7A99B; --violet:#584B9E; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-accent-2:#94513C; --color-accent-2-100:#F7E8E2; --color-accent-2-200:#EFD3C9;
+  --color-accent-2-300:#DFB6A7; --color-accent-2-400:#C97B63; --color-accent-2-500:#94513C;
+  --color-accent-2-600:#82472F; --color-accent-2-700:#6E3B27; --color-accent-2-800:#5A301F;
+  --color-accent-2-900:#46251A;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+select{font-family:inherit}
+image-slot{display:block}
+
+@media (max-width:760px){
+  header nav{display:none !important}
+  header > div{height:58px !important;padding:0 16px !important}
+  footer{padding-bottom:26px !important}
+}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip">
+
+  <dc-import name="SiteHeader" active="shop" count="{{ count }}" on-bag="{{ openCart }}" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+
+  <section id="top" style="position:relative;background:var(--sand);border-bottom:2px solid var(--ink)">
+    <div style="position:relative;width:100%;aspect-ratio:2200/1166;min-height:420px;overflow:hidden">
+      <img src="assets/hero.jpg" alt="Model at rest in warm natural light" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 40%">
+
+      <div style="position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,color-mix(in srgb,var(--sand) 55%,transparent) 52%,var(--sand) 100%);pointer-events:none;z-index:2"></div>
+
+      <div style="position:absolute;left:50%;transform:translateX(-50%);top:clamp(34px,8%,96px);width:min(720px,88%);display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none;z-index:8">
+        <div style="font-size:10.5px;letter-spacing:0.38em;text-transform:uppercase;color:var(--t7)">EasyBeauty — Clean skincare</div>
+        <span style="display:block;width:1px;height:34px;background:var(--t5);margin:20px 0 22px"></span>
+        <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(40px,5.8vw,82px);line-height:1.06;letter-spacing:0.02em;margin:0 0 22px;text-wrap:balance">Love your skin<br>from within</h1>
+        <p style="font-size:14.5px;line-height:1.8;color:var(--t1);margin:0 0 32px;max-width:420px;letter-spacing:0.015em">Twelve weightless formulas, dermatologist tested, built for the barrier you already have.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;pointer-events:auto">
+          <a href="#best" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.18em;font-size:11px;padding:15px 34px;justify-content:center">Shop the edit</a>
+          <a href="EasyBeauty Quiz.dc.html" class="btn btn-secondary" style="text-transform:uppercase;letter-spacing:0.18em;font-size:11px;padding:15px 34px;justify-content:center;background:var(--plate-soft)">Take the skin quiz</a>
+        </div>
+      </div>
+
+      <sc-for list="{{ hotspots }}" as="h" hint-placeholder-count="0">
+        <div onMouseEnter="{{ h.enter }}" onMouseLeave="{{ h.leave }}" style="{{ h.wrapStyle }}">
+          <button type="button" onClick="{{ h.toggle }}" aria-label="{{ h.title }}" style="{{ h.dotStyle }}">
+            <span style="{{ h.plusStyle }}">+</span>
+            <span style="{{ h.minusStyle }}">–</span>
+          </button>
+          <a href="#best" style="{{ h.cardStyle }}">
+            <div role="img" aria-label="{{ h.title }}" style="{{ h.thumbStyle }}"></div>
+            <div style="min-width:0">
+              <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:4px">
+                <span style="font-size:14px;font-weight:600;letter-spacing:0.01em">{{ h.title }}</span>
+                <span style="font-size:11.5px;letter-spacing:0.08em;color:var(--terra);margin-left:auto">{{ h.price }}</span>
+              </div>
+              <div style="font-size:12.5px;line-height:1.5;color:var(--t3)">{{ h.body }}</div>
+            </div>
+          </a>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));max-width:1600px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:12px;padding:22px 28px;border-right:1px solid var(--color-border);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="stroke:var(--terra)" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>
+        Free shipping over $75
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:22px 28px;border-right:1px solid var(--color-border);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="stroke:var(--terra)" stroke-width="1.6"><path d="M12 21s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.6-7 10-7 10z"></path></svg>
+        Cruelty-free &amp; vegan
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:22px 28px;border-right:1px solid var(--color-border);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="stroke:var(--terra)" stroke-width="1.6"><path d="M12 3l7 3v6c0 5-3 7.5-7 9-4-1.5-7-4-7-9V6z"></path><path d="M9 12l2 2 4-4"></path></svg>
+        Dermatologist tested
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:22px 28px;font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="stroke:var(--terra)" stroke-width="1.6"><rect x="4" y="10" width="16" height="10"></rect><path d="M8 10V7a4 4 0 018 0v3"></path></svg>
+        Secure checkout
+      </div>
+    </div>
+  </section>
+
+  <section id="concern" style="position:relative;border-bottom:2px solid var(--ink)">
+    <div style="position:relative;min-height:620px;height:74vh;max-height:760px;overflow:hidden;background:var(--sand)">
+      <sc-for list="{{ cats }}" as="c" hint-placeholder-count="0">
+        <div style="{{ c.layerStyle }}">
+          <image-slot id="{{ c.slotId }}" shape="rect" src="{{ c.img }}" placeholder="{{ c.slotHint }}"></image-slot>
+        </div>
+      </sc-for>
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(43,36,29,0.62) 0%,rgba(43,36,29,0.34) 46%,rgba(43,36,29,0.05) 78%);pointer-events:none"></div>
+      <div style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:0 28px;max-width:1600px;margin:0 auto">
+        <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(251,250,248,0.9);margin-bottom:20px">Shop by category</div>
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="0">
+          <a href="#best" onMouseEnter="{{ c.enter }}" onClick="{{ c.enter }}" style="{{ c.linkStyle }}">{{ c.name }}</a>
+        </sc-for>
+        <div style="margin-top:22px;max-width:320px;font-size:14px;line-height:1.6;color:rgba(251,250,248,0.86)">{{ activeCatNote }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="best" style="border-bottom:2px solid var(--ink);padding:0 0 92px">
+    <div style="max-width:1600px;margin:0 auto;padding:0 28px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:80px 0 26px;border-bottom:2px solid var(--ink)">
+        <div style="display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="0">
+            <button type="button" onClick="{{ t.click }}" style="{{ t.style }}">{{ t.label }}</button>
+          </sc-for>
+        </div>
+        <a href="#best" style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:3px">Shop all products</a>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border);margin-top:36px">
+        <sc-for list="{{ products }}" as="p" hint-placeholder-count="0">
+          <div onMouseEnter="{{ p.enter }}" onMouseLeave="{{ p.leave }}" style="{{ p.cardStyle }}">
+            <div style="position:relative;overflow:hidden;aspect-ratio:1/1;background:var(--cream)">
+              <div role="img" aria-label="{{ p.name }}" style="{{ p.imgStyle }}"></div>
+              <div style="{{ p.img2Style }}"></div>
+              <sc-if value="{{ p.hasBadge }}" hint-placeholder-val="{{ true }}">
+                <span style="{{ p.badgeStyle }}">{{ p.badge }}</span>
+              </sc-if>
+              <button type="button" onClick="{{ p.add }}" style="{{ p.quickStyle }}">
+                <span>Quick add</span>
+                <span style="font-size:15px;line-height:1">+</span>
+              </button>
+            </div>
+            <div style="padding:18px 18px 22px;display:flex;flex-direction:column;gap:7px">
+              <a href="#best" style="font-size:15px;font-weight:500;letter-spacing:0.01em">{{ p.name }}</a>
+              <div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--t3)">
+                <span style="color:var(--terra);letter-spacing:0.08em">★★★★★</span>
+                <span>{{ p.rating }} · {{ p.reviews }} reviews</span>
+              </div>
+              <div style="display:flex;align-items:baseline;gap:10px;font-size:14px">
+                <span>{{ p.priceLabel }}</span>
+                <sc-if value="{{ p.hasWas }}" hint-placeholder-val="{{ false }}">
+                  <span style="text-decoration:line-through;color:var(--t3);font-size:12.5px">{{ p.wasLabel }}</span>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))">
+      <div style="position:relative;aspect-ratio:1/1;border-right:1px solid var(--color-border);background:var(--dark-bg)">
+        <image-slot id="tex-cream" shape="rect" src="assets/skin.jpg" placeholder="Macro: cream swirled on skin"></image-slot>
+        <a href="#best" style="position:absolute;left:24px;bottom:24px;display:grid;grid-template-columns:62px 1fr;gap:14px;align-items:center;background:var(--off);padding:12px;max-width:290px;box-shadow:0 10px 30px rgba(26,21,18,0.28)">
+          <img src="assets/p2.jpg" alt="Barrier Cream" style="width:62px;height:62px;object-fit:cover;display:block">
+          <div>
+            <div style="font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:5px">Shop the texture</div>
+            <div style="font-size:14px;font-weight:500">Barrier Repair Cream</div>
+            <div style="font-size:13px;color:var(--t3);margin-top:3px">$58</div>
+          </div>
+        </a>
+      </div>
+      <div style="position:relative;aspect-ratio:1/1;background:var(--dark-bg)">
+        <image-slot id="tex-serum" shape="rect" src="assets/apply.jpg" placeholder="Macro: serum in an open palm"></image-slot>
+        <a href="#best" style="position:absolute;left:24px;bottom:24px;display:grid;grid-template-columns:62px 1fr;gap:14px;align-items:center;background:var(--off);padding:12px;max-width:290px;box-shadow:0 10px 30px rgba(26,21,18,0.28)">
+          <img src="assets/p4.jpg" alt="Radiance Serum No.3" style="width:62px;height:62px;object-fit:cover;display:block">
+          <div>
+            <div style="font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:5px">Shop the texture</div>
+            <div style="font-size:14px;font-weight:500">Radiance Serum No.3</div>
+            <div style="font-size:13px;color:var(--t3);margin-top:3px">$68</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);background:var(--off);padding:110px 28px">
+    <p style="max-width:1080px;margin:0 auto;font-size:clamp(26px,3.6vw,52px);line-height:1.34;font-weight:600;letter-spacing:-0.01em">Make you look <span style="display:inline-block;vertical-align:middle;width:104px;height:58px;border-radius:999px;overflow:hidden;margin:0 6px"><image-slot id="chip-face" shape="pill" src="assets/hero.jpg" placeholder="Face"></image-slot></span> and feel glowy <span style="display:inline-block;vertical-align:middle;width:104px;height:58px;border-radius:999px;overflow:hidden;margin:0 6px"><image-slot id="chip-drop" shape="pill" src="assets/p4.jpg" placeholder="Dropper"></image-slot></span> and healthy <span style="display:inline-block;vertical-align:middle;width:104px;height:58px;border-radius:999px;overflow:hidden;margin:0 6px"><image-slot id="chip-skin" shape="pill" src="assets/skin.jpg" placeholder="Skin"></image-slot></span> every single morning.</p>
+  </section>
+
+  <section id="bundle" style="border-bottom:2px solid var(--ink)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr))">
+      <div style="position:relative;background:var(--sand);aspect-ratio:1/1;border-right:1px solid var(--color-border);display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:10px;padding:8% 7%">
+        <div style="position:relative">
+          <img src="assets/p3.jpg" alt="Gentle Cleansing Milk" style="width:100%;display:block;mix-blend-mode:multiply">
+          <span style="position:absolute;top:-10px;left:-10px;width:34px;height:34px;border-radius:50%;background:var(--dark-bg);color:var(--off);display:flex;align-items:center;justify-content:center;font-size:13px">1</span>
+        </div>
+        <div style="position:relative">
+          <img src="assets/p4.jpg" alt="Radiance Serum No.3" style="width:100%;display:block;mix-blend-mode:multiply">
+          <span style="position:absolute;top:-10px;left:-10px;width:34px;height:34px;border-radius:50%;background:var(--dark-bg);color:var(--off);display:flex;align-items:center;justify-content:center;font-size:13px">2</span>
+        </div>
+        <div style="position:relative">
+          <img src="assets/p2.jpg" alt="Barrier Repair Cream" style="width:100%;display:block;mix-blend-mode:multiply">
+          <span style="position:absolute;top:-10px;left:-10px;width:34px;height:34px;border-radius:50%;background:var(--dark-bg);color:var(--off);display:flex;align-items:center;justify-content:center;font-size:13px">3</span>
+        </div>
+      </div>
+      <div style="padding:clamp(40px,5vw,78px) 28px;display:flex;flex-direction:column;justify-content:center;max-width:720px">
+        <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">Build your routine</div>
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.6vw,46px);line-height:1.1;margin:0 0 30px">Level up your routine with the bundle</h2>
+        <div style="border-top:2px solid var(--ink)">
+          <sc-for list="{{ bundle }}" as="b" hint-placeholder-count="0">
+            <div style="display:grid;grid-template-columns:34px 64px 1fr auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--color-border)">
+              <span style="width:28px;height:28px;border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:12px">{{ b.n }}</span>
+              <div role="img" aria-label="{{ b.name }}" style="{{ b.imgStyle }}"></div>
+              <div style="min-width:0">
+                <div style="font-size:14.5px;font-weight:500;margin-bottom:8px">{{ b.name }}</div>
+                <select onChange="{{ b.change }}" aria-label="Size for {{ b.name }}" class="input" style="font-size:12px;padding:6px 8px;max-width:150px;border:1px solid var(--color-border);background:var(--off)">
+                  <sc-for list="{{ b.sizes }}" as="s" hint-placeholder-count="0">
+                    <option value="{{ s }}">{{ s }}</option>
+                  </sc-for>
+                </select>
+              </div>
+              <div style="font-size:14px;white-space:nowrap">{{ b.priceLabel }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:28px">
+          <button type="button" onClick="{{ addBundle }}" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Add bundle to bag — {{ bundleTotal }}</button>
+          <span class="tag tag-accent" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase">Save 10% as a set</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);padding:88px 0 96px">
+    <div style="max-width:1600px;margin:0 auto;padding:0 28px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:34px">
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.4vw,44px);line-height:1.1;margin:0">Best skincare products, in use</h2>
+      <div style="display:flex;gap:10px">
+        <button type="button" onClick="{{ vidPrev }}" aria-label="Previous" class="btn btn-secondary" style="padding:10px 14px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"></path></svg>
+        </button>
+        <button type="button" onClick="{{ vidNext }}" aria-label="Next" class="btn btn-secondary" style="padding:10px 14px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg>
+        </button>
+      </div>
+    </div>
+    <div ref="{{ vidRef }}" style="display:flex;gap:20px;overflow-x:auto;scroll-behavior:smooth;padding:0 28px 8px;max-width:1600px;margin:0 auto;scrollbar-width:thin">
+      <sc-for list="{{ vids }}" as="v" hint-placeholder-count="0">
+        <div style="flex:0 0 auto;width:240px">
+          <div style="position:relative;width:240px;aspect-ratio:9/16;background:var(--dark-bg)">
+            <image-slot id="{{ v.slotId }}" shape="rect" src="{{ v.img }}" placeholder="{{ v.hint }}"></image-slot>
+            <span style="position:absolute;top:12px;left:12px;width:30px;height:30px;border-radius:50%;background:var(--plate);display:flex;align-items:center;justify-content:center;pointer-events:none">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"></path></svg>
+            </span>
+          </div>
+          <a href="#best" style="display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center;background:var(--off);border:1px solid var(--color-border);border-top:0;padding:12px">
+            <div role="img" aria-label="{{ v.name }}" style="{{ v.thumbStyle }}"></div>
+            <div style="min-width:0">
+              <div style="font-size:13px;font-weight:500;line-height:1.3;margin-bottom:4px">{{ v.name }}</div>
+              <div style="font-size:12px;color:var(--t3)">{{ v.price }}</div>
+            </div>
+          </a>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);background:var(--off);padding:92px 28px 100px">
+    <div style="max-width:1600px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:54px">
+        <div style="font-family:var(--serif);font-size:clamp(40px,6vw,86px);line-height:1;letter-spacing:0.01em">4.8 <span style="color:var(--terra)">★</span></div>
+        <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--t3);margin-top:14px">12,400+ verified reviews</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--color-border);border:1px solid var(--color-border)">
+        <sc-for list="{{ quotes }}" as="q" hint-placeholder-count="0">
+          <figure style="margin:0;background:var(--cream);padding:34px 28px;display:flex;flex-direction:column;gap:20px">
+            <div style="color:var(--terra);font-size:13px;letter-spacing:0.14em">★★★★★</div>
+            <blockquote style="margin:0;font-family:var(--serif);font-size:20px;line-height:1.45">“{{ q.text }}”</blockquote>
+            <figcaption style="display:flex;align-items:center;gap:12px;margin-top:auto">
+              <span style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex:0 0 auto;display:block">
+                <image-slot id="{{ q.slotId }}" shape="circle" src="{{ q.img }}" placeholder="UGC"></image-slot>
+              </span>
+              <span style="font-size:12.5px;color:var(--t3)">{{ q.name }} · {{ q.meta }}</span>
+            </figcaption>
+          </figure>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:54px;font-family:var(--serif);font-size:17px;letter-spacing:0.18em;text-transform:uppercase;color:var(--t3)">
+        <span>Vogue</span><span>Allure</span><span>Byrdie</span><span>Refinery29</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="journal" style="border-bottom:2px solid var(--ink)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr))">
+      <div style="position:relative;aspect-ratio:4/5;border-right:1px solid var(--color-border);background:var(--sand)">
+        <image-slot id="story-photo" shape="rect" src="assets/apply.jpg" placeholder="Founder or brand environment"></image-slot>
+      </div>
+      <div style="padding:clamp(40px,5vw,86px) 28px;display:flex;flex-direction:column;justify-content:center;max-width:680px">
+        <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:20px">Our story</div>
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.4vw,44px);line-height:1.12;margin:0 0 24px">We started with one question: what does skin actually need?</h2>
+        <p style="font-size:15.5px;line-height:1.75;color:var(--t1);margin:0 0 18px">EasyBeauty began in a small Lisbon kitchen in 2019, after two years of reformulating a single moisturiser that wouldn't sting. Everything we make now follows the same rule: short ingredient lists, clinically supported actives, and nothing added for the smell of it.</p>
+        <p style="font-size:15.5px;line-height:1.75;color:var(--t1);margin:0 0 30px">Twelve products, no seasonal launches, no reformulations for the sake of newness.</p>
+        <a href="#journal" style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;border-bottom:2px solid var(--ink);padding-bottom:4px;align-self:flex-start">Read our story</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz" style="background:var(--accent-fill);color:var(--off);border-bottom:2px solid var(--ink);padding:78px 28px">
+    <div style="max-width:1600px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:34px;flex-wrap:wrap">
+      <div style="max-width:640px">
+        <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;opacity:0.85;margin-bottom:16px">Find your routine</div>
+        <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.8vw,52px);line-height:1.08;margin:0">Not sure where to start? Take the 60-second skin quiz.</h2>
+      </div>
+      <a href="EasyBeauty Quiz.dc.html" class="btn" style="background:var(--off);color:var(--ink);border:2px solid var(--off);text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Start the quiz</a>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);padding:88px 28px 96px">
+    <div style="max-width:720px;margin:0 auto">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:16px">Newsletter</div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,40px);line-height:1.12;margin:0 0 14px">Get 10% off your first order</h2>
+      <p style="font-size:15px;line-height:1.7;color:var(--t3);margin:0 0 28px">One email a month: what we're formulating, what we've learned, and the occasional restock note.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:stretch">
+        <input class="input" type="email" aria-label="Email address for the newsletter" autocomplete="email" placeholder="you@email.com" value="{{ email }}" onChange="{{ setEmail }}" style="flex:1 1 260px;border:2px solid var(--ink);background:var(--off);padding:13px 15px;font-size:14px">
+        <button type="button" onClick="{{ submitEmail }}" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">{{ emailCta }}</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="shop">
+    <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+  </div>
+
+  <div onClick="{{ closeCart }}" style="{{ scrimStyle }}"></div>
+  <aside aria-label="Your bag" style="{{ drawerStyle }}">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:2px solid var(--ink)">
+      <span style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase">Your bag ({{ count }})</span>
+      <button type="button" onClick="{{ closeCart }}" aria-label="Close bag" style="background:none;border:0;cursor:pointer;color:var(--ink);display:flex;padding:4px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+    </div>
+    <div style="padding:18px 24px;border-bottom:1px solid var(--color-border);background:var(--off)">
+      <div style="font-size:12.5px;margin-bottom:10px">{{ shipLabel }}</div>
+      <div style="height:4px;background:var(--sand)">
+        <div style="{{ shipBarStyle }}"></div>
+      </div>
+    </div>
+    <div style="flex:1;overflow-y:auto">
+      <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:48px 24px;font-size:14px;color:var(--t3);line-height:1.7">Your bag is empty. Start with the <a href="#bundle" style="border-bottom:1px solid var(--ink)">three-step routine</a>.</div>
+      </sc-if>
+      <sc-for list="{{ cart }}" as="l" hint-placeholder-count="0">
+        <div style="display:grid;grid-template-columns:72px 1fr auto;gap:14px;padding:18px 24px;border-bottom:1px solid var(--color-border)">
+          <div role="img" aria-label="{{ l.name }}" style="{{ l.imgStyle }}"></div>
+          <div style="min-width:0">
+            <div style="font-size:14px;font-weight:500;margin-bottom:4px">{{ l.name }}</div>
+            <div style="font-size:12.5px;color:var(--t3);margin-bottom:10px">{{ l.priceLabel }}</div>
+            <div style="display:flex;align-items:center;border:1px solid var(--color-border);width:max-content">
+              <button type="button" onClick="{{ l.dec }}" aria-label="{{ l.decLabel }}" style="background:none;border:0;padding:0 14px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--ink)">–</button>
+              <span style="font-size:13px;min-width:22px;text-align:center">{{ l.qty }}</span>
+              <button type="button" onClick="{{ l.inc }}" aria-label="{{ l.incLabel }}" style="background:none;border:0;padding:0 14px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--ink)">+</button>
+            </div>
+          </div>
+          <div style="font-size:13.5px;white-space:nowrap">{{ l.lineLabel }}</div>
+        </div>
+      </sc-for>
+      <div style="padding:22px 24px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:14px">Complete your routine</div>
+        <sc-for list="{{ upsell }}" as="u" hint-placeholder-count="0">
+          <div style="display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--color-border)">
+            <div role="img" aria-label="{{ u.name }}" style="{{ u.imgStyle }}"></div>
+            <div style="min-width:0">
+              <div style="font-size:13px;font-weight:500">{{ u.name }}</div>
+              <div style="font-size:12px;color:var(--t3)">{{ u.priceLabel }}</div>
+            </div>
+            <button type="button" onClick="{{ u.add }}" aria-label="Add {{ u.name }} to your bag" style="background:none;border:1px solid var(--ink);padding:9px 13px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:var(--ink)">Add</button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="border-top:2px solid var(--ink);padding:20px 24px 26px;background:var(--off)">
+      <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:16px">
+        <span>Subtotal</span><span>{{ subtotalLabel }}</span>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" style="justify-content:space-between;text-transform:uppercase;letter-spacing:0.1em;font-size:12px">
+        <span>Checkout</span><span>{{ subtotalLabel }}</span>
+      </button>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3)">
+        <span>Visa</span><span>Mastercard</span><span>Amex</span><span>PayPal</span><span>Apple Pay</span>
+      </div>
+    </div>
+  </aside>
+
+  <div style="{{ popupStyle }}">
+    <div style="background:var(--off);border:2px solid var(--ink);max-width:420px;width:100%;padding:34px 30px 30px;position:relative">
+      <button type="button" onClick="{{ closePopup }}" aria-label="Close" style="position:absolute;top:12px;right:12px;background:none;border:0;cursor:pointer;color:var(--ink);display:flex;padding:4px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--terra);margin-bottom:14px">Welcome offer</div>
+      <h3 style="font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.1;margin:0 0 12px">10% off your first order</h3>
+      <p style="font-size:14px;line-height:1.65;color:var(--t3);margin:0 0 22px">Join the list for the code. No more than one email a month.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <input class="input" type="email" aria-label="Email address for your first-order code" autocomplete="email" placeholder="you@email.com" style="border:2px solid var(--ink);background:var(--cream);padding:12px 14px;font-size:14px">
+        <button type="button" onClick="{{ closePopup }}" class="btn btn-primary btn-block" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">Send my code</button>
+      </div>
+    </div>
+  </div>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="shop" bag-count="{{ count }}" hint-size="100%,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#94513C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#94513C&quot;,&quot;#82472F&quot;,&quot;#3F4A3D&quot;,&quot;#7A4A55&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;threshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:75,&quot;min&quot;:0,&quot;max&quot;:200,&quot;step&quot;:5,&quot;unit&quot;:&quot;$&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Cart&quot;},&quot;hoverSwap&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Product card&quot;},&quot;popupEnabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Popup&quot;}}">
+const POOL = {
+  cleanser: { id:'cleanser', name:'Gentle Cleansing Milk', img:'assets/p3.jpg', img2:'assets/skin.jpg', price:42, rating:4.7, reviews:613 },
+  serum:    { id:'serum',    name:'Radiance Serum No.3',   img:'assets/p4.jpg', img2:'assets/apply.jpg', price:68, rating:4.9, reviews:1284 },
+  cream:    { id:'cream',    name:'Barrier Repair Cream',  img:'assets/p2.jpg', img2:'assets/skin.jpg', price:58, rating:4.8, reviews:942 },
+  oil:      { id:'oil',      name:'Glow Body Oil',         img:'assets/p1.jpg', img2:'assets/apply.jpg', price:38, rating:4.9, reviews:1507 }
+};
+
+const TABS = [
+  { label:"What's hot", items:[
+    { k:'serum', badge:'Selling fast!', badgeBg:'var(--iris)' },
+    { k:'cream', badge:'New', badgeBg:'var(--moss-2)' },
+    { k:'cleanser' },
+    { k:'oil' }
+  ]},
+  { label:'Best sellers', items:[
+    { k:'oil', badge:'Best seller', badgeBg:'var(--ink)' },
+    { k:'serum', badge:'Best seller', badgeBg:'var(--ink)' },
+    { k:'cream' },
+    { k:'cleanser' }
+  ]},
+  { label:'Sale', items:[
+    { k:'cleanser', price:34, was:42, badge:'-19%', badgeBg:'var(--terra)' },
+    { k:'oil', price:31, was:38, badge:'-18%', badgeBg:'var(--terra)' },
+    { k:'cream', price:49, was:58, badge:'-15%', badgeBg:'var(--terra)' },
+    { k:'serum', price:59, was:68, badge:'-13%', badgeBg:'var(--terra)' }
+  ]}
+];
+
+const CATS = [
+  { name:'Serum',      img:'assets/apply.jpg', note:'Three actives, one dropper. Built for visible change in four weeks.' },
+  { name:'Recovery',   img:'assets/skin.jpg',  note:'Overnight repair for skin that has had too much sun, wind or retinol.' },
+  { name:'Daily Care', img:'assets/hero.jpg',  note:'The two steps you will actually do every morning, in under a minute.' },
+  { name:'Eye Care',   img:'assets/skin.jpg',  note:'Caffeine and peptides for the thinnest skin on your face.' },
+  { name:'Body',       img:'assets/apply.jpg', note:'A silky oil that sinks in fast and leaves no residue on fabric.' }
+];
+
+const HOT = [
+  { id:'cheek', x:'13%', y:'90%', side:'right', title:'Radiant Skin Glow', price:'$68', body:'Daily hydration keeps your cheeks soft, plump, and glowing.', thumb:'assets/p4.jpg' },
+  { id:'clav',  x:'46%', y:'96%', side:'right', title:'Weightless Body Veil', price:'$38', body:'A silky oil that sinks in fast and leaves no residue.', thumb:'assets/p1.jpg' },
+  { id:'shoul', x:'88%', y:'86%', side:'left',  title:'Barrier Repair', price:'$58', body:'Ceramides rebuild dry, sun-exposed skin overnight.', thumb:'assets/p2.jpg' }
+];
+
+const ANN = [
+  'Welcome offer — 10% off your first order',
+  'Free shipping on orders over $75',
+  'New: Radiance Serum No.3 — now in 50ml'
+];
+
+const QUOTES = [
+  { text:'The first moisturiser in four years that did not sting. Three months in and my barrier is finally quiet.', name:'Maya R.', meta:'Sensitive, 34', img:'assets/skin.jpg' },
+  { text:'I bought the bundle to try it and now I cannot use anything else in the morning. The oil is the surprise.', name:'Dilan A.', meta:'Combination, 41', img:'assets/apply.jpg' },
+  { text:'Short ingredient lists, no perfume, no drama. My dermatologist had no notes.', name:'Priya S.', meta:'Acne-prone, 27', img:'assets/hero.jpg' }
+];
+
+const VIDS = [
+  { name:'Radiance Serum No.3', price:'$68', img:'assets/apply.jpg', thumb:'assets/p4.jpg', hint:'Serum application clip' },
+  { name:'Barrier Repair Cream', price:'$58', img:'assets/skin.jpg', thumb:'assets/p2.jpg', hint:'Cream application clip' },
+  { name:'Gentle Cleansing Milk', price:'$42', img:'assets/hero.jpg', thumb:'assets/p3.jpg', hint:'Cleanse clip' },
+  { name:'Glow Body Oil', price:'$38', img:'assets/apply.jpg', thumb:'assets/p1.jpg', hint:'Body oil clip' },
+  { name:'Mist Toner', price:'$36', img:'assets/skin.jpg', thumb:'assets/p3.jpg', hint:'Toner mist clip' }
+];
+
+const money = (n) => '$' + (Math.round(n * 100) / 100).toFixed(2).replace(/\.00$/, '');
+
+class Component extends DCLogic {
+  state = { ann:0, scrolled:false, mega:false, cartOpen:false, cart:[], hot:null, cat:1, tab:0, hover:null, popup:false, email:'', sent:false, bundleSizes:['50 ml','30 ml','50 ml'] };
+
+  componentDidMount() {
+    this.applyAccent();
+    this.annTimer = setInterval(() => this.setState(s => ({ ann:(s.ann + 1) % ANN.length })), 4000);
+    this.onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const next = y > 80;
+      if (next !== this.state.scrolled) this.setState({ scrolled: next });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+    if (this.props.popupEnabled !== false) this.popTimer = setTimeout(() => this.setState({ popup:true }), 5000);
+  }
+
+  componentDidUpdate() { this.applyAccent(); }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (!a || String(a).indexOf('var(') === 0 || String(a).toUpperCase() === '#94513C') return;
+    document.documentElement.style.setProperty('--accent-fill', a);
+    const r = document.documentElement.style;
+    r.setProperty('--terra', a);
+    r.setProperty('--color-accent', a);
+    r.setProperty('--color-accent-500', a);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.annTimer); clearTimeout(this.popTimer);
+    window.removeEventListener('scroll', this.onScroll);
+  }
+
+  add(p, price) {
+    this.setState((s) => {
+      const cart = s.cart.slice();
+      const i = cart.findIndex((l) => l.id === p.id);
+      if (i >= 0) cart[i] = Object.assign({}, cart[i], { qty: cart[i].qty + 1 });
+      else cart.push({ id:p.id, name:p.name, img:p.img, price: price == null ? p.price : price, qty:1 });
+      return { cart, cartOpen:true };
+    });
+  }
+
+  bump(id, d) {
+    this.setState((s) => ({ cart: s.cart.map((l) => l.id === id ? Object.assign({}, l, { qty:l.qty + d }) : l).filter((l) => l.qty > 0) }));
+  }
+
+  renderVals() {
+    const st = this.state;
+    const threshold = this.props.threshold ?? 75;
+    const hoverSwap = this.props.hoverSwap !== false;
+    const subtotal = st.cart.reduce((a, l) => a + l.price * l.qty, 0);
+    const count = st.cart.reduce((a, l) => a + l.qty, 0);
+    const remaining = Math.max(0, threshold - subtotal);
+    const pct = Math.min(100, threshold ? (subtotal / threshold) * 100 : 100);
+
+    const hotspots = HOT.map((h) => {
+      const open = st.hot === h.id;
+      const right = h.side === 'right';
+      return {
+        title:h.title, body:h.body, thumb:h.thumb, price:h.price,
+        thumbStyle: 'width:62px;height:62px;flex:0 0 auto;background:var(--imgbg) url("' + h.thumb + '") center/cover no-repeat',
+        wrapStyle: 'position:absolute;left:' + h.x + ';top:' + h.y + ';width:0;height:0;z-index:' + (open ? 12 : 4),
+        dotStyle: 'position:absolute;left:-17px;top:-17px;width:34px;height:34px;border-radius:50%;border:0;cursor:pointer;background:' + (open ? 'var(--terra)' : 'var(--plate)') + ';color:' + (open ? 'var(--off)' : 'var(--ink)') + ';box-shadow:0 2px 14px rgba(43,36,29,0.28);display:flex;align-items:center;justify-content:center;transition:background .25s ease,color .25s ease,transform .25s ease;transform:scale(' + (open ? 1.08 : 1) + ')',
+        plusStyle: 'position:absolute;font-size:19px;line-height:1;transition:opacity .2s ease,transform .25s ease;opacity:' + (open ? 0 : 1) + ';transform:rotate(' + (open ? '90deg' : '0deg') + ')',
+        minusStyle: 'position:absolute;font-size:19px;line-height:1;transition:opacity .2s ease;opacity:' + (open ? 1 : 0),
+        cardStyle: 'position:absolute;bottom:18px;' + (right ? 'left:18px' : 'right:18px') + ';width:min(320px,66vw);display:grid;grid-template-columns:62px 1fr;gap:14px;align-items:center;background:var(--off);padding:13px;border:1px solid rgba(43,36,29,0.1);box-shadow:0 14px 40px rgba(43,36,29,0.22);transition:opacity .28s ease,transform .28s ease,visibility .28s;opacity:' + (open ? 1 : 0) + ';visibility:' + (open ? 'visible' : 'hidden') + ';transform:translateY(' + (open ? '0' : '6px') + ');pointer-events:' + (open ? 'auto' : 'none'),
+        enter: () => { clearTimeout(this.hotTimer); this.setState({ hot:h.id }); },
+        leave: () => { clearTimeout(this.hotTimer); this.hotTimer = setTimeout(() => this.setState((s) => s.hot === h.id ? { hot:null } : null), 180); },
+        toggle: () => this.setState({ hot:h.id })
+      };
+    });
+
+    const cats = CATS.map((c, i) => {
+      const on = st.cat === i;
+      return {
+        name:c.name, img:c.img, slotId:'cat-' + i, slotHint:c.name + ' photograph',
+        layerStyle: 'position:absolute;inset:0;transition:opacity .45s ease;opacity:' + (on ? 1 : 0),
+        linkStyle: 'font-family:var(--serif);font-size:clamp(30px,5vw,68px);line-height:1.08;letter-spacing:0.01em;color:var(--dark-ink);width:max-content;transition:opacity .3s ease;opacity:' + (on ? 1 : 0.42),
+        enter: () => this.setState({ cat:i })
+      };
+    });
+
+    const tabs = TABS.map((t, i) => ({
+      label:t.label,
+      style: 'background:none;border:0;padding:0 0 10px;cursor:pointer;font-size:clamp(20px,2.4vw,30px);font-family:var(--serif);letter-spacing:0.01em;color:' + (st.tab === i ? 'var(--ink)' : 'var(--t3)') + ';border-bottom:2px solid ' + (st.tab === i ? 'var(--terra)' : 'transparent') + ';margin-bottom:-2px;transition:color .2s ease',
+      click: () => this.setState({ tab:i })
+    }));
+
+    const products = TABS[st.tab].items.map((it, i) => {
+      const p = POOL[it.k];
+      const key = st.tab + '-' + i;
+      const on = st.hover === key;
+      const price = it.price == null ? p.price : it.price;
+      return {
+        name:p.name, img:p.img, img2:p.img2, rating:p.rating.toFixed(1), reviews:p.reviews.toLocaleString(),
+        priceLabel: money(price), hasWas: it.was != null, wasLabel: it.was != null ? money(it.was) : '',
+        hasBadge: !!it.badge, badge: it.badge || '',
+        badgeStyle: 'position:absolute;top:12px;left:12px;background:' + (it.badgeBg || 'var(--ink)') + ';color:var(--off);font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;padding:5px 11px;border-radius:999px;z-index:2',
+        imgStyle: 'position:absolute;inset:0;background:var(--cream) url("' + p.img + '") center/cover no-repeat',
+        img2Style: 'position:absolute;inset:0;background:var(--cream) url("' + p.img2 + '") center/cover no-repeat;transition:opacity .3s ease;opacity:' + (on && hoverSwap ? 1 : 0),
+        cardStyle: 'position:relative;background:var(--off);transition:transform .25s ease,box-shadow .25s ease;transform:translateY(' + (on ? '-4px' : '0') + ');box-shadow:' + (on ? '0 16px 34px rgba(43,36,29,0.14)' : 'none') + ';z-index:' + (on ? 2 : 1),
+        quickStyle: 'position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--dark-bg);color:var(--off);border:0;cursor:pointer;padding:13px 16px;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;transition:transform .25s ease;transform:translateY(' + (on ? '0' : '101%') + ')',
+        add: () => this.add(p, price),
+        enter: () => this.setState({ hover:key }),
+        leave: () => this.setState((s) => s.hover === key ? { hover:null } : null)
+      };
+    });
+
+    const bundleKeys = ['cleanser', 'serum', 'cream'];
+    const bundle = bundleKeys.map((k, i) => ({
+      n:String(i + 1), name:POOL[k].name, priceLabel: money(POOL[k].price),
+      imgStyle: 'width:64px;height:64px;background:var(--imgbg) url("' + POOL[k].img + '") center/cover no-repeat',
+      sizes: i === 1 ? ['30 ml', '50 ml'] : ['50 ml', '100 ml'],
+      change: (e) => this.setState((s) => { const b = s.bundleSizes.slice(); b[i] = e.target.value; return { bundleSizes:b }; })
+    }));
+    const bundleSum = bundleKeys.reduce((a, k) => a + POOL[k].price, 0);
+
+    const upsellKeys = st.cart.length ? ['oil', 'cleanser'] : ['serum', 'oil'];
+    const upsell = upsellKeys.map((k) => ({
+      name:POOL[k].name, priceLabel: money(POOL[k].price), add: () => this.add(POOL[k]),
+      imgStyle: 'width:54px;height:54px;background:var(--imgbg) url("' + POOL[k].img + '") center/cover no-repeat'
+    }));
+
+    return {
+      ann: ANN[st.ann],
+      headerStyle: 'position:sticky;top:0;z-index:40;background:' + (st.scrolled ? 'rgba(245,240,234,0.96)' : 'var(--cream)') + ';backdrop-filter:blur(8px);border-bottom:2px solid var(--ink);box-shadow:' + (st.scrolled ? '0 6px 24px rgba(43,36,29,0.08)' : 'none') + ';transition:box-shadow .3s ease,background .3s ease',
+      count, countStyle: 'min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:' + (count ? 'var(--terra)' : 'var(--sand)') + ';color:' + (count ? 'var(--off)' : 'var(--t3)') + ';font-size:11px;display:flex;align-items:center;justify-content:center;transition:background .2s ease',
+      megaStyle: 'position:absolute;left:0;right:0;top:100%;background:var(--off);border-bottom:2px solid var(--ink);overflow:hidden;transition:max-height .35s ease,opacity .25s ease;max-height:' + (st.mega ? '420px' : '0') + ';opacity:' + (st.mega ? 1 : 0),
+      openMega: () => this.setState({ mega:true }),
+      closeMega: () => this.setState({ mega:false }),
+      hotspots, cats, activeCatNote: CATS[st.cat].note, tabs, products, bundle, upsell,
+      bundleTotal: money(bundleSum * 0.9),
+      addBundle: () => { bundleKeys.forEach((k) => this.add(POOL[k], POOL[k].price * 0.9)); },
+      quotes: QUOTES.map((q, i) => Object.assign({}, q, { slotId:'ugc-' + i })),
+      vids: VIDS.map((v, i) => Object.assign({}, v, { slotId:'vid-' + i, thumbStyle:'width:52px;height:52px;background:var(--imgbg) url("' + v.thumb + '") center/cover no-repeat' })),
+      vidRef: (this.vidRef = this.vidRef || React.createRef()),
+      vidNext: () => { const n = this.vidRef.current; if (n) n.scrollBy({ left:520, behavior:'smooth' }); },
+      vidPrev: () => { const n = this.vidRef.current; if (n) n.scrollBy({ left:-520, behavior:'smooth' }); },
+      openCart: () => this.setState({ cartOpen:true }),
+      closeCart: () => this.setState({ cartOpen:false }),
+      cartEmpty: st.cart.length === 0,
+      cart: st.cart.map((l) => ({
+        name:l.name, qty:l.qty,
+        incLabel: 'Add one more ' + l.name, decLabel: 'Remove one ' + l.name, priceLabel: money(l.price), lineLabel: money(l.price * l.qty),
+        imgStyle: 'width:72px;height:72px;background:var(--imgbg) url("' + l.img + '") center/cover no-repeat',
+        inc: () => this.bump(l.id, 1), dec: () => this.bump(l.id, -1)
+      })),
+      subtotalLabel: money(subtotal),
+      shipLabel: remaining > 0 ? "You're " + money(remaining) + ' away from free shipping' : 'Free shipping unlocked',
+      shipBarStyle: 'height:100%;background:var(--terra-tint);transition:width .4s ease;width:' + pct + '%',
+      scrimStyle: 'position:fixed;inset:0;z-index:50;background:rgba(43,36,29,0.42);transition:opacity .3s ease,visibility .3s;opacity:' + (st.cartOpen ? 1 : 0) + ';visibility:' + (st.cartOpen ? 'visible' : 'hidden'),
+      drawerStyle: 'position:fixed;top:0;right:0;bottom:0;z-index:51;width:min(420px,100vw);background:var(--cream);border-left:2px solid var(--ink);display:flex;flex-direction:column;transition:transform .36s cubic-bezier(.22,.61,.36,1);transform:translateX(' + (st.cartOpen ? '0' : '100%') + ')',
+      email: st.email,
+      setEmail: (e) => this.setState({ email:e.target.value }),
+      emailCta: st.sent ? 'Check your inbox' : 'Get my code',
+      submitEmail: () => this.setState({ sent:true }),
+      popupStyle: 'position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(43,36,29,0.42);transition:opacity .3s ease,visibility .3s;opacity:' + (st.popup ? 1 : 0) + ';visibility:' + (st.popup ? 'visible' : 'hidden'),
+      closePopup: () => this.setState({ popup:false })
+    };
+  }
+}
+</script>
+</body>
+</html>

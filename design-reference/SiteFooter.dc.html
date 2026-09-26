@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-border:#D8CDBE; --radius-md:0px; --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+@media (max-width:760px){ footer[data-site-footer]{padding-bottom:96px !important} }
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+</helmet>
+
+<footer data-site-footer="true" style="background:var(--dark-bg);color:var(--off);padding:clamp(44px,5vw,72px) 28px 40px">
+  <div style="max-width:1600px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(251,250,248,0.2)">
+      <div>
+        <div style="font-family:var(--serif);font-size:24px;margin-bottom:16px">EasyBeauty</div>
+        <p style="font-size:13px;line-height:1.7;color:rgba(251,250,248,0.72);margin:0 0 20px">Clean, clinically supported skincare. Made in Portugal.</p>
+        <div style="display:flex;gap:2px">
+          <input type="email" placeholder="you@email.com" value="{{ email }}" onChange="{{ setEmail }}" aria-label="Email" style="flex:1 1 auto;min-width:0;border:1px solid rgba(251,250,248,0.32);background:transparent;padding:11px 12px;font-size:13px;color:var(--off);outline:none">
+          <button type="button" onClick="{{ submit }}" style="flex:0 0 auto;background:var(--off);color:var(--ink);border:0;cursor:pointer;padding:11px 14px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase">{{ subLabel }}</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(251,250,248,0.6);margin-bottom:16px">Shop</div>
+        <div style="display:flex;flex-direction:column;gap:2px;font-size:13.5px">
+          <a href="EasyBeauty Collection.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">All products</a>
+          <a href="EasyBeauty Landing.dc.html#bundle" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Bundles</a>
+          <a href="EasyBeauty Lookbook.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Lookbook</a>
+          <a href="EasyBeauty Quiz.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Skin quiz</a>
+          <a href="EasyBeauty Bag.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Your bag</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(251,250,248,0.6);margin-bottom:16px">Company</div>
+        <div style="display:flex;flex-direction:column;gap:2px;font-size:13.5px">
+          <a href="EasyBeauty About.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">About us</a>
+          <a href="EasyBeauty Blog.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">The Journal</a>
+          <a href="EasyBeauty Contact.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Contact</a>
+          <a href="EasyBeauty Account.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Your account</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(251,250,248,0.6);margin-bottom:16px">Help</div>
+        <div style="display:flex;flex-direction:column;gap:2px;font-size:13.5px">
+          <a href="EasyBeauty FAQ.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">FAQ</a>
+          <a href="EasyBeauty FAQ.dc.html#shipping" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Shipping</a>
+          <a href="EasyBeauty FAQ.dc.html#returns" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Returns</a>
+          <a href="EasyBeauty Legal.dc.html" style="color:rgba(251,250,248,0.88);display:inline-flex;align-items:center;min-height:38px">Legal</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(251,250,248,0.6);margin-bottom:16px">Certified</div>
+        <div style="display:flex;flex-direction:column;gap:2px;font-size:13.5px;color:rgba(251,250,248,0.72)">
+          <span>Cruelty-free (Leaping Bunny)</span><span>Vegan formulas</span><span>Secure checkout</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;font-size:12px;color:rgba(251,250,248,0.58)">
+      <span>© 2026 EasyBeauty</span>
+      <span style="display:flex;gap:20px">
+        <a href="EasyBeauty Legal.dc.html#privacy" style="color:rgba(251,250,248,0.58);display:inline-flex;align-items:center;min-height:38px">Privacy</a>
+        <a href="EasyBeauty Legal.dc.html#terms" style="color:rgba(251,250,248,0.58);display:inline-flex;align-items:center;min-height:38px">Terms</a>
+        <a href="EasyBeauty Legal.dc.html#cookies" style="color:rgba(251,250,248,0.58);display:inline-flex;align-items:center;min-height:38px">Cookies</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:420}}">
+class Component extends DCLogic {
+  state = { email:'', done:false };
+
+  renderVals() {
+    return {
+      email: this.state.email,
+      setEmail: (e) => this.setState({ email:e.target.value, done:false }),
+      subLabel: this.state.done ? 'Thank you' : 'Join',
+      submit: () => { if (this.state.email.indexOf('@') > 0) this.setState({ done:true }); }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

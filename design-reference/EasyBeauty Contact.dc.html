@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/styles.css">
+<script src="_ds/modernist-31450e66-462e-4f6b-87d8-3ace1b50f965/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0EA; --sand:#E8DFD3; --off:#FBFAF8; --ink:#2B241D;
+  --terra:#94513C; --terra-tint:#C97B63; --moss:#3D6A4D;
+  --color-bg:#F5F0EA; --color-surface:#FBFAF8; --color-text:#2B241D;
+  --color-accent:#94513C; --color-accent-100:#F7E8E2; --color-accent-200:#EFD3C9;
+  --color-accent-300:#DFB6A7; --color-accent-400:#C97B63; --color-accent-500:#94513C;
+  --color-accent-600:#82472F; --color-accent-700:#6E3B27; --color-accent-800:#5A301F;
+  --color-accent-900:#46251A;
+  --color-accent-2:#94513C; --color-accent-2-500:#94513C; --color-accent-2-600:#82472F;
+  --color-divider:#2B241D; --color-border:#D8CDBE; --radius-md:0px; --radius-sm:0px;
+  --font-heading:'Archivo',sans-serif; --font-body:'Archivo',sans-serif;
+  --serif:'Bodoni Moda', Georgia, serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--ink);text-decoration:none}
+a:hover{color:var(--terra)}
+button{font-family:inherit}
+input,textarea,select{font-family:inherit}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px}
+::selection{background:var(--tint-200)}
+
+@media (max-width:760px){
+  header nav{display:none !important}
+  header > div{height:58px !important;padding:0 16px !important}
+  footer{padding-bottom:26px !important}
+}
+
+/* theme tokens */
+:root{--cream:#F5F0EA;--off:#FBFAF8;--ink:#2B241D;--sand:#E8DFD3;--imgbg:#EDE6DC;--line:#D8CDBE;--line2:#C3B7A6;--t1:#463C31;--t2:#655B4F;--t3:#6F6559;--t4:#8C8073;--t5:#A99C8B;--t6:#3A322A;--t7:#5E5347;--near:#1A1512;--terra:#94513C;--terra-600:#82472F;--terra-700:#6E3B27;--terra-800:#5A301F;--terra-900:#46251A;--terra-tint:#C97B63;--tint-100:#F7E8E2;--tint-200:#EFD3C9;--tint-300:#DFB6A7;--tint-400:#E7A99B;--moss:#3D6A4D;--moss-2:#4A7A5C;--moss-3:#3F4A3D;--wine:#7A4A55;--iris:#584B9E;--color-bg:var(--cream);--color-surface:var(--off);--color-text:var(--ink);--color-accent:var(--terra);--color-accent-100:var(--tint-100);--color-accent-200:var(--tint-200);--color-accent-500:var(--terra);--color-accent-600:var(--terra-600);--color-accent-700:var(--terra-700);--color-divider:var(--ink);--color-border:var(--line)}
+html[data-theme="dark"]{color-scheme:dark;--cream:#15120F;--off:#1D1915;--ink:#E9E1D5;--sand:#2A2420;--imgbg:#2C2621;--line:#3A332C;--line2:#4A4239;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t4:#998F83;--t5:#8A8175;--t6:#D8CEC0;--t7:#B3A999;--near:#0C0A08;--terra:#CE8268;--terra-600:#B87057;--terra-700:#A66048;--terra-800:#E7A99B;--terra-900:#EFD3C9;--terra-tint:#D98F77;--tint-100:#2A1A15;--tint-200:#3A231B;--tint-300:#4A2C22;--tint-400:#5A3428;--moss:#7FB08F;--moss-2:#8FBF9F;--moss-3:#A3B59F;--wine:#C98F9A;--iris:#9B8FE0}
+
+:root{--plate:rgba(251,250,248,0.97);--plate-mid:rgba(251,250,248,0.88);--plate-soft:rgba(251,250,248,0.72);--dark-bg:#2B241D;--dark-ink:#FBFAF8;--accent-fill:#94513C;--color-accent-300:var(--tint-300);--color-accent-400:var(--terra-tint);--color-accent-800:var(--terra-800);--color-accent-900:var(--terra-900);--color-accent-2:var(--accent-fill);--color-accent-2-100:var(--tint-100);--color-accent-2-200:var(--tint-200);--color-accent-2-300:var(--tint-300);--color-accent-2-400:var(--terra-tint);--color-accent-2-500:var(--terra);--color-accent-2-600:var(--terra-600);--color-accent-2-700:var(--terra-700);--color-accent-2-800:var(--terra-800);--color-accent-2-900:var(--terra-900);--rose:var(--tint-400);--violet:var(--iris);--color-accent:var(--accent-fill)}
+html[data-theme="dark"]{--plate:rgba(20,17,14,0.95);--plate-mid:rgba(20,17,14,0.88);--plate-soft:rgba(20,17,14,0.72);--dark-bg:#12100E;--dark-ink:#F2EAE0;--accent-fill:#A85C43}
+html[data-theme="dark"] [style*="--dark-bg"],html[data-theme="dark"] [style*="--accent-fill"]{--off:#F3EBDF;--cream:#F3EBDF;--ink:#141110;--t1:#D6CCBE;--t2:#C0B6A8;--t3:#C0B6A8;--t5:#A79D90;--line:#4A4239;--line2:#5A5149;--sand:#3A322B;--imgbg:#2C2621;--color-text:#F3EBDF;--color-bg:#141110;--color-surface:#2A2420;--color-border:#4A4239;--color-divider:#F3EBDF;color:#F3EBDF}
+html[data-theme="dark"] [style*="--dark-bg"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background:var(--off)"],html[data-theme="dark"] [style*="--dark-bg"] [style*="background: var(--off)"],html[data-theme="dark"] [style*="--accent-fill"] [style*="background: var(--off)"]{--off:#1D1915;--cream:#15120F;--ink:#E9E1D5;--t1:#C6BCAF;--t2:#A69C8E;--t3:#A69C8E;--t5:#8A8175;--line:#3A332C;--line2:#4A4239;--sand:#2A2420;--imgbg:#2C2621;--color-text:#E9E1D5;--color-bg:#15120F;--color-surface:#1D1915;--color-border:#3A332C;--color-divider:#E9E1D5;color:#E9E1D5}
+html[data-theme="dark"] img,html[data-theme="dark"] image-slot{filter:brightness(.88) saturate(.94)}
+</style>
+<script>try{var t=localStorage.getItem('eb-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+</helmet>
+
+<div style="max-width:1600px;margin:0 auto;background:var(--cream);overflow-x:clip">
+
+  <dc-import name="SiteHeader" style="position:sticky;top:0;z-index:44" hint-size="100%,110px"></dc-import>
+
+  <section style="border-bottom:2px solid var(--ink);padding:36px 28px 42px">
+    <div style="max-width:1600px;margin:0 auto">
+      <nav style="font-size:12px;letter-spacing:0.06em;color:var(--t2);margin-bottom:26px">
+        <a href="EasyBeauty Landing.dc.html" style="color:var(--t2)">Home</a> / <span style="color:var(--ink)">Contact</span>
+      </nav>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap">
+        <div style="max-width:640px">
+          <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(36px,5.4vw,74px);line-height:1;margin:0 0 18px">Talk to us</h1>
+          <p style="font-size:15.5px;line-height:1.7;color:var(--t1);margin:0">Routine questions go to our formulation team, not a script. We answer every message within one working day, usually sooner.</p>
+        </div>
+        <div style="display:flex;gap:34px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--t2)">
+          <span>Mon–Fri · 9–18 WET</span>
+          <span>Replies in ~6h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);background:var(--color-border);display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px">
+    <sc-for list="{{ channels }}" as="c" hint-placeholder-count="3">
+      <div onMouseEnter="{{ c.enter }}" onMouseLeave="{{ c.leave }}" style="{{ c.style }}">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:16px">{{ c.kicker }}</div>
+        <div style="font-family:var(--serif);font-size:23px;line-height:1.2;margin-bottom:10px">{{ c.title }}</div>
+        <div style="font-size:13.5px;line-height:1.7;color:var(--t1);margin-bottom:18px">{{ c.body }}</div>
+        <div style="{{ c.linkStyle }}">{{ c.link }}</div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="border-bottom:2px solid var(--ink);display:grid;grid-template-columns:{{ formCols }}">
+    <div style="padding:clamp(36px,4.5vw,64px) 28px">
+      <div style="font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">Send a message</div>
+      <h2 style="font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,40px);line-height:1.1;margin:0 0 30px;max-width:22ch">Tell us what your skin is doing and we will answer properly.</h2>
+
+      <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:22px;max-width:640px">
+        <div>
+          <div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:12px">What is this about?</div>
+          <div style="display:flex;gap:2px;flex-wrap:wrap">
+            <sc-for list="{{ topics }}" as="t" hint-placeholder-count="4">
+              <button type="button" onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px">
+          <label style="display:block">
+            <span style="display:block;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:9px">Name</span>
+            <input type="text" required aria-label="Your name" autocomplete="name" placeholder="Your name" value="{{ name }}" onChange="{{ setName }}" style="width:100%;border:2px solid var(--ink);background:var(--off);padding:13px 15px;font-size:14px;color:var(--ink);outline:none">
+          </label>
+          <label style="display:block">
+            <span style="display:block;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:9px">Email</span>
+            <input type="email" required aria-label="Email address" autocomplete="email" placeholder="you@email.com" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;border:2px solid var(--ink);background:var(--off);padding:13px 15px;font-size:14px;color:var(--ink);outline:none">
+          </label>
+        </div>
+
+        <label style="display:block">
+          <span style="display:block;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:9px">Order number <span style="text-transform:none;letter-spacing:0;color:var(--t5)">(optional)</span></span>
+          <input type="text" aria-label="Order number, optional" placeholder="EB-00000" value="{{ order }}" onChange="{{ setOrder }}" style="width:100%;border:2px solid var(--ink);background:var(--off);padding:13px 15px;font-size:14px;color:var(--ink);outline:none">
+        </label>
+
+        <label style="display:block">
+          <span style="display:block;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--t2);margin-bottom:9px">Message</span>
+          <textarea required rows="6" aria-label="Your message" placeholder="What is your skin doing, and what have you tried?" value="{{ msg }}" onChange="{{ setMsg }}" style="width:100%;border:2px solid var(--ink);background:var(--off);padding:13px 15px;font-size:14px;line-height:1.6;color:var(--ink);outline:none;resize:vertical"></textarea>
+          <div style="{{ countStyle }}">{{ countLabel }}</div>
+        </label>
+
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
+          <button type="button" onClick="{{ toggleConsent }}" aria-pressed="{{ consent }}" style="{{ boxStyle }}">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FBFAF8" stroke-width="3" style="{{ tickStyle }}"><path d="M5 13l4 4L19 7"></path></svg>
+          </button>
+          <span style="font-size:13px;line-height:1.6;color:var(--t1)">Send me the every-other-Thursday letter as well. Unsubscribe in one click.</span>
+        </label>
+
+        <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+          <button type="submit" class="btn btn-primary" style="text-transform:uppercase;letter-spacing:0.1em;font-size:12px">{{ submitLabel }}</button>
+          <span role="status" aria-live="polite" style="{{ noteStyle }}">{{ note }}</span>
+        </div>
+      </form>
+    </div>
+
+    <aside style="{{ asideStyle }}">
+      <div style="padding:34px 26px 30px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">Studio</div>
+        <div style="font-size:14.5px;line-height:1.8;color:var(--t1)">
+          Rua da Fábrica 14<br>2710 Sintra<br>Portugal
+        </div>
+      </div>
+      <div role="img" aria-label="Studio exterior" style="height:200px;background:var(--sand) url('assets/skin.jpg') center/cover no-repeat;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)"></div>
+      <div style="padding:28px 26px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">Direct</div>
+        <div style="display:flex;flex-direction:column;gap:14px;font-size:14px">
+          <a href="EasyBeauty Contact.dc.html">hello@easybeauty.co</a>
+          <a href="EasyBeauty Contact.dc.html">press@easybeauty.co</a>
+          <a href="EasyBeauty Contact.dc.html">+351 21 000 0000</a>
+        </div>
+      </div>
+      <div style="border-top:2px solid var(--ink);padding:28px 26px 34px">
+        <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--t2);margin-bottom:18px">Before you write</div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+            <div style="border-bottom:1px solid var(--color-border)">
+              <button type="button" onClick="{{ f.toggle }}" style="{{ f.btnStyle }}">
+                <span>{{ f.q }}</span>
+                <span style="{{ f.iconStyle }}">+</span>
+              </button>
+              <div style="{{ f.bodyStyle }}">
+                <div style="font-size:13.5px;line-height:1.72;color:var(--t1);padding:0 0 16px">{{ f.a }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <dc-import name="SiteFooter" hint-size="100%,420px"></dc-import>
+  <dc-import name="AuthModal" hint-size="0,0"></dc-import>
+  <dc-import name="MobileDock" active="" hint-size="100%,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#94513C&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#94513C&quot;,&quot;#82472F&quot;,&quot;#3F4A3D&quot;,&quot;#7A4A55&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;maxLength&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1200,&quot;min&quot;:300,&quot;max&quot;:2000,&quot;step&quot;:100,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Form&quot;}}">
+const ANN = [
+  'Welcome offer — 10% off your first order',
+  'Free shipping on orders over $75',
+  'Ships in 24h from Lisbon'
+];
+
+const CHANNELS = [
+  { kicker:'Routine advice', title:'Ask a formulator', body:'Send what you use now and what your skin does with it. Maren or Inês answers in person.', link:'hello@easybeauty.co' },
+  { kicker:'Orders & returns', title:'Order support', body:'Unopened or not — 60 days, return shipping paid, no questions about why.', link:'Track or return an order' },
+  { kicker:'Press & stockists', title:'Partnerships', body:'Sample requests, stockist enquiries and interviews go to one inbox.', link:'press@easybeauty.co' }
+];
+
+const TOPICS = ['Routine advice', 'An order', 'Returns', 'Press', 'Something else'];
+
+const FAQS = [
+  { q:'How long does delivery take?', a:'EU orders ship in 24h from Lisbon and arrive in two to four working days. Rest of world, five to nine.' },
+  { q:'What is your return window?', a:'Sixty days, opened or not. We pay return shipping inside the EU.' },
+  { q:'Can I use two actives together?', a:'Usually yes, on alternate days. Write to us with both products and we will give you an order.' },
+  { q:'Are you certified cruelty-free?', a:'Leaping Bunny certified since 2024, with an audited supply chain at every tier.' }
+];
+
+class Component extends DCLogic {
+  state = {
+    ann:0, scrolled:false, hover:null, topic:'Routine advice',
+    name:'', email:'', order:'', msg:'', consent:true, sent:false, open:0, wide:true
+  };
+
+  componentDidMount() {
+    this.applyAccent();
+    this.annTimer = setInterval(() => this.setState((s) => ({ ann:(s.ann + 1) % ANN.length })), 4000);
+    this.onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const next = y > 80;
+      if (next !== this.state.scrolled) this.setState({ scrolled:next });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive:true });
+    this.onResize = () => {
+      const wide = window.innerWidth >= 980;
+      if (wide !== this.state.wide) this.setState({ wide });
+    };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentDidUpdate() { this.applyAccent(); }
+
+  applyAccent() {
+    const a = this.props.accent;
+    if (!a || String(a).indexOf('var(') === 0 || String(a).toUpperCase() === '#94513C') return;
+    document.documentElement.style.setProperty('--accent-fill', a);
+    const r = document.documentElement.style;
+    r.setProperty('--terra', a);
+    r.setProperty('--color-accent', a);
+    r.setProperty('--color-accent-500', a);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.annTimer);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  renderVals() {
+    const st = this.state;
+    const maxLen = this.props.maxLength ?? 1200;
+    const left = maxLen - st.msg.length;
+
+    return {
+      ann: ANN[st.ann],
+      headerStyle: 'position:sticky;top:0;z-index:40;background:' + (st.scrolled ? 'rgba(245,240,234,0.96)' : 'var(--cream)') + ';backdrop-filter:blur(8px);border-bottom:2px solid var(--ink);box-shadow:' + (st.scrolled ? '0 6px 24px rgba(43,36,29,0.08)' : 'none') + ';transition:box-shadow .3s ease,background .3s ease',
+
+      channels: CHANNELS.map((c, i) => {
+        const on = st.hover === i;
+        return {
+          kicker:c.kicker, title:c.title, body:c.body, link:c.link,
+          style: 'background:' + (on ? 'var(--off)' : 'var(--cream)') + ';padding:34px 26px 32px;transition:background .22s ease',
+          linkStyle: 'display:inline-block;font-size:12.5px;letter-spacing:0.06em;border-bottom:1px solid ' + (on ? 'var(--terra)' : 'var(--color-border)') + ';padding-bottom:5px;color:' + (on ? 'var(--terra)' : 'var(--ink)') + ';transition:color .2s ease,border-color .2s ease',
+          enter: () => this.setState({ hover:i }),
+          leave: () => this.setState((s) => s.hover === i ? { hover:null } : null)
+        };
+      }),
+
+      formCols: st.wide ? 'minmax(0,1fr) minmax(0,340px)' : 'minmax(0,1fr)',
+      asideStyle: 'border-left:' + (st.wide ? '2px solid var(--ink)' : '0') + ';border-top:' + (st.wide ? '0' : '2px solid var(--ink)') + ';background:var(--cream)',
+
+      topics: TOPICS.map((t) => {
+        const on = st.topic === t;
+        return {
+          label:t,
+          style: 'background:' + (on ? 'var(--ink)' : 'var(--off)') + ';color:' + (on ? 'var(--off)' : 'var(--ink)') + ';border:1px solid ' + (on ? 'var(--ink)' : 'var(--color-border)') + ';padding:10px 14px;font-size:12px;letter-spacing:0.06em;cursor:pointer;transition:background .2s ease,color .2s ease',
+          pick: () => this.setState({ topic:t })
+        };
+      }),
+
+      name: st.name, setName: (e) => this.setState({ name:e.target.value }),
+      email: st.email, setEmail: (e) => this.setState({ email:e.target.value }),
+      order: st.order, setOrder: (e) => this.setState({ order:e.target.value }),
+      msg: st.msg, setMsg: (e) => this.setState({ msg:e.target.value.slice(0, maxLen) }),
+      countLabel: left + ' characters left',
+      countStyle: 'font-size:11.5px;margin-top:8px;color:' + (left < 100 ? 'var(--terra)' : 'var(--t5)'),
+
+      consent: st.consent,
+      toggleConsent: () => this.setState((s) => ({ consent: !s.consent })),
+      boxStyle: 'width:20px;height:20px;flex:0 0 auto;margin-top:1px;border:2px solid ' + (st.consent ? 'var(--terra)' : 'var(--t5)') + ';background:' + (st.consent ? 'var(--terra)' : 'transparent') + ';display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:background .18s ease,border-color .18s ease',
+      tickStyle: 'transition:opacity .15s ease;opacity:' + (st.consent ? 1 : 0),
+
+      submit: (e) => { e.preventDefault(); this.setState({ sent:true }); },
+      submitLabel: st.sent ? 'Message sent' : 'Send message',
+      note: st.sent ? 'Thanks — we will reply to ' + (st.email || 'your inbox') + ' within one working day.' : 'We reply from a real address, not a no-reply.',
+      noteStyle: 'font-size:12.5px;line-height:1.6;transition:color .2s ease;color:' + (st.sent ? 'var(--terra)' : 'var(--t2)'),
+
+      faqs: FAQS.map((f, i) => {
+        const on = st.open === i;
+        return {
+          q:f.q, a:f.a,
+          btnStyle: 'display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;background:none;border:0;cursor:pointer;padding:16px 0;text-align:left;font-size:13.5px;line-height:1.5;color:' + (on ? 'var(--terra)' : 'var(--ink)') + ';transition:color .2s ease',
+          iconStyle: 'font-size:16px;line-height:1;flex:0 0 auto;transition:transform .25s ease;transform:rotate(' + (on ? '45deg' : '0deg') + ')',
+          bodyStyle: 'overflow:hidden;transition:max-height .3s ease,opacity .25s ease;max-height:' + (on ? '200px' : '0') + ';opacity:' + (on ? 1 : 0),
+          toggle: () => this.setState((s) => ({ open: s.open === i ? -1 : i }))
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

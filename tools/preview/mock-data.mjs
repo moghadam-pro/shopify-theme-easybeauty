@@ -95,7 +95,7 @@ export const collections = { all: collection, 'best-sellers': { ...collection, h
 const link = (title, url, links = []) => ({ title, url, links, active: false, handle: title.toLowerCase() });
 
 export const linklists = {
-  // Mirrors the design's header (design-reference/pages/SiteHeader.dc.html):
+  // Mirrors the design's header (design-reference/SiteHeader.dc.html):
   // level 1 = nav, level 2 = mega menu columns, level 3 = column items.
   'main-menu': {
     handle: 'main-menu',
