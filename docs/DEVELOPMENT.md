@@ -88,6 +88,39 @@ shopify theme push --live --store your-store.myshopify.com   # ⚠ publishes to 
 Never `--live`-push straight from a feature branch to a production store without review —
 push to an unpublished theme first, preview it, then publish from Admin.
 
+## Releasing a version
+
+The theme is always called **EasyBeauty** in Shopify Admin; releases are told apart by
+version, never by renaming. The version lives in one place — `theme_info.theme_version`
+in `theme/config/settings_schema.json` — and Admin shows it under the theme name
+("Version 1.1.0"). Use [semver](https://semver.org/): patch for fixes, minor for new
+sections/templates, major for changes that break merchant settings (removed/renamed
+setting IDs or sections).
+
+1. On the feature branch, bump `theme_version` and add a `## [x.y.z]` entry to
+   `CHANGELOG.md`. Run `theme check`.
+2. Merge the PR into `main`.
+3. Tag the merge commit and push the tag:
+
+   ```bash
+   git switch main && git pull
+   git tag -a v1.1.0 -m "EasyBeauty 1.1.0"
+   git push origin v1.1.0
+   ```
+
+4. Build the upload file: `tools/package.sh` → `dist/EasyBeauty.zip`. It packages the
+   committed `theme/` contents at the ZIP root and refuses to run if the tree is dirty,
+   the CHANGELOG entry is missing, or the tag points elsewhere. Shopify names an uploaded
+   theme after the ZIP file, which is why the file is always `EasyBeauty.zip`.
+5. Admin → Online Store → Themes → Import → Upload zip file. It lands as an unpublished
+   "EasyBeauty" draft with the new version; preview every template, then **Publish**.
+   Older drafts can be deleted once the new version is live.
+
+Shopify's ZIP import silently drops files it rejects (e.g. a section schema with both
+`default` and `presets`, or an invalid setting value in a template) — `theme check` does
+not catch all of these. After uploading, open the draft's code editor and confirm every
+file in `sections/` and `templates/` is there before publishing.
+
 ## Pulling merchant changes back
 
 If a merchant edits colors/content in the theme editor, those settings live in
