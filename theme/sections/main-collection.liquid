@@ -13,7 +13,7 @@
             <summary class="btn btn-secondary" style="display:inline-flex">{{ filter.label }}</summary>
             <div style="padding:12px 0;display:flex;flex-direction:column;gap:8px">
               {%- for value in filter.values -%}
-                <label style="display:flex;gap:8px;align-items:center;font-size:13.5px">
+                <label style="display:flex;gap:8px;align-items:center;font-size:14px">
                   <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} onchange="this.form.submit()">
                   {{ value.label }} ({{ value.count }})
                 </label>

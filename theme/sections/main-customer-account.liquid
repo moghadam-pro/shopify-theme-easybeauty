@@ -8,13 +8,13 @@
 
   <div class="grid grid-2">
     <div class="card" style="border:1px solid var(--color-border);padding:var(--space-6)">
-      <h2 style="font-size:22px">{{ 'customer.account.details' | t }}</h2>
+      <h2 style="font-size:24px">{{ 'customer.account.details' | t }}</h2>
       <p>{{ customer.name }}<br>{{ customer.email }}</p>
       <a href="{{ routes.account_addresses_url }}" class="btn-ghost">{{ 'customer.account.view_addresses' | t }} &rarr;</a>
     </div>
 
     <div class="card" style="border:1px solid var(--color-border);padding:var(--space-6)">
-      <h2 style="font-size:22px">{{ 'customer.orders.title' | t }}</h2>
+      <h2 style="font-size:24px">{{ 'customer.orders.title' | t }}</h2>
       {%- if customer.orders.size == 0 -%}
         <p class="text-muted">{{ 'customer.orders.none' | t }}</p>
       {%- else -%}

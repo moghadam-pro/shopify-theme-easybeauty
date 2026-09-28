@@ -27,6 +27,12 @@ Homepage brought in line with the latest landing design (`EasyBeauty Landing`).
 - Statement copy: "Wake up to skin that feels soft, looks rested, and glows well past noon."
 - All dropdowns: larger chevron with more right padding.
 - Tabs underline in terracotta; footer "Join" button and signed-in account initials per design.
+- One field style for every input, textarea and dropdown on every page (44px tall, 16px side
+  padding, hairline border, ink on hover, terracotta focus ring); buttons 44px (primary
+  checkout / add-to-bag 48px); quantity steppers match; checkboxes/radios in terracotta.
+- Spacing on a 2/4 grid site-wide: 0–12px in steps of 2, then multiples of 4 (margins,
+  paddings, gaps, offsets, sizes). Font sizes on the same scale (10–20px even, then
+  multiples of 4); body text 15px → 16px.
 
 ## [1.2.0] — 2026-09-26
 

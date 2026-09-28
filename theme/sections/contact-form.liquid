@@ -23,7 +23,7 @@
 
       {%- if form.errors -%}
         <div class="form-message form-message--error">
-          <ul style="margin:0;padding-left:18px">
+          <ul style="margin:0;padding-left:20px">
             {%- for field in form.errors -%}
               <li>{{ form.errors.translated_fields[field] }} {{ form.errors.messages[field] }}</li>
             {%- endfor -%}
