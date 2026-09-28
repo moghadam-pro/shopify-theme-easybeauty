@@ -5,7 +5,7 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
-## [Unreleased]
+## [1.3.0] — 2026-09-28
 
 Homepage brought in line with the latest landing design (`EasyBeauty Landing`).
 
