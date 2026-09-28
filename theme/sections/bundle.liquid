@@ -2,8 +2,10 @@
   "Build your routine" bundle: numbered product steps, a variant (size)
   picker per step, and one button that adds every step to the cart in a
   single /cart/add.js call ([data-bundle] in theme.js). The "save" note is
-  display copy only — the actual discount has to be an automatic discount
-  set up in Admin → Discounts.
+  display copy only, and "Bundle discount" only changes the total shown on
+  the button — the actual discount has to be an automatic discount set up
+  in Admin → Discounts with the same percentage, or checkout will charge
+  full price.
   Steps without a picked product fall back to text + a bundled asset photo,
   and the add-to-cart button is replaced by a link until every step has a
   real product.
@@ -18,12 +20,16 @@
       assign bundle_total = bundle_total | plus: block.settings.product.selected_or_first_available_variant.price
     endif
   endfor
+  assign discount_keep = 100 | minus: section.settings.discount_percent
+  assign bundle_total = bundle_total | times: discount_keep | divided_by: 100.0 | round
 -%}
-<section class="bundle" data-bundle>
+<section class="bundle" data-bundle data-discount="{{ section.settings.discount_percent }}">
   <div class="bundle__media">
     {%- for block in section.blocks -%}
       <div class="bundle__media-item">
-        {%- if block.settings.product.featured_image != blank -%}
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.image.alt | default: block.settings.product.title | escape }}" width="500" height="{{ 500 | divided_by: block.settings.image.aspect_ratio | round }}" loading="lazy">
+        {%- elsif block.settings.product.featured_image != blank -%}
           <img src="{{ block.settings.product.featured_image | image_url: width: 500 }}" alt="{{ block.settings.product.title | escape }}" width="500" height="{{ 500 | divided_by: block.settings.product.featured_image.aspect_ratio | round }}" loading="lazy">
         {%- else -%}
           <img src="{{ block.settings.fallback_image | default: 'sample-product-3.jpg' | asset_url }}" alt="{{ block.settings.fallback_title | escape }}" width="500" height="625" loading="lazy">
@@ -60,7 +66,10 @@
                 </select>
               {%- endif -%}
             {%- elsif block.settings.fallback_sizes != blank -%}
-              <div class="bundle__step-meta">{{ block.settings.fallback_sizes }}</div>
+              {%- assign fallback_sizes = block.settings.fallback_sizes | split: ',' -%}
+              <select class="bundle__select" aria-label="{{ block.settings.fallback_title | escape }}">
+                {%- for size in fallback_sizes -%}<option>{{ size | strip }}</option>{%- endfor -%}
+              </select>
             {%- endif -%}
           </div>
           <div class="bundle__step-price" data-bundle-price>
@@ -114,6 +123,17 @@
       "default": "Save 10% as a set"
     },
     {
+      "type": "range",
+      "id": "discount_percent",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "label": "t:sections.bundle.settings.discount_percent.label",
+      "info": "t:sections.bundle.settings.discount_percent.info",
+      "default": 0
+    },
+    {
       "type": "text",
       "id": "fallback_button_label",
       "label": "t:sections.bundle.settings.fallback_button_label.label",
@@ -134,6 +154,12 @@
           "type": "product",
           "id": "product",
           "label": "t:sections.bundle.blocks.step.settings.product.label"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.bundle.blocks.step.settings.image.label",
+          "info": "t:sections.bundle.blocks.step.settings.image.info"
         },
         {
           "type": "text",

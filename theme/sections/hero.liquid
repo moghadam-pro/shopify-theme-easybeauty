@@ -1,56 +1,79 @@
-<section class="hero hero--copy-{{ section.settings.copy_position }}">
+{%- comment -%}
+  Full-bleed hero with shoppable hotspots. The photo and its hotspots sit on
+  one "canvas" that can be zoomed from its left edge (image_shift), which
+  slides the subject right and clears room for copy on the left without
+  leaving an empty strip. Hotspots are positioned in canvas percentages, so
+  they stay pinned to the same spot on the photo; theme.js opens a hotspot
+  card on hover/focus/tap and keeps it open while the pointer is on the card.
+{%- endcomment -%}
+{%- liquid
+  assign zoom = section.settings.image_shift | divided_by: 100.0 | plus: 1
+-%}
+<section class="hero hero--copy-{{ section.settings.copy_position }}" style="--hero-zoom: {{ zoom }}">
   <div class="hero__media">
-    {%- if section.settings.image -%}
-      <img
-        src="{{ section.settings.image | image_url: width: 2200 }}"
-        alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
-        width="2200"
-        height="{{ 2200 | divided_by: section.settings.image.aspect_ratio }}"
-        fetchpriority="high"
-        loading="eager"
-      >
-    {%- else -%}
-      <img
-        src="{{ 'hero-banner.jpg' | asset_url }}"
-        alt="{{ section.settings.heading | escape }}"
-        width="1500"
-        height="795"
-        fetchpriority="high"
-        loading="eager"
-      >
-    {%- endif -%}
-
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'hotspot' -%}
-        <div
-          class="hotspot"
-          data-hotspot
-          style="left:{{ block.settings.horizontal_position }}%;top:{{ block.settings.vertical_position }}%"
-          {{ block.shopify_attributes }}
+    <div class="hero__canvas">
+      {%- if section.settings.image -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 2400 }}"
+          srcset="{{ section.settings.image | image_url: width: 900 }} 900w, {{ section.settings.image | image_url: width: 1600 }} 1600w, {{ section.settings.image | image_url: width: 2400 }} 2400w"
+          sizes="100vw"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          width="2400"
+          height="{{ 2400 | divided_by: section.settings.image.aspect_ratio | round }}"
+          fetchpriority="high"
+          loading="eager"
         >
-          <button type="button" class="hotspot__dot" data-hotspot-toggle aria-label="{{ block.settings.title }}">
-            {% render 'icon', icon: 'plus', size: 14 %}
-          </button>
-          <div class="hotspot__card">
-            {%- if block.settings.image -%}
-              <img src="{{ block.settings.image | image_url: width: 120 }}" alt="" width="120" height="120" loading="lazy" style="width:48px;height:48px;object-fit:cover;flex:none">
-            {%- elsif block.settings.fallback_image != blank -%}
-              <img src="{{ block.settings.fallback_image | asset_url }}" alt="" width="120" height="120" loading="lazy" style="width:48px;height:48px;object-fit:cover;flex:none">
-            {%- else -%}
-              <img src="{{ 'sample-product-4.jpg' | asset_url }}" alt="" width="120" height="120" loading="lazy" style="width:48px;height:48px;object-fit:cover;flex:none">
-            {%- endif -%}
-            <div>
-              <div style="font-size:13px;font-weight:600;margin-bottom:4px">{{ block.settings.title }}</div>
-              <div style="font-size:12px;color:#6F6559">{{ block.settings.text }}</div>
+      {%- else -%}
+        <img
+          src="{{ 'hero-banner.jpg' | asset_url }}"
+          alt="{{ section.settings.heading | escape }}"
+          width="1500"
+          height="795"
+          fetchpriority="high"
+          loading="eager"
+        >
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'hotspot' -%}
+          {%- liquid
+            assign spot_product = block.settings.product
+            assign spot_title = block.settings.title | default: spot_product.title
+            assign spot_url = block.settings.link | default: spot_product.url
+          -%}
+          <div
+            class="hotspot hotspot--{{ block.settings.card_side }}"
+            data-hotspot
+            style="left:{{ block.settings.horizontal_position }}%;top:{{ block.settings.vertical_position }}%"
+            {{ block.shopify_attributes }}
+          >
+            <div class="hotspot__inner">
+              <button type="button" class="hotspot__dot" data-hotspot-toggle aria-expanded="false" aria-label="{{ spot_title | escape }}">
+                <span class="hotspot__plus" aria-hidden="true">+</span>
+                <span class="hotspot__minus" aria-hidden="true">&ndash;</span>
+              </button>
+              <{% if spot_url != blank %}a href="{{ spot_url }}"{% else %}div{% endif %} class="hotspot__card">
+                {%- if block.settings.image -%}
+                  <img src="{{ block.settings.image | image_url: width: 124 }}" alt="" width="62" height="62" loading="lazy">
+                {%- elsif spot_product.featured_image -%}
+                  <img src="{{ spot_product.featured_image | image_url: width: 124 }}" alt="" width="62" height="62" loading="lazy">
+                {%- else -%}
+                  <img src="{{ block.settings.fallback_image | default: 'sample-product-4.jpg' | asset_url }}" alt="" width="62" height="62" loading="lazy">
+                {%- endif -%}
+                <span class="hotspot__copy">
+                  <span class="hotspot__title">{{ spot_title }}</span>
+                  {%- if block.settings.text != blank -%}<span class="hotspot__text">{{ block.settings.text }}</span>{%- endif -%}
+                </span>
+              </{% if spot_url != blank %}a{% else %}div{% endif %}>
             </div>
           </div>
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
   </div>
 
   <div class="hero__copy">
-    {%- if section.settings.eyebrow != blank -%}<div class="eyebrow" style="color:#5E5347">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    {%- if section.settings.eyebrow != blank -%}<div class="hero__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
     <h1>{{ section.settings.heading }}</h1>
     {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
     <div class="hero__actions">
@@ -88,6 +111,17 @@
         }
       ],
       "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "image_shift",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "label": "t:sections.hero.settings.image_shift.label",
+      "info": "t:sections.hero.settings.image_shift.info",
+      "default": 22
     },
     {
       "type": "text",
@@ -167,6 +201,12 @@
           "info": "t:sections.hero.blocks.hotspot.settings.fallback_image.info"
         },
         {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.hero.blocks.hotspot.settings.product.label",
+          "info": "t:sections.hero.blocks.hotspot.settings.product.info"
+        },
+        {
           "type": "text",
           "id": "title",
           "label": "t:sections.hero.blocks.hotspot.settings.title.label"
@@ -175,6 +215,27 @@
           "type": "textarea",
           "id": "text",
           "label": "t:sections.hero.blocks.hotspot.settings.text.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.hero.blocks.hotspot.settings.link.label"
+        },
+        {
+          "type": "select",
+          "id": "card_side",
+          "label": "t:sections.hero.blocks.hotspot.settings.card_side.label",
+          "options": [
+            {
+              "value": "right",
+              "label": "t:sections.hero.blocks.hotspot.settings.card_side.options__1.label"
+            },
+            {
+              "value": "left",
+              "label": "t:sections.hero.blocks.hotspot.settings.card_side.options__2.label"
+            }
+          ],
+          "default": "right"
         }
       ]
     }

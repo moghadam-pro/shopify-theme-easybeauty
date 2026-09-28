@@ -5,6 +5,29 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [Unreleased]
+
+Homepage brought in line with the latest landing design (`EasyBeauty Landing`).
+
+### Added
+- Hero: "Shift photo right" setting (zooms the photo from its left edge so copy sits beside
+  the subject, hotspots stay pinned); hotspot product/link and card side settings.
+- Product card: second-image crossfade, lift + shadow, sliding "Quick add" bar (single-variant
+  products) or "Choose size" link, `badge:Text` tag badges, sale %, star rating from review
+  metafields.
+- "In use" reels: row fills the width, active reel is wider/taller and plays; plays the next
+  when a video ends (photos after a set time) and loops; pauses off-screen / reduced motion.
+- Press names scroll in an endless marquee (pauses on hover; static for reduced motion).
+- Bundle: per-step large image override, "Bundle discount" % reflected in the button total,
+  size dropdowns for fallback steps.
+
+### Changed
+- Hotspots open on hover and stay open while the pointer is on the card; tap on touch.
+- "Our story" (image-text) is a full-bleed 50/50 split with a height cap, copy centred.
+- Statement copy: "Wake up to skin that feels soft, looks rested, and glows well past noon."
+- All dropdowns: larger chevron with more right padding.
+- Tabs underline in terracotta; footer "Join" button and signed-in account initials per design.
+
 ## [1.2.0] — 2026-09-26
 
 Header, cart, product and account chrome brought in line with `design-reference/`.

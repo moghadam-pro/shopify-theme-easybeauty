@@ -10,7 +10,8 @@
         "button_link": "/collections/all",
         "button_label_2": "Take the skin quiz",
         "button_link_2": "/pages/quiz",
-        "copy_position": "right"
+        "copy_position": "left",
+        "image_shift": 22
       },
       "blocks": {
         "hotspot-1": {
@@ -40,7 +41,8 @@
             "vertical_position": 70,
             "fallback_image": "sample-product-2.jpg",
             "title": "Barrier Repair",
-            "text": "Ceramides rebuild dry, sun-exposed skin overnight."
+            "text": "Ceramides rebuild dry, sun-exposed skin overnight.",
+            "card_side": "left"
           }
         }
       },
@@ -212,7 +214,7 @@
         "t-1": {
           "type": "text",
           "settings": {
-            "text": "Make you look"
+            "text": "Wake up to skin that feels soft,"
           }
         },
         "i-1": {
@@ -224,7 +226,7 @@
         "t-2": {
           "type": "text",
           "settings": {
-            "text": "and feel glowy"
+            "text": "looks rested,"
           }
         },
         "i-2": {
@@ -236,7 +238,7 @@
         "t-3": {
           "type": "text",
           "settings": {
-            "text": "and healthy"
+            "text": "and glows"
           }
         },
         "i-3": {
@@ -248,7 +250,7 @@
         "t-4": {
           "type": "text",
           "settings": {
-            "text": "every single morning."
+            "text": "well past noon."
           }
         }
       },
@@ -267,9 +269,10 @@
       "settings": {
         "eyebrow": "Build your routine",
         "heading": "Level up your routine with the bundle",
-        "button_label": "Add bundle to cart",
+        "button_label": "Add bundle to bag",
         "save_note": "Save 10% as a set",
-        "fallback_button_label": "Shop the routine"
+        "fallback_button_label": "Shop the routine",
+        "discount_percent": 10
       },
       "blocks": {
         "step-1": {
@@ -277,7 +280,7 @@
           "settings": {
             "fallback_title": "Gentle Cleansing Milk",
             "fallback_price": "$42",
-            "fallback_sizes": "50 ml",
+            "fallback_sizes": "50 ml, 100 ml",
             "fallback_image": "sample-product-3.jpg"
           }
         },
@@ -286,7 +289,7 @@
           "settings": {
             "fallback_title": "Radiance Serum No.3",
             "fallback_price": "$68",
-            "fallback_sizes": "30 ml",
+            "fallback_sizes": "30 ml, 50 ml",
             "fallback_image": "sample-product-4.jpg"
           }
         },
@@ -295,7 +298,7 @@
           "settings": {
             "fallback_title": "Barrier Repair Cream",
             "fallback_price": "$58",
-            "fallback_sizes": "50 ml",
+            "fallback_sizes": "50 ml, 100 ml",
             "fallback_image": "sample-product-2.jpg"
           }
         }
@@ -371,7 +374,7 @@
       "settings": {
         "rating": "4.8",
         "rating_label": "12,400+ verified reviews",
-        "press": "Vogue, Allure, Byrdie, Refinery29"
+        "press": "Vogue, Allure, Byrdie, Refinery29, Harper's Bazaar, Elle, Glamour, Marie Claire, InStyle, Cosmopolitan"
       },
       "blocks": {
         "q-1": {

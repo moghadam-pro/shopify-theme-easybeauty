@@ -22,6 +22,8 @@ const CATALOG = [
 const DESCRIPTION =
   '<p>A weightless, fragrance-free formula built around the barrier you already have. Dermatologist tested, batch-tested in our lab outside Lisbon.</p>';
 
+const BADGES = { 0: 'Selling fast!', 1: 'New', 5: 'Best seller' };
+
 export const products = CATALOG.map(([handle, title, price, compare, img, type], i) => {
   const images = [IMG(img, title), IMG('lifestyle-skin.jpg', title), IMG('lifestyle-apply.jpg', title)];
   const variants = ['30 ml', '50 ml'].map((size, v) => ({
@@ -41,7 +43,8 @@ export const products = CATALOG.map(([handle, title, price, compare, img, type],
     vendor: 'EasyBeauty',
     type,
     description: DESCRIPTION,
-    tags: [type],
+    tags: [type, ...(BADGES[i] ? ['badge:' + BADGES[i]] : [])],
+    metafields: { reviews: { rating: { value: { rating: 4.6 + ((i * 7) % 4) / 10 } }, rating_count: { value: 180 + ((i * 137) % 1300) } } },
     price: variants[0].price,
     price_min: variants[0].price,
     price_max: variants[1].price,

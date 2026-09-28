@@ -1,37 +1,50 @@
 {%- comment -%}
-  Horizontally scrolling 9:16 cards ("Best skincare products, in use"), each
-  a Shopify-hosted video (plays on hover/focus) or a still photo, with a
-  product link underneath. Prev/next buttons scroll the track
-  ([data-carousel] in theme.js); native scroll/swipe works without JS.
+  "Best skincare products, in use": a row of 9:16 reels that fills the page
+  width. One reel is active at a time — it is wider and taller than the rest
+  and plays; when its video ends (or after a few seconds for a still photo)
+  the next reel takes over, looping back to the first after the last.
+  Playback only runs while the section is on screen and is skipped entirely
+  for visitors who prefer reduced motion. Clicking a reel makes it active;
+  the arrows step through them. Driven by [data-reel] in theme.js — without
+  JS the row is a plain horizontal scroller.
 {%- endcomment -%}
-<section class="section media-carousel" data-carousel>
+<section class="section media-carousel" data-reel data-image-duration="{{ section.settings.image_duration }}">
   <div class="container section__head">
     <h2>{{ section.settings.heading }}</h2>
     <div class="media-carousel__nav">
-      <button type="button" class="btn btn-secondary btn-icon" data-carousel-prev aria-label="{{ 'sections.media-carousel.previous' | t }}">
+      <button type="button" class="btn btn-secondary btn-icon" data-reel-prev aria-label="{{ 'sections.media-carousel.previous' | t }}">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
       </button>
-      <button type="button" class="btn btn-secondary btn-icon" data-carousel-next aria-label="{{ 'sections.media-carousel.next' | t }}">
+      <button type="button" class="btn btn-secondary btn-icon" data-reel-next aria-label="{{ 'sections.media-carousel.next' | t }}">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
       </button>
     </div>
   </div>
 
-  <div class="media-carousel__track" data-carousel-track>
+  <div class="media-carousel__track" data-reel-track>
     {%- for block in section.blocks -%}
       {%- assign card_product = block.settings.product -%}
-      <div class="media-carousel__item" {{ block.shopify_attributes }}>
-        <div class="media-carousel__media">
+      <div class="media-carousel__item{% if forloop.first %} is-active{% endif %}" data-reel-item {{ block.shopify_attributes }}>
+        <div class="media-carousel__media" data-reel-media>
           {%- if block.settings.video != blank -%}
-            {{ block.settings.video | video_tag: muted: true, loop: true, playsinline: true, controls: false, preload: 'none', image_size: '480x' }}
+            {{ block.settings.video | video_tag: muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '720x' }}
           {%- elsif block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 480 }}" alt="{{ block.settings.image.alt | escape }}" width="480" height="853" loading="lazy">
+            <img
+              src="{{ block.settings.image | image_url: width: 720 }}"
+              srcset="{{ block.settings.image | image_url: width: 480 }} 480w, {{ block.settings.image | image_url: width: 720 }} 720w"
+              sizes="(min-width: 760px) 25vw, 70vw"
+              alt="{{ block.settings.image.alt | escape }}"
+              width="720"
+              height="1280"
+              loading="lazy"
+            >
           {%- else -%}
             <img src="{{ block.settings.fallback_image | default: 'lifestyle-apply.jpg' | asset_url }}" alt="" width="480" height="853" loading="lazy">
           {%- endif -%}
           <span class="media-carousel__play" aria-hidden="true">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
+            <svg class="media-carousel__icon-play" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5l11 7-11 7z"/></svg>
           </span>
+          <span class="media-carousel__progress" aria-hidden="true"><span data-reel-progress></span></span>
         </div>
         {%- liquid
           if card_product != blank
@@ -71,6 +84,17 @@
       "id": "heading",
       "label": "t:sections.media-carousel.settings.heading.label",
       "default": "Best skincare products, in use"
+    },
+    {
+      "type": "range",
+      "id": "image_duration",
+      "min": 2,
+      "max": 15,
+      "step": 1,
+      "unit": "s",
+      "label": "t:sections.media-carousel.settings.image_duration.label",
+      "info": "t:sections.media-carousel.settings.image_duration.info",
+      "default": 5
     }
   ],
   "blocks": [

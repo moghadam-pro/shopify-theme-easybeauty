@@ -1,26 +1,106 @@
 {%- comment -%}
-  Renders a product grid card.
+  Renders a product grid card, following the design's card: square photo that
+  crossfades to the product's second image on hover, a pill badge, a
+  "Quick add" bar that slides up from the bottom of the photo, then title,
+  star rating and price. The card lifts slightly on hover.
+
+  - Badge: "-X%" when on sale, otherwise the first product tag written as
+    "badge:Text" (e.g. "badge:New", "badge:Selling fast!").
+  - Rating: the standard reviews.rating / reviews.rating_count metafields
+    that review apps write; hidden when there are no reviews.
+  - Quick add: adds straight to the bag for single-variant products; for
+    products with options (sizes) it links to the product page instead of
+    guessing a size.
+
   Usage: {% render 'product-card', product: product %}
 {%- endcomment -%}
-<div class="product-card">
-  <a href="{{ product.url }}" class="product-card__media">
-    {%- if product.featured_image -%}
-      <img
-        src="{{ product.featured_image | image_url: width: 800 }}"
-        alt="{{ product.featured_image.alt | default: product.title | escape }}"
-        loading="lazy"
-        width="800"
-        height="{{ 800 | divided_by: product.featured_image.aspect_ratio | default: 1000 }}"
-      >
+{%- liquid
+  assign second_image = product.images[1]
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value
+
+  assign badge = ''
+  assign badge_class = 'product-card__badge'
+  if product.compare_at_price > product.price
+    assign saving = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+    assign badge = '-' | append: saving | append: '%'
+    assign badge_class = badge_class | append: ' product-card__badge--sale'
+  else
+    for tag in product.tags
+      assign tag_prefix = tag | slice: 0, 6 | downcase
+      if tag_prefix == 'badge:'
+        assign badge = tag | slice: 6, 60 | strip
+        assign badge_handle = badge | handleize
+        if badge_handle == 'new'
+          assign badge_class = badge_class | append: ' product-card__badge--new'
+        elsif badge_handle contains 'fast' or badge_handle contains 'low'
+          assign badge_class = badge_class | append: ' product-card__badge--hot'
+        endif
+        break
+      endif
+    endfor
+  endif
+-%}
+<div class="product-card{% if second_image %} has-second-image{% endif %}">
+  <div class="product-card__media">
+    <a href="{{ product.url }}" class="product-card__media-link" tabindex="-1" aria-hidden="true">
+      {%- if product.featured_image -%}
+        <img
+          class="product-card__image"
+          src="{{ product.featured_image | image_url: width: 800 }}"
+          srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 800 }} 800w"
+          sizes="(min-width: 990px) 25vw, 50vw"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="800"
+          height="{{ 800 | divided_by: product.featured_image.aspect_ratio | round }}"
+        >
+        {%- if second_image -%}
+          <img
+            class="product-card__image product-card__image--second"
+            src="{{ second_image | image_url: width: 800 }}"
+            srcset="{{ second_image | image_url: width: 400 }} 400w, {{ second_image | image_url: width: 800 }} 800w"
+            sizes="(min-width: 990px) 25vw, 50vw"
+            alt=""
+            loading="lazy"
+            width="800"
+            height="{{ 800 | divided_by: second_image.aspect_ratio | round }}"
+          >
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </a>
+    {%- if badge != blank -%}<span class="{{ badge_class }}">{{ badge }}</span>{%- endif -%}
+
+    {%- if product.available -%}
+      {%- if product.has_only_default_variant -%}
+        {%- form 'product', product, data-quick-add: true, class: 'product-card__quick-form' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="product-card__quick">
+            <span>{{ 'products.product.quick_add' | t }}</span>
+            <span class="product-card__quick-icon" aria-hidden="true">+</span>
+          </button>
+        {%- endform -%}
+      {%- else -%}
+        <a href="{{ product.url }}" class="product-card__quick">
+          <span>{{ 'products.product.choose_options' | t }}</span>
+          <span class="product-card__quick-icon" aria-hidden="true">+</span>
+        </a>
+      {%- endif -%}
     {%- else -%}
-      {{ 'product-1' | placeholder_svg_tag }}
+      <span class="product-card__quick product-card__quick--disabled">{{ 'products.product.sold_out' | t }}</span>
     {%- endif -%}
-    {%- if product.compare_at_price > product.price -%}
-      <span class="tag" style="position:absolute;top:10px;left:10px">{{ 'products.product.sale' | t }}</span>
-    {%- endif -%}
-  </a>
-  <div>
+  </div>
+  <div class="product-card__body">
     <a href="{{ product.url }}" class="product-card__title">{{ product.title }}</a>
+    {%- if rating != blank and rating_count > 0 -%}
+      {%- assign rating_rounded = rating.rating | round: 1 -%}
+      <div class="product-card__rating">
+        <span class="product-card__stars" aria-hidden="true">★★★★★</span>
+        <span>{{ 'products.product.reviews_count' | t: rating: rating_rounded, count: rating_count }}</span>
+      </div>
+    {%- endif -%}
     <div class="product-card__price">{% render 'price', product: product %}</div>
   </div>
 </div>

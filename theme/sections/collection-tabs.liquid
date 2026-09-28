@@ -5,7 +5,7 @@
   real products instead of an empty grid.
 {%- endcomment -%}
 <section class="section container collection-tabs" data-tabs>
-  <div class="section__head">
+  <div class="section__head collection-tabs__head">
     <div class="tabs" role="tablist">
       {%- for block in section.blocks -%}
         <button
@@ -21,14 +21,14 @@
       {%- endfor -%}
     </div>
     {%- if section.settings.view_all_label != blank -%}
-      <a href="{{ section.settings.view_all_link | default: routes.all_products_collection_url }}" class="btn-ghost">{{ section.settings.view_all_label }} &rarr;</a>
+      <a href="{{ section.settings.view_all_link | default: routes.all_products_collection_url }}" class="collection-tabs__all">{{ section.settings.view_all_label }}</a>
     {%- endif -%}
   </div>
 
   {%- for block in section.blocks -%}
     {%- assign source_collection = block.settings.collection | default: collections.all -%}
     <div
-      class="grid grid--products grid-{{ section.settings.columns_desktop }}"
+      class="grid grid--products grid--bordered grid-{{ section.settings.columns_desktop }}"
       role="tabpanel"
       id="Panel-{{ section.id }}-{{ forloop.index }}"
       aria-labelledby="Tab-{{ section.id }}-{{ forloop.index }}"

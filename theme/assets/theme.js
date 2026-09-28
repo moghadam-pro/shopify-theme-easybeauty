@@ -374,19 +374,46 @@
     render();
   });
 
-  /* ---------- hero hotspots ---------- */
-  document.addEventListener('click', (e) => {
-    const dot = e.target.closest('[data-hotspot-toggle]');
-    if (!dot) return;
-    const hotspot = dot.closest('[data-hotspot]');
-    const wasOpen = hotspot.classList.contains('is-open');
-    qsa('[data-hotspot].is-open').forEach((h) => h.classList.remove('is-open'));
-    if (!wasOpen) hotspot.classList.add('is-open');
+  /* ---------- hero hotspots ----------
+     Hover (or keyboard focus) opens a hotspot's card; it stays open while the
+     pointer is anywhere on the dot or the card, and closes shortly after the
+     pointer leaves both. Touch has no hover, so a tap toggles it instead. */
+  const HOTSPOT_CLOSE_DELAY = 180;
+  function setHotspot(hotspot, open) {
+    clearTimeout(hotspot._closeTimer);
+    hotspot.classList.toggle('is-open', open);
+    const dot = qs('[data-hotspot-toggle]', hotspot);
+    if (dot) dot.setAttribute('aria-expanded', String(open));
+  }
+  function openHotspot(hotspot) {
+    qsa('[data-hotspot].is-open').forEach((h) => { if (h !== hotspot) setHotspot(h, false); });
+    setHotspot(hotspot, true);
+  }
+  const canHover = window.matchMedia('(hover: hover)');
+  qsa('[data-hotspot]').forEach((hotspot) => {
+    hotspot.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') openHotspot(hotspot); });
+    hotspot.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(hotspot._closeTimer);
+      hotspot._closeTimer = setTimeout(() => setHotspot(hotspot, false), HOTSPOT_CLOSE_DELAY);
+    });
+    hotspot.addEventListener('focusin', () => openHotspot(hotspot));
+    hotspot.addEventListener('focusout', (e) => { if (!hotspot.contains(e.relatedTarget)) setHotspot(hotspot, false); });
   });
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('[data-hotspot]')) {
-      qsa('[data-hotspot].is-open').forEach((h) => h.classList.remove('is-open'));
+    const dot = e.target.closest('[data-hotspot-toggle]');
+    if (dot) {
+      const hotspot = dot.closest('[data-hotspot]');
+      /* With a mouse the card is already open from hovering; a click keeps it. */
+      if (canHover.matches) openHotspot(hotspot);
+      else if (hotspot.classList.contains('is-open')) setHotspot(hotspot, false);
+      else openHotspot(hotspot);
+      return;
     }
+    if (!e.target.closest('[data-hotspot]')) qsa('[data-hotspot].is-open').forEach((h) => setHotspot(h, false));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') qsa('[data-hotspot].is-open').forEach((h) => setHotspot(h, false));
   });
 
   /* ---------- header mega menu (hover + keyboard) ---------- */
@@ -495,26 +522,113 @@
     });
   });
 
-  /* ---------- media carousel: prev/next + hover-to-play videos ---------- */
-  qsa('[data-carousel]').forEach((root) => {
-    const track = qs('[data-carousel-track]', root);
-    if (!track) return;
-    const step = () => {
-      const item = track.firstElementChild;
-      return item ? item.getBoundingClientRect().width + 20 : 260;
-    };
-    const prev = qs('[data-carousel-prev]', root);
-    const next = qs('[data-carousel-next]', root);
-    const nav = (prev || next) && (prev || next).parentElement;
-    const syncNav = () => { if (nav) nav.hidden = track.scrollWidth <= track.clientWidth + 1; };
-    syncNav();
-    window.addEventListener('resize', syncNav);
-    if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-    if (next) next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
-    qsa('video', track).forEach((video) => {
-      const media = video.closest('.media-carousel__media') || video;
-      media.addEventListener('mouseenter', () => { video.play().catch(() => {}); });
-      media.addEventListener('mouseleave', () => { video.pause(); });
+  /* ---------- media carousel ("in use" reels) ----------
+     One reel is active at a time: it grows (CSS) and plays. A video advances
+     to the next reel when it ends, a photo after data-image-duration seconds,
+     and the last reel loops back to the first. Playback runs only while the
+     section is visible and never for prefers-reduced-motion. */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  qsa('[data-reel]').forEach((root) => {
+    const track = qs('[data-reel-track]', root);
+    const items = qsa('[data-reel-item]', root);
+    if (!track || !items.length) return;
+    const imageMs = (parseFloat(root.getAttribute('data-image-duration')) || 5) * 1000;
+    let active = Math.max(0, items.findIndex((it) => it.classList.contains('is-active')));
+    let visible = false;
+    let timer = null;
+    let frame = null;
+
+    const videoOf = (item) => qs('video', item);
+    const barOf = (item) => qs('[data-reel-progress]', item);
+    function setProgress(item, ratio) {
+      const bar = barOf(item);
+      if (bar) bar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, ratio)) + ')';
+    }
+    function stop() {
+      clearTimeout(timer);
+      cancelAnimationFrame(frame);
+      items.forEach((item) => {
+        item.classList.remove('is-playing');
+        const video = videoOf(item);
+        if (video) video.pause();
+      });
+    }
+    function next() { activate((active + 1) % items.length, true); }
+    function play() {
+      stop();
+      if (!visible || reduceMotion.matches) return;
+      const item = items[active];
+      const video = videoOf(item);
+      item.classList.add('is-playing');
+      if (video) {
+        video.muted = true;
+        video.play().catch(() => { timer = setTimeout(next, imageMs); });
+        const tick = () => {
+          if (video.duration) setProgress(item, video.currentTime / video.duration);
+          frame = requestAnimationFrame(tick);
+        };
+        tick();
+      } else {
+        const started = performance.now();
+        const tick = (now) => {
+          setProgress(item, (now - started) / imageMs);
+          frame = requestAnimationFrame(tick);
+        };
+        frame = requestAnimationFrame(tick);
+        timer = setTimeout(next, imageMs);
+      }
+    }
+    /* Bring the active reel into view inside the track only — never scroll
+       the page — once its grow transition has settled. */
+    function reveal(item) {
+      if (track.scrollWidth <= track.clientWidth + 1) return;
+      setTimeout(() => {
+        const left = item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
+        track.scrollTo({ left: Math.max(0, left), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      }, 520);
+    }
+    function activate(index, autoplay) {
+      const changed = index !== active;
+      if (changed) {
+        const prevVideo = videoOf(items[active]);
+        if (prevVideo) { prevVideo.pause(); prevVideo.currentTime = 0; }
+        setProgress(items[active], 0);
+      }
+      active = index;
+      items.forEach((item, i) => item.classList.toggle('is-active', i === active));
+      if (changed) reveal(items[active]);
+      if (autoplay) play();
+    }
+
+    items.forEach((item, i) => {
+      const video = videoOf(item);
+      if (video) {
+        video.loop = false;
+        video.addEventListener('ended', () => { if (i === active) next(); });
+      }
+      const media = qs('[data-reel-media]', item);
+      if (!media) return;
+      media.addEventListener('click', () => {
+        if (i !== active) { activate(i, true); return; }
+        /* Clicking the playing reel pauses it; clicking again resumes. */
+        if (item.classList.contains('is-playing')) stop(); else play();
+      });
+    });
+    const prevBtn = qs('[data-reel-prev]', root);
+    const nextBtn = qs('[data-reel-next]', root);
+    if (prevBtn) prevBtn.addEventListener('click', () => activate((active - 1 + items.length) % items.length, true));
+    if (nextBtn) nextBtn.addEventListener('click', () => activate((active + 1) % items.length, true));
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          visible = entry.isIntersecting;
+          if (visible) play(); else stop();
+        });
+      }, { threshold: 0.35 }).observe(root);
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop(); else if (visible) play();
     });
   });
 
@@ -524,6 +638,7 @@
     const totalEl = qs('[data-bundle-total]', root);
     const errorEl = qs('[data-bundle-error]', root);
     const inputs = qsa('[data-bundle-variant]', root);
+    const discount = parseFloat(root.getAttribute('data-discount')) || 0;
     function priceOf(input) {
       const opt = input.tagName === 'SELECT' ? input.options[input.selectedIndex] : input;
       return parseInt(opt.getAttribute('data-price'), 10) || 0;
@@ -537,7 +652,7 @@
         const priceEl = row && qs('[data-bundle-price]', row);
         if (priceEl) priceEl.textContent = formatMoney(price);
       });
-      if (totalEl) totalEl.textContent = formatMoney(total);
+      if (totalEl) totalEl.textContent = formatMoney(Math.round(total * (100 - discount) / 100));
     }
     inputs.forEach((input) => input.addEventListener('change', refresh));
     if (!addBtn) return;

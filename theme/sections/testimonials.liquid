@@ -47,13 +47,26 @@
       {%- endfor -%}
     </div>
 
-    {%- assign press = section.settings.press | split: ',' -%}
-    {%- if section.settings.press != blank -%}
-      <div class="testimonials__press">
-        {%- for name in press -%}<span>{{ name | strip }}</span>{%- endfor -%}
-      </div>
-    {%- endif -%}
   </div>
+
+  {%- if section.settings.press != blank -%}
+    {%- assign press = section.settings.press | split: ',' -%}
+    {%- comment -%}
+      Press names scroll in an endless loop: the list is rendered twice and
+      the strip slides by exactly one copy, so the seam never shows. The
+      second copy is hidden from assistive tech. Hovering pauses it; reduced
+      motion shows a static, wrapped row instead.
+    {%- endcomment -%}
+    <div class="press-marquee" style="--marquee-duration: {{ press.size | times: section.settings.press_speed }}s">
+      <div class="press-marquee__track">
+        {%- for copy in (1..2) -%}
+          <ul class="press-marquee__list"{% if copy == 2 %} aria-hidden="true"{% endif %}>
+            {%- for name in press -%}<li>{{ name | strip }}</li>{%- endfor -%}
+          </ul>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -77,7 +90,18 @@
       "id": "press",
       "label": "t:sections.testimonials.settings.press.label",
       "info": "t:sections.testimonials.settings.press.info",
-      "default": "Vogue, Allure, Byrdie, Refinery29"
+      "default": "Vogue, Allure, Byrdie, Refinery29, Harper's Bazaar, Elle, Glamour, Marie Claire, InStyle, Cosmopolitan"
+    },
+    {
+      "type": "range",
+      "id": "press_speed",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "unit": "s",
+      "label": "t:sections.testimonials.settings.press_speed.label",
+      "info": "t:sections.testimonials.settings.press_speed.info",
+      "default": 4
     }
   ],
   "blocks": [

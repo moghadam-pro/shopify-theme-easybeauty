@@ -218,6 +218,10 @@
         },
         "button_link_2": {
           "label": "Second button link"
+        },
+        "image_shift": {
+          "label": "Shift photo right",
+          "info": "Zooms the photo from its left edge so the subject moves right, away from left-aligned text. 0% shows the whole photo. Desktop only."
         }
       },
       "blocks": {
@@ -242,6 +246,22 @@
             "fallback_image": {
               "label": "Fallback image (theme asset filename)",
               "info": "Used only if no thumbnail is picked above. Must be a filename already in Assets, e.g. sample-product-1.jpg."
+            },
+            "product": {
+              "label": "Product",
+              "info": "Optional. Fills in the title, thumbnail and link when those are left empty."
+            },
+            "link": {
+              "label": "Link"
+            },
+            "card_side": {
+              "label": "Card opens to the",
+              "options__1": {
+                "label": "Right"
+              },
+              "options__2": {
+                "label": "Left"
+              }
             }
           }
         }
@@ -884,6 +904,10 @@
         },
         "fallback_link": {
           "label": "Link when products are missing"
+        },
+        "discount_percent": {
+          "label": "Bundle discount",
+          "info": "Only lowers the total shown on the button. Create an automatic discount with the same percentage in Admin → Discounts, or checkout will charge full price. Leave at 0% if there is no discount."
         }
       },
       "blocks": {
@@ -900,10 +924,14 @@
               "label": "Fallback price text"
             },
             "fallback_sizes": {
-              "label": "Fallback size text"
+              "label": "Fallback sizes (comma-separated)"
             },
             "fallback_image": {
               "label": "Fallback image (theme asset filename)"
+            },
+            "image": {
+              "label": "Large image",
+              "info": "Optional. Replaces the product photo in the image panel only."
             }
           }
         }
@@ -917,6 +945,10 @@
       "settings": {
         "heading": {
           "label": "Heading"
+        },
+        "image_duration": {
+          "label": "Photo reel duration",
+          "info": "How long a reel with a photo instead of a video stays active before the next one plays."
         }
       },
       "blocks": {
@@ -965,6 +997,10 @@
         "press": {
           "label": "Press names",
           "info": "Comma-separated, e.g. Vogue, Allure, Byrdie"
+        },
+        "press_speed": {
+          "label": "Press strip speed (seconds per name)",
+          "info": "Higher is slower."
         }
       },
       "blocks": {
