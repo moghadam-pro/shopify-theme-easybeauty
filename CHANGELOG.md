@@ -21,6 +21,14 @@ Homepage brought in line with the latest landing design (`EasyBeauty Landing`).
 - Bundle: per-step large image override, "Bundle discount" % reflected in the button total,
   size dropdowns for fallback steps.
 
+- Product page: the design's four layouts (Gallery left, Full-width photo, Details left /
+  gallery right, Dark dossier) as a Layout setting, plus `product.hero`, `product.info-left`
+  and `product.dossier` templates (assign per product or preview with `?view=`).
+- "Choose your pack": Pack blocks (quantity + display discount, or subscription via the
+  product's selling plan); every price, the add button and the cart quantity/selling plan
+  follow the chosen pack and size. Spec blocks for the dossier. Sticky add-to-bag bar,
+  breadcrumb, stock/service line.
+
 ### Changed
 - Hotspots open on hover and stay open while the pointer is on the card; tap on touch.
 - "Our story" (image-text) is a full-bleed 50/50 split with a height cap, copy centred.

@@ -415,6 +415,43 @@
         },
         "show_description": {
           "label": "Show full description as an accordion"
+        },
+        "layout": {
+          "label": "Layout",
+          "info": "Each layout is also available as its own product template (hero, info-left, dossier) that you can assign per product.",
+          "options__1": {
+            "label": "Gallery left"
+          },
+          "options__2": {
+            "label": "Full-width photo"
+          },
+          "options__3": {
+            "label": "Details left, gallery right"
+          },
+          "options__4": {
+            "label": "Dark dossier"
+          }
+        },
+        "stock_note": {
+          "label": "In-stock note"
+        },
+        "service_notes": {
+          "label": "Service notes",
+          "info": "Separate with |"
+        },
+        "default_pack": {
+          "label": "Pack selected by default",
+          "info": "Position of the pack block, counting only packs that are shown."
+        },
+        "show_sticky_bar": {
+          "label": "Show sticky add-to-bag bar"
+        },
+        "header_dossier": {
+          "content": "Dark dossier layout"
+        },
+        "dossier_eyebrow": {
+          "label": "Eyebrow",
+          "info": "Separate parts with ·, e.g. No.3 · Serum · Niacinamide 10%. Defaults to the product type."
         }
       },
       "blocks": {
@@ -434,6 +471,42 @@
           "settings": {
             "title": {},
             "content": {}
+          }
+        },
+        "pack": {
+          "name": "Pack",
+          "settings": {
+            "title": {
+              "label": "Title"
+            },
+            "note": {
+              "label": "Note"
+            },
+            "quantity": {
+              "label": "Bottles in the pack"
+            },
+            "discount": {
+              "label": "Pack discount",
+              "info": "Only changes the prices shown. Create an automatic discount with the same percentage and minimum quantity (Admin → Discounts), or checkout charges full price."
+            },
+            "tag": {
+              "label": "Tag"
+            },
+            "subscription": {
+              "label": "Subscription pack",
+              "info": "Uses the product's first selling plan (from a subscriptions app) and its price. Hidden when the product has no selling plan."
+            }
+          }
+        },
+        "spec": {
+          "name": "Spec (dossier)",
+          "settings": {
+            "value": {
+              "label": "Value"
+            },
+            "label": {
+              "label": "Label"
+            }
           }
         }
       }

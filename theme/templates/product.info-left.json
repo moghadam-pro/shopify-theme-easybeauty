@@ -161,7 +161,7 @@
         "show_sticky_bar": true,
         "stock_note": "In stock — ships within 24h",
         "service_notes": "Free delivery over $75 | 60-day returns, opened or not",
-        "layout": "gallery_left",
+        "layout": "info_left",
         "dossier_eyebrow": "No.3 · Serum · Niacinamide 10% · pH 5.5"
       }
     },

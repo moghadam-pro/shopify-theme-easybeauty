@@ -1,12 +1,29 @@
 {%- comment -%}
-  Product page: gallery + info column following the design — title, rating
-  (from the standard reviews.rating / reviews.rating_count metafields that
-  review apps write), lead text, option pills, large price with compare-at
-  and unit price, "Choose your pack" (the product's native selling plans,
-  when it has any), add-to-bag with price, save for later, badge row,
-  highlight list and accordions.
+  Product page — one section, four layouts (theme editor → Product → Layout):
+    gallery_left  gallery left (sticky), details right          [default]
+    full_width    full-width 16:9 photo, details centred below
+    info_left     details left, gallery right (sticky)
+    dossier       dark editorial block: big title, spec grid and tabs on the
+                  left; photo with a thumbnail rail and a floating buy panel
+                  on the right; badge strip underneath
+  Each layout also ships as its own template (product.hero / .info-left /
+  .dossier) so it can be assigned per product or previewed with ?view=.
+
+  Packs ("Choose your pack") are "Pack" blocks: a quantity + a display
+  discount (e.g. Duo = 2 × 10% off), or a subscription pack that uses the
+  product's first selling plan (needs a subscriptions app) and is hidden
+  when the product has none. Picking a pack sets the quantity / selling plan
+  that goes to the cart and updates every price on the page ([data-packs]
+  in theme.js). Quantity-pack discounts are display only: create matching
+  automatic discounts (Admin → Discounts → Amount off products, minimum
+  quantity 2 → 10%, 3 → 18%) or checkout charges full price.
+
+  Rating comes from the standard reviews.rating / reviews.rating_count
+  metafields that review apps write.
 {%- endcomment -%}
 {%- liquid
+  assign layout = section.settings.layout
+  assign form_id = 'ProductForm-' | append: section.id
   assign current_variant = product.selected_or_first_available_variant
   assign main_image = current_variant.featured_image | default: product.featured_image
   assign add_text = 'products.product.add_to_bag' | t
@@ -14,206 +31,444 @@
   assign unavailable_text = 'products.product.unavailable' | t
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value
+  if rating != blank
+    assign rating_rounded = rating.rating | round: 1
+  endif
+  assign first_plan = product.selling_plan_groups.first.selling_plans.first
+  assign pack_blocks = section.blocks | where: 'type', 'pack'
+  assign spec_blocks = section.blocks | where: 'type', 'spec'
+  assign highlight_blocks = section.blocks | where: 'type', 'highlight'
+  assign accordion_blocks = section.blocks | where: 'type', 'accordion'
+
+  comment
+    Resolve the default pack: the Nth usable pack, falling back to the first.
+  endcomment
+  assign usable_index = 0
+  assign default_pack_id = ''
+  assign first_pack_id = ''
+  assign has_subscription_pack = false
+  for block in pack_blocks
+    if block.settings.subscription and first_plan == blank
+      continue
+    endif
+    assign usable_index = usable_index | plus: 1
+    if first_pack_id == ''
+      assign first_pack_id = block.id
+    endif
+    if usable_index == section.settings.default_pack
+      assign default_pack_id = block.id
+    endif
+    if block.settings.subscription
+      assign has_subscription_pack = true
+    endif
+  endfor
+  if default_pack_id == ''
+    assign default_pack_id = first_pack_id
+  endif
+  assign has_packs = false
+  if usable_index > 0
+    assign has_packs = true
+  endif
+
+  comment
+    Starting price for the default pack (JS keeps it in sync afterwards).
+  endcomment
+  assign pack_qty = 1
+  assign pack_price = current_variant.price
+  assign pack_full = current_variant.price
+  assign pack_plan = ''
+  for block in pack_blocks
+    if block.id != default_pack_id
+      continue
+    endif
+    assign pack_qty = block.settings.quantity
+    assign pack_full = current_variant.price | times: pack_qty
+    if block.settings.subscription
+      assign allocation = current_variant.selling_plan_allocations | where: 'selling_plan_id', first_plan.id | first
+      assign pack_price = allocation.price | default: current_variant.price | times: pack_qty
+      assign pack_plan = first_plan.id
+    else
+      assign keep = 100 | minus: block.settings.discount
+      assign pack_price = pack_full | times: keep | divided_by: 100.0 | round
+    endif
+  endfor
 -%}
-<section class="section container">
-  <div class="product" data-product-root>
-    <div class="product__gallery">
-      <div class="product__gallery-main">
-        {%- if main_image -%}
-          <img
-            src="{{ main_image | image_url: width: 1200 }}"
-            alt="{{ product.featured_image.alt | default: product.title | escape }}"
-            width="1200"
-            height="{{ 1200 | divided_by: main_image.aspect_ratio | round }}"
-            loading="eager"
-            data-product-main-image
-          >
-        {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: class: 'placeholder-svg', data-product-main-image: true }}
-        {%- endif -%}
+
+{%- capture gallery_thumbs -%}
+  {%- if product.images.size > 1 -%}
+    {%- for image in product.images -%}
+      <button
+        type="button"
+        class="product__thumb{% if image.id == main_image.id %} is-active{% endif %}"
+        data-gallery-thumb
+        data-full-src="{{ image | image_url: width: 1600 }}"
+        aria-label="{{ image.alt | default: product.title | escape }} {{ forloop.index }}"
+      >
+        <img src="{{ image | image_url: width: 160 }}" alt="" width="80" height="80" loading="lazy">
+      </button>
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture main_media -%}
+  {%- if main_image -%}
+    <img
+      src="{{ main_image | image_url: width: 1600 }}"
+      srcset="{{ main_image | image_url: width: 800 }} 800w, {{ main_image | image_url: width: 1200 }} 1200w, {{ main_image | image_url: width: 1600 }} 1600w"
+      sizes="{% if layout == 'full_width' %}100vw{% else %}(min-width: 990px) 50vw, 100vw{% endif %}"
+      alt="{{ main_image.alt | default: product.title | escape }}"
+      width="1600"
+      height="{{ 1600 | divided_by: main_image.aspect_ratio | round }}"
+      loading="eager"
+      fetchpriority="high"
+      data-product-main-image
+    >
+  {%- else -%}
+    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture rating_line -%}
+  {%- if rating != blank and rating_count > 0 -%}
+    <a href="#reviews" class="product__rating">
+      <span class="product__stars" aria-hidden="true">★★★★★</span>
+      <span>{{ 'products.product.reviews_count' | t: rating: rating_rounded, count: rating_count }}</span>
+    </a>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- comment -%} Buy box: options, price, packs, add to bag, save. {%- endcomment -%}
+{%- capture buy_box -%}
+  {%- form 'product', product, id: form_id, class: 'product__form', data-product-form: true, data-add-text: add_text, data-soldout-text: soldout_text, data-unavailable-text: unavailable_text -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+    {%- if layout == 'dossier' -%}
+      <div class="product__price product__price--panel">
+        <span class="product__price-now" data-product-price>{{ pack_price | money }}</span>
+        <s data-product-compare-price {% unless pack_full > pack_price %}hidden{% endunless %}>{{ pack_full | money }}</s>
+        <span class="product__unit-price" data-pack-unit data-each="{{ 'products.product.each' | t | escape }}">{% if pack_qty > 1 %}{{ pack_price | divided_by: pack_qty | money }} {{ 'products.product.each' | t }}{% endif %}</span>
       </div>
-      {%- if product.images.size > 1 -%}
-        <div class="product__gallery-thumbs">
-          {%- for image in product.images -%}
-            <img
-              src="{{ image | image_url: width: 200 }}"
-              data-full-src="{{ image | image_url: width: 1200 }}"
-              data-gallery-thumb
-              class="{% if forloop.first %}is-active{% endif %}"
-              alt="{{ image.alt | escape }}"
-              width="200"
-              height="{{ 200 | divided_by: image.aspect_ratio | round }}"
-              loading="lazy"
-            >
-          {%- endfor -%}
+    {%- endif -%}
+
+    {%- unless product.has_only_default_variant -%}
+      {%- for option in product.options_with_values -%}
+        <div class="product__variants">
+          <div class="product__label">{{ option.name }}</div>
+          <div class="swatch-list">
+            {%- for value in option.values -%}
+              <label class="swatch">
+                <input
+                  type="radio"
+                  name="option-{{ option.position }}"
+                  value="{{ value | escape }}"
+                  data-option-input
+                  {% if option.selected_value == value %}checked{% endif %}
+                >
+                {{ value }}
+              </label>
+            {%- endfor -%}
+          </div>
         </div>
-      {%- endif -%}
-    </div>
+      {%- endfor -%}
+    {%- endunless -%}
 
-    <div class="product__info">
-      {%- if section.settings.show_vendor and product.vendor != blank -%}<div class="eyebrow">{{ product.vendor }}</div>{%- endif -%}
-      <h1 class="product__title">{{ product.title }}</h1>
-
-      {%- if rating != blank and rating_count > 0 -%}
-        {%- assign rating_rounded = rating.rating | round: 1 -%}
-        <a href="#reviews" class="product__rating">
-          <span class="product__stars" aria-hidden="true">★★★★★</span>
-          <span>{{ 'products.product.reviews_count' | t: rating: rating_rounded, count: rating_count }}</span>
-        </a>
-      {%- endif -%}
-
-      {%- if product.description != blank -%}
-        <p class="product__lead">{{ product.description | strip_html | truncatewords: section.settings.lead_words }}</p>
-      {%- endif -%}
-
-      {%- form 'product', product, data-product-form: true, data-add-text: add_text, data-soldout-text: soldout_text, data-unavailable-text: unavailable_text -%}
-        <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
-
-        {%- unless product.has_only_default_variant -%}
-          {%- for option in product.options_with_values -%}
-            <div class="product__variants">
-              <div class="product__label">{{ option.name }}</div>
-              <div class="swatch-list">
-                {%- for value in option.values -%}
-                  <label class="swatch">
-                    <input
-                      type="radio"
-                      name="option-{{ option.position }}"
-                      value="{{ value | escape }}"
-                      data-option-input
-                      {% if option.selected_value == value %}checked{% endif %}
-                    >
-                    {{ value }}
-                  </label>
-                {%- endfor -%}
-              </div>
-            </div>
-          {%- endfor -%}
-        {%- endunless -%}
-
-        <div class="product__price">
-          <span class="product__price-now" data-product-price>{{ current_variant.price | money }}</span>
-          <s data-product-compare-price {% unless current_variant.compare_at_price > current_variant.price %}hidden{% endunless %}>{{ current_variant.compare_at_price | money }}</s>
-          {%- if current_variant.unit_price_measurement -%}
-            {%- capture unit_label -%}
-              {{ current_variant.unit_price | money }} / {% if current_variant.unit_price_measurement.reference_value != 1 %}{{ current_variant.unit_price_measurement.reference_value }}{% endif %}{{ current_variant.unit_price_measurement.reference_unit }}
-            {%- endcapture -%}
-            <span class="product__unit-price">{{ unit_label | strip }}</span>
+    {%- unless layout == 'dossier' -%}
+      <div class="product__price">
+        <span class="product__price-now" data-product-price>{{ pack_price | money }}</span>
+        <s data-product-compare-price {% unless pack_full > pack_price %}hidden{% endunless %}>{{ pack_full | money }}</s>
+        <span class="product__unit-price" data-pack-unit data-each="{{ 'products.product.each' | t | escape }}">
+          {%- if pack_qty > 1 -%}
+            {{ pack_price | divided_by: pack_qty | money }} {{ 'products.product.each' | t }}
+          {%- elsif current_variant.unit_price_measurement -%}
+            {{ current_variant.unit_price | money }} / {% if current_variant.unit_price_measurement.reference_value != 1 %}{{ current_variant.unit_price_measurement.reference_value }}{% endif %}{{ current_variant.unit_price_measurement.reference_unit }}
           {%- endif -%}
-        </div>
+        </span>
+      </div>
+    {%- endunless -%}
 
-        {%- if product.selling_plan_groups.size > 0 -%}
-          <div class="product__packs">
-            <div class="product__packs-head">
-              <span class="product__label">{{ 'products.product.choose_pack' | t }}</span>
-              <span class="product__packs-note">{{ 'products.product.cancel_anytime' | t }}</span>
-            </div>
-            <div class="product__packs-list">
-              {%- unless product.requires_selling_plan -%}
-                <label class="pack-option">
-                  <input type="radio" name="selling_plan" value="" {% unless current_variant.selected_selling_plan_allocation %}checked{% endunless %}>
-                  <span class="pack-option__dot"></span>
-                  <span class="pack-option__text">
-                    <span class="pack-option__title">{{ 'products.product.one_time' | t }}</span>
-                    <span class="pack-option__note">{{ 'products.product.one_time_note' | t }}</span>
-                  </span>
-                  <span class="pack-option__price">{{ current_variant.price | money }}</span>
-                </label>
-              {%- endunless -%}
-              {%- for group in product.selling_plan_groups -%}
-                {%- for plan in group.selling_plans -%}
-                  {%- assign allocation = current_variant.selling_plan_allocations | where: 'selling_plan_id', plan.id | first -%}
-                  <label class="pack-option">
-                    <input type="radio" name="selling_plan" value="{{ plan.id }}" {% if product.requires_selling_plan and forloop.first %}checked{% endif %}>
-                    <span class="pack-option__dot"></span>
-                    <span class="pack-option__text">
-                      <span class="pack-option__title">{{ plan.name }}</span>
-                      {%- if plan.description != blank -%}<span class="pack-option__note">{{ plan.description }}</span>{%- else -%}<span class="pack-option__note">{{ group.name }}</span>{%- endif -%}
-                    </span>
-                    <span class="pack-option__price">
-                      {%- if allocation -%}{{ allocation.price | money }}{%- endif -%}
-                      {%- for adjustment in plan.price_adjustments limit: 1 -%}
-                        {%- if adjustment.value_type == 'percentage' and adjustment.value > 0 -%}<span class="pack-option__tag">−{{ adjustment.value }}%</span>{%- endif -%}
-                      {%- endfor -%}
-                    </span>
-                  </label>
-                {%- endfor -%}
+    {%- if has_packs -%}
+      <div class="product__packs" data-packs>
+        {%- unless layout == 'dossier' -%}
+          <div class="product__packs-head">
+            <span class="product__label">{{ 'products.product.choose_pack' | t }}</span>
+            {%- if has_subscription_pack -%}<span class="product__packs-note">{{ 'products.product.cancel_anytime' | t }}</span>{%- endif -%}
+          </div>
+        {%- endunless -%}
+        <div class="product__packs-list" role="radiogroup" aria-label="{{ 'products.product.choose_pack' | t }}">
+          {%- for block in pack_blocks -%}
+            {%- if block.settings.subscription and first_plan == blank -%}{%- continue -%}{%- endif -%}
+            {%- liquid
+              assign b_qty = block.settings.quantity
+              assign b_full = current_variant.price | times: b_qty
+              if block.settings.subscription
+                assign allocation = current_variant.selling_plan_allocations | where: 'selling_plan_id', first_plan.id | first
+                assign b_price = allocation.price | default: current_variant.price | times: b_qty
+              else
+                assign keep = 100 | minus: block.settings.discount
+                assign b_price = b_full | times: keep | divided_by: 100.0 | round
+              endif
+            -%}
+            <label class="pack-option" {{ block.shopify_attributes }}>
+              <input
+                type="radio"
+                name="pack-{{ section.id }}"
+                value="{{ block.id }}"
+                data-pack
+                data-qty="{{ b_qty }}"
+                data-discount="{% if block.settings.subscription %}0{% else %}{{ block.settings.discount }}{% endif %}"
+                data-plan="{% if block.settings.subscription %}{{ first_plan.id }}{% endif %}"
+                data-title="{{ block.settings.title | escape }}"
+                {% if block.id == default_pack_id %}checked{% endif %}
+              >
+              <span class="pack-option__dot" aria-hidden="true"></span>
+              <span class="pack-option__text">
+                <span class="pack-option__title">{{ block.settings.title }}</span>
+                {%- if block.settings.note != blank -%}<span class="pack-option__note">{{ block.settings.note }}</span>{%- endif -%}
+              </span>
+              <span class="pack-option__price">
+                <span data-pack-price>{{ b_price | money }}</span>
+                {%- if block.settings.tag != blank -%}<span class="pack-option__tag">{{ block.settings.tag }}</span>{%- endif -%}
+              </span>
+            </label>
+          {%- endfor -%}
+        </div>
+        <input type="hidden" name="quantity" value="{{ pack_qty }}" data-pack-quantity>
+        <input type="hidden" name="selling_plan" value="{{ pack_plan }}" data-pack-plan>
+      </div>
+    {%- elsif product.selling_plan_groups.size > 0 -%}
+      <div class="product__packs">
+        <div class="product__packs-head">
+          <span class="product__label">{{ 'products.product.choose_pack' | t }}</span>
+          <span class="product__packs-note">{{ 'products.product.cancel_anytime' | t }}</span>
+        </div>
+        <div class="product__packs-list">
+          {%- unless product.requires_selling_plan -%}
+            <label class="pack-option">
+              <input type="radio" name="selling_plan" value="" {% unless current_variant.selected_selling_plan_allocation %}checked{% endunless %}>
+              <span class="pack-option__dot"></span>
+              <span class="pack-option__text">
+                <span class="pack-option__title">{{ 'products.product.one_time' | t }}</span>
+                <span class="pack-option__note">{{ 'products.product.one_time_note' | t }}</span>
+              </span>
+              <span class="pack-option__price">{{ current_variant.price | money }}</span>
+            </label>
+          {%- endunless -%}
+          {%- for group in product.selling_plan_groups -%}
+            {%- for plan in group.selling_plans -%}
+              {%- assign allocation = current_variant.selling_plan_allocations | where: 'selling_plan_id', plan.id | first -%}
+              <label class="pack-option">
+                <input type="radio" name="selling_plan" value="{{ plan.id }}" {% if product.requires_selling_plan and forloop.first %}checked{% endif %}>
+                <span class="pack-option__dot"></span>
+                <span class="pack-option__text">
+                  <span class="pack-option__title">{{ plan.name }}</span>
+                  <span class="pack-option__note">{{ plan.description | default: group.name }}</span>
+                </span>
+                <span class="pack-option__price">{%- if allocation -%}{{ allocation.price | money }}{%- endif -%}</span>
+              </label>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_quantity and has_packs == false -%}
+      <div class="field product__quantity">
+        <label class="product__label" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+        <div class="quantity-selector" data-quantity-selector>
+          <button type="button" data-quantity-step="decrease" aria-label="{{ 'sections.cart.decrease' | t }}">−</button>
+          <input type="number" name="quantity" id="Quantity-{{ section.id }}" value="1" min="1">
+          <button type="button" data-quantity-step="increase" aria-label="{{ 'sections.cart.increase' | t }}">+</button>
+        </div>
+      </div>
+    {%- endif -%}
+
+    <p class="field-error" data-form-error hidden></p>
+
+    <button type="submit" class="btn btn-primary btn-block product__add" data-product-add {% unless current_variant.available %}disabled{% endunless %}>
+      <span data-add-label>
+        {%- if current_variant.available -%}{{ add_text }}{%- else -%}{{ soldout_text }}{%- endif -%}
+      </span>
+      <span data-add-price>{{ pack_price | money }}</span>
+    </button>
+  {%- endform -%}
+
+  {%- if section.settings.show_save -%}
+    {% render 'save-button', product: product, class: 'product__save' %}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture service_line -%}
+  {%- if section.settings.stock_note != blank or section.settings.service_notes != blank -%}
+    <div class="product__service">
+      {%- if section.settings.stock_note != blank and current_variant.available -%}
+        <span class="product__stock"><span class="product__stock-dot" aria-hidden="true"></span>{{ section.settings.stock_note }}</span>
+      {%- endif -%}
+      {%- assign service_notes = section.settings.service_notes | split: '|' -%}
+      {%- for note in service_notes -%}<span>{{ note | strip }}</span>{%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture badges -%}
+  {%- if section.settings.badges != blank -%}
+    <div class="product__badges">
+      {%- assign badge_list = section.settings.badges | split: '|' -%}
+      {%- for badge in badge_list -%}<span>{{ badge | strip }}</span>{%- endfor -%}
+    </div>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture highlights -%}
+  {%- if highlight_blocks.size > 0 -%}
+    <ul class="product__highlights">
+      {%- for block in highlight_blocks -%}
+        <li {{ block.shopify_attributes }}>
+          <span aria-hidden="true">—</span>
+          <span>{%- if block.settings.title != blank -%}<strong>{{ block.settings.title }}</strong> {% endif -%}{{ block.settings.text }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture accordion -%}
+  <div class="product__accordion" data-accordion-single>
+    {%- if section.settings.show_description and product.description != blank -%}
+      <div class="product__accordion-item" data-accordion-item>
+        <button type="button" class="product__accordion-trigger" data-accordion-trigger>
+          {{ 'products.product.description' | t }}
+          <span class="icon-plus">{% render 'icon', icon: 'plus', size: 14 %}</span>
+          <span class="icon-minus">{% render 'icon', icon: 'minus', size: 14 %}</span>
+        </button>
+        <div class="product__accordion-panel rte">{{ product.description }}</div>
+      </div>
+    {%- endif -%}
+    {%- for block in accordion_blocks -%}
+      <div class="product__accordion-item" data-accordion-item {{ block.shopify_attributes }}>
+        <button type="button" class="product__accordion-trigger" data-accordion-trigger>
+          {{ block.settings.title }}
+          <span class="icon-plus">{% render 'icon', icon: 'plus', size: 14 %}</span>
+          <span class="icon-minus">{% render 'icon', icon: 'minus', size: 14 %}</span>
+        </button>
+        <div class="product__accordion-panel rte">{{ block.settings.content }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endcapture -%}
+
+<section class="product-page product-page--{{ layout }}" data-product-root>
+  <nav class="product-page__breadcrumb" aria-label="{{ 'sections.page-intro.breadcrumb' | t }}">
+    <a href="{{ routes.root_url }}">{{ 'sections.page-intro.home' | t }}</a> /
+    {% if collection -%}
+      <a href="{{ collection.url }}">{{ collection.title }}</a> /
+    {% elsif product.type != blank -%}
+      <a href="{{ routes.all_products_collection_url }}">{{ product.type }}</a> /
+    {% endif -%}
+    <span aria-current="page">{{ product.title }}</span>
+  </nav>
+  {%- if layout == 'dossier' -%}
+    <div class="dossier">
+      <div class="dossier__grid">
+        <div class="dossier__copy">
+          {%- assign eyebrow = section.settings.dossier_eyebrow | default: product.type -%}
+          {%- if eyebrow != blank -%}
+            <div class="dossier__eyebrow">
+              {%- assign eyebrow_parts = eyebrow | split: '·' -%}
+              {%- for part in eyebrow_parts -%}
+                <span{% if forloop.first %} class="dossier__eyebrow-lead"{% endif %}>{{ part | strip }}</span>
               {%- endfor -%}
             </div>
-          </div>
-        {%- endif -%}
+          {%- endif -%}
+          <h1 class="dossier__title">{{ product.title }}</h1>
+          {%- if product.description != blank -%}
+            <p class="dossier__lead">{{ product.description | strip_html | truncatewords: section.settings.lead_words }}</p>
+          {%- endif -%}
 
-        {%- if section.settings.show_quantity -%}
-          <div class="field product__quantity">
-            <label class="product__label" for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
-            <div class="quantity-selector" data-quantity-selector>
-              <button type="button" data-quantity-step="decrease" aria-label="{{ 'sections.cart.decrease' | t }}">−</button>
-              <input type="number" name="quantity" id="Quantity-{{ section.id }}" value="1" min="1">
-              <button type="button" data-quantity-step="increase" aria-label="{{ 'sections.cart.increase' | t }}">+</button>
-            </div>
-          </div>
-        {%- endif -%}
-
-        <p class="field-error" data-form-error hidden></p>
-
-        <button type="submit" class="btn btn-primary btn-block product__add" {% unless current_variant.available %}disabled{% endunless %}>
-          <span data-add-label>
-            {%- if current_variant.available -%}{{ add_text }}{%- else -%}{{ soldout_text }}{%- endif -%}
-          </span>
-          <span data-add-price>{{ current_variant.price | money }}</span>
-        </button>
-      {%- endform -%}
-
-      {%- if section.settings.show_save -%}
-        {% render 'save-button', product: product, class: 'product__save' %}
-      {%- endif -%}
-
-      {%- if section.settings.badges != blank -%}
-        <div class="product__badges">
-          {%- assign badges = section.settings.badges | split: '|' -%}
-          {%- for badge in badges -%}<span>{{ badge | strip }}</span>{%- endfor -%}
-        </div>
-      {%- endif -%}
-
-      {%- assign highlight_blocks = section.blocks | where: 'type', 'highlight' -%}
-      {%- if highlight_blocks.size > 0 -%}
-        <ul class="product__highlights">
-          {%- for block in highlight_blocks -%}
-            <li {{ block.shopify_attributes }}>
-              <span aria-hidden="true">—</span>
-              <span>{%- if block.settings.title != blank -%}<strong>{{ block.settings.title }}</strong> {% endif -%}{{ block.settings.text }}</span>
-            </li>
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
-
-      <div class="product__accordion" data-accordion-single>
-        {%- if section.settings.show_description and product.description != blank -%}
-          <div class="product__accordion-item" data-accordion-item>
-            <button type="button" class="product__accordion-trigger" data-accordion-trigger>
-              {{ 'products.product.description' | t }}
-              <span class="icon-plus">{% render 'icon', icon: 'plus', size: 14 %}</span>
-              <span class="icon-minus">{% render 'icon', icon: 'minus', size: 14 %}</span>
-            </button>
-            <div class="product__accordion-panel rte">{{ product.description }}</div>
-          </div>
-        {%- endif -%}
-
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'accordion' -%}
-            <div class="product__accordion-item" data-accordion-item {{ block.shopify_attributes }}>
-              <button type="button" class="product__accordion-trigger" data-accordion-trigger>
-                {{ block.settings.title }}
-                <span class="icon-plus">{% render 'icon', icon: 'plus', size: 14 %}</span>
-                <span class="icon-minus">{% render 'icon', icon: 'minus', size: 14 %}</span>
-              </button>
-              <div class="product__accordion-panel rte">{{ block.settings.content }}</div>
+          {%- if spec_blocks.size > 0 -%}
+            <div class="dossier__specs">
+              {%- for block in spec_blocks -%}
+                <div class="dossier__spec" {{ block.shopify_attributes }}>
+                  <div class="dossier__spec-value">{{ block.settings.value }}</div>
+                  <div class="dossier__spec-label">{{ block.settings.label }}</div>
+                </div>
+              {%- endfor -%}
             </div>
           {%- endif -%}
-        {%- endfor -%}
+
+          {%- if accordion_blocks.size > 0 or section.settings.show_description -%}
+            <div class="dossier__tabs" data-tabs>
+              <div class="dossier__tablist" role="tablist">
+                {%- for block in accordion_blocks -%}
+                  <button type="button" class="dossier__tab" role="tab" data-tab aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" id="DossierTab-{{ block.id }}" aria-controls="DossierPanel-{{ block.id }}">{{ block.settings.title }}</button>
+                {%- endfor -%}
+              </div>
+              {%- for block in accordion_blocks -%}
+                <div class="dossier__panel rte" role="tabpanel" data-tab-panel id="DossierPanel-{{ block.id }}" aria-labelledby="DossierTab-{{ block.id }}" {% unless forloop.first %}hidden{% endunless %}>{{ block.settings.content }}</div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="dossier__media">
+          <div class="dossier__shot">{{ main_media }}</div>
+          {%- if gallery_thumbs != blank -%}<div class="dossier__rail">{{ gallery_thumbs }}</div>{%- endif -%}
+          <div class="dossier__panel-buy">
+            {{ buy_box }}
+            <div class="dossier__panel-foot">
+              <span>{% if rating != blank and rating_count > 0 %}{{ rating_rounded }} ★ · {{ rating_count }}{% endif %}</span>
+              {%- assign first_note = section.settings.service_notes | split: '|' | last -%}
+              <span>{{ first_note | strip }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {%- if section.settings.badges != blank -%}
+        <div class="dossier__strip">
+          {%- assign badge_list = section.settings.badges | split: '|' -%}
+          {%- for badge in badge_list -%}<span>{{ badge | strip }}</span>{%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <div class="product">
+      <div class="product__gallery">
+        <div class="product__gallery-main">{{ main_media }}</div>
+        {%- if gallery_thumbs != blank -%}<div class="product__gallery-thumbs">{{ gallery_thumbs }}</div>{%- endif -%}
+      </div>
+
+      <div class="product__info">
+        {%- if section.settings.show_vendor and product.vendor != blank -%}<div class="eyebrow">{{ product.vendor }}</div>{%- endif -%}
+        <h1 class="product__title">{{ product.title }}</h1>
+        {{ rating_line }}
+        {%- if product.description != blank -%}
+          <p class="product__lead">{{ product.description | strip_html | truncatewords: section.settings.lead_words }}</p>
+        {%- endif -%}
+        {{ buy_box }}
+        {{ service_line }}
+        {{ badges }}
+        {{ highlights }}
+        {{ accordion }}
       </div>
     </div>
-  </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_sticky_bar -%}
+    <div class="product-sticky" data-product-sticky aria-hidden="true">
+      <div class="product-sticky__inner">
+        {%- if product.featured_image -%}
+          <img src="{{ product.featured_image | image_url: width: 96 }}" alt="" width="48" height="48" loading="lazy">
+        {%- endif -%}
+        <div class="product-sticky__text">
+          <div class="product-sticky__title">{{ product.title }}</div>
+          <div class="product-sticky__summary" data-sticky-summary></div>
+        </div>
+        <button type="submit" form="{{ form_id }}" class="btn btn-primary product-sticky__add" tabindex="-1" {% unless current_variant.available %}disabled{% endunless %}>
+          {{ 'products.product.add_short' | t }} — <span data-add-price>{{ pack_price | money }}</span>
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
 
   <script type="application/json" data-product-json>
     {{ product | json }}
@@ -224,6 +479,31 @@
 {
   "name": "t:sections.main-product.name",
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.main-product.settings.layout.label",
+      "info": "t:sections.main-product.settings.layout.info",
+      "options": [
+        {
+          "value": "gallery_left",
+          "label": "t:sections.main-product.settings.layout.options__1.label"
+        },
+        {
+          "value": "full_width",
+          "label": "t:sections.main-product.settings.layout.options__2.label"
+        },
+        {
+          "value": "info_left",
+          "label": "t:sections.main-product.settings.layout.options__3.label"
+        },
+        {
+          "value": "dossier",
+          "label": "t:sections.main-product.settings.layout.options__4.label"
+        }
+      ],
+      "default": "gallery_left"
+    },
     {
       "type": "checkbox",
       "id": "show_vendor",
@@ -259,13 +539,121 @@
       "default": "Cruelty-free | Vegan | Derm tested"
     },
     {
+      "type": "text",
+      "id": "stock_note",
+      "label": "t:sections.main-product.settings.stock_note.label",
+      "default": "In stock — ships within 24h"
+    },
+    {
+      "type": "text",
+      "id": "service_notes",
+      "label": "t:sections.main-product.settings.service_notes.label",
+      "info": "t:sections.main-product.settings.service_notes.info",
+      "default": "Free delivery over $75 | 60-day returns, opened or not"
+    },
+    {
       "type": "checkbox",
       "id": "show_description",
       "label": "t:sections.main-product.settings.show_description.label",
       "default": true
+    },
+    {
+      "type": "range",
+      "id": "default_pack",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "t:sections.main-product.settings.default_pack.label",
+      "info": "t:sections.main-product.settings.default_pack.info",
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky_bar",
+      "label": "t:sections.main-product.settings.show_sticky_bar.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.main-product.settings.header_dossier.content"
+    },
+    {
+      "type": "text",
+      "id": "dossier_eyebrow",
+      "label": "t:sections.main-product.settings.dossier_eyebrow.label",
+      "info": "t:sections.main-product.settings.dossier_eyebrow.info"
     }
   ],
   "blocks": [
+    {
+      "type": "pack",
+      "name": "t:sections.main-product.blocks.pack.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.main-product.blocks.pack.settings.title.label",
+          "default": "Duo pack"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "t:sections.main-product.blocks.pack.settings.note.label",
+          "default": "Two bottles — about four months."
+        },
+        {
+          "type": "range",
+          "id": "quantity",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "label": "t:sections.main-product.blocks.pack.settings.quantity.label",
+          "default": 2
+        },
+        {
+          "type": "range",
+          "id": "discount",
+          "min": 0,
+          "max": 50,
+          "step": 1,
+          "unit": "%",
+          "label": "t:sections.main-product.blocks.pack.settings.discount.label",
+          "info": "t:sections.main-product.blocks.pack.settings.discount.info",
+          "default": 10
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "t:sections.main-product.blocks.pack.settings.tag.label",
+          "default": "Save 10%"
+        },
+        {
+          "type": "checkbox",
+          "id": "subscription",
+          "label": "t:sections.main-product.blocks.pack.settings.subscription.label",
+          "info": "t:sections.main-product.blocks.pack.settings.subscription.info",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "spec",
+      "name": "t:sections.main-product.blocks.spec.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "t:sections.main-product.blocks.spec.settings.value.label",
+          "default": "10%"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.main-product.blocks.spec.settings.label.label",
+          "default": "Niacinamide, the dose that stopped flushing our panel"
+        }
+      ]
+    },
     {
       "type": "highlight",
       "name": "t:sections.main-product.blocks.highlight.name",
@@ -302,6 +690,50 @@
   ],
   "default": {
     "blocks": [
+      {
+        "type": "pack",
+        "settings": {
+          "title": "Single bottle",
+          "note": "One bottle, delivered once.",
+          "quantity": 1,
+          "discount": 0,
+          "tag": "",
+          "subscription": false
+        }
+      },
+      {
+        "type": "pack",
+        "settings": {
+          "title": "Duo pack",
+          "note": "Two bottles — about four months.",
+          "quantity": 2,
+          "discount": 10,
+          "tag": "Save 10%",
+          "subscription": false
+        }
+      },
+      {
+        "type": "pack",
+        "settings": {
+          "title": "Trio pack",
+          "note": "Three bottles — our best value.",
+          "quantity": 3,
+          "discount": 18,
+          "tag": "Save 18%",
+          "subscription": false
+        }
+      },
+      {
+        "type": "pack",
+        "settings": {
+          "title": "Refill every 8 weeks",
+          "note": "One bottle, auto-delivered. Skip anytime.",
+          "quantity": 1,
+          "discount": 0,
+          "tag": "Save 15%",
+          "subscription": true
+        }
+      },
       {
         "type": "accordion",
         "settings": {

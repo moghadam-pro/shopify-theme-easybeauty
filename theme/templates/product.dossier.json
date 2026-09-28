@@ -155,13 +155,13 @@
         "lead_words": 26,
         "show_quantity": false,
         "show_save": true,
-        "badges": "Cruelty-free | Vegan | Derm tested",
+        "badges": "Fragrance-free | Vegan | Cruelty-free | Derm tested | Made in Portugal | Batch-tested | 60-day returns",
         "show_description": true,
         "default_pack": 2,
         "show_sticky_bar": true,
         "stock_note": "In stock — ships within 24h",
         "service_notes": "Free delivery over $75 | 60-day returns, opened or not",
-        "layout": "gallery_left",
+        "layout": "dossier",
         "dossier_eyebrow": "No.3 · Serum · Niacinamide 10% · pH 5.5"
       }
     },

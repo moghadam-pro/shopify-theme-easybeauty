@@ -194,7 +194,9 @@
       "one_time_note": "Delivered once.",
       "cancel_anytime": "Cancel or skip anytime",
       "quick_add": "Quick add",
-      "choose_options": "Choose size"
+      "choose_options": "Choose size",
+      "each": "each",
+      "add_short": "Add"
     }
   },
   "blogs": {

@@ -34,6 +34,8 @@ export const products = CATALOG.map(([handle, title, price, compare, img, type],
     available: true,
     featured_image: images[0],
     option1: size,
+    options: [size],
+    selling_plan_allocations: [{ selling_plan_id: 9001, price: Math.round((price + v * 18) * 85) }],
   }));
   return {
     id: 100 + i,
@@ -57,6 +59,7 @@ export const products = CATALOG.map(([handle, title, price, compare, img, type],
     variants,
     has_only_default_variant: false,
     selected_or_first_available_variant: variants[0],
+    selling_plan_groups: [{ name: 'Refill', selling_plans: [{ id: 9001, name: 'Every 8 weeks' }] }],
     options_with_values: [{ name: 'Size', position: 1, selected_value: '30 ml', values: ['30 ml', '50 ml'] }],
   };
 });

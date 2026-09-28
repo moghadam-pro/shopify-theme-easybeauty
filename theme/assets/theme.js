@@ -108,6 +108,7 @@
     try {
       const formData = new FormData(form);
       if (formData.get('selling_plan') === '') formData.delete('selling_plan');
+      Array.from(formData.keys()).filter((k) => k.indexOf('pack-') === 0).forEach((k) => formData.delete(k));
       const res = await fetch(settings.cartAddUrl, {
         method: 'POST',
         headers: { Accept: 'application/json' },
@@ -230,59 +231,116 @@
     }
   });
 
-  /* ---------- product: variant selection + gallery thumbs ---------- */
+  /* ---------- product: variant selection, packs, sticky bar ----------
+     Prices shown depend on the variant *and* the chosen pack: a quantity
+     pack is qty × variant price less its display discount; a subscription
+     pack uses the variant's selling-plan allocation price. The pack also
+     sets the quantity / selling_plan fields that go to the cart. */
   qsa('[data-product-form]').forEach((form) => {
-    const productJsonEl = qs('[data-product-json]', form.closest('[data-product-root]') || document);
+    const root = form.closest('[data-product-root]') || document;
+    const productJsonEl = qs('[data-product-json]', root);
     if (!productJsonEl) return;
     let product;
     try { product = JSON.parse(productJsonEl.textContent); } catch (err) { return; }
+    const packs = qsa('[data-pack]', form);
+    const qtyInput = qs('[data-pack-quantity]', form);
+    const planInput = qs('[data-pack-plan]', form);
+    let variant = null;
 
     function selectedOptions() {
       return qsa('[data-option-input]:checked, [data-option-select]', form).map((el) => el.value);
     }
     function findVariant(options) {
+      if (!options.length) return product.variants[0];
       return product.variants.find((v) => v.options.every((val, i) => val === options[i]));
     }
-    function updateForVariant(variant) {
-      const priceEl = qs('[data-product-price]', form.closest('[data-product-root]'));
-      const compareEl = qs('[data-product-compare-price]', form.closest('[data-product-root]'));
+    function packPrice(v, pack) {
+      const qty = parseInt(pack.getAttribute('data-qty'), 10) || 1;
+      const plan = pack.getAttribute('data-plan');
+      if (plan) {
+        const alloc = (v.selling_plan_allocations || []).find((a) => String(a.selling_plan_id) === plan);
+        return { price: (alloc ? alloc.price : v.price) * qty, full: v.price * qty, qty };
+      }
+      const discount = parseFloat(pack.getAttribute('data-discount')) || 0;
+      return { price: Math.round(v.price * qty * (100 - discount) / 100), full: v.price * qty, qty };
+    }
+    function activePack() { return packs.find((p) => p.checked) || null; }
+
+    function render() {
+      const priceEl = qs('[data-product-price]', root);
+      const compareEl = qs('[data-product-compare-price]', root);
+      const unitEl = qs('[data-pack-unit]', root);
       const submitBtn = qs('[type="submit"]', form);
       const idInput = qs('[data-variant-id]', form);
       const setButtonLabel = (text) => {
         const label = submitBtn && qs('[data-add-label]', submitBtn);
         if (label) label.textContent = text; else if (submitBtn) submitBtn.textContent = text;
       };
+      const stickyBtn = qs('[data-product-sticky] [type="submit"]', root);
       if (!variant) {
         if (submitBtn) { submitBtn.disabled = true; setButtonLabel(form.getAttribute('data-unavailable-text') || 'Unavailable'); }
+        if (stickyBtn) stickyBtn.disabled = true;
         return;
       }
-      const addPrice = submitBtn && qs('[data-add-price]', submitBtn);
-      if (addPrice) addPrice.textContent = formatMoney(variant.price);
+      const pack = activePack();
+      const pp = pack ? packPrice(variant, pack) : {
+        price: variant.price, qty: 1,
+        full: variant.compare_at_price > variant.price ? variant.compare_at_price : variant.price
+      };
       if (idInput) idInput.value = variant.id;
-      if (priceEl) priceEl.textContent = formatMoney(variant.price);
+      if (priceEl) priceEl.textContent = formatMoney(pp.price);
       if (compareEl) {
-        if (variant.compare_at_price > variant.price) {
-          compareEl.textContent = formatMoney(variant.compare_at_price);
-          compareEl.hidden = false;
-        } else {
-          compareEl.hidden = true;
-        }
+        compareEl.hidden = !(pp.full > pp.price);
+        if (pp.full > pp.price) compareEl.textContent = formatMoney(pp.full);
       }
+      if (unitEl && pack) unitEl.textContent = pp.qty > 1 ? formatMoney(Math.round(pp.price / pp.qty)) + ' ' + (unitEl.getAttribute('data-each') || 'each') : '';
+      qsa('[data-add-price]', root).forEach((el) => { el.textContent = formatMoney(pp.price); });
+      packs.forEach((p) => {
+        const label = p.closest('.pack-option');
+        const el = label && qs('[data-pack-price]', label);
+        if (el) el.textContent = formatMoney(packPrice(variant, p).price);
+      });
+      if (pack) {
+        if (qtyInput) qtyInput.value = pp.qty;
+        if (planInput) planInput.value = pack.getAttribute('data-plan') || '';
+      }
+      const summary = qs('[data-sticky-summary]', root);
+      if (summary) summary.textContent = [variant.title !== 'Default Title' ? variant.title : '', pack ? pack.getAttribute('data-title') : ''].filter(Boolean).join(' · ');
       if (submitBtn) {
         submitBtn.disabled = !variant.available;
         setButtonLabel(variant.available
           ? (form.getAttribute('data-add-text') || 'Add to bag')
           : (form.getAttribute('data-soldout-text') || 'Sold out'));
       }
-      const root = form.closest('[data-product-root]');
-      if (root && variant.featured_image) {
-        const mainImg = qs('[data-product-main-image]', root);
-        if (mainImg) mainImg.src = variant.featured_image.src;
-      }
+      if (stickyBtn) stickyBtn.disabled = !variant.available;
     }
 
-    form.addEventListener('change', () => updateForVariant(findVariant(selectedOptions())));
-    updateForVariant(findVariant(selectedOptions()));
+    form.addEventListener('change', (e) => {
+      if (e.target.matches('[data-option-input], [data-option-select]')) {
+        variant = findVariant(selectedOptions());
+        if (variant && variant.featured_image) {
+          const mainImg = qs('[data-product-main-image]', root);
+          if (mainImg) { mainImg.removeAttribute('srcset'); mainImg.src = variant.featured_image.src; }
+        }
+      }
+      render();
+    });
+    variant = findVariant(selectedOptions());
+    render();
+
+    /* Sticky add-to-bag bar: shown once the main add button has scrolled
+       out of view above, hidden again near it or at the footer. */
+    const sticky = qs('[data-product-sticky]', root);
+    const mainAdd = qs('[data-product-add]', form);
+    if (sticky && mainAdd && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        const show = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        sticky.classList.toggle('is-visible', show);
+        sticky.setAttribute('aria-hidden', String(!show));
+        const btn = qs('button', sticky);
+        if (btn) btn.tabIndex = show ? 0 : -1;
+      }).observe(mainAdd);
+    }
   });
 
   qsa('[data-gallery-thumb]').forEach((thumb) => {
@@ -291,7 +349,7 @@
       const mainImg = qs('[data-product-main-image]', root);
       qsa('[data-gallery-thumb]', root).forEach((t) => t.classList.remove('is-active'));
       thumb.classList.add('is-active');
-      if (mainImg) mainImg.src = thumb.getAttribute('data-full-src') || thumb.src;
+      if (mainImg) { mainImg.removeAttribute('srcset'); mainImg.src = thumb.getAttribute('data-full-src') || thumb.src; }
     });
   });
 

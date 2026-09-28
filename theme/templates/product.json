@@ -3,6 +3,50 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "pack-single": {
+          "type": "pack",
+          "settings": {
+            "title": "Single bottle",
+            "note": "One bottle, delivered once.",
+            "quantity": 1,
+            "discount": 0,
+            "tag": "",
+            "subscription": false
+          }
+        },
+        "pack-duo": {
+          "type": "pack",
+          "settings": {
+            "title": "Duo pack",
+            "note": "Two bottles — about four months.",
+            "quantity": 2,
+            "discount": 10,
+            "tag": "Save 10%",
+            "subscription": false
+          }
+        },
+        "pack-trio": {
+          "type": "pack",
+          "settings": {
+            "title": "Trio pack",
+            "note": "Three bottles — our best value.",
+            "quantity": 3,
+            "discount": 18,
+            "tag": "Save 18%",
+            "subscription": false
+          }
+        },
+        "pack-refill": {
+          "type": "pack",
+          "settings": {
+            "title": "Refill every 8 weeks",
+            "note": "One bottle, auto-delivered. Skip anytime.",
+            "quantity": 1,
+            "discount": 0,
+            "tag": "Save 15%",
+            "subscription": true
+          }
+        },
         "accordion-1": {
           "type": "accordion",
           "settings": {
@@ -19,6 +63,10 @@
         }
       },
       "block_order": [
+        "pack-single",
+        "pack-duo",
+        "pack-trio",
+        "pack-refill",
         "accordion-1",
         "accordion-2"
       ],
@@ -28,7 +76,12 @@
         "show_quantity": false,
         "show_save": true,
         "badges": "Cruelty-free | Vegan | Derm tested",
-        "show_description": true
+        "show_description": true,
+        "default_pack": 2,
+        "show_sticky_bar": true,
+        "stock_note": "In stock — ships within 24h",
+        "service_notes": "Free delivery over $75 | 60-day returns, opened or not",
+        "layout": "gallery_left"
       }
     },
     "recommendations": {
