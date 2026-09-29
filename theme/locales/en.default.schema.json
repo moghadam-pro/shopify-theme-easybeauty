@@ -118,6 +118,10 @@
         },
         "mega_mono": {
           "label": "Show the feature image in black and white"
+        },
+        "demo_product": {
+          "label": "Demo product",
+          "info": "Used by the \"Product page\" column of a link mega menu. Defaults to the first product."
         }
       },
       "blocks": {
@@ -186,6 +190,37 @@
             },
             "footnote_link_2": {
               "label": "Footnote link 2"
+            }
+          }
+        },
+        "link_mega": {
+          "name": "Link mega menu",
+          "settings": {
+            "title": {
+              "label": "Menu label"
+            },
+            "link": {
+              "label": "Menu label link"
+            },
+            "column_title": {
+              "label": "Column title"
+            },
+            "column_links": {
+              "label": "Column links",
+              "info": "One link per line: Label | /url | optional note"
+            },
+            "show_layouts": {
+              "label": "Add a column with the product page layouts",
+              "info": "Links the demo product in all four layouts."
+            },
+            "layouts_title": {
+              "label": "Layouts column title"
+            },
+            "layouts_position": {
+              "label": "Layouts column position"
+            },
+            "footnote": {
+              "label": "Footnote"
             }
           }
         }
@@ -873,8 +908,69 @@
             },
             "tag_3": {
               "label": "Option 3 → product tag"
+            },
+            "hint": {
+              "label": "Hint"
+            },
+            "multi": {
+              "label": "Allow more than one answer (shows checkboxes)"
+            },
+            "max_choices": {
+              "label": "Maximum answers"
+            },
+            "note": {
+              "label": "Option note"
+            },
+            "option_4": {
+              "label": "Option 4"
+            },
+            "tag_4": {
+              "label": "Option 4 tag"
             }
           }
+        }
+      },
+      "settings": {
+        "header_intro": {
+          "content": "Intro"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "start_label": {
+          "label": "Start button label"
+        },
+        "trust": {
+          "label": "Small notes",
+          "info": "Separate with |"
+        },
+        "image": {
+          "label": "Image"
+        },
+        "header_result": {
+          "content": "Result"
+        },
+        "result_eyebrow": {
+          "label": "Eyebrow"
+        },
+        "result_heading": {
+          "label": "Heading"
+        },
+        "result_text": {
+          "label": "Text"
+        },
+        "result_collection": {
+          "label": "Recommend products from",
+          "info": "Products are ranked by how many answer tags they carry as product tags (e.g. tag a product dry, sensitive, brightening). Defaults to all products."
+        },
+        "result_count": {
+          "label": "Products to recommend"
         }
       }
     },

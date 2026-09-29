@@ -5,6 +5,23 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.5.0] — 2026-09-29
+
+### Added
+- Header "Link mega menu" block: a nav item with editor-written columns (Label | URL | note per
+  line) and an optional column linking the demo product in all four layouts. Ships as
+  "Features" (pages, product layouts, shopping pages, built-in features). Header demo product
+  setting.
+- Skin quiz rebuilt to the design: split intro (eyebrow, title, text, start, skip, notes, photo);
+  centred, softly framed question card with progress, "Question n of 6", Back / Next;
+  single-answer questions advance on tap (no radio dots), multi-answer questions use checkboxes
+  with a maximum; result with answer tags, ranked product picks, routine total, "Add all to bag",
+  retake and a recap of the answers. Questions carry a hint and per-option notes.
+
+### Changed
+- Below 1280px the header puts the logo left and centres a tighter nav, so longer menus fit.
+- FAQ closer to the design: 240px sticky group nav with a 2px rule, terracotta plus icons.
+
 ## [1.4.0] — 2026-09-29
 
 ### Added

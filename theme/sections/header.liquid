@@ -14,8 +14,17 @@
   dropdown (orders, addresses, saved, log out). Customer accounts may be
   Shopify-hosted (new customer accounts); routes.* resolve either way.
 {%- endcomment -%}
+{%- comment -%}
+  "Link mega menu" blocks add their own nav item with a mega panel whose
+  columns are written in the editor (one link per line: Label | URL | note),
+  so a merchant can showcase pages without building a menu — used for the
+  "Features" item. A column can instead list the four product-page layouts
+  of a chosen product (?view=hero / info-left / dossier).
+{%- endcomment -%}
 {%- liquid
   assign menu = section.settings.menu
+  assign link_megas = section.blocks | where: 'type', 'link_mega'
+  assign demo_product = section.settings.demo_product | default: collections.all.products.first
   if customer
     assign first_initial = customer.first_name | default: customer.email | slice: 0 | upcase
     assign last_initial = customer.last_name | slice: 0 | upcase
@@ -41,6 +50,19 @@
         {%- else -%}
           <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
         {%- endif -%}
+      {%- endfor -%}
+      {%- for block in link_megas -%}
+        <a
+          href="{{ block.settings.link | default: '#' }}"
+          data-mega-trigger
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="MegaPanel-{{ section.id }}-{{ block.id }}"
+          {{ block.shopify_attributes }}
+        >
+          <span>{{ block.settings.title }}</span>
+          <span class="site-header__caret">{% render 'icon', icon: 'chevron-down', size: 10 %}</span>
+        </a>
       {%- endfor -%}
     </nav>
 
@@ -212,6 +234,69 @@
         {%- endif -%}
       </div>
     {%- endfor -%}
+
+    {%- for block in link_megas -%}
+      {%- liquid
+        assign column_count = 0
+        for i in (1..4)
+          assign title_key = 'column_' | append: i | append: '_title'
+          assign links_key = 'column_' | append: i | append: '_links'
+          if block.settings[title_key] != blank or block.settings[links_key] != blank
+            assign column_count = column_count | plus: 1
+          endif
+        endfor
+        if block.settings.show_layouts and demo_product
+          assign column_count = column_count | plus: 1
+        endif
+      -%}
+      <div class="mega-panel" id="MegaPanel-{{ section.id }}-{{ block.id }}" data-mega-panel>
+        <div class="mega-panel__inner">
+          <div class="mega-panel__columns" style="--mega-cols: {{ column_count }}">
+            {%- for i in (1..4) -%}
+              {%- liquid
+                assign title_key = 'column_' | append: i | append: '_title'
+                assign links_key = 'column_' | append: i | append: '_links'
+                assign lines = block.settings[links_key] | newline_to_br | split: '<br />'
+              -%}
+              {%- if block.settings[title_key] != blank or block.settings[links_key] != blank -%}
+                <div class="mega-panel__column">
+                  <div class="mega-panel__title">{{ block.settings[title_key] }}</div>
+                  <div class="mega-panel__items">
+                    {%- for line in lines -%}
+                      {%- liquid
+                        assign parts = line | strip | split: '|'
+                        assign item_label = parts[0] | strip
+                        assign item_url = parts[1] | strip | default: '#'
+                      -%}
+                      {%- if item_label != blank -%}
+                        <a href="{{ item_url }}">
+                          <span>{{ item_label }}</span>
+                          {%- if parts[2] != blank -%}<span class="mega-panel__note">{{ parts[2] | strip }}</span>{%- endif -%}
+                        </a>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endif -%}
+              {%- if i == block.settings.layouts_position and block.settings.show_layouts and demo_product -%}
+                <div class="mega-panel__column">
+                  <div class="mega-panel__title">{{ block.settings.layouts_title }}</div>
+                  <div class="mega-panel__items">
+                    <a href="{{ demo_product.url }}"><span>{{ 'sections.header.layout_gallery' | t }}</span><span class="mega-panel__note">{{ 'sections.header.layout_default' | t }}</span></a>
+                    <a href="{{ demo_product.url }}?view=hero"><span>{{ 'sections.header.layout_full' | t }}</span></a>
+                    <a href="{{ demo_product.url }}?view=info-left"><span>{{ 'sections.header.layout_info_left' | t }}</span></a>
+                    <a href="{{ demo_product.url }}?view=dossier"><span>{{ 'sections.header.layout_dossier' | t }}</span></a>
+                  </div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+        {%- if block.settings.footnote != blank -%}
+          <div class="mega-panel__footnote"><span>{{ block.settings.footnote }}</span></div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
   </div>
 
   <div class="mobile-nav-panel" data-mobile-menu aria-hidden="true">
@@ -249,6 +334,36 @@
         {%- else -%}
           <a href="{{ link.url }}" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
         {%- endif -%}
+      {%- endfor -%}
+      {%- for block in link_megas -%}
+        <details>
+          <summary>{{ block.settings.title }}</summary>
+          <div class="mobile-nav-panel__sublinks">
+            {%- for i in (1..4) -%}
+              {%- liquid
+                assign title_key = 'column_' | append: i | append: '_title'
+                assign links_key = 'column_' | append: i | append: '_links'
+                assign lines = block.settings[links_key] | newline_to_br | split: '<br />'
+              -%}
+              {%- if block.settings[title_key] != blank -%}<div class="mobile-nav-panel__group">{{ block.settings[title_key] }}</div>{%- endif -%}
+              {%- for line in lines -%}
+                {%- liquid
+                  assign parts = line | strip | split: '|'
+                  assign item_label = parts[0] | strip
+                  assign item_url = parts[1] | strip | default: '#'
+                -%}
+                {%- if item_label != blank -%}<a href="{{ item_url }}">{{ item_label }}</a>{%- endif -%}
+              {%- endfor -%}
+              {%- if i == block.settings.layouts_position and block.settings.show_layouts and demo_product -%}
+                <div class="mobile-nav-panel__group">{{ block.settings.layouts_title }}</div>
+                <a href="{{ demo_product.url }}">{{ 'sections.header.layout_gallery' | t }}</a>
+                <a href="{{ demo_product.url }}?view=hero">{{ 'sections.header.layout_full' | t }}</a>
+                <a href="{{ demo_product.url }}?view=info-left">{{ 'sections.header.layout_info_left' | t }}</a>
+                <a href="{{ demo_product.url }}?view=dossier">{{ 'sections.header.layout_dossier' | t }}</a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </details>
       {%- endfor -%}
     </nav>
   </div>
@@ -336,6 +451,12 @@
       "id": "mega_mono",
       "label": "t:sections.header.settings.mega_mono.label",
       "default": true
+    },
+    {
+      "type": "product",
+      "id": "demo_product",
+      "label": "t:sections.header.settings.demo_product.label",
+      "info": "t:sections.header.settings.demo_product.info"
     }
   ],
   "blocks": [
@@ -428,6 +549,94 @@
           "type": "url",
           "id": "footnote_link_2",
           "label": "t:sections.header.blocks.mega.settings.footnote_link_2.label"
+        }
+      ]
+    },
+    {
+      "type": "link_mega",
+      "name": "t:sections.header.blocks.link_mega.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.header.blocks.link_mega.settings.title.label",
+          "default": "Features"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.header.blocks.link_mega.settings.link.label"
+        },
+        {
+          "type": "text",
+          "id": "column_1_title",
+          "label": "t:sections.header.blocks.link_mega.settings.column_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "column_1_links",
+          "label": "t:sections.header.blocks.link_mega.settings.column_links.label",
+          "info": "t:sections.header.blocks.link_mega.settings.column_links.info"
+        },
+        {
+          "type": "text",
+          "id": "column_2_title",
+          "label": "t:sections.header.blocks.link_mega.settings.column_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "column_2_links",
+          "label": "t:sections.header.blocks.link_mega.settings.column_links.label",
+          "info": "t:sections.header.blocks.link_mega.settings.column_links.info"
+        },
+        {
+          "type": "text",
+          "id": "column_3_title",
+          "label": "t:sections.header.blocks.link_mega.settings.column_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "column_3_links",
+          "label": "t:sections.header.blocks.link_mega.settings.column_links.label",
+          "info": "t:sections.header.blocks.link_mega.settings.column_links.info"
+        },
+        {
+          "type": "text",
+          "id": "column_4_title",
+          "label": "t:sections.header.blocks.link_mega.settings.column_title.label"
+        },
+        {
+          "type": "textarea",
+          "id": "column_4_links",
+          "label": "t:sections.header.blocks.link_mega.settings.column_links.label",
+          "info": "t:sections.header.blocks.link_mega.settings.column_links.info"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_layouts",
+          "label": "t:sections.header.blocks.link_mega.settings.show_layouts.label",
+          "info": "t:sections.header.blocks.link_mega.settings.show_layouts.info",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "layouts_title",
+          "label": "t:sections.header.blocks.link_mega.settings.layouts_title.label",
+          "default": "Product page"
+        },
+        {
+          "type": "range",
+          "id": "layouts_position",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "label": "t:sections.header.blocks.link_mega.settings.layouts_position.label",
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "footnote",
+          "label": "t:sections.header.blocks.link_mega.settings.footnote.label"
         }
       ]
     }

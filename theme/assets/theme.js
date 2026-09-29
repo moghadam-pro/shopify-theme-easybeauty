@@ -366,70 +366,143 @@
     });
   });
 
-  /* ---------- skin quiz ---------- */
+  /* ---------- skin quiz ----------
+     intro → one question at a time → result. Single-answer questions advance
+     on tap; multi-answer ones (checkboxes) cap at data-max and use Next.
+     Products are ranked by how many answer tags they carry. */
   qsa('[data-quiz]').forEach((quiz) => {
-    const steps = qsa('[data-quiz-step]', quiz);
-    const progressFill = qs('[data-quiz-progress-fill]', quiz);
-    const answers = {};
+    const intro = qs('.quiz-intro', quiz);
+    const stage = qs('[data-quiz-stage]', quiz);
+    const result = qs('.quiz-result', quiz);
+    const questions = qsa('.quiz-question', quiz);
+    const progress = qs('[data-quiz-progress]', quiz);
     let current = 0;
 
-    function render() {
-      steps.forEach((step, i) => step.classList.toggle('is-active', i === current));
-      if (progressFill) progressFill.style.width = Math.round((current / (steps.length - 1)) * 100) + '%';
-      if (current === steps.length - 1) buildResult();
+    function scrollTop() {
+      const top = quiz.getBoundingClientRect().top + window.scrollY - 80;
+      if (window.scrollY > top) window.scrollTo({ top, behavior: 'smooth' });
+    }
+    function show(view) {
+      intro.hidden = view !== 'intro';
+      stage.hidden = view !== 'quiz';
+      result.hidden = view !== 'result';
+    }
+    function goTo(i) {
+      current = i;
+      questions.forEach((q, j) => { q.hidden = j !== i; });
+      if (progress) progress.style.width = (i / questions.length) * 100 + '%';
+      show('quiz');
+      const first = qs('input', questions[i]);
+      if (first) first.focus({ preventScroll: true });
+    }
+    function answersOf(q) { return qsa('[data-quiz-input]:checked', q); }
+    function next() {
+      if (current < questions.length - 1) goTo(current + 1);
+      else finish();
+      scrollTop();
     }
 
-    function buildResult() {
-      const pickedTags = Object.values(answers).filter(Boolean);
-      const resultList = qs('[data-quiz-results]', quiz);
-      if (!resultList) return;
-      const cards = qsa('[data-quiz-product]', resultList);
-      if (!pickedTags.length) {
-        cards.forEach((card) => { card.hidden = false; });
-        return;
-      }
-      /* Score every card by how many of the answers it satisfies, rather than
-         picking one "top" tag — with one tag per question, counts tie and a
-         single-tag filter would only ever reflect whichever answer sorted
-         first, ignoring the rest of the quiz. */
-      const scored = cards.map((card) => {
-        const tags = (card.getAttribute('data-tags') || '').split(',').map((t) => t.trim());
-        const score = pickedTags.reduce((n, tag) => n + (tags.includes(tag) ? 1 : 0), 0);
-        return { card, score };
+    questions.forEach((q) => {
+      const multi = q.getAttribute('data-multi') === 'true';
+      const max = parseInt(q.getAttribute('data-max'), 10) || 2;
+      const nextBtn = qs('[data-quiz-next]', q);
+      q.addEventListener('change', (e) => {
+        const input = e.target.closest('[data-quiz-input]');
+        if (!input) return;
+        if (multi) {
+          const checked = answersOf(q);
+          if (checked.length > max) input.checked = false;
+          if (nextBtn) nextBtn.disabled = answersOf(q).length === 0;
+        } else {
+          setTimeout(next, 180);
+        }
       });
-      const bestScore = Math.max(0, ...scored.map((s) => s.score));
-      scored
-        .sort((a, b) => b.score - a.score)
-        .forEach(({ card, score }) => {
-          resultList.appendChild(card);
-          card.hidden = bestScore > 0 && score === 0;
-        });
-    }
-
-    quiz.addEventListener('click', (e) => {
-      const option = e.target.closest('[data-quiz-option]');
-      if (option) {
-        const step = option.closest('[data-quiz-step]');
-        answers[step.getAttribute('data-quiz-step')] = option.getAttribute('data-quiz-tag');
-        current = Math.min(current + 1, steps.length - 1);
-        render();
-      }
-      if (e.target.closest('[data-quiz-back]')) {
-        current = Math.max(current - 1, 0);
-        render();
-      }
-      if (e.target.closest('[data-quiz-restart]')) {
-        Object.keys(answers).forEach((k) => delete answers[k]);
-        current = 0;
-        render();
-      }
-      if (e.target.closest('[data-quiz-start]')) {
-        current = 1;
-        render();
-      }
+      if (nextBtn) nextBtn.addEventListener('click', () => { if (answersOf(q).length) next(); });
+      const back = qs('[data-quiz-back]', q);
+      if (back) back.addEventListener('click', () => {
+        if (current === 0) { show('intro'); } else { goTo(current - 1); }
+        scrollTop();
+      });
     });
 
-    render();
+    function finish() {
+      const tags = [];
+      const recap = qs('[data-quiz-recap]', quiz);
+      if (recap) recap.innerHTML = '';
+      questions.forEach((q) => {
+        const picked = answersOf(q);
+        picked.forEach((input) => { if (input.value) tags.push(input.value.toLowerCase()); });
+        if (recap) {
+          const cell = document.createElement('div');
+          const dt = document.createElement('dt');
+          const dd = document.createElement('dd');
+          dt.textContent = (q.getAttribute('data-question') || '').replace(/\?$/, '');
+          dd.textContent = picked.map((i) => i.getAttribute('data-label')).join(', ') || '—';
+          cell.appendChild(dt); cell.appendChild(dd);
+          recap.appendChild(cell);
+        }
+      });
+      const tagWrap = qs('[data-quiz-tags]', quiz);
+      if (tagWrap) {
+        tagWrap.innerHTML = '';
+        questions.slice(0, 3).forEach((q) => answersOf(q).slice(0, 1).forEach((input) => {
+          const span = document.createElement('span');
+          span.textContent = input.getAttribute('data-label');
+          tagWrap.appendChild(span);
+        }));
+      }
+      const grid = qs('[data-quiz-results]', quiz);
+      const limit = parseInt(grid && grid.getAttribute('data-limit'), 10) || 3;
+      const items = grid ? qsa('[data-quiz-product]', grid) : [];
+      const ranked = items.map((el, index) => {
+        const own = (el.getAttribute('data-tags') || '').split(',').map((t) => t.trim());
+        const score = tags.reduce((n, t) => n + (own.indexOf(t) !== -1 ? 1 : 0), 0);
+        return { el, score, index, ok: !el.hasAttribute('data-unavailable') };
+      }).filter((r) => r.ok).sort((x, y) => y.score - x.score || x.index - y.index);
+      const picks = ranked.slice(0, limit);
+      items.forEach((el) => { el.hidden = true; });
+      picks.forEach((r) => { r.el.hidden = false; grid.appendChild(r.el); });
+      const total = picks.reduce((n, r) => n + (parseInt(r.el.getAttribute('data-price'), 10) || 0), 0);
+      const totalEl = qs('[data-quiz-total]', quiz);
+      if (totalEl) totalEl.textContent = formatMoney(total);
+      quiz._picks = picks.map((r) => parseInt(r.el.getAttribute('data-variant-id'), 10)).filter(Boolean);
+      if (progress) progress.style.width = '100%';
+      show('result');
+      syncSaved();
+    }
+
+    const start = qs('[data-quiz-start]', quiz);
+    if (start) start.addEventListener('click', () => goTo(0));
+    const restart = qs('[data-quiz-restart]', quiz);
+    if (restart) restart.addEventListener('click', () => {
+      qsa('[data-quiz-input]', quiz).forEach((i) => { i.checked = false; });
+      qsa('[data-quiz-next]', quiz).forEach((b) => { b.disabled = true; });
+      show('intro');
+      scrollTop();
+    });
+    const add = qs('[data-quiz-add]', quiz);
+    const error = qs('[data-quiz-error]', quiz);
+    if (add) add.addEventListener('click', async () => {
+      if (!quiz._picks || !quiz._picks.length) return;
+      add.disabled = true;
+      if (error) error.hidden = true;
+      try {
+        const res = await fetch(settings.cartAddUrl + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items: quiz._picks.map((id) => ({ id, quantity: 1 })) })
+        });
+        const data = await res.json();
+        if (!res.ok) { if (error) { error.textContent = data.description || data.message; error.hidden = false; } return; }
+        if (settings.cartType === 'page') { window.location.href = settings.cartUrl; return; }
+        await refreshCartDrawer();
+        openCartDrawer();
+      } catch (err) {
+        console.error('[quiz] add failed', err);
+      } finally {
+        add.disabled = false;
+      }
+    });
   });
 
   /* ---------- hero hotspots ----------

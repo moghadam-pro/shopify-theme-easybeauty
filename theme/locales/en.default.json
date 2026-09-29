@@ -63,7 +63,12 @@
         "one": "{{ count }} product",
         "other": "{{ count }} products"
       },
-      "dark_mode": "Dark mode"
+      "dark_mode": "Dark mode",
+      "layout_gallery": "Gallery left",
+      "layout_default": "Default",
+      "layout_full": "Full-width photo",
+      "layout_info_left": "Details left, gallery right",
+      "layout_dossier": "Dark dossier"
     },
     "cart": {
       "title": "Your bag",
@@ -117,11 +122,19 @@
     "quiz": {
       "title": "Twelve products, narrowed to a routine.",
       "start": "Start the quiz",
-      "next": "Next",
+      "next": "Next question",
       "back": "Back",
       "see_results": "See my routine",
       "retake": "Retake the quiz",
-      "add_routine_to_bag": "Add routine to bag"
+      "add_routine_to_bag": "Add all to bag",
+      "skip": "Skip the quiz",
+      "step": "Question {{ current }} of {{ total }}",
+      "pick_up_to": "Pick up to {{ count }}.",
+      "tap_to_continue": "Tap an answer to continue.",
+      "routine_total": "Routine total",
+      "browse": "Browse everything instead",
+      "you_told_us": "What you told us",
+      "adding": "Adding…"
     },
     "faq": {
       "title": "Help",

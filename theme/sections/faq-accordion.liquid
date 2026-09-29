@@ -35,6 +35,7 @@
 <section class="faq{% if section.settings.show_nav %} faq--with-nav{% endif %}">
   {%- if section.settings.show_nav -%}
     <nav class="faq__nav" aria-label="{{ 'sections.faq.title' | t }}">
+      <div class="faq__nav-inner">
       {%- for block in section.blocks -%}
         {%- if block.type == 'group' -%}
           {%- assign answer_count = 0 -%}
@@ -48,6 +49,7 @@
           </a>
         {%- endif -%}
       {%- endfor -%}
+      </div>
     </nav>
   {%- endif -%}
   <div class="faq__groups">

@@ -132,6 +132,7 @@ export const linklists = {
       ]),
       link('Quiz', 'page.quiz.html'),
       link('Contact', 'page.contact.html'),
+      link('Journal', 'blog.html'),
     ],
   },
   'footer-shop': { handle: 'footer-shop', title: 'Shop', links: [link('All products', 'collection.html'), link('Bundles', 'index.html'), link('Lookbook', 'page.lookbook.html'), link('Skin quiz', 'page.quiz.html'), link('Your bag', 'cart.html')] },
