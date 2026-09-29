@@ -1,0 +1,216 @@
+{%- comment -%}
+  Legal hub (design: Legal). Tabs across the top (one per "Document" block),
+  the active document as numbered clauses (the "Clause" blocks that follow
+  it), and a sticky side column of "Side note" blocks.
+  A document with no clauses shows the Shopify policy picked in its
+  settings (Settings → Policies), so the text can live in one place.
+  Tabs: [data-legal] in theme.js (also opens #privacy, #terms … links);
+  without JS every document is shown one after another.
+{%- endcomment -%}
+{%- liquid
+  assign doc_count = 0
+  assign aside_count = 0
+  for block in section.blocks
+    if block.type == 'document'
+      assign doc_count = doc_count | plus: 1
+    elsif block.type == 'aside'
+      assign aside_count = aside_count | plus: 1
+    endif
+  endfor
+-%}
+<div class="legal-doc" data-legal>
+  {%- if doc_count > 1 -%}
+    <div class="legal-doc__tabs" role="tablist">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'document' -%}
+          {%- assign doc_id = block.settings.anchor | default: block.settings.label | handleize -%}
+          <button type="button" class="legal-doc__tab" role="tab" id="LegalTab-{{ doc_id }}" aria-controls="{{ doc_id }}" data-legal-tab="{{ doc_id }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="legal-doc__shell{% if aside_count > 0 %} legal-doc__shell--aside{% endif %}">
+    <div class="legal-doc__main">
+      {%- assign open = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'document' -%}
+          {%- if open -%}</div></div>{%- endif -%}
+          {%- liquid
+            assign doc_id = block.settings.anchor | default: block.settings.label | handleize
+            assign next_block = section.blocks[forloop.index]
+            assign has_clauses = false
+            if next_block.type == 'clause'
+              assign has_clauses = true
+            endif
+            assign policy = blank
+            case block.settings.policy
+              when 'privacy'
+                assign policy = shop.privacy_policy
+              when 'terms'
+                assign policy = shop.terms_of_service
+              when 'refund'
+                assign policy = shop.refund_policy
+              when 'shipping'
+                assign policy = shop.shipping_policy
+              when 'subscription'
+                assign policy = shop.subscription_policy
+            endcase
+          -%}
+          <div class="legal-doc__panel" id="{{ doc_id }}" role="tabpanel" aria-labelledby="LegalTab-{{ doc_id }}" data-legal-panel="{{ doc_id }}">
+            {%- if block.settings.kicker != blank -%}<div class="legal-doc__kicker">{{ block.settings.kicker }}</div>{%- endif -%}
+            {%- if block.settings.heading != blank -%}<h2 class="legal-doc__title">{{ block.settings.heading }}</h2>{%- endif -%}
+            <div class="legal-doc__clauses">
+            {%- if has_clauses == false and policy != blank -%}
+              <div class="legal-doc__policy rte">{{ policy.body }}</div>
+            {%- endif -%}
+          {%- assign open = true -%}
+        {%- elsif block.type == 'clause' and open -%}
+          <div class="legal-doc__clause" {{ block.shopify_attributes }}>
+            <div class="legal-doc__clause-head">{% if block.settings.number != blank %}{{ block.settings.number }} — {% endif %}{{ block.settings.heading }}</div>
+            <div class="legal-doc__clause-body rte">{{ block.settings.text }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if open -%}</div></div>{%- endif -%}
+    </div>
+
+    {%- if aside_count > 0 -%}
+      <aside class="legal-doc__aside">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'aside' -%}
+            <div class="legal-doc__note" {{ block.shopify_attributes }}>
+              {%- if block.settings.heading != blank -%}<div class="legal-doc__note-label">{{ block.settings.heading }}</div>{%- endif -%}
+              {%- if block.settings.text != blank -%}<div class="legal-doc__note-text rte">{{ block.settings.text }}</div>{%- endif -%}
+              {%- if block.settings.button_label != blank -%}
+                <a href="{{ block.settings.button_link | default: '#' }}" class="btn btn-secondary legal-doc__note-btn">{{ block.settings.button_label }}</a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </aside>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.legal-document.name",
+  "blocks": [
+    {
+      "type": "document",
+      "name": "t:sections.legal-document.blocks.document.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "t:sections.legal-document.blocks.document.settings.label.label",
+          "default": "Privacy"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "t:sections.legal-document.blocks.document.settings.anchor.label",
+          "info": "t:sections.legal-document.blocks.document.settings.anchor.info"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "t:sections.legal-document.blocks.document.settings.kicker.label"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.legal-document.blocks.document.settings.heading.label"
+        },
+        {
+          "type": "select",
+          "id": "policy",
+          "label": "t:sections.legal-document.blocks.document.settings.policy.label",
+          "info": "t:sections.legal-document.blocks.document.settings.policy.info",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.legal-document.blocks.document.settings.policy.options__1.label"
+            },
+            {
+              "value": "privacy",
+              "label": "t:sections.legal-document.blocks.document.settings.policy.options__2.label"
+            },
+            {
+              "value": "terms",
+              "label": "t:sections.legal-document.blocks.document.settings.policy.options__3.label"
+            },
+            {
+              "value": "refund",
+              "label": "t:sections.legal-document.blocks.document.settings.policy.options__4.label"
+            },
+            {
+              "value": "shipping",
+              "label": "t:sections.legal-document.blocks.document.settings.policy.options__5.label"
+            },
+            {
+              "value": "subscription",
+              "label": "t:sections.legal-document.blocks.document.settings.policy.options__6.label"
+            }
+          ],
+          "default": "none"
+        }
+      ]
+    },
+    {
+      "type": "clause",
+      "name": "t:sections.legal-document.blocks.clause.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "t:sections.legal-document.blocks.clause.settings.number.label",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.legal-document.blocks.clause.settings.heading.label"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.legal-document.blocks.clause.settings.text.label"
+        }
+      ]
+    },
+    {
+      "type": "aside",
+      "name": "t:sections.legal-document.blocks.aside.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "t:sections.legal-document.blocks.aside.settings.heading.label"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.legal-document.blocks.aside.settings.text.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:sections.legal-document.blocks.aside.settings.button_label.label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.legal-document.blocks.aside.settings.button_link.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.legal-document.name"
+    }
+  ]
+}
+{% endschema %}

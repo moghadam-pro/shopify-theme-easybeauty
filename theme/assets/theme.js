@@ -1122,6 +1122,61 @@
     qsa('[data-collection].is-drawer-open').forEach((r) => { r.classList.remove('is-drawer-open'); document.body.style.overflow = ''; });
   });
 
+  /* ---------- legal: document tabs (+ #privacy style links) ---------- */
+  qsa('[data-legal]').forEach((root) => {
+    const tabs = qsa('[data-legal-tab]', root);
+    const panels = qsa('[data-legal-panel]', root);
+    if (!tabs.length) return;
+    function show(id, focus) {
+      if (!panels.some((p) => p.getAttribute('data-legal-panel') === id)) id = tabs[0].getAttribute('data-legal-tab');
+      tabs.forEach((t) => {
+        const on = t.getAttribute('data-legal-tab') === id;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach((p) => { p.hidden = p.getAttribute('data-legal-panel') !== id; });
+    }
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => {
+        const id = t.getAttribute('data-legal-tab');
+        show(id);
+        try { history.replaceState(null, '', '#' + id); } catch (err) { /* ignore */ }
+      });
+      t.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        show(next.getAttribute('data-legal-tab'), true);
+      });
+    });
+    const fromHash = () => show((window.location.hash || '').replace('#', ''));
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  });
+
+  /* ---------- lookbook: hotspots <-> product rows ---------- */
+  qsa('[data-look]').forEach((root) => {
+    const spots = qsa('[data-look-spot]', root);
+    const rows = qsa('[data-look-row]', root);
+    let pinned = '';
+    function mark(n) {
+      const key = n || pinned;
+      spots.forEach((el) => el.classList.toggle('is-active', el.getAttribute('data-look-spot') === key));
+      rows.forEach((el) => el.classList.toggle('is-active', el.getAttribute('data-look-row') === key));
+    }
+    spots.forEach((el) => {
+      const n = el.getAttribute('data-look-spot');
+      el.addEventListener('mouseenter', () => mark(n));
+      el.addEventListener('mouseleave', () => mark(''));
+      el.addEventListener('click', () => { pinned = pinned === n ? '' : n; mark(''); });
+    });
+    rows.forEach((el) => {
+      const n = el.getAttribute('data-look-row');
+      el.addEventListener('mouseenter', () => mark(n));
+      el.addEventListener('mouseleave', () => mark(''));
+    });
+  });
+
   /* ---------- journal: search + load more ---------- */
   qsa('[data-blog]').forEach((root) => {
     const grid = qs('[data-blog-grid]', root);

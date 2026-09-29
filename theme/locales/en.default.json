@@ -202,6 +202,9 @@
       "search_empty": "No products on this page match your search.",
       "load_more": "Load more",
       "showing_html": "Showing {{ shown }} of {{ total }}"
+    },
+    "lookbook": {
+      "add": "Add"
     }
   },
   "templates": {

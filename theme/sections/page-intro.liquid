@@ -9,7 +9,14 @@
     assign intro_title = page.title | default: blog.title | default: collection.title
   endif
 -%}
-<section class="page-intro">
+{%- liquid
+  assign intro_image = section.settings.image
+  assign has_image = false
+  if intro_image != blank or section.settings.fallback_image != blank
+    assign has_image = true
+  endif
+-%}
+<section class="page-intro{% if has_image %} page-intro--media{% endif %}{% if section.settings.grayscale %} page-intro--mono{% endif %}">
   <div class="container">
     {%- if section.settings.show_breadcrumb -%}
       <nav class="page-intro__breadcrumb" aria-label="{{ 'sections.page-intro.breadcrumb' | t }}">
@@ -58,6 +65,15 @@
       </div>
     {%- endif -%}
   </div>
+  {%- if has_image -%}
+    <div class="page-intro__media">
+      {%- if intro_image != blank -%}
+        {{ intro_image | image_url: width: 1400 | image_tag: loading: 'eager', sizes: '(min-width: 960px) 44vw, 100vw', widths: '600, 1000, 1400', alt: intro_image.alt }}
+      {%- else -%}
+        <img src="{{ section.settings.fallback_image | asset_url }}" alt="" width="1200" height="1500" loading="eager">
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -127,6 +143,24 @@
       "type": "url",
       "id": "button_link_2",
       "label": "t:sections.page-intro.settings.button_link_2.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.page-intro.settings.image.label",
+      "info": "t:sections.page-intro.settings.image.info"
+    },
+    {
+      "type": "text",
+      "id": "fallback_image",
+      "label": "t:sections.page-intro.settings.fallback_image.label",
+      "info": "t:sections.page-intro.settings.fallback_image.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "t:sections.page-intro.settings.grayscale.label",
+      "default": false
     }
   ],
   "presets": [

@@ -5,60 +5,44 @@
       "settings": {
         "show_breadcrumb": true,
         "heading": "Legal",
-        "text": "<p>Privacy notice, terms of sale and cookie use. Written to be read, not to be skipped.</p>"
+        "text": "<p>Privacy notice, terms of sale and cookie use. Written to be read, not to be skipped.</p>",
+        "meta": "Last updated 4 March 2026",
+        "meta_style": "right"
       }
     },
     "main": {
-      "type": "legal-links",
-      "settings": {
-        "heading": "Policies"
-      }
-    },
-    "details": {
-      "type": "multicolumn",
-      "settings": {
-        "style": "cards"
-      },
+      "type": "legal-document",
       "blocks": {
-        "col-1": {
-          "type": "column",
-          "settings": {
-            "kicker": "Company",
-            "title": "EasyBeauty Lda",
-            "text": "Rua da Fábrica 14, 2710 Sintra, Portugal · VAT PT512 448 019"
-          }
-        },
-        "col-2": {
-          "type": "column",
-          "settings": {
-            "kicker": "Data requests",
-            "title": "Your data, on request",
-            "text": "Ask for a copy of your data, or its deletion, and we answer within thirty days.",
-            "link_label": "Write to us",
-            "link": "/pages/contact"
-          }
-        },
-        "col-3": {
-          "type": "column",
-          "settings": {
-            "kicker": "Also useful",
-            "title": "Shipping times and returns",
-            "text": "Delivery windows, the sixty-day return policy and how to start a return.",
-            "link_label": "Read the FAQ",
-            "link": "/pages/faq"
-          }
-        }
+        "doc-privacy": { "type": "document", "settings": { "label": "Privacy", "anchor": "privacy", "kicker": "Privacy notice", "heading": "What we hold, why, and for how long.", "policy": "none" } },
+        "privacy-1": { "type": "clause", "settings": { "number": "01", "heading": "What we collect", "text": "<p>To ship an order we need a name, a delivery address and a phone number. If you sign in with Google we receive your email address and display name, nothing else from your Google account.</p><p>The quiz answers, saved items and skin profile you enter are stored so the shop can filter itself for you. They are never used to set a different price.</p>" } },
+        "privacy-2": { "type": "clause", "settings": { "number": "02", "heading": "Why we hold it", "text": "<p>Order and invoice records are kept because Portuguese tax law requires ten years. Everything else — quiz answers, saved items, marketing consent — is kept because you asked us to, and is deleted on request.</p>" } },
+        "privacy-3": { "type": "clause", "settings": { "number": "03", "heading": "Who sees it", "text": "<p>Our carrier receives the address and phone number needed to deliver. Our payment provider handles card data; we never see the full number. No one else receives your details, and we do not sell or rent any of it.</p>" } },
+        "privacy-4": { "type": "clause", "settings": { "number": "04", "heading": "Your rights", "text": "<p>You can ask for a copy of your data, correct it, or have it deleted. Write to us and we answer within thirty days. You can also complain to the CNPD, the Portuguese data protection authority.</p>" } },
+        "doc-terms": { "type": "document", "settings": { "label": "Terms", "anchor": "terms", "kicker": "Terms of sale", "heading": "The agreement when you buy from us.", "policy": "none" } },
+        "terms-1": { "type": "clause", "settings": { "number": "01", "heading": "Prices and currency", "text": "<p>Prices shown include VAT at the Portuguese rate and are charged in US dollars. Delivery is added at checkout unless the order qualifies as free.</p>" } },
+        "terms-2": { "type": "clause", "settings": { "number": "02", "heading": "Orders and stock", "text": "<p>A contract begins when we send the shipping confirmation, not at payment. If a batch fails testing after you ordered, we cancel, refund in full and tell you why.</p>" } },
+        "terms-3": { "type": "clause", "settings": { "number": "03", "heading": "Returns and refunds", "text": "<p>You may return any product within sixty days of delivery, opened or not, and we pay the return postage. Refunds go to the original payment method within five working days of the parcel reaching our warehouse.</p>" } },
+        "terms-4": { "type": "clause", "settings": { "number": "04", "heading": "Subscriptions", "text": "<p>A subscription renews at the interval you chose until you skip, delay or cancel it. There is no notice period, and changes made before the cut-off date shown in your account apply to the next shipment.</p>" } },
+        "terms-5": { "type": "clause", "settings": { "number": "05", "heading": "Claims and law", "text": "<p>Nothing here limits the statutory rights you have as a consumer in the EU. These terms are governed by Portuguese law, and the courts of Lisbon have jurisdiction.</p>" } },
+        "doc-cookies": { "type": "document", "settings": { "label": "Cookies", "anchor": "cookies", "kicker": "Cookie use", "heading": "Three that are needed, one you can refuse.", "policy": "none" } },
+        "cookies-1": { "type": "clause", "settings": { "number": "01", "heading": "Strictly necessary", "text": "<p>A session cookie keeps your bag and your sign-in valid while you browse. It carries no identifier we can link to a person and cannot be switched off without breaking checkout.</p>" } },
+        "cookies-2": { "type": "clause", "settings": { "number": "02", "heading": "Preferences", "text": "<p>Local storage on your device holds saved items, quiz answers and your skin profile. It never leaves the device until you sign in, and clearing your browser data removes it.</p>" } },
+        "cookies-3": { "type": "clause", "settings": { "number": "03", "heading": "Analytics", "text": "<p>We count page views and checkout steps with a self-hosted, cookie-free tool. No third-party analytics, no advertising pixels, no cross-site tracking.</p>" } },
+        "cookies-4": { "type": "clause", "settings": { "number": "04", "heading": "Changing your mind", "text": "<p>Because we set no marketing or advertising cookies, there is no consent banner to dismiss. If that changes we will ask first, and the choice will live in your account.</p>" } },
+        "aside-1": { "type": "aside", "settings": { "heading": "Company", "text": "<p>EasyBeauty Lda · Rua da Fábrica 14, 2710 Sintra, Portugal · VAT PT512 448 019</p>" } },
+        "aside-2": { "type": "aside", "settings": { "heading": "Data requests", "text": "<p>Ask for a copy of your data, or its deletion, and we answer within thirty days.</p>", "button_label": "Write to us", "button_link": "/pages/contact" } },
+        "aside-3": { "type": "aside", "settings": { "heading": "Also useful", "text": "<p><a href=\"/pages/faq#shipping\">Shipping times</a><br><a href=\"/pages/faq#returns\">Return policy</a><br><a href=\"/account\">Your account data</a></p>" } }
       },
       "block_order": [
-        "col-1",
-        "col-2",
-        "col-3"
+        "doc-privacy", "privacy-1", "privacy-2", "privacy-3", "privacy-4",
+        "doc-terms", "terms-1", "terms-2", "terms-3", "terms-4", "terms-5",
+        "doc-cookies", "cookies-1", "cookies-2", "cookies-3", "cookies-4",
+        "aside-1", "aside-2", "aside-3"
       ]
     }
   },
   "order": [
     "intro",
-    "main",
-    "details"
+    "main"
   ]
 }

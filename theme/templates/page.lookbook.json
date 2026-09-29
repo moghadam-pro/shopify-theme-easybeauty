@@ -10,13 +10,15 @@
         "button_label": "Start with morning",
         "button_link": "/pages/lookbook#look-1",
         "button_label_2": "Shop all products",
-        "button_link_2": "/collections/all"
+        "button_link_2": "/collections/all",
+        "fallback_image": "hero-banner.jpg",
+        "grayscale": true
       }
     },
     "index": {
       "type": "multicolumn",
       "settings": {
-        "style": "cards"
+        "style": "index"
       },
       "blocks": {
         "look-1": {
@@ -76,7 +78,8 @@
         "text": "Ana has combination skin that turns oily by midday. The milk goes on dry skin, the serum on damp, and the cream only where it tightens — cheeks, never the T-zone.",
         "button_label": "Add all 3 to bag",
         "fallback_button_label": "Shop all products",
-        "note": "3 products · $168"
+        "note": "3 products · $168",
+        "grayscale": true
       },
       "blocks": {
         "p-1": {
@@ -132,7 +135,8 @@
         "text": "No actives for seven days. Mineral mist while the skin is still damp, then the cream in two thin layers rather than one thick one. Redness settled by day four.",
         "button_label": "Add all 2 to bag",
         "fallback_button_label": "Shop all products",
-        "note": "2 products · $86"
+        "note": "2 products · $86",
+        "grayscale": true
       },
       "blocks": {
         "p-1": {
@@ -176,7 +180,8 @@
         "text": "The trio that clears cabin rules and still covers a week: the milk doubles as a makeup remover, the balm covers lips and cuticles, and No.3 stands in for anything brightening.",
         "button_label": "Add all 3 to bag",
         "fallback_button_label": "Shop all products",
-        "note": "3 products · $128"
+        "note": "3 products · $128",
+        "grayscale": true
       },
       "blocks": {
         "p-1": {
@@ -232,7 +237,8 @@
         "text": "Clay on the chin and nose only, fifteen minutes, never to dry. Everything after it is the morning routine in reverse order, with the serum left on longer.",
         "button_label": "Add all 3 to bag",
         "fallback_button_label": "Shop all products",
-        "note": "3 products · $157"
+        "note": "3 products · $157",
+        "grayscale": true
       },
       "blocks": {
         "p-1": {

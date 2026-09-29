@@ -3,6 +3,8 @@
   a panel with number/kicker/title/body, the product list and an
   "add all to bag" button. Add-all reuses the bundle JS ([data-bundle]), so
   it only appears once every product block has a real product picked.
+  Hotspots and product rows highlight each other ([data-look] in theme.js);
+  each row has its own "Add". "Black & white photos" matches the design.
   The anchor setting gives the section a stable id for in-page links such
   as /pages/lookbook#look-1.
 {%- endcomment -%}
@@ -14,7 +16,7 @@
     endif
   endfor
 -%}
-<section class="shoppable-look{% if section.settings.layout == 'right' %} is-reversed{% endif %}" {% if section.settings.anchor != blank %}id="{{ section.settings.anchor | handleize }}"{% endif %} data-bundle>
+<section class="shoppable-look{% if section.settings.layout == 'right' %} is-reversed{% endif %}{% if section.settings.grayscale %} shoppable-look--mono{% endif %}" data-look {% if section.settings.anchor != blank %}id="{{ section.settings.anchor | handleize }}"{% endif %} data-bundle>
   <div class="shoppable-look__media">
     {%- if section.settings.image != blank -%}
       <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.image.alt | escape }}" width="1400" height="{{ 1400 | divided_by: section.settings.image.aspect_ratio | round }}" loading="lazy">
@@ -23,9 +25,11 @@
     {%- endif -%}
     {%- for block in section.blocks -%}
       {%- assign spot_title = block.settings.product.title | default: block.settings.fallback_title -%}
-      <span class="shoppable-look__spot" style="left: {{ block.settings.horizontal_position }}%; top: {{ block.settings.vertical_position }}%" title="{{ spot_title | escape }}">
-        <span class="visually-hidden">{{ spot_title }}</span>{{ forloop.index }}
-      </span>
+      <button type="button" class="shoppable-look__spot" style="left: {{ block.settings.horizontal_position }}%; top: {{ block.settings.vertical_position }}%" aria-label="{{ spot_title | escape }}" data-look-spot="{{ forloop.index }}">
+        <span class="shoppable-look__pulse" aria-hidden="true"></span>
+        <span class="shoppable-look__dot" aria-hidden="true"></span>
+        <span class="shoppable-look__tip" aria-hidden="true">{{ spot_title }}</span>
+      </button>
     {%- endfor -%}
     {%- if section.settings.caption != blank -%}<div class="shoppable-look__caption">{{ section.settings.caption }}</div>{%- endif -%}
   </div>
@@ -41,7 +45,7 @@
     <div class="shoppable-look__products">
       {%- for block in section.blocks -%}
         {%- assign look_product = block.settings.product -%}
-        <div class="shoppable-look__product" data-bundle-row {{ block.shopify_attributes }}>
+        <div class="shoppable-look__product" data-bundle-row data-look-row="{{ forloop.index }}" {{ block.shopify_attributes }}>
           <a href="{{ look_product.url | default: routes.all_products_collection_url }}" class="shoppable-look__thumb">
             {%- if look_product.featured_image != blank -%}
               <img src="{{ look_product.featured_image | image_url: width: 112 }}" alt="" width="56" height="56" loading="lazy">
@@ -58,6 +62,14 @@
           </div>
           {%- if look_product != blank -%}
             <input type="hidden" value="{{ look_product.selected_or_first_available_variant.id }}" data-price="{{ look_product.selected_or_first_available_variant.price }}" data-bundle-variant>
+            {%- if look_product.available -%}
+              {%- form 'product', look_product, data-quick-add: true, class: 'shoppable-look__add-form' -%}
+                <input type="hidden" name="id" value="{{ look_product.selected_or_first_available_variant.id }}">
+                <button type="submit" class="shoppable-look__add">{{ 'sections.lookbook.add' | t }}</button>
+              {%- endform -%}
+            {%- else -%}
+              <span class="shoppable-look__add is-disabled">{{ 'products.product.sold_out' | t }}</span>
+            {%- endif -%}
           {%- endif -%}
         </div>
       {%- endfor -%}
@@ -110,6 +122,12 @@
         }
       ],
       "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "t:sections.shoppable-look.settings.grayscale.label",
+      "default": false
     },
     {
       "type": "text",

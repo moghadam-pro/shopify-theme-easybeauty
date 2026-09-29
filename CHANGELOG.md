@@ -5,6 +5,21 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.7.0] — 2026-09-29
+
+### Added
+- "Legal documents" section (design: Legal): tabs per document (opened by `#privacy`,
+  `#terms`, `#cookies` links), numbered clauses in a two-column layout, and a sticky side
+  column of notes. A document without clauses can show a Shopify policy instead.
+- Page intro: optional side image (split layout, optional black & white).
+- Multicolumn "Index" style: serif number, small-caps title and note (lookbook contents).
+
+### Changed
+- Lookbook (design: Lookbook): split hero with a black & white photo, index strip, looks with
+  a 420px product panel, black & white photos (setting), pulsing hotspots with name labels
+  that highlight the matching product row (and the other way round), an "Add" button per
+  product and dark captions.
+
 ## [1.6.0] — 2026-09-29
 
 ### Added

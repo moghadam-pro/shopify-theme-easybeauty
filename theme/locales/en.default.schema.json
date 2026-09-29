@@ -770,6 +770,48 @@
     "main-page": {
       "name": "Page"
     },
+    "legal-document": {
+      "name": "Legal documents",
+      "blocks": {
+        "document": {
+          "name": "Document (tab)",
+          "settings": {
+            "label": { "label": "Tab label" },
+            "anchor": { "label": "Link name", "info": "Opens this tab from links such as /pages/legal#privacy. Defaults to the tab label." },
+            "kicker": { "label": "Eyebrow" },
+            "heading": { "label": "Heading" },
+            "policy": {
+              "label": "Show a Shopify policy",
+              "info": "Shown when no Clause blocks follow this document. Edit the text in Settings → Policies.",
+              "options__1": { "label": "None" },
+              "options__2": { "label": "Privacy policy" },
+              "options__3": { "label": "Terms of service" },
+              "options__4": { "label": "Refund policy" },
+              "options__5": { "label": "Shipping policy" },
+              "options__6": { "label": "Subscription policy" }
+            }
+          }
+        },
+        "clause": {
+          "name": "Clause",
+          "settings": {
+            "number": { "label": "Number" },
+            "heading": { "label": "Heading" },
+            "text": { "label": "Text" }
+          }
+        },
+        "aside": {
+          "name": "Side note",
+          "settings": {
+            "heading": { "label": "Heading" },
+            "text": { "label": "Text" },
+            "button_label": { "label": "Button label" },
+            "button_link": { "label": "Button link" }
+          }
+        }
+      },
+      "presets": { "name": "Legal documents" }
+    },
     "legal-links": {
       "name": "Legal links",
       "settings": {
@@ -1453,6 +1495,17 @@
           "options__2": {
             "label": "Small caps on the right"
           }
+        },
+        "image": {
+          "label": "Side image",
+          "info": "Shows the intro as a split with the image on the right."
+        },
+        "fallback_image": {
+          "label": "Theme sample image (file name)",
+          "info": "Used until you pick an image, e.g. hero-banner.jpg. Leave empty for no image."
+        },
+        "grayscale": {
+          "label": "Black & white image"
         }
       },
       "presets": {
@@ -1463,7 +1516,10 @@
       "name": "Multicolumn",
       "settings": {
         "style": {
-          "label": "Style"
+          "label": "Style",
+          "options__index": {
+            "label": "Index (numbered links)"
+          }
         },
         "eyebrow": {
           "label": "Eyebrow"
@@ -1595,6 +1651,9 @@
         },
         "note": {
           "label": "Note next to the button"
+        },
+        "grayscale": {
+          "label": "Black & white photo"
         }
       },
       "blocks": {
