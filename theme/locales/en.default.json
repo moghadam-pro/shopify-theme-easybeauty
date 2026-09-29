@@ -56,7 +56,14 @@
       "view_all": "View all",
       "dock_shop": "Shop",
       "dock_bag": "Bag",
-      "dock_account": "You"
+      "dock_account": "You",
+      "theme_dark": "Switch to dark mode",
+      "theme_light": "Switch to light mode",
+      "products_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "dark_mode": "Dark mode"
     },
     "cart": {
       "title": "Your bag",
@@ -149,6 +156,35 @@
     "page-intro": {
       "breadcrumb": "Breadcrumb",
       "home": "Home"
+    },
+    "collection": {
+      "filter": "Filter",
+      "clear_all": "Clear all",
+      "clear_all_filters": "Clear all filters",
+      "search_placeholder": "Search products",
+      "filters_applied": {
+        "one": "{{ count }} filter applied",
+        "other": "{{ count }} filters applied"
+      },
+      "price_min": "Minimum price",
+      "price_max": "Maximum price",
+      "in_stock_only": "In stock only",
+      "apply": "Apply filters",
+      "hide_filters": "Hide filters",
+      "show_filters": "Show filters",
+      "products_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "sort": "Sort",
+      "grid_size": "Grid size",
+      "grid_dense": "Compact grid",
+      "grid_large": "Large grid",
+      "empty_title": "No products match those filters.",
+      "empty_text": "Try widening the price range or clearing a filter — most formulas suit more than one concern.",
+      "search_empty": "No products on this page match your search.",
+      "load_more": "Load more",
+      "showing_html": "Showing {{ shown }} of {{ total }}"
     }
   },
   "templates": {

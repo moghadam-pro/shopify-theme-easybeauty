@@ -6,24 +6,47 @@
       "type": "footer",
       "blocks": {
         "column-shop": {
-          "type": "link_list",
+          "type": "links",
           "settings": {
             "title": "Shop",
-            "menu": "footer-shop"
+            "label_1": "All products",
+            "url_1": "/collections/all",
+            "label_2": "Bundles",
+            "url_2": "/#bundle",
+            "label_3": "Lookbook",
+            "url_3": "/pages/lookbook",
+            "label_4": "Skin quiz",
+            "url_4": "/pages/quiz",
+            "label_5": "Your bag",
+            "url_5": "/cart"
           }
         },
         "column-company": {
-          "type": "link_list",
+          "type": "links",
           "settings": {
             "title": "Company",
-            "menu": "footer-company"
+            "label_1": "About us",
+            "url_1": "/pages/about",
+            "label_2": "The Journal",
+            "url_2": "/blogs/journal",
+            "label_3": "Contact",
+            "url_3": "/pages/contact",
+            "label_4": "Your account",
+            "url_4": "/account"
           }
         },
         "column-help": {
-          "type": "link_list",
+          "type": "links",
           "settings": {
             "title": "Help",
-            "menu": "footer-help"
+            "label_1": "FAQ",
+            "url_1": "/pages/faq",
+            "label_2": "Shipping",
+            "url_2": "/pages/faq",
+            "label_3": "Returns",
+            "url_3": "/pages/faq",
+            "label_4": "Legal",
+            "url_4": "/pages/legal"
           }
         },
         "column-certified": {
@@ -39,7 +62,18 @@
         "column-company",
         "column-help",
         "column-certified"
-      ]
+      ],
+      "settings": {
+        "brand": "EasyBeauty",
+        "tagline": "Clean, clinically supported skincare. Made in Portugal.",
+        "show_newsletter": true,
+        "legal_label_1": "Privacy",
+        "legal_url_1": "/policies/privacy-policy",
+        "legal_label_2": "Terms",
+        "legal_url_2": "/policies/terms-of-service",
+        "legal_label_3": "Cookies",
+        "legal_url_3": "/pages/legal"
+      }
     }
   },
   "order": [

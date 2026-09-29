@@ -22,7 +22,7 @@ const CATALOG = [
 const DESCRIPTION =
   '<p>A weightless, fragrance-free formula built around the barrier you already have. Dermatologist tested, batch-tested in our lab outside Lisbon.</p>';
 
-const BADGES = { 0: 'Selling fast!', 1: 'New', 5: 'Best seller' };
+const BADGES = { 0: 'Best seller', 1: 'New', 5: 'Best seller', 7: 'Selling fast!' };
 
 export const products = CATALOG.map(([handle, title, price, compare, img, type], i) => {
   const images = [IMG(img, title), IMG('lifestyle-skin.jpg', title), IMG('lifestyle-apply.jpg', title)];
@@ -82,16 +82,29 @@ export const collection = {
   ],
   filters: [
     {
-      type: 'list',
-      label: 'Product type',
-      values: ['Serum', 'Moisturizer', 'Cleanser'].map((v) => ({
-        label: v, value: v, param_name: 'filter.p.product_type', count: 2, active: false,
+      type: 'list', label: 'Category', param_name: 'filter.p.product_type', active_values: [],
+      values: [['Serum', 3], ['Moisturizer', 2], ['Cleanser', 2], ['Treatment', 3], ['Eye care', 1], ['Body', 1]].map(([v, c]) => ({
+        label: v, value: v, param_name: 'filter.p.product_type', count: c, active: false, url_to_remove: 'collection.html',
       })),
     },
     {
-      type: 'boolean',
-      label: 'In stock',
-      values: [{ label: 'In stock', value: '1', param_name: 'filter.v.availability', count: 12, active: false }],
+      type: 'list', label: 'Concern', param_name: 'filter.p.m.custom.concern', active_values: [{ label: 'Hydration', url_to_remove: 'collection.html' }],
+      values: [['Hydration', 5, true], ['Brightening', 4], ['Anti-aging', 3], ['Acne', 2], ['Sensitivity', 4]].map(([v, c, a]) => ({
+        label: v, value: v, param_name: 'filter.p.m.custom.concern', count: c, active: !!a, url_to_remove: 'collection.html',
+      })),
+    },
+    {
+      type: 'list', label: 'Skin type', param_name: 'filter.p.m.custom.skin_type', active_values: [],
+      values: ['Dry', 'Oily', 'Combination', 'Sensitive'].map((v) => ({ label: v, value: v, param_name: 'filter.p.m.custom.skin_type', count: 3, active: false })),
+    },
+    {
+      type: 'price_range', label: 'Price', param_name: 'filter.v.price', range_max: 12000, url_to_remove: 'collection.html',
+      min_value: { param_name: 'filter.v.price.gte', value: null },
+      max_value: { param_name: 'filter.v.price.lte', value: null },
+    },
+    {
+      type: 'list', label: 'Availability', param_name: 'filter.v.availability', active_values: [],
+      values: [{ label: 'In stock', value: '1', param_name: 'filter.v.availability', count: 11, active: false }, { label: 'Out of stock', value: '0', param_name: 'filter.v.availability', count: 1, active: false }],
     },
   ],
 };
@@ -117,8 +130,8 @@ export const linklists = {
         link('For skin that is', 'page.quiz.html', [link('Reactive', 'collection.html'), link('Dry through winter', 'collection.html'), link('Oily by midday', 'collection.html'), link('Post-treatment', 'collection.html'), link('New to actives', 'collection.html')]),
         link('Gifting', 'collection.html', [link('Duo pack', 'product.html'), link('The full twelve', 'collection.html'), link('Under $60', 'collection.html'), link('Plain packaging', 'page.faq.html')]),
       ]),
-      link('Journal', 'blog.html'),
-      link('About', 'page.about.html'),
+      link('Quiz', 'page.quiz.html'),
+      link('Contact', 'page.contact.html'),
     ],
   },
   'footer-shop': { handle: 'footer-shop', title: 'Shop', links: [link('All products', 'collection.html'), link('Bundles', 'index.html'), link('Lookbook', 'page.lookbook.html'), link('Skin quiz', 'page.quiz.html'), link('Your bag', 'cart.html')] },

@@ -5,6 +5,32 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.4.0] — 2026-09-29
+
+### Added
+- Dark mode: Theme settings → Dark mode (on/off, default light / dark / follow device, five
+  dark colours); light/dark switch in the header (and in the mobile menu); no flash on load.
+- Collection page rebuilt to the design: sticky filter sidebar (quick search, applied-filter
+  chips, collapsible groups with counts, two-handle price range, in-stock switch) with a slim
+  hover-only scrollbar; sticky toolbar (show/hide filters, count, sort, grid density); bordered
+  grid; "Load more" with progress; empty state. Filters, sort and paging update in place (Section
+  Rendering API); drawer on narrow screens.
+- Product cards: wishlist heart (icon only) and badges from plain "New" / "Best seller" tags.
+- Header: logo position (centre / left), light/dark switch toggle, mega-menu options (links per
+  column, product counts, black-and-white feature image).
+- Footer: editable "Links" columns (no menus needed) and editable bottom links; defaults match the
+  design.
+- `CLAUDE.md` design rules and `tools/grid-check.py` (2/4px spacing and font-size check).
+
+### Changed
+- Colours are tokens mixed from the Theme settings colours (no hard-coded greys/tints).
+- Hero hotspot cards always link: picked product, custom link, or a product search for the title.
+- Homepage tabs: no full-width rule under the tabs, only the selected tab is underlined.
+- "Shop the texture" cards wider; mega-menu feature image 220px tall.
+
+### Removed
+- Collection banner badges ("Fragrance-free · Vegan · Derm tested").
+
 ## [1.3.0] — 2026-09-28
 
 Homepage brought in line with the latest landing design (`EasyBeauty Landing`).

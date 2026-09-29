@@ -4,8 +4,11 @@
   "Quick add" bar that slides up from the bottom of the photo, then title,
   star rating and price. The card lifts slightly on hover.
 
-  - Badge: "-X%" when on sale, otherwise the first product tag written as
-    "badge:Text" (e.g. "badge:New", "badge:Selling fast!").
+  - Badge: "-X%" when on sale; otherwise the first product tag written as
+    "badge:Text" (e.g. "badge:Selling fast!"), or a plain "New" /
+    "Best seller" / "Bestseller" tag.
+  - Heart: save for later / wishlist (kept in the browser, see
+    [data-save-toggle] in theme.js); icon only.
   - Rating: the standard reviews.rating / reviews.rating_count metafields
     that review apps write; hidden when there are no reviews.
   - Quick add: adds straight to the bag for single-variant products; for
@@ -28,8 +31,13 @@
   else
     for tag in product.tags
       assign tag_prefix = tag | slice: 0, 6 | downcase
+      assign tag_handle = tag | handleize
       if tag_prefix == 'badge:'
         assign badge = tag | slice: 6, 60 | strip
+      elsif tag_handle == 'new' or tag_handle == 'best-seller' or tag_handle == 'bestseller'
+        assign badge = tag
+      endif
+      if badge != ''
         assign badge_handle = badge | handleize
         if badge_handle == 'new'
           assign badge_class = badge_class | append: ' product-card__badge--new'
@@ -72,6 +80,18 @@
       {%- endif -%}
     </a>
     {%- if badge != blank -%}<span class="{{ badge_class }}">{{ badge }}</span>{%- endif -%}
+    <button
+      type="button"
+      class="product-card__save"
+      data-save-toggle
+      data-product-handle="{{ product.handle }}"
+      aria-pressed="false"
+      aria-label="{{ 'products.product.save' | t | escape }}: {{ product.title | escape }}"
+      data-label-save="{{ 'products.product.save' | t | escape }}"
+      data-label-saved="{{ 'products.product.saved' | t | escape }}"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+    </button>
 
     {%- if product.available -%}
       {%- if product.has_only_default_variant -%}

@@ -1,8 +1,8 @@
 <footer class="site-footer">
   <div class="site-footer__grid">
     <div>
-      <div class="site-header__logo" style="margin-bottom:16px">{{ shop.name }}</div>
-      <p style="font-size:14px;line-height:1.7;color:rgba(251,250,248,0.72)">{{ section.settings.tagline }}</p>
+      <div class="site-footer__brand">{{ section.settings.brand | default: shop.name }}</div>
+      {%- if section.settings.tagline != blank -%}<p class="site-footer__tagline">{{ section.settings.tagline }}</p>{%- endif -%}
 
       {%- if section.settings.show_newsletter -%}
         <div data-newsletter-wrapper>
@@ -37,6 +37,19 @@
                 <a href="{{ link.url }}">{{ link.title }}</a>
               {%- endfor -%}
             </div>
+          {%- when 'links' -%}
+            <div class="site-footer__heading">{{ block.settings.title }}</div>
+            <div class="site-footer__links">
+              {%- for i in (1..6) -%}
+                {%- liquid
+                  assign label_key = 'label_' | append: i
+                  assign url_key = 'url_' | append: i
+                  assign link_label = block.settings[label_key]
+                  assign link_url = block.settings[url_key]
+                -%}
+                {%- if link_label != blank -%}<a href="{{ link_url | default: '#' }}">{{ link_label }}</a>{%- endif -%}
+              {%- endfor -%}
+            </div>
           {%- when 'text' -%}
             <div class="site-footer__heading">{{ block.settings.title }}</div>
             <div class="site-footer__links rte">{{ block.settings.content }}</div>
@@ -46,11 +59,15 @@
   </div>
 
   <div class="site-footer__bottom">
-    <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}</span>
-    <span style="display:flex;gap:20px">
-      {%- if shop.privacy_policy -%}<a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title }}</a>{%- endif -%}
-      {%- if shop.terms_of_service -%}<a href="{{ shop.terms_of_service.url }}">{{ shop.terms_of_service.title }}</a>{%- endif -%}
-      {%- if shop.refund_policy -%}<a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>{%- endif -%}
+    <span>&copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand | default: shop.name }}</span>
+    <span class="site-footer__legal">
+      {%- for i in (1..3) -%}
+        {%- liquid
+          assign label_key = 'legal_label_' | append: i
+          assign url_key = 'legal_url_' | append: i
+        -%}
+        {%- if section.settings[label_key] != blank -%}<a href="{{ section.settings[url_key] | default: '#' }}">{{ section.settings[label_key] }}</a>{%- endif -%}
+      {%- endfor -%}
     </span>
   </div>
 </footer>
@@ -59,6 +76,12 @@
 {
   "name": "t:sections.footer.name",
   "settings": [
+    {
+      "type": "text",
+      "id": "brand",
+      "label": "t:sections.footer.settings.brand.label",
+      "info": "t:sections.footer.settings.brand.info"
+    },
     {
       "type": "text",
       "id": "tagline",
@@ -70,9 +93,118 @@
       "id": "show_newsletter",
       "label": "t:sections.footer.settings.show_newsletter.label",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header_legal.content"
+    },
+    {
+      "type": "text",
+      "id": "legal_label_1",
+      "label": "t:sections.footer.settings.legal_label.label",
+      "default": "Privacy"
+    },
+    {
+      "type": "url",
+      "id": "legal_url_1",
+      "label": "t:sections.footer.settings.legal_url.label"
+    },
+    {
+      "type": "text",
+      "id": "legal_label_2",
+      "label": "t:sections.footer.settings.legal_label.label",
+      "default": "Terms"
+    },
+    {
+      "type": "url",
+      "id": "legal_url_2",
+      "label": "t:sections.footer.settings.legal_url.label"
+    },
+    {
+      "type": "text",
+      "id": "legal_label_3",
+      "label": "t:sections.footer.settings.legal_label.label",
+      "default": "Cookies"
+    },
+    {
+      "type": "url",
+      "id": "legal_url_3",
+      "label": "t:sections.footer.settings.legal_url.label"
     }
   ],
   "blocks": [
+    {
+      "type": "links",
+      "name": "t:sections.footer.blocks.links.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.footer.blocks.link_list.settings.title.label",
+          "default": "Shop"
+        },
+        {
+          "type": "text",
+          "id": "label_1",
+          "label": "t:sections.footer.blocks.links.settings.label.label"
+        },
+        {
+          "type": "url",
+          "id": "url_1",
+          "label": "t:sections.footer.blocks.links.settings.url.label"
+        },
+        {
+          "type": "text",
+          "id": "label_2",
+          "label": "t:sections.footer.blocks.links.settings.label.label"
+        },
+        {
+          "type": "url",
+          "id": "url_2",
+          "label": "t:sections.footer.blocks.links.settings.url.label"
+        },
+        {
+          "type": "text",
+          "id": "label_3",
+          "label": "t:sections.footer.blocks.links.settings.label.label"
+        },
+        {
+          "type": "url",
+          "id": "url_3",
+          "label": "t:sections.footer.blocks.links.settings.url.label"
+        },
+        {
+          "type": "text",
+          "id": "label_4",
+          "label": "t:sections.footer.blocks.links.settings.label.label"
+        },
+        {
+          "type": "url",
+          "id": "url_4",
+          "label": "t:sections.footer.blocks.links.settings.url.label"
+        },
+        {
+          "type": "text",
+          "id": "label_5",
+          "label": "t:sections.footer.blocks.links.settings.label.label"
+        },
+        {
+          "type": "url",
+          "id": "url_5",
+          "label": "t:sections.footer.blocks.links.settings.url.label"
+        },
+        {
+          "type": "text",
+          "id": "label_6",
+          "label": "t:sections.footer.blocks.links.settings.label.label"
+        },
+        {
+          "type": "url",
+          "id": "url_6",
+          "label": "t:sections.footer.blocks.links.settings.url.label"
+        }
+      ]
+    },
     {
       "type": "link_list",
       "name": "t:sections.footer.blocks.link_list.name",

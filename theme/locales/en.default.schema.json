@@ -37,6 +37,40 @@
       "page": "Page",
       "show_free_shipping_bar": "Show free shipping progress bar",
       "free_shipping_threshold": "Free shipping threshold ($)"
+    },
+    "dark_mode": {
+      "name": "Dark mode",
+      "enabled": {
+        "label": "Enable dark mode",
+        "info": "Adds a light / dark switch to the header (Header → Show light / dark switch)."
+      },
+      "default": {
+        "label": "Default for new visitors",
+        "options__1": {
+          "label": "Light"
+        },
+        "options__2": {
+          "label": "Dark"
+        },
+        "options__3": {
+          "label": "Follow the visitor's device"
+        }
+      },
+      "background": {
+        "label": "Background"
+      },
+      "surface": {
+        "label": "Surface (cards, panels)"
+      },
+      "text": {
+        "label": "Text"
+      },
+      "accent": {
+        "label": "Accent"
+      },
+      "border": {
+        "label": "Border"
+      }
     }
   },
   "sections": {
@@ -59,6 +93,31 @@
         "saved_link": {
           "label": "Saved items page link",
           "info": "A page using the \"saved\" template, e.g. /pages/saved. Leave empty to hide it from the account menu."
+        },
+        "logo_position": {
+          "label": "Logo position",
+          "options__1": {
+            "label": "Centre (menu left)"
+          },
+          "options__2": {
+            "label": "Left (menu centre)"
+          }
+        },
+        "show_theme_toggle": {
+          "label": "Show light / dark switch",
+          "info": "Needs dark mode switched on in Theme settings → Dark mode."
+        },
+        "header_mega": {
+          "content": "Mega menu"
+        },
+        "mega_items": {
+          "label": "Links per column"
+        },
+        "mega_counts": {
+          "label": "Show product counts next to collection links"
+        },
+        "mega_mono": {
+          "label": "Show the feature image in black and white"
         }
       },
       "blocks": {
@@ -156,6 +215,19 @@
         },
         "show_newsletter": {
           "label": "Show newsletter signup"
+        },
+        "brand": {
+          "label": "Brand name",
+          "info": "Defaults to the store name."
+        },
+        "header_legal": {
+          "content": "Bottom links"
+        },
+        "legal_label": {
+          "label": "Link label"
+        },
+        "legal_url": {
+          "label": "Link"
         }
       },
       "blocks": {
@@ -178,6 +250,17 @@
             },
             "content": {
               "label": "Content"
+            }
+          }
+        },
+        "links": {
+          "name": "Links",
+          "settings": {
+            "label": {
+              "label": "Link label"
+            },
+            "url": {
+              "label": "Link"
             }
           }
         }
@@ -523,7 +606,21 @@
       }
     },
     "main-collection": {
-      "name": "Collection"
+      "name": "Collection",
+      "settings": {
+        "products_per_page": {
+          "label": "Products per page"
+        },
+        "open_groups": {
+          "label": "Filter groups open by default"
+        },
+        "show_search": {
+          "label": "Show product search in the sidebar"
+        },
+        "filters_info": {
+          "content": "Filters come from the Shopify Search & Discovery app (Online Store → Navigation → Collection and search filters). Add Price, Availability, Product type and any product metafields (concern, skin type, key active…)."
+        }
+      }
     },
     "collection-banner": {
       "name": "Collection banner",

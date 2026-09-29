@@ -887,6 +887,186 @@
   window.addEventListener('storage', (e) => { if (e.key === SAVED_KEY) syncSaved(); });
   syncSaved();
 
+  /* ---------- collection page: filters, sort, density, load more ----------
+     Filter / sort changes fetch this section again through the Section
+     Rendering API and swap it in place (URL kept in sync with history), so
+     the page never fully reloads. */
+  const GRID_KEY = 'eb-grid';
+  const FILTERS_KEY = 'eb-filters-hidden';
+  const narrow = window.matchMedia('(max-width: 900px)');
+
+  function initCollection(root) {
+    const sectionId = root.getAttribute('data-section-id');
+    const form = qs('[data-collection-form]', root);
+    const grid = qs('[data-collection-grid]', root);
+
+    /* show / hide filters (desktop) or open / close the drawer (narrow) */
+    try { root.classList.toggle('is-filters-hidden', localStorage.getItem(FILTERS_KEY) === '1'); } catch (err) { /* storage unavailable */ }
+    qsa('[data-collection-toggle]', root).forEach((btn) => btn.addEventListener('click', () => {
+      if (narrow.matches) {
+        root.classList.toggle('is-drawer-open');
+        document.body.style.overflow = root.classList.contains('is-drawer-open') ? 'hidden' : '';
+        return;
+      }
+      const hidden = root.classList.toggle('is-filters-hidden');
+      try { localStorage.setItem(FILTERS_KEY, hidden ? '1' : '0'); } catch (err) { /* storage unavailable */ }
+      const toggle = qs('.collection-toolbar__toggle', root);
+      if (toggle) toggle.setAttribute('aria-expanded', String(!hidden));
+    }));
+
+    /* grid density */
+    function setDensity(mode) {
+      if (grid) grid.classList.toggle('is-dense', mode === 'dense');
+      qsa('[data-grid-density]', root).forEach((b) => b.setAttribute('aria-pressed', String(b.getAttribute('data-grid-density') === mode)));
+    }
+    let density = 'large';
+    try { density = localStorage.getItem(GRID_KEY) || 'large'; } catch (err) { /* storage unavailable */ }
+    setDensity(density);
+    qsa('[data-grid-density]', root).forEach((b) => b.addEventListener('click', () => {
+      const mode = b.getAttribute('data-grid-density');
+      setDensity(mode);
+      try { localStorage.setItem(GRID_KEY, mode); } catch (err) { /* storage unavailable */ }
+    }));
+
+    /* quick search over the loaded cards */
+    const search = qs('[data-collection-search]', root);
+    const searchEmpty = qs('[data-collection-search-empty]', root);
+    if (search && grid) {
+      search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        let shown = 0;
+        qsa('.product-card', grid).forEach((card) => {
+          const title = (qs('.product-card__title', card) || card).textContent.toLowerCase();
+          const match = !q || title.indexOf(q) !== -1;
+          card.hidden = !match;
+          if (match) shown += 1;
+        });
+        if (searchEmpty) searchEmpty.hidden = shown > 0;
+      });
+    }
+
+    /* two-handle price range */
+    qsa('[data-price-range]', root).forEach((wrap) => {
+      const minR = qs('[data-price-min]', wrap);
+      const maxR = qs('[data-price-max]', wrap);
+      const minF = qs('[data-price-min-field]', wrap);
+      const maxF = qs('[data-price-max-field]', wrap);
+      const minL = qs('[data-price-min-label]', wrap);
+      const maxL = qs('[data-price-max-label]', wrap);
+      const box = qs('.price-range', wrap);
+      const rangeMax = parseFloat(maxF.getAttribute('data-range-max')) || parseFloat(maxR.max);
+      function paint(changed) {
+        let lo = parseFloat(minR.value);
+        let hi = parseFloat(maxR.value);
+        if (lo > hi) { if (changed === minR) { lo = hi; minR.value = lo; } else { hi = lo; maxR.value = hi; } }
+        box.style.setProperty('--min', lo);
+        box.style.setProperty('--max', hi);
+        if (minL) minL.textContent = formatMoney(lo * 100).replace(/[.,]00(?=\D*$)/, '');
+        if (maxL) maxL.textContent = formatMoney(hi * 100).replace(/[.,]00(?=\D*$)/, '');
+        minF.value = lo > 0 ? lo : '';
+        maxF.value = hi < rangeMax ? hi : '';
+      }
+      [minR, maxR].forEach((r) => {
+        r.addEventListener('input', () => paint(r));
+        r.addEventListener('change', () => { paint(r); submit(); });
+      });
+    });
+
+    /* AJAX filtering */
+    function urlFromForm() {
+      const params = new URLSearchParams();
+      new FormData(form).forEach((value, key) => { if (value !== '') params.append(key, value); });
+      return form.getAttribute('action') + (params.toString() ? '?' + params.toString() : '');
+    }
+    async function load(url, push) {
+      root.classList.add('is-loading');
+      try {
+        const sep = url.indexOf('?') === -1 ? '?' : '&';
+        const res = await fetch(url + sep + 'section_id=' + encodeURIComponent(sectionId));
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const fresh = doc.querySelector('[data-collection]');
+        if (!fresh) { window.location.href = url; return; }
+        const drawerOpen = root.classList.contains('is-drawer-open');
+        const hidden = root.classList.contains('is-filters-hidden');
+        const scroll = (qs('[data-collection-filters]', root) || {}).scrollTop || 0;
+        const openGroups = qsa('.collection-filters__group', root).map((d) => d.open);
+        root.innerHTML = fresh.innerHTML;
+        root.classList.toggle('is-drawer-open', drawerOpen);
+        root.classList.toggle('is-filters-hidden', hidden);
+        qsa('.collection-filters__group', root).forEach((d, i) => { if (openGroups[i] !== undefined) d.open = openGroups[i] || d.open; });
+        const aside = qs('[data-collection-filters]', root);
+        if (aside) aside.scrollTop = scroll;
+        if (push) history.replaceState({}, '', url);
+        initCollection(root);
+        syncSaved();
+      } catch (err) {
+        window.location.href = url;
+      } finally {
+        root.classList.remove('is-loading');
+      }
+    }
+    function submit() { if (form) load(urlFromForm(), true); }
+    if (form) {
+      form.addEventListener('change', (e) => { if (!e.target.closest('[data-price-range]')) submit(); });
+      form.addEventListener('submit', (e) => { e.preventDefault(); submit(); });
+    }
+    const sort = qs('[data-collection-sort]', root);
+    if (sort) sort.addEventListener('change', submit);
+    qsa('[data-collection-link]', root).forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); load(a.href, true); }));
+
+    /* load more: fetch the next page of this section and append its cards */
+    const more = qs('[data-load-more]', root);
+    if (more && grid) {
+      more.addEventListener('click', async (e) => {
+        e.preventDefault();
+        more.setAttribute('aria-busy', 'true');
+        try {
+          const url = more.href;
+          const res = await fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'section_id=' + encodeURIComponent(sectionId));
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+          qsa('[data-collection-grid] > *', doc).forEach((card) => grid.appendChild(card));
+          const nextMore = doc.querySelector('[data-load-more]');
+          const total = parseInt(more.getAttribute('data-total'), 10) || 0;
+          const count = qsa('.product-card', grid).length;
+          const shownEl = qs('[data-shown]', root);
+          const bar = qs('[data-progress]', root);
+          if (shownEl) shownEl.textContent = count;
+          if (bar && total) bar.style.width = Math.min(100, (count / total) * 100) + '%';
+          if (nextMore) more.href = nextMore.href; else (qs('[data-collection-more]', root) || more).remove();
+          syncSaved();
+        } catch (err) {
+          window.location.href = more.href;
+        } finally {
+          more.removeAttribute('aria-busy');
+        }
+      });
+    }
+  }
+  qsa('[data-collection]').forEach(initCollection);
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    qsa('[data-collection].is-drawer-open').forEach((r) => { r.classList.remove('is-drawer-open'); document.body.style.overflow = ''; });
+  });
+
+  /* ---------- light / dark switch (header) ---------- */
+  function syncThemeToggle() {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    qsa('[data-theme-toggle]').forEach((btn) => {
+      btn.setAttribute('aria-label', btn.getAttribute(dark ? 'data-label-light' : 'data-label-dark') || '');
+      btn.setAttribute('aria-pressed', String(dark));
+    });
+  }
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('[data-theme-toggle]')) return;
+    const dark = document.documentElement.getAttribute('data-theme') !== 'dark';
+    if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+    try { localStorage.setItem('eb-theme', dark ? 'dark' : 'light'); } catch (err) { /* storage unavailable */ }
+    syncThemeToggle();
+  });
+  syncThemeToggle();
+
   /* ---------- free shipping progress bar in cart ---------- */
   updateCartCount();
 })();

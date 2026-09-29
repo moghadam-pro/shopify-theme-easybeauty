@@ -32,6 +32,17 @@
   {%- render 'favicon' -%}
 
   <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+  {%- if settings.dark_mode_enabled -%}
+    {%- comment -%} Apply the saved / default colour mode before first paint (no flash). {%- endcomment -%}
+    <script>
+      (function () {
+        var mode = {{ settings.dark_mode_default | json }};
+        try { var saved = localStorage.getItem('eb-theme'); if (saved === 'dark' || saved === 'light') mode = saved; } catch (e) {}
+        if (mode === 'system') mode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (mode === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      })();
+    </script>
+  {%- endif -%}
 </head>
 
 <body class="template-{{ request.page_type | handleize }}">

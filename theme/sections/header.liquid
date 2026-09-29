@@ -22,7 +22,7 @@
     assign initials = first_initial | append: last_initial
   endif
 -%}
-<header class="site-header" data-site-header {% if section.settings.sticky %}data-sticky{% endif %}>
+<header class="site-header site-header--logo-{{ section.settings.logo_position }}" data-site-header {% if section.settings.sticky %}data-sticky{% endif %}>
   <div class="site-header__bar container" data-site-nav>
     <nav class="site-header__nav" aria-label="{{ 'sections.header.menu' | t }}">
       {%- for link in menu.links -%}
@@ -63,6 +63,20 @@
       <button type="button" class="site-header__icon-btn" data-search-drawer-open aria-label="{{ 'general.search.search' | t }}">
         {% render 'icon', icon: 'search' %}
       </button>
+
+      {%- if settings.dark_mode_enabled and section.settings.show_theme_toggle -%}
+        <button
+          type="button"
+          class="site-header__icon-btn theme-toggle"
+          data-theme-toggle
+          aria-label="{{ 'sections.header.theme_dark' | t }}"
+          data-label-dark="{{ 'sections.header.theme_dark' | t | escape }}"
+          data-label-light="{{ 'sections.header.theme_light' | t | escape }}"
+        >
+          <span class="theme-toggle__moon">{% render 'icon', icon: 'moon' %}</span>
+          <span class="theme-toggle__sun">{% render 'icon', icon: 'sun' %}</span>
+        </button>
+      {%- endif -%}
 
       {%- if customer -%}
         <div class="account-menu" data-account-menu>
@@ -137,11 +151,11 @@
               <div class="mega-panel__column">
                 <div class="mega-panel__title">{{ column.title }}</div>
                 <div class="mega-panel__items">
-                  {%- for item in column.links -%}
+                  {%- for item in column.links limit: section.settings.mega_items -%}
                     <a href="{{ item.url }}" {% if item.active %}aria-current="page"{% endif %}>
                       <span>{{ item.title }}</span>
-                      {%- if item.type == 'collection_link' and item.object.products_count > 0 -%}
-                        <span class="mega-panel__note">{{ item.object.products_count }}</span>
+                      {%- if section.settings.mega_counts and item.type == 'collection_link' and item.object.products_count > 0 -%}
+                        <span class="mega-panel__note">{{ 'sections.header.products_count' | t: count: item.object.products_count }}</span>
                       {%- endif -%}
                     </a>
                   {%- endfor -%}
@@ -168,7 +182,7 @@
 
           {%- if mega and mega.settings.feature_title != blank -%}
             <div class="mega-panel__feature">
-              <a href="{{ mega.settings.feature_link | default: link.url }}" class="mega-panel__feature-media" aria-label="{{ mega.settings.feature_title | escape }}">
+              <a href="{{ mega.settings.feature_link | default: link.url }}" class="mega-panel__feature-media{% if section.settings.mega_mono %} is-mono{% endif %}" aria-label="{{ mega.settings.feature_title | escape }}">
                 {%- if mega.settings.feature_image != blank -%}
                   <img src="{{ mega.settings.feature_image | image_url: width: 700 }}" alt="" width="700" height="{{ 700 | divided_by: mega.settings.feature_image.aspect_ratio | round }}" loading="lazy">
                 {%- else -%}
@@ -207,6 +221,13 @@
         {% render 'icon', icon: 'close' %}
       </button>
     </div>
+    {%- if settings.dark_mode_enabled and section.settings.show_theme_toggle -%}
+      <button type="button" class="mobile-nav-panel__theme theme-toggle" data-theme-toggle data-label-dark="{{ 'sections.header.theme_dark' | t | escape }}" data-label-light="{{ 'sections.header.theme_light' | t | escape }}">
+        <span class="theme-toggle__moon">{% render 'icon', icon: 'moon', size: 18 %}</span>
+        <span class="theme-toggle__sun">{% render 'icon', icon: 'sun', size: 18 %}</span>
+        <span>{{ 'sections.header.dark_mode' | t }}</span>
+      </button>
+    {%- endif -%}
     <nav class="mobile-nav-panel__links" aria-label="{{ 'sections.header.menu' | t }}">
       {%- for link in menu.links -%}
         {%- if link.links != blank -%}
@@ -267,6 +288,54 @@
       "id": "saved_link",
       "label": "t:sections.header.settings.saved_link.label",
       "info": "t:sections.header.settings.saved_link.info"
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "t:sections.header.settings.logo_position.label",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:sections.header.settings.logo_position.options__1.label"
+        },
+        {
+          "value": "left",
+          "label": "t:sections.header.settings.logo_position.options__2.label"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_theme_toggle",
+      "label": "t:sections.header.settings.show_theme_toggle.label",
+      "info": "t:sections.header.settings.show_theme_toggle.info",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header_mega.content"
+    },
+    {
+      "type": "range",
+      "id": "mega_items",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "label": "t:sections.header.settings.mega_items.label",
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "mega_counts",
+      "label": "t:sections.header.settings.mega_counts.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "mega_mono",
+      "label": "t:sections.header.settings.mega_mono.label",
+      "default": true
     }
   ],
   "blocks": [

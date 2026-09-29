@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "EasyBeauty",
-    "theme_version": "1.3.0",
+    "theme_version": "1.4.0",
     "theme_author": "EasyBeauty",
     "theme_documentation_url": "https://github.com/moghadam-pro/shopify-theme-easybeauty/blob/main/docs/ARCHITECTURE.md",
     "theme_support_url": "https://github.com/moghadam-pro/shopify-theme-easybeauty/issues"
@@ -71,6 +71,68 @@
         "id": "color_inverse_text",
         "label": "t:settings.colors.inverse_text",
         "default": "#FBFAF8"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.dark_mode.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "dark_mode_enabled",
+        "label": "t:settings.dark_mode.enabled.label",
+        "info": "t:settings.dark_mode.enabled.info",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "dark_mode_default",
+        "label": "t:settings.dark_mode.default.label",
+        "options": [
+          {
+            "value": "light",
+            "label": "t:settings.dark_mode.default.options__1.label"
+          },
+          {
+            "value": "dark",
+            "label": "t:settings.dark_mode.default.options__2.label"
+          },
+          {
+            "value": "system",
+            "label": "t:settings.dark_mode.default.options__3.label"
+          }
+        ],
+        "default": "light"
+      },
+      {
+        "type": "color",
+        "id": "dark_background",
+        "label": "t:settings.dark_mode.background.label",
+        "default": "#15120F"
+      },
+      {
+        "type": "color",
+        "id": "dark_surface",
+        "label": "t:settings.dark_mode.surface.label",
+        "default": "#1D1915"
+      },
+      {
+        "type": "color",
+        "id": "dark_text",
+        "label": "t:settings.dark_mode.text.label",
+        "default": "#E9E1D5"
+      },
+      {
+        "type": "color",
+        "id": "dark_accent",
+        "label": "t:settings.dark_mode.accent.label",
+        "default": "#CE8268"
+      },
+      {
+        "type": "color",
+        "id": "dark_border",
+        "label": "t:settings.dark_mode.border.label",
+        "default": "#3A332C"
       }
     ]
   },

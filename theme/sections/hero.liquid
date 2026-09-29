@@ -40,6 +40,14 @@
             assign spot_product = block.settings.product
             assign spot_title = block.settings.title | default: spot_product.title
             assign spot_url = block.settings.link | default: spot_product.url
+            comment
+              No product picked yet: fall back to a product search for the
+              hotspot title so the card still leads to the product.
+            endcomment
+            if spot_url == blank and spot_title != blank
+              assign spot_query = spot_title | url_encode
+              assign spot_url = routes.search_url | append: '?type=product&q=' | append: spot_query
+            endif
           -%}
           <div
             class="hotspot hotspot--{{ block.settings.card_side }}"
