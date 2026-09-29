@@ -1,5 +1,36 @@
+{%- comment -%}
+  Newsletter sign-up. "Centered" is the plain band; "Split with image"
+  (design: Journal) puts an eyebrow, heading and inline form on the left
+  and a photograph on the right.
+{%- endcomment -%}
+{%- if section.settings.layout == 'split' -%}
+  <section class="newsletter-split">
+    <div class="newsletter-split__copy" data-newsletter-wrapper>
+      {%- if section.settings.eyebrow != blank -%}<div class="newsletter-split__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+      {%- form 'customer', id: 'NewsletterForm', class: 'newsletter-split__form', data-newsletter-form: true -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label for="NewsletterEmail" class="visually-hidden">{{ 'general.newsletter.email_placeholder' | t }}</label>
+        <input type="email" name="contact[email]" id="NewsletterEmail" class="input" placeholder="{{ 'general.newsletter.email_placeholder' | t }}" required autocomplete="email">
+        <button type="submit" class="btn btn-primary" data-success-text="{{ 'general.newsletter.success' | t }}" data-error-text="{{ 'general.newsletter.error' | t }}">
+          {{ 'general.newsletter.submit' | t }}
+        </button>
+      {%- endform -%}
+      <p class="form-message" data-form-message hidden></p>
+    </div>
+    <div class="newsletter-split__media">
+      {%- if section.settings.image -%}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '600, 1000, 1400', alt: section.settings.image.alt }}
+      {%- else -%}
+        <img src="{{ 'lifestyle-skin.jpg' | asset_url }}" alt="" width="1200" height="900" loading="lazy">
+      {%- endif -%}
+    </div>
+  </section>
+{%- else -%}
 <section class="section newsletter">
-  <div class="container" style="max-width:640px" data-newsletter-wrapper>
+  <div class="container newsletter__inner" data-newsletter-wrapper>
+    {%- if section.settings.eyebrow != blank -%}<div class="newsletter-split__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
     <h2>{{ section.settings.heading }}</h2>
     {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
 
@@ -14,11 +45,33 @@
     <p class="form-message" data-form-message hidden></p>
   </div>
 </section>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "t:sections.newsletter.name",
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.newsletter.settings.layout.label",
+      "options": [
+        {
+          "value": "centered",
+          "label": "t:sections.newsletter.settings.layout.options__1.label"
+        },
+        {
+          "value": "split",
+          "label": "t:sections.newsletter.settings.layout.options__2.label"
+        }
+      ],
+      "default": "centered"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "t:sections.newsletter.settings.eyebrow.label"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -30,6 +83,12 @@
       "id": "text",
       "label": "t:sections.newsletter.settings.text.label",
       "default": "One email a month. Ingredient research, restock notices, nothing else."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.newsletter.settings.image.label",
+      "info": "t:sections.newsletter.settings.image.info"
     }
   ],
   "presets": [

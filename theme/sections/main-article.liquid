@@ -1,50 +1,176 @@
-<article class="section container" style="max-width:720px">
-  <a href="{{ blog.url }}" class="btn-ghost">&larr; {{ 'blogs.article.back_to_journal' | t }}</a>
-  <h1 style="margin-top:var(--space-4)">{{ article.title }}</h1>
-  <div class="card-meta" style="margin-bottom:var(--space-6)">
-    {%- if article.author != blank -%}{{ 'blogs.article.by_author' | t: author: article.author }} &middot; {%- endif -%}
-    {{ article.published_at | date: '%B %d, %Y' }}
-  </div>
+{%- comment -%}
+  Journal article (design: EasyBeauty Blog Post):
+    reading-progress bar under the header, header (breadcrumb, first tag,
+    date, read time, reviewer, title, excerpt), full-width image with
+    caption, then a two-column body: a sticky rail (author, "In this
+    article" contents built from the article's h2 headings, share buttons)
+    and the article text with the design's typography (serif h2s,
+    terracotta pull quotes, numbered lists, tables), tags and comments.
+  Contents / progress / share: [data-article] in theme.js.
+{%- endcomment -%}
+{%- liquid
+  assign word_count = article.content | strip_html | split: ' ' | size
+  assign read_minutes = word_count | divided_by: 200 | at_least: 1
+  assign author_image = article.user.image
+-%}
+<div class="article-progress" aria-hidden="true"><span data-article-progress></span></div>
+
+<article class="article-page" data-article>
+  <header class="article-page__head">
+    <nav class="page-intro__breadcrumb" aria-label="{{ 'sections.page-intro.breadcrumb' | t }}">
+      <a href="{{ routes.root_url }}">{{ 'sections.page-intro.home' | t }}</a> /
+      <a href="{{ blog.url }}">{{ blog.title }}</a> /
+      <span aria-current="page">{{ article.title | truncatewords: 4 }}</span>
+    </nav>
+    <div class="article-page__meta">
+      {%- if article.tags.size > 0 -%}<a href="{{ blog.url }}/tagged/{{ article.tags.first | handle }}" class="article-page__tag">{{ article.tags.first }}</a>{%- endif -%}
+      <span>{{ article.published_at | date: format: 'date' }}</span>
+      <span aria-hidden="true">·</span>
+      <span>{{ 'blogs.article.read_time' | t: count: read_minutes }}</span>
+      {%- if section.settings.reviewer != blank -%}
+        <span aria-hidden="true">·</span>
+        <span>{{ section.settings.reviewer }}</span>
+      {%- endif -%}
+    </div>
+    <h1 class="article-page__title">{{ article.title }}</h1>
+    {%- if article.excerpt != blank -%}<div class="article-page__lead">{{ article.excerpt | strip_html }}</div>{%- endif -%}
+  </header>
 
   {%- if article.image -%}
-    <img
-      src="{{ article.image | image_url: width: 1400 }}"
-      alt="{{ article.image.alt | escape }}"
-      width="1400"
-      height="{{ 1400 | divided_by: article.image.aspect_ratio | default: 933 }}"
-      loading="eager"
-      style="width:100%;margin-bottom:var(--space-8)"
-    >
-  {%- endif -%}
-
-  <div class="rte">{{ article.content }}</div>
-
-  {%- if blog.comments_enabled? -%}
-    <div style="margin-top:var(--space-8);padding-top:var(--space-8);border-top:1px solid var(--color-border)">
-      {%- form 'new_comment', article -%}
-        <div class="field">
-          <label for="CommentAuthor">{{ 'general.newsletter.email_placeholder' | t }}</label>
-          <input type="text" name="comment[author]" id="CommentAuthor" class="input" required>
-        </div>
-        <div class="field">
-          <label for="CommentEmail">Email</label>
-          <input type="email" name="comment[email]" id="CommentEmail" class="input" required>
-        </div>
-        <div class="field">
-          <label for="CommentBody">Comment</label>
-          <textarea name="comment[body]" id="CommentBody" class="input" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Post comment</button>
-      {%- endform -%}
+    <div class="article-page__hero">
+      <img
+        src="{{ article.image | image_url: width: 2400 }}"
+        srcset="{{ article.image | image_url: width: 1000 }} 1000w, {{ article.image | image_url: width: 1600 }} 1600w, {{ article.image | image_url: width: 2400 }} 2400w"
+        sizes="100vw"
+        alt="{{ article.image.alt | escape }}"
+        width="2400"
+        height="{{ 2400 | divided_by: article.image.aspect_ratio | round }}"
+        loading="eager"
+        fetchpriority="high"
+      >
     </div>
+    {%- if article.image.alt != blank and section.settings.show_caption -%}
+      <div class="article-page__caption">{{ article.image.alt }}</div>
+    {%- endif -%}
   {%- endif -%}
+
+  <div class="article-page__shell">
+    <aside class="article-rail">
+      <div class="article-rail__block">
+        <div class="article-rail__label">{{ 'blogs.article.written_by' | t }}</div>
+        <div class="article-rail__author">
+          {%- if author_image -%}
+            <img src="{{ author_image | image_url: width: 96 }}" alt="" width="48" height="48" loading="lazy">
+          {%- else -%}
+            <span class="article-rail__initial" aria-hidden="true">{{ article.author | slice: 0 }}</span>
+          {%- endif -%}
+          <div>
+            <div class="article-rail__name">{{ article.author }}</div>
+            {%- if section.settings.author_role != blank -%}<div class="article-rail__role">{{ section.settings.author_role }}</div>{%- endif -%}
+          </div>
+        </div>
+        {%- if article.user.bio != blank -%}
+          <p class="article-rail__bio">{{ article.user.bio }}</p>
+        {%- elsif section.settings.author_bio != blank -%}
+          <p class="article-rail__bio">{{ section.settings.author_bio }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="article-rail__block" data-article-toc-wrap hidden>
+        <div class="article-rail__label">{{ 'blogs.article.in_this_article' | t }}</div>
+        <nav class="article-rail__toc" data-article-toc aria-label="{{ 'blogs.article.in_this_article' | t }}"></nav>
+      </div>
+
+      {%- if section.settings.show_share -%}
+        <div class="article-rail__block">
+          <div class="article-rail__label">{{ 'blogs.article.share' | t }}</div>
+          <div class="article-rail__share">
+            <button type="button" data-article-copy data-copied="{{ 'blogs.article.copied' | t | escape }}">{{ 'blogs.article.copy_link' | t }}</button>
+            <a href="https://www.pinterest.com/pin/create/button/?url={{ shop.url | append: article.url | url_encode }}&description={{ article.title | url_encode }}" target="_blank" rel="noopener">Pinterest</a>
+            <a href="mailto:?subject={{ article.title | url_encode }}&body={{ shop.url | append: article.url | url_encode }}">{{ 'blogs.article.email' | t }}</a>
+          </div>
+          <div class="article-rail__note" data-article-copied role="status" aria-live="polite"></div>
+        </div>
+      {%- endif -%}
+    </aside>
+
+    <div class="article-body">
+      <div class="article-body__content rte" data-article-content>{{ article.content }}</div>
+
+      {%- if article.tags.size > 0 -%}
+        <div class="article-body__tags">
+          {%- for tag in article.tags -%}<a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if blog.comments_enabled? -%}
+        <div class="article-comments">
+          <h2 class="article-comments__title">{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+          {%- for comment in article.comments -%}
+            <div class="article-comments__item">
+              <div class="article-comments__author">{{ comment.author }} · {{ comment.created_at | date: format: 'date' }}</div>
+              <div class="rte">{{ comment.content }}</div>
+            </div>
+          {%- endfor -%}
+          {%- form 'new_comment', article, class: 'article-comments__form' -%}
+            {%- if form.posted_successfully? -%}<p class="form-message form-message--success">{{ 'blogs.article.comment_posted' | t }}</p>{%- endif -%}
+            <div class="article-comments__row">
+              <div class="field">
+                <label for="CommentAuthor">{{ 'blogs.article.name' | t }}</label>
+                <input type="text" name="comment[author]" id="CommentAuthor" class="input" required autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="CommentEmail">{{ 'blogs.article.email_label' | t }}</label>
+                <input type="email" name="comment[email]" id="CommentEmail" class="input" required autocomplete="email">
+              </div>
+            </div>
+            <div class="field">
+              <label for="CommentBody">{{ 'blogs.article.comment' | t }}</label>
+              <textarea name="comment[body]" id="CommentBody" class="input" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">{{ 'blogs.article.post_comment' | t }}</button>
+          {%- endform -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
 </article>
 
 {% schema %}
 {
   "name": "t:sections.main-article.name",
   "settings": [
-
+    {
+      "type": "text",
+      "id": "reviewer",
+      "label": "t:sections.main-article.settings.reviewer.label",
+      "default": "Reviewed by Dr. Inês Rocha"
+    },
+    {
+      "type": "text",
+      "id": "author_role",
+      "label": "t:sections.main-article.settings.author_role.label",
+      "default": "Head of formulation"
+    },
+    {
+      "type": "textarea",
+      "id": "author_bio",
+      "label": "t:sections.main-article.settings.author_bio.label",
+      "info": "t:sections.main-article.settings.author_bio.info",
+      "default": "Twelve years formulating barrier-first skincare. Writes the ingredient notes on every batch we ship."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_caption",
+      "label": "t:sections.main-article.settings.show_caption.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "t:sections.main-article.settings.show_share.label",
+      "default": true
+    }
   ]
 }
 {% endschema %}

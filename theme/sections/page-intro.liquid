@@ -17,9 +17,32 @@
       </nav>
     {%- endif -%}
     {%- if section.settings.eyebrow != blank -%}<div class="page-intro__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
-    <h1 class="page-intro__title">{{ intro_title }}</h1>
-    {%- if section.settings.text != blank -%}<div class="page-intro__text">{{ section.settings.text }}</div>{%- endif -%}
-    {%- if section.settings.meta != blank or section.settings.button_label != blank or section.settings.button_label_2 != blank -%}
+    {%- liquid
+      assign meta_right = false
+      if section.settings.meta != blank and section.settings.meta_style == 'right'
+        assign meta_right = true
+      endif
+      assign meta_items = section.settings.meta | split: '|'
+      assign show_footer = false
+      if section.settings.button_label != blank or section.settings.button_label_2 != blank
+        assign show_footer = true
+      endif
+      if section.settings.meta != blank and meta_right == false
+        assign show_footer = true
+      endif
+    -%}
+    <div class="page-intro__row">
+      <div>
+        <h1 class="page-intro__title">{{ intro_title }}</h1>
+        {%- if section.settings.text != blank -%}<div class="page-intro__text">{{ section.settings.text }}</div>{%- endif -%}
+      </div>
+      {%- if meta_right -%}
+        <div class="page-intro__side">
+          {%- for item in meta_items -%}<span>{{ item | strip }}</span>{%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    {%- if show_footer -%}
       <div class="page-intro__footer">
         {%- if section.settings.button_label != blank -%}
           <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn-primary">{{ section.settings.button_label }}</a>
@@ -27,9 +50,8 @@
         {%- if section.settings.button_label_2 != blank -%}
           <a href="{{ section.settings.button_link_2 | default: '#' }}" class="btn btn-secondary">{{ section.settings.button_label_2 }}</a>
         {%- endif -%}
-        {%- if section.settings.meta != blank -%}
+        {%- if section.settings.meta != blank and meta_right == false -%}
           <div class="page-intro__meta">
-            {%- assign meta_items = section.settings.meta | split: '|' -%}
             {%- for item in meta_items -%}<span class="tag tag-outline">{{ item | strip }}</span>{%- endfor -%}
           </div>
         {%- endif -%}
@@ -69,6 +91,22 @@
       "id": "meta",
       "label": "t:sections.page-intro.settings.meta.label",
       "info": "t:sections.page-intro.settings.meta.info"
+    },
+    {
+      "type": "select",
+      "id": "meta_style",
+      "label": "t:sections.page-intro.settings.meta_style.label",
+      "options": [
+        {
+          "value": "tags",
+          "label": "t:sections.page-intro.settings.meta_style.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.page-intro.settings.meta_style.options__2.label"
+        }
+      ],
+      "default": "tags"
     },
     {
       "type": "text",

@@ -1,0 +1,81 @@
+{%- comment -%}
+  Full-width photograph band between sections (design: About, under the
+  intro). Height and focal point are settings; optional caption strip.
+{%- endcomment -%}
+<div class="image-banner image-banner--{{ section.settings.height }}">
+  <div class="image-banner__media" style="--focus: {{ section.settings.position }}">
+    {%- if section.settings.image -%}
+      {{ section.settings.image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', widths: '800, 1200, 1600, 2400', alt: section.settings.image.alt }}
+    {%- else -%}
+      <img src="{{ 'lifestyle-apply.jpg' | asset_url }}" alt="" width="1600" height="1067" loading="lazy">
+    {%- endif -%}
+  </div>
+  {%- if section.settings.caption != blank -%}<div class="image-banner__caption">{{ section.settings.caption }}</div>{%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.image-banner.name",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.image-banner.settings.image.label"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:sections.image-banner.settings.height.label",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.image-banner.settings.height.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.image-banner.settings.height.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.image-banner.settings.height.options__3.label"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "position",
+      "label": "t:sections.image-banner.settings.position.label",
+      "options": [
+        {
+          "value": "center top",
+          "label": "t:sections.image-banner.settings.position.options__1.label"
+        },
+        {
+          "value": "center 30%",
+          "label": "t:sections.image-banner.settings.position.options__2.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.image-banner.settings.position.options__3.label"
+        },
+        {
+          "value": "center bottom",
+          "label": "t:sections.image-banner.settings.position.options__4.label"
+        }
+      ],
+      "default": "center 30%"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:sections.image-banner.settings.caption.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.image-banner.presets.name"
+    }
+  ]
+}
+{% endschema %}

@@ -16,7 +16,7 @@
       {%- for post in source_blog.articles -%}
         {%- if post.id == article.id -%}{%- continue -%}{%- endif -%}
         {%- if shown >= section.settings.limit -%}{%- break -%}{%- endif -%}
-        {% render 'article-card', article: post %}
+        {% render 'article-card', article: post, show_excerpt: false %}
         {%- assign shown = shown | plus: 1 -%}
       {%- endfor -%}
     </div>

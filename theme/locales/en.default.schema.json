@@ -471,6 +471,22 @@
         },
         "text": {
           "label": "Text"
+        },
+        "layout": {
+          "label": "Layout",
+          "options__1": {
+            "label": "Centered"
+          },
+          "options__2": {
+            "label": "Split with image"
+          }
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "image": {
+          "label": "Image",
+          "info": "Used by the split layout."
         }
       },
       "presets": {
@@ -712,11 +728,44 @@
         },
         "show_featured": {
           "label": "Feature the newest article"
+        },
+        "header_note": {
+          "label": "Header note"
+        },
+        "author_role": {
+          "label": "Featured author role"
+        },
+        "per_page": {
+          "label": "Articles per page"
+        },
+        "max_tags": {
+          "label": "Tags in the filter bar"
+        },
+        "show_search": {
+          "label": "Show journal search"
         }
       }
     },
     "main-article": {
-      "name": "Article"
+      "name": "Article",
+      "settings": {
+        "reviewer": {
+          "label": "Reviewer note"
+        },
+        "author_role": {
+          "label": "Author role"
+        },
+        "author_bio": {
+          "label": "Author bio",
+          "info": "Used when the staff account has no bio."
+        },
+        "show_caption": {
+          "label": "Show the image alt text as a caption"
+        },
+        "show_share": {
+          "label": "Show share buttons"
+        }
+      }
     },
     "main-page": {
       "name": "Page"
@@ -745,6 +794,23 @@
               "label": "Text"
             }
           }
+        }
+      },
+      "settings": {
+        "layout": {
+          "label": "Layout",
+          "options__1": {
+            "label": "Split — heading left, list right"
+          },
+          "options__2": {
+            "label": "Grid"
+          }
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
         }
       }
     },
@@ -843,6 +909,22 @@
         },
         "faq_heading": {
           "label": "Q&A heading"
+        },
+        "aside_image": {
+          "label": "Side column image"
+        },
+        "aside_content_2": {
+          "label": "Side column details (below the image)"
+        },
+        "show_consent": {
+          "label": "Show newsletter opt-in"
+        },
+        "consent_text": {
+          "label": "Opt-in text"
+        },
+        "show_image": {
+          "label": "Show a photo in the side column",
+          "info": "Uses the theme's sample photo until you pick an image."
         }
       },
       "blocks": {
@@ -1362,6 +1444,15 @@
         },
         "button_link_2": {
           "label": "Second button link"
+        },
+        "meta_style": {
+          "label": "Meta style",
+          "options__1": {
+            "label": "Tags under the text"
+          },
+          "options__2": {
+            "label": "Small caps on the right"
+          }
         }
       },
       "presets": {
@@ -1599,6 +1690,47 @@
       },
       "presets": {
         "name": "Saved items"
+      }
+    },
+    "image-banner": {
+      "name": "Image band",
+      "settings": {
+        "image": {
+          "label": "Image"
+        },
+        "height": {
+          "label": "Height",
+          "options__1": {
+            "label": "Small"
+          },
+          "options__2": {
+            "label": "Medium"
+          },
+          "options__3": {
+            "label": "Large"
+          }
+        },
+        "position": {
+          "label": "Image focus",
+          "options__1": {
+            "label": "Top"
+          },
+          "options__2": {
+            "label": "Upper third"
+          },
+          "options__3": {
+            "label": "Center"
+          },
+          "options__4": {
+            "label": "Bottom"
+          }
+        },
+        "caption": {
+          "label": "Caption"
+        }
+      },
+      "presets": {
+        "name": "Image band"
       }
     }
   }

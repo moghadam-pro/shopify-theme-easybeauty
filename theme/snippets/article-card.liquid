@@ -1,15 +1,23 @@
 {%- comment -%}
-  Journal article card: image with first-tag label, date, title, excerpt.
-  Usage: {% render 'article-card', article: article %}
+  Journal article card: 4:3 image (zooms on hover) with the first tag on a
+  dark label, "Tag · date · n min read", serif title, excerpt and an
+  underlined "Read article" link. The card lifts on hover.
+  Usage: {% render 'article-card', article: article, show_excerpt: true %}
 {%- endcomment -%}
-<a href="{{ article.url }}" class="article-card">
+{%- liquid
+  assign word_count = article.content | strip_html | split: ' ' | size
+  assign read_minutes = word_count | divided_by: 200 | at_least: 1
+-%}
+<a href="{{ article.url }}" class="article-card" data-article-card data-title="{{ article.title | downcase | escape }} {{ article.tags | join: ' ' | downcase | escape }}">
   <div class="article-card__media">
     {%- if article.image -%}
       <img
-        src="{{ article.image | image_url: width: 800 }}"
+        src="{{ article.image | image_url: width: 900 }}"
+        srcset="{{ article.image | image_url: width: 500 }} 500w, {{ article.image | image_url: width: 900 }} 900w"
+        sizes="(min-width: 990px) 33vw, 100vw"
         alt="{{ article.image.alt | escape }}"
-        width="800"
-        height="{{ 800 | divided_by: article.image.aspect_ratio | round }}"
+        width="900"
+        height="{{ 900 | divided_by: article.image.aspect_ratio | round }}"
         loading="lazy"
       >
     {%- else -%}
@@ -18,9 +26,16 @@
     {%- if article.tags.size > 0 -%}<span class="article-card__tag">{{ article.tags.first }}</span>{%- endif -%}
   </div>
   <div class="article-card__body">
-    <div class="article-card__meta">{{ article.published_at | date: '%-d %B %Y' }}</div>
+    <div class="article-card__meta">
+      {{- article.published_at | date: format: 'date' }} · {{ 'blogs.article.read_time' | t: count: read_minutes -}}
+    </div>
     <h3 class="article-card__title">{{ article.title }}</h3>
-    <p class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
-    <span class="article-card__link">{{ 'blogs.article.read_article' | t }} &rarr;</span>
+    {%- unless show_excerpt == false -%}
+      <p class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+    {%- endunless -%}
+    <span class="article-card__link">
+      {{ 'blogs.article.read_article' | t }}
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+    </span>
   </div>
 </a>

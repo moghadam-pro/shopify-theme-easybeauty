@@ -4,7 +4,7 @@
       "type": "page-intro",
       "settings": {
         "show_breadcrumb": true,
-        "eyebrow": "Founded 2019 · Lisbon",
+        "eyebrow": "Founded 2019 \u00b7 Lisbon",
         "heading": "Twelve formulas. No seasonal launches.",
         "text": "<p>We started because a friend with reactive skin could not find a cleanser that listed what was in it. Everything since has followed from that: short ingredient decks, published test data, and a range that only grows when a formula earns its place.</p>"
       }
@@ -83,7 +83,7 @@
           "settings": {
             "number": "04",
             "title": "We publish what we measure",
-            "text": "Test data goes in the Journal — including the studies where the effect was smaller than we hoped."
+            "text": "Test data goes in the Journal \u2014 including the studies where the effect was smaller than we hoped."
           }
         }
       },
@@ -92,7 +92,12 @@
         "value-2",
         "value-3",
         "value-4"
-      ]
+      ],
+      "settings": {
+        "layout": "split",
+        "eyebrow": "What we hold to",
+        "heading": "Four rules that decide every formula we ship."
+      }
     },
     "timeline": {
       "type": "multicolumn",
@@ -157,7 +162,7 @@
         "layout": "left",
         "eyebrow": "Where it is made",
         "heading": "One lab outside Lisbon, batch-tested before it leaves.",
-        "text": "<p>We produce in a single GMP-certified facility in Sintra. Every batch is tested for microbial load and active concentration, and the certificate of analysis is printed on the carton with the batch number.</p><p>Nothing is tested on animals, at any stage, in any market — including the ones that would require it. That decision costs us distribution and we are keeping it.</p>",
+        "text": "<p>We produce in a single GMP-certified facility in Sintra. Every batch is tested for microbial load and active concentration, and the certificate of analysis is printed on the carton with the batch number.</p><p>Nothing is tested on animals, at any stage, in any market \u2014 including the ones that would require it. That decision costs us distribution and we are keeping it.</p>",
         "button_label": "Read the formulation notes",
         "button_link": "/blogs/news"
       }
@@ -181,7 +186,7 @@
         "member-2": {
           "type": "member",
           "settings": {
-            "name": "Dr. Inês Rocha",
+            "name": "Dr. In\u00eas Rocha",
             "role": "Dermatology review",
             "bio": "Reviews all clinical claims and the Journal before it publishes.",
             "fallback_image": "lifestyle-apply.jpg"
@@ -190,7 +195,7 @@
         "member-3": {
           "type": "member",
           "settings": {
-            "name": "Tomás Vieira",
+            "name": "Tom\u00e1s Vieira",
             "role": "Supply & sourcing",
             "bio": "Traces every raw material to its origin. Left two suppliers over it.",
             "fallback_image": "sample-product-3.jpg"
@@ -224,10 +229,18 @@
         "button_label_2": "Talk to us",
         "button_link_2": "/pages/contact"
       }
+    },
+    "image": {
+      "type": "image-banner",
+      "settings": {
+        "height": "large",
+        "position": "center 30%"
+      }
     }
   },
   "order": [
     "intro",
+    "image",
     "stats",
     "values",
     "timeline",

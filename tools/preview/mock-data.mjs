@@ -173,27 +173,37 @@ export const cart = {
 };
 
 const articleBody =
-  '<p>Your skin barrier is a thin layer of lipids and cells that keeps water in and irritants out. When it is compromised, everything stings.</p><h2>What actually helps</h2><p>Ceramides, cholesterol and fatty acids in roughly the ratio your skin makes them — and fewer actives, not more.</p>';
+  '<p>Your skin barrier is a thin layer of lipids and cells that keeps water in and irritants out. When it is compromised, everything stings.</p>' +
+  '<h2>What the barrier actually is</h2><p>Ceramides, cholesterol and fatty acids in roughly the ratio your skin makes them — and fewer actives, not more. Trans-epidermal water loss is the number we watch.</p><p>When it rises, sensitivity follows within days.</p>' +
+  '<blockquote><p>Most stinging is a barrier problem, not an ingredient problem.</p></blockquote>' +
+  '<h2>Why 4% beats 10%</h2><p>Higher concentrations do not add benefit past a plateau, but they do add irritation.</p><ol><li>Cleanse with a low-pH gel.</li><li>Apply niacinamide to damp skin.</li><li>Seal with a ceramide cream.</li></ol>' +
+  '<h2>Layering with acids</h2><p>Keep them apart by time of day rather than by minutes. The old warning about niacin flush comes from studies at pH extremes your routine will never reach.</p>' +
+  '<h2>The caveat</h2><p>If your skin is actively inflamed, strip back to cleanser, moisturiser and SPF for a week before introducing anything new.</p>';
 
+const ARTICLE_TAGS = ['Ingredients', 'Routines', 'Science', 'Behind the formula'];
 export const articles = [
-  ['Barrier first: why your serum stings', 'lifestyle-skin.jpg'],
-  ['The three-step routine we actually use', 'lifestyle-apply.jpg'],
-  ['Niacinamide at 10%, explained', 'hero-banner.jpg'],
+  ['Niacinamide, without the internet noise', 'lifestyle-skin.jpg'],
+  ['The order of a routine matters more than the products', 'lifestyle-apply.jpg'],
+  ['What retinal does that retinol does not', 'hero-banner.jpg'],
+  ['Barrier repair, measured over twelve weeks', 'lifestyle-skin.jpg'],
+  ['Sunscreen is the anti-ageing step', 'lifestyle-apply.jpg'],
+  ['How we choose a supplier', 'hero-banner.jpg'],
+  ['Sensitive skin is a state, not a type', 'lifestyle-skin.jpg'],
 ].map(([title, img], i) => ({
   id: 500 + i,
   title,
   url: 'article.html',
-  author: 'Marta Sousa',
-  published_at: `2026-0${7 + i}-12T09:00:00Z`,
+  author: 'Maren Sousa',
+  published_at: `2026-0${9 - (i % 8)}-12T09:00:00Z`,
   image: IMG(img, title),
-  excerpt: '<p>A short read on what the barrier is and why fewer actives often work better.</p>',
-  excerpt_or_content: '<p>A short read on what the barrier is and why fewer actives often work better.</p>',
+  excerpt: '<p>What 4% actually does to a compromised barrier, why the 10% versions sting, and how to layer it with acids.</p>',
+  excerpt_or_content: '<p>Why 4% outperforms 10% on a compromised barrier, and how to layer it with acids.</p>',
   content: articleBody,
-  tags: ['Routine'],
+  tags: [ARTICLE_TAGS[i % 4]],
   comments_enabled: false,
 }));
 
-export const blog = { id: 9, handle: 'journal', title: 'Journal', url: 'blog.html', articles, articles_count: articles.length, comments_enabled: false };
+export const blog = { id: 9, handle: 'journal', title: 'Journal', url: 'blog.html', articles, all_tags: ARTICLE_TAGS, articles_count: articles.length, comments_enabled: false };
 
 export const shop = {
   name: 'EasyBeauty',

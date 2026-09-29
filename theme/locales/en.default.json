@@ -151,7 +151,11 @@
       "message": "Message",
       "submit": "Send message",
       "success": "Thanks — we usually reply within 6 hours.",
-      "order_number": "Order number (optional)"
+      "order_number": "Order number (optional)",
+      "order_number_label": "Order number",
+      "optional": "(optional)",
+      "newsletter": "Newsletter",
+      "yes": "Yes"
     },
     "collection-tabs": {
       "example_product": "Example product"
@@ -253,8 +257,26 @@
       "read_more": "Keep reading",
       "back_to_journal": "Back to the Journal",
       "by_author": "By {{ author }}",
-      "share": "Share this article",
-      "read_article": "Read article"
+      "share": "Share",
+      "read_article": "Read article",
+      "read_time": {
+        "one": "{{ count }} min read",
+        "other": "{{ count }} min read"
+      },
+      "written_by": "Written by",
+      "in_this_article": "In this article",
+      "copy_link": "Copy link",
+      "copied": "Link copied",
+      "email": "Email",
+      "comments": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      },
+      "comment_posted": "Thanks — your comment will appear once it is approved.",
+      "name": "Name",
+      "email_label": "Email",
+      "comment": "Comment",
+      "post_comment": "Post comment"
     },
     "blog": {
       "featured": "Featured",
@@ -263,7 +285,11 @@
         "one": "{{ count }} article",
         "other": "{{ count }} articles"
       },
-      "empty": "No articles yet — the first formulation notes are on their way."
+      "empty": "No articles yet — the first formulation notes are on their way.",
+      "all": "All",
+      "search": "Search the journal",
+      "search_empty": "No articles on this page match your search.",
+      "load_more": "Load more articles"
     }
   },
   "customer": {

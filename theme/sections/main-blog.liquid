@@ -1,7 +1,9 @@
 {%- comment -%}
   Journal listing: header (breadcrumb, title, intro text, article count),
   the newest article as a large "featured" split on the first page, then
-  the rest as a bordered card grid with pagination.
+  a filter bar (the blog's tags + a search over the loaded articles), and
+  the rest as a bordered card grid with "Load more" ([data-blog] in
+  theme.js; plain pagination links without JS).
 {%- endcomment -%}
 <div class="blog-header">
   <div class="container">
@@ -13,12 +15,16 @@
         <h1>{{ blog.title }}</h1>
         {%- if section.settings.intro != blank -%}<div class="blog-header__intro">{{ section.settings.intro }}</div>{%- endif -%}
       </div>
-      <div class="blog-header__count">{{ 'blogs.blog.count' | t: count: blog.articles_count }}</div>
+      <div class="blog-header__count">
+        <span>{{ 'blogs.blog.count' | t: count: blog.articles_count }}</span>
+        {%- if section.settings.header_note != blank -%}<span>{{ section.settings.header_note }}</span>{%- endif -%}
+      </div>
     </div>
   </div>
 </div>
 
-{%- paginate blog.articles by 9 -%}
+<div data-blog data-section-id="{{ section.id }}">
+{%- paginate blog.articles by section.settings.per_page -%}
   {%- liquid
     assign show_featured = false
     if section.settings.show_featured and paginate.current_page == 1 and blog.articles.size > 0
@@ -37,35 +43,76 @@
         <span class="blog-featured__tag">{{ 'blogs.blog.featured' | t }}</span>
       </a>
       <div class="blog-featured__body">
+        {%- liquid
+          assign featured_words = featured.content | strip_html | split: ' ' | size
+          assign featured_minutes = featured_words | divided_by: 200 | at_least: 1
+        -%}
         <div class="blog-featured__meta">
           {%- if featured.tags.size > 0 -%}<span class="blog-featured__category">{{ featured.tags.first }}</span><span>·</span>{%- endif -%}
-          <span>{{ featured.published_at | date: '%-d %B %Y' }}</span>
+          <span>{{ featured.published_at | date: format: 'date' }}</span>
+          <span>·</span>
+          <span>{{ 'blogs.article.read_time' | t: count: featured_minutes }}</span>
         </div>
         <h2>{{ featured.title }}</h2>
         <p>{{ featured.excerpt_or_content | strip_html | truncatewords: 40 }}</p>
-        {%- if featured.author != blank -%}<div class="blog-featured__author">{{ 'blogs.article.by_author' | t: author: featured.author }}</div>{%- endif -%}
+        {%- if featured.author != blank -%}
+          <div class="blog-featured__author">
+            {%- if featured.user.image -%}
+              <img src="{{ featured.user.image | image_url: width: 88 }}" alt="" width="44" height="44" loading="lazy">
+            {%- else -%}
+              <span class="blog-featured__initial" aria-hidden="true">{{ featured.author | slice: 0 }}</span>
+            {%- endif -%}
+            <div>
+              <div class="blog-featured__author-name">{{ featured.author }}</div>
+              {%- if section.settings.author_role != blank -%}<div class="blog-featured__author-role">{{ section.settings.author_role }}</div>{%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
         <a href="{{ featured.url }}" class="btn btn-primary">{{ 'blogs.blog.read_featured' | t }}</a>
       </div>
     </div>
   {%- endif -%}
 
+  <div class="blog-filter">
+    <div class="blog-filter__tags">
+      <a href="{{ blog.url }}" class="blog-filter__tag{% if current_tags == blank %} is-active{% endif %}">{{ 'blogs.blog.all' | t }}</a>
+      {%- for tag in blog.all_tags limit: section.settings.max_tags -%}
+        <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="blog-filter__tag{% if current_tags contains tag %} is-active{% endif %}">{{ tag }}</a>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.show_search -%}
+      <label class="blog-filter__search">
+        {% render 'icon', icon: 'search', size: 16 %}
+        <input type="search" placeholder="{{ 'blogs.blog.search' | t | escape }}" aria-label="{{ 'blogs.blog.search' | t | escape }}" data-blog-search>
+      </label>
+    {%- endif -%}
+  </div>
+
   {%- if blog.articles_count == 0 -%}
     <p class="container blog-empty">{{ 'blogs.blog.empty' | t }}</p>
   {%- endif -%}
-  <div class="article-grid">
+  <div class="article-grid" data-blog-grid>
     {%- for article in blog.articles -%}
       {%- if show_featured and forloop.first -%}{%- continue -%}{%- endif -%}
       {% render 'article-card', article: article %}
     {%- endfor -%}
   </div>
 
-  {%- if paginate.pages > 1 -%}
-    <nav class="container blog-pagination">
-      {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="btn btn-secondary">&larr;</a>{%- endif -%}
-      {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="btn btn-secondary">&rarr;</a>{%- endif -%}
-    </nav>
+  <p class="blog-search-empty" data-blog-search-empty hidden>{{ 'blogs.blog.search_empty' | t }}</p>
+
+  {%- if paginate.next -%}
+    {%- liquid
+      assign shown = paginate.current_offset | plus: blog.articles.size
+      assign shown_html = '<span data-shown>' | append: shown | append: '</span>'
+    -%}
+    <div class="collection-more" data-blog-more>
+      <div class="collection-more__label" role="status" aria-live="polite">{{ 'sections.collection.showing_html' | t: shown: shown_html, total: paginate.items }}</div>
+      <div class="collection-more__bar"><span data-progress style="width: {{ shown | times: 100.0 | divided_by: paginate.items }}%"></span></div>
+      <a href="{{ paginate.next.url }}" class="btn btn-secondary" data-blog-load-more data-total="{{ paginate.items }}">{{ 'blogs.blog.load_more' | t }}</a>
+    </div>
   {%- endif -%}
 {%- endpaginate -%}
+</div>
 
 {% schema %}
 {
@@ -80,6 +127,42 @@
       "type": "checkbox",
       "id": "show_featured",
       "label": "t:sections.main-blog.settings.show_featured.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "header_note",
+      "label": "t:sections.main-blog.settings.header_note.label",
+      "default": "Updated weekly"
+    },
+    {
+      "type": "text",
+      "id": "author_role",
+      "label": "t:sections.main-blog.settings.author_role.label",
+      "default": "Head of formulation"
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "label": "t:sections.main-blog.settings.per_page.label",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "max_tags",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "label": "t:sections.main-blog.settings.max_tags.label",
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "t:sections.main-blog.settings.show_search.label",
       "default": true
     }
   ]

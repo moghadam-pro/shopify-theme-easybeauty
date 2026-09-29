@@ -1122,6 +1122,96 @@
     qsa('[data-collection].is-drawer-open').forEach((r) => { r.classList.remove('is-drawer-open'); document.body.style.overflow = ''; });
   });
 
+  /* ---------- journal: search + load more ---------- */
+  qsa('[data-blog]').forEach((root) => {
+    const grid = qs('[data-blog-grid]', root);
+    const search = qs('[data-blog-search]', root);
+    const empty = qs('[data-blog-search-empty]', root);
+    function filter() {
+      if (!search || !grid) return;
+      const q = search.value.trim().toLowerCase();
+      let visible = 0;
+      qsa('[data-article-card]', grid).forEach((card) => {
+        const hit = !q || (card.getAttribute('data-title') || '').indexOf(q) !== -1;
+        card.hidden = !hit;
+        if (hit) visible += 1;
+      });
+      if (empty) empty.hidden = visible > 0;
+    }
+    if (search) search.addEventListener('input', filter);
+    const more = qs('[data-blog-load-more]', root);
+    if (more && grid) {
+      more.addEventListener('click', async (e) => {
+        e.preventDefault();
+        more.setAttribute('aria-busy', 'true');
+        try {
+          const url = more.href;
+          const res = await fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'section_id=' + encodeURIComponent(root.getAttribute('data-section-id')));
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+          qsa('[data-blog-grid] > *', doc).forEach((card) => grid.appendChild(card));
+          const nextMore = doc.querySelector('[data-blog-load-more]');
+          const total = parseInt(more.getAttribute('data-total'), 10) || 0;
+          const count = qsa('[data-article-card]', grid).length + (qs('.blog-featured', root) ? 1 : 0);
+          const shownEl = qs('[data-shown]', root);
+          const bar = qs('[data-progress]', root);
+          if (shownEl) shownEl.textContent = count;
+          if (bar && total) bar.style.width = Math.min(100, (count / total) * 100) + '%';
+          if (nextMore) more.href = nextMore.href; else (qs('[data-blog-more]', root) || more).remove();
+          filter();
+        } catch (err) {
+          window.location.href = more.href;
+        } finally {
+          more.removeAttribute('aria-busy');
+        }
+      });
+    }
+  });
+
+  /* ---------- journal article: contents, reading progress, copy link ---------- */
+  qsa('[data-article]').forEach((root) => {
+    const content = qs('[data-article-content]', root);
+    const toc = qs('[data-article-toc]', root);
+    const tocWrap = qs('[data-article-toc-wrap]', root);
+    const heads = content ? qsa('h2', content) : [];
+    const links = [];
+    if (toc && heads.length > 1) {
+      heads.forEach((h, i) => {
+        if (!h.id) h.id = 'section-' + (i + 1) + '-' + h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.textContent = h.textContent.trim();
+        toc.appendChild(a);
+        links.push(a);
+      });
+      if (tocWrap) tocWrap.hidden = false;
+    }
+    const bar = qs('[data-article-progress]');
+    function onScroll() {
+      if (!content) return;
+      const rect = content.getBoundingClientRect();
+      const total = rect.height - window.innerHeight * 0.6;
+      const done = Math.min(1, Math.max(0, -rect.top / (total > 0 ? total : 1)));
+      if (bar) bar.style.width = (done * 100) + '%';
+      if (!links.length) return;
+      let active = 0;
+      heads.forEach((h, i) => { if (h.getBoundingClientRect().top < window.innerHeight * 0.3) active = i; });
+      links.forEach((a, i) => a.classList.toggle('is-active', i === active));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    const copy = qs('[data-article-copy]', root);
+    const note = qs('[data-article-copied]', root);
+    if (copy) {
+      copy.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(window.location.href.split('#')[0]); } catch (err) { /* clipboard blocked */ }
+        if (!note) return;
+        note.textContent = copy.getAttribute('data-copied') || '';
+        clearTimeout(copy._t);
+        copy._t = setTimeout(() => { note.textContent = ''; }, 2200);
+      });
+    }
+  });
+
   /* ---------- light / dark switch (header) ---------- */
   function syncThemeToggle() {
     const dark = document.documentElement.getAttribute('data-theme') === 'dark';

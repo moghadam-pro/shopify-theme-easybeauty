@@ -1,11 +1,12 @@
 {%- comment -%}
   Shopify contact form ({% form 'contact' %} → the store's contact email),
-  with an optional side column: free-form details (address, direct emails)
-  and short "before you write" Q&A blocks.
+  design: Contact. Topic chips, uppercase labels, optional order number and
+  newsletter opt-in (sent with the message), and a side column split by
+  rules: details, a photo, more details, and "before you write" Q&A.
 {%- endcomment -%}
 {%- liquid
   assign has_aside = false
-  if section.settings.aside_content != blank or section.blocks.size > 0
+  if section.settings.aside_content != blank or section.settings.aside_content_2 != blank or section.settings.aside_image != blank or section.blocks.size > 0
     assign has_aside = true
   endif
   assign topics = section.settings.topics | split: ','
@@ -16,7 +17,7 @@
     <h2>{{ section.settings.heading }}</h2>
     {%- if section.settings.text != blank -%}<p class="contact-form__lead">{{ section.settings.text }}</p>{%- endif -%}
 
-    {%- form 'contact' -%}
+    {%- form 'contact', class: 'contact-form__form' -%}
       {%- if form.posted_successfully? -%}
         <p class="form-message form-message--success">{{ 'sections.contact.success' | t }}</p>
       {%- endif -%}
@@ -32,16 +33,18 @@
       {%- endif -%}
 
       {%- if section.settings.topics != blank -%}
-        <fieldset class="contact-form__topics">
-          <legend>{{ 'sections.contact.topic' | t }}</legend>
-          {%- for topic in topics -%}
-            {%- assign topic_label = topic | strip -%}
-            <label class="contact-form__topic">
-              <input type="radio" name="contact[{{ 'sections.contact.topic' | t }}]" value="{{ topic_label | escape }}" {% if forloop.first %}checked{% endif %}>
-              <span>{{ topic_label }}</span>
-            </label>
-          {%- endfor -%}
-        </fieldset>
+        <div role="radiogroup" aria-labelledby="ContactTopic-{{ section.id }}">
+          <div class="contact-form__label" id="ContactTopic-{{ section.id }}">{{ 'sections.contact.topic' | t }}</div>
+          <div class="contact-form__topics">
+            {%- for topic in topics -%}
+              {%- assign topic_label = topic | strip -%}
+              <label class="contact-form__topic">
+                <input type="radio" name="contact[{{ 'sections.contact.topic' | t }}]" value="{{ topic_label | escape }}" {% if forloop.first %}checked{% endif %}>
+                <span>{{ topic_label }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        </div>
       {%- endif -%}
 
       <div class="contact-form__row">
@@ -56,7 +59,7 @@
       </div>
       {%- if section.settings.show_order_number -%}
         <div class="field">
-          <label for="ContactOrder-{{ section.id }}">{{ 'sections.contact.order_number' | t }}</label>
+          <label for="ContactOrder-{{ section.id }}">{{ 'sections.contact.order_number_label' | t }} <span class="contact-form__optional">{{ 'sections.contact.optional' | t }}</span></label>
           <input type="text" class="input" id="ContactOrder-{{ section.id }}" name="contact[{{ 'sections.contact.order_number' | t }}]">
         </div>
       {%- endif -%}
@@ -64,14 +67,30 @@
         <label for="ContactMessage-{{ section.id }}">{{ 'sections.contact.message' | t }}</label>
         <textarea class="input" id="ContactMessage-{{ section.id }}" name="contact[body]" rows="6" required>{{ form.body }}</textarea>
       </div>
-      <button type="submit" class="btn btn-primary">{{ 'sections.contact.submit' | t }}</button>
+      {%- if section.settings.show_consent and section.settings.consent_text != blank -%}
+        <label class="contact-form__consent">
+          <input type="checkbox" name="contact[{{ 'sections.contact.newsletter' | t }}]" value="{{ 'sections.contact.yes' | t }}">
+          <span>{{ section.settings.consent_text }}</span>
+        </label>
+      {%- endif -%}
+      <button type="submit" class="btn btn-primary contact-form__submit">{{ 'sections.contact.submit' | t }}</button>
     {%- endform -%}
   </div>
 
   {%- if has_aside -%}
     <aside class="contact-form__aside">
       {%- if section.settings.aside_content != blank -%}
-        <div class="rte contact-form__details">{{ section.settings.aside_content }}</div>
+        <div class="rte contact-form__block">{{ section.settings.aside_content }}</div>
+      {%- endif -%}
+      {%- if section.settings.aside_image != blank -%}
+        <div class="contact-form__image">
+          {{ section.settings.aside_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '340px', widths: '400, 800', alt: section.settings.aside_image.alt }}
+        </div>
+      {%- elsif section.settings.show_image -%}
+        <div class="contact-form__image"><img src="{{ 'lifestyle-apply.jpg' | asset_url }}" alt="" width="800" height="533" loading="lazy"></div>
+      {%- endif -%}
+      {%- if section.settings.aside_content_2 != blank -%}
+        <div class="rte contact-form__block">{{ section.settings.aside_content_2 }}</div>
       {%- endif -%}
       {%- if section.blocks.size > 0 -%}
         <div class="contact-form__faq">
@@ -123,10 +142,39 @@
       "default": true
     },
     {
+      "type": "checkbox",
+      "id": "show_consent",
+      "label": "t:sections.contact-form.settings.show_consent.label",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "consent_text",
+      "label": "t:sections.contact-form.settings.consent_text.label",
+      "default": "Send me the every-other-Thursday letter as well. Unsubscribe in one click."
+    },
+    {
       "type": "richtext",
       "id": "aside_content",
       "label": "t:sections.contact-form.settings.aside_content.label",
       "info": "t:sections.contact-form.settings.aside_content.info"
+    },
+    {
+      "type": "image_picker",
+      "id": "aside_image",
+      "label": "t:sections.contact-form.settings.aside_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "t:sections.contact-form.settings.show_image.label",
+      "info": "t:sections.contact-form.settings.show_image.info",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "aside_content_2",
+      "label": "t:sections.contact-form.settings.aside_content_2.label"
     },
     {
       "type": "text",

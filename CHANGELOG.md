@@ -5,6 +5,29 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.6.0] — 2026-09-29
+
+### Added
+- Journal article redesign (design: Blog Post): reading-progress bar under the header, tag /
+  date / read time / reviewer meta, full-width image with caption, sticky rail with author,
+  "In this article" contents built from the article's h2s (active section highlighted), and
+  share buttons (copy link, Pinterest, email); editorial typography for h2, pull quotes, lists
+  and tables.
+- Journal listing: featured article with author, tag filter bar with a search over loaded
+  articles, bordered 3-column card grid (hover lift + image zoom, dark tag label, underlined
+  link) and "Load more" with a progress bar (Section Rendering API; plain links without JS).
+- Newsletter section "Split with image" layout with an eyebrow (used on Journal pages).
+- "Image band" section: full-width photograph with height, focal point and caption settings.
+- Contact form: newsletter opt-in checkbox, side-column photo and second details block.
+- Page intro: meta can sit as small caps on the right.
+
+### Changed
+- About: image band under the intro, principles as a split list with hover, team cards lift
+  and zoom on hover (full width, no greyscale), dark CTA uses a terracotta primary button.
+- Bag: header notes styled as small caps, summary column filled to the bottom.
+- Contact: uppercase labels, topic chips, ruled side column, "+" Q&A toggles, channel cards
+  highlight on hover.
+
 ## [1.5.0] — 2026-09-29
 
 ### Added

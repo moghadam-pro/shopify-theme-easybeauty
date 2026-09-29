@@ -6,7 +6,8 @@
         "show_breadcrumb": true,
         "heading": "Talk to us",
         "text": "<p>Routine questions go to our formulation team, not a script. We answer every message within one working day, usually sooner.</p>",
-        "meta": "Mon–Fri · 9–18 WET | Replies in ~6h"
+        "meta": "Mon–Fri · 9–18 WET | Replies in ~6h",
+        "meta_style": "right"
       }
     },
     "channels": {
@@ -60,8 +61,10 @@
         "text": "",
         "topics": "Routine advice, An order, Returns, Press, Something else",
         "show_order_number": true,
-        "aside_content": "<p><strong>Studio</strong><br>Rua da Fábrica 14<br>2710 Sintra<br>Portugal</p><p><strong>Direct</strong><br><a href=\"mailto:hello@easybeauty.co\">hello@easybeauty.co</a><br><a href=\"mailto:press@easybeauty.co\">press@easybeauty.co</a><br>+351 21 000 0000</p>",
-        "faq_heading": "Before you write"
+        "aside_content": "<p><strong>Studio</strong>Rua da Fábrica 14<br>2710 Sintra<br>Portugal</p>",
+        "faq_heading": "Before you write",
+        "aside_content_2": "<p><strong>Direct</strong><a href=\"mailto:hello@easybeauty.co\">hello@easybeauty.co</a><br><a href=\"mailto:press@easybeauty.co\">press@easybeauty.co</a><br><a href=\"tel:+351210000000\">+351 21 000 0000</a></p>",
+        "show_consent": true
       },
       "blocks": {
         "q-1": {
