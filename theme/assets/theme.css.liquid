@@ -521,6 +521,34 @@ html[data-theme="dark"] .theme-toggle__moon { display: none; }
   transform: scale(var(--hero-zoom)); transform-origin: 0 40%;
 }
 .hero--copy-right .hero__canvas { transform-origin: 100% 40%; }
+/* Photo fit "Show the whole height": the canvas is always as tall as the hero.
+   Narrower than the hero → it sits against the far edge (away from the copy)
+   and its inner edge fades into the blurred backdrop; wider → cropped at the
+   sides around the focus point. */
+.hero--fit-height .hero__canvas {
+  --canvas-w: calc(100cqh * var(--hero-ratio, 1.887));
+  --spare: calc(100cqw - var(--canvas-w));
+  --push: calc(100cqw * var(--hero-shift, 0));
+  /* gap between the photo and the copy side: at least --push, right-aligned when there is room */
+  --gap: max(calc(var(--spare) * var(--focus-x, 0.52) + var(--push)), var(--spare), var(--push));
+  top: 0; transform: none; left: var(--gap);
+}
+.hero--fit-height.hero--copy-right .hero__canvas {
+  --gap: max(calc(var(--spare) * (1 - var(--focus-x, 0.52)) + var(--push)), var(--spare), var(--push));
+  left: calc(var(--spare) - var(--gap));
+}
+.hero--fit-height .hotspot__inner { transform: none; }
+.hero--fit-height .hero__canvas > img {
+  --fade: min(var(--gap), 320px);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black var(--fade));
+  mask-image: linear-gradient(to right, transparent 0, black var(--fade));
+}
+.hero--fit-height.hero--copy-right .hero__canvas > img {
+  -webkit-mask-image: linear-gradient(to left, transparent 0, black var(--fade));
+  mask-image: linear-gradient(to left, transparent 0, black var(--fade));
+}
+.hero__backdrop { position: absolute; inset: -40px; background-repeat: no-repeat; background-size: 2400% 150%; background-position: 0 0; filter: blur(24px); }
+.hero--copy-right .hero__backdrop { background-position: 100% 0; }
 .hero__canvas > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .hero__copy { position: absolute; left: 5%; top: 13%; max-width: min(472px, 32%); z-index: 3; }
 .hero--copy-right .hero__copy { left: auto; right: 5%; }

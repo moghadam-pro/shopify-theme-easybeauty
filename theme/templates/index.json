@@ -11,10 +11,11 @@
         "button_label_2": "Take the skin quiz",
         "button_link_2": "/pages/quiz",
         "copy_position": "left",
-        "image_shift": 8,
+        "image_shift": 14,
         "height": "screen",
         "focus_x": 52,
-        "focus_y": 40
+        "focus_y": 40,
+        "image_fit": "height"
       },
       "blocks": {
         "hotspot-1": {

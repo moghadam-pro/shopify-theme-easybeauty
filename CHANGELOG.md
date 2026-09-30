@@ -5,6 +5,19 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.10.0] — 2026-09-30
+
+### Added
+- Hero "Photo fit": "Show the whole height" (default) keeps the full photo height; on screens
+  wider than the photo it sits away from the copy and its edge fades into a blurred extension
+  of its own background, so wide screens no longer show an empty strip. "Fill the width" is the
+  previous behaviour.
+
+### Changed
+- Hero "Move the photo away from the text" (was "Shift photo right"): in "Show the whole height"
+  it is the minimum gap between the copy side and the photo (the empty far side is trimmed
+  instead of zooming); default 14%.
+
 ## [1.9.0] — 2026-09-30
 
 ### Added

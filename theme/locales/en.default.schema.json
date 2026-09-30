@@ -338,8 +338,8 @@
           "label": "Second button link"
         },
         "image_shift": {
-          "label": "Shift photo right",
-          "info": "Zooms the photo from its left edge so the subject moves right, away from left-aligned text. 0% shows the whole photo. Desktop only."
+          "label": "Move the photo away from the text",
+          "info": "\"Show the whole height\": slides the photo right (left when the text is on the right) and fills the gap with its own background. \"Fill the width\": zooms in from the text side."
         },
         "height": {
           "label": "Height",
@@ -356,6 +356,16 @@
         "focus_y": {
           "label": "Photo focus — top / bottom",
           "info": "The part of the photo kept in view when the hero is cropped."
+        },
+        "image_fit": {
+          "label": "Photo fit",
+          "info": "On screens wider than the photo: keep its full height beside the text, or fill the width and crop top and bottom.",
+          "options__1": {
+            "label": "Show the whole height"
+          },
+          "options__2": {
+            "label": "Fill the width"
+          }
         }
       },
       "blocks": {
