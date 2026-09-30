@@ -8,8 +8,18 @@
 {%- endcomment -%}
 {%- liquid
   assign zoom = section.settings.image_shift | divided_by: 100.0 | plus: 1
+  assign ratio = 1.887
+  if section.settings.image
+    assign ratio = section.settings.image.aspect_ratio
+  endif
+  assign focus_x = section.settings.focus_x | divided_by: 100.0
+  assign focus_y = section.settings.focus_y | divided_by: 100.0
 -%}
-<section class="hero hero--copy-{{ section.settings.copy_position }}" style="--hero-zoom: {{ zoom }}">
+<section
+  class="hero hero--copy-{{ section.settings.copy_position }} hero--height-{{ section.settings.height }}"
+  style="--hero-zoom: {{ zoom }}; --hero-ratio: {{ ratio }}; --focus-x: {{ focus_x }}; --focus-y: {{ focus_y }}"
+  data-hero
+>
   <div class="hero__media">
     <div class="hero__canvas">
       {%- if section.settings.image -%}
@@ -121,6 +131,43 @@
       "default": "left"
     },
     {
+      "type": "select",
+      "id": "height",
+      "label": "t:sections.hero.settings.height.label",
+      "options": [
+        {
+          "value": "screen",
+          "label": "t:sections.hero.settings.height.options__1.label"
+        },
+        {
+          "value": "image",
+          "label": "t:sections.hero.settings.height.options__2.label"
+        }
+      ],
+      "default": "screen"
+    },
+    {
+      "type": "range",
+      "id": "focus_x",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "t:sections.hero.settings.focus_x.label",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "focus_y",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "t:sections.hero.settings.focus_y.label",
+      "info": "t:sections.hero.settings.focus_y.info",
+      "default": 40
+    },
+    {
       "type": "range",
       "id": "image_shift",
       "min": 0,
@@ -129,13 +176,13 @@
       "unit": "%",
       "label": "t:sections.hero.settings.image_shift.label",
       "info": "t:sections.hero.settings.image_shift.info",
-      "default": 22
+      "default": 8
     },
     {
       "type": "text",
       "id": "eyebrow",
       "label": "t:sections.hero.settings.eyebrow.label",
-      "default": "EasyBeauty — Clean skincare"
+      "default": "EasyBeauty \u2014 Clean skincare"
     },
     {
       "type": "text",

@@ -340,6 +340,22 @@
         "image_shift": {
           "label": "Shift photo right",
           "info": "Zooms the photo from its left edge so the subject moves right, away from left-aligned text. 0% shows the whole photo. Desktop only."
+        },
+        "height": {
+          "label": "Height",
+          "options__1": {
+            "label": "Fit the first screen"
+          },
+          "options__2": {
+            "label": "Photo's own shape"
+          }
+        },
+        "focus_x": {
+          "label": "Photo focus — left / right"
+        },
+        "focus_y": {
+          "label": "Photo focus — top / bottom",
+          "info": "The part of the photo kept in view when the hero is cropped."
         }
       },
       "blocks": {
@@ -1349,6 +1365,10 @@
         "discount_percent": {
           "label": "Bundle discount",
           "info": "Only lowers the total shown on the button. Create an automatic discount with the same percentage in Admin → Discounts, or checkout will charge full price. Leave at 0% if there is no discount."
+        },
+        "set_image": {
+          "label": "Set photo",
+          "info": "One photo of the whole set. Each step then gets a numbered marker you place on its product (in the step's settings)."
         }
       },
       "blocks": {
@@ -1373,6 +1393,16 @@
             "image": {
               "label": "Large image",
               "info": "Optional. Replaces the product photo in the image panel only."
+            },
+            "marker_header": {
+              "content": "Marker on the set photo",
+              "info": "Only used when the section has a set photo."
+            },
+            "marker_x": {
+              "label": "Marker — left / right"
+            },
+            "marker_y": {
+              "label": "Marker — top / bottom"
             }
           }
         }

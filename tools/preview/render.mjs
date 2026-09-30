@@ -53,7 +53,8 @@ function resolveSetting(type, value) {
     case 'link_list': return mock.linklists[value] || null;
     case 'collection': return mock.collections[value] || mock.collection;
     case 'product': return mock.products.find((p) => p.handle === value) || mock.products[0];
-    case 'image_picker': return null; // images uploaded in the admin don't exist locally
+    // images uploaded in the admin don't exist locally; "preview:<asset>" stands in for one
+    case 'image_picker': return String(value).startsWith('preview:') ? { src: `assets/${String(value).slice(8)}`, alt: '', aspect_ratio: 1.5, width: 1500, height: 1000 } : null;
     default: return value;
   }
 }

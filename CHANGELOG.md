@@ -5,6 +5,20 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.9.0] — 2026-09-30
+
+### Added
+- Bundle "Set photo": one photo of the whole set with a numbered marker per step; each step
+  places its marker (left / top %) on its product. Markers and step rows highlight each other.
+- Hero "Height" (fit the first screen / photo's own shape) and photo focus (left–right,
+  top–bottom) settings.
+
+### Changed
+- Hero fits the space under the header by default, so the whole banner is visible on the first
+  screen; the photo keeps its shape and is cropped around the focus point, so hotspots stay on
+  the same spot at every screen size. Default image shift lowered from 22% to 8%.
+- Preview tool: `preview:<asset>` stands in for an uploaded image in image settings.
+
 ## [1.8.0] — 2026-09-30
 
 ### Added

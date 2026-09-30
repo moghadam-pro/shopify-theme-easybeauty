@@ -11,7 +11,10 @@
         "button_label_2": "Take the skin quiz",
         "button_link_2": "/pages/quiz",
         "copy_position": "left",
-        "image_shift": 22
+        "image_shift": 8,
+        "height": "screen",
+        "focus_x": 52,
+        "focus_y": 40
       },
       "blocks": {
         "hotspot-1": {
@@ -282,7 +285,9 @@
             "fallback_title": "Gentle Cleansing Milk",
             "fallback_price": "$42",
             "fallback_sizes": "50 ml, 100 ml",
-            "fallback_image": "sample-product-3.jpg"
+            "fallback_image": "sample-product-3.jpg",
+            "marker_x": 22,
+            "marker_y": 14
           }
         },
         "step-2": {
@@ -291,7 +296,9 @@
             "fallback_title": "Radiance Serum No.3",
             "fallback_price": "$68",
             "fallback_sizes": "30 ml, 50 ml",
-            "fallback_image": "sample-product-4.jpg"
+            "fallback_image": "sample-product-4.jpg",
+            "marker_x": 50,
+            "marker_y": 14
           }
         },
         "step-3": {
@@ -300,7 +307,9 @@
             "fallback_title": "Barrier Repair Cream",
             "fallback_price": "$58",
             "fallback_sizes": "50 ml, 100 ml",
-            "fallback_image": "sample-product-2.jpg"
+            "fallback_image": "sample-product-2.jpg",
+            "marker_x": 78,
+            "marker_y": 14
           }
         }
       },

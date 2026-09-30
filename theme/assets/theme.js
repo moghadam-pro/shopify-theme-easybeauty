@@ -1122,6 +1122,13 @@
     qsa('[data-collection].is-drawer-open').forEach((r) => { r.classList.remove('is-drawer-open'); document.body.style.overflow = ''; });
   });
 
+  /* ---------- hero: "fit the first screen" measures what sits above it ---------- */
+  qsa('[data-hero]').forEach((hero) => {
+    const measure = () => hero.style.setProperty('--hero-top', Math.round(hero.getBoundingClientRect().top + window.scrollY) + 'px');
+    measure();
+    window.addEventListener('resize', measure);
+  });
+
   /* ---------- dropdowns: styled option list for every <select> ----------
      The native <select> stays the field (value, form submit, change events,
      keyboard focus); on mouse/trackpad devices its browser pop-up is swapped

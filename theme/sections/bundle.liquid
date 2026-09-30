@@ -6,6 +6,10 @@
   the button — the actual discount has to be an automatic discount set up
   in Admin → Discounts with the same percentage, or checkout will charge
   full price.
+  "Set photo": one photo of the whole set with a numbered marker per step;
+  each step block places its marker (left / top %) so it can sit on that
+  product in the photo. Without it, each step's own image is shown in a row.
+  Markers and step rows highlight each other ([data-look] in theme.js).
   Steps without a picked product fall back to text + a bundled asset photo,
   and the add-to-cart button is replaced by a link until every step has a
   real product.
@@ -23,21 +27,35 @@
   assign discount_keep = 100 | minus: section.settings.discount_percent
   assign bundle_total = bundle_total | times: discount_keep | divided_by: 100.0 | round
 -%}
-<section class="bundle" data-bundle data-discount="{{ section.settings.discount_percent }}">
-  <div class="bundle__media">
-    {%- for block in section.blocks -%}
-      <div class="bundle__media-item">
-        {%- if block.settings.image != blank -%}
-          <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.image.alt | default: block.settings.product.title | escape }}" width="500" height="{{ 500 | divided_by: block.settings.image.aspect_ratio | round }}" loading="lazy">
-        {%- elsif block.settings.product.featured_image != blank -%}
-          <img src="{{ block.settings.product.featured_image | image_url: width: 500 }}" alt="{{ block.settings.product.title | escape }}" width="500" height="{{ 500 | divided_by: block.settings.product.featured_image.aspect_ratio | round }}" loading="lazy">
-        {%- else -%}
-          <img src="{{ block.settings.fallback_image | default: 'sample-product-3.jpg' | asset_url }}" alt="{{ block.settings.fallback_title | escape }}" width="500" height="625" loading="lazy">
-        {%- endif -%}
-        <span class="bundle__step-badge">{{ forloop.index }}</span>
+<section class="bundle" data-bundle data-look data-discount="{{ section.settings.discount_percent }}">
+  {%- if section.settings.set_image != blank -%}
+    <div class="bundle__media bundle__media--set">
+      <div class="bundle__set">
+        {{ section.settings.set_image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '600, 1000, 1600', alt: section.settings.set_image.alt, class: 'bundle__set-image' }}
+        {%- for block in section.blocks -%}
+          {%- assign marker_title = block.settings.product.title | default: block.settings.fallback_title -%}
+          <span class="bundle__marker" style="left: {{ block.settings.marker_x }}%; top: {{ block.settings.marker_y }}%" data-look-spot="{{ forloop.index }}" title="{{ marker_title | escape }}">
+            <span class="visually-hidden">{{ marker_title }}</span>{{ forloop.index }}
+          </span>
+        {%- endfor -%}
       </div>
-    {%- endfor -%}
-  </div>
+    </div>
+  {%- else -%}
+    <div class="bundle__media">
+      {%- for block in section.blocks -%}
+        <div class="bundle__media-item" data-look-spot="{{ forloop.index }}">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.image.alt | default: block.settings.product.title | escape }}" width="500" height="{{ 500 | divided_by: block.settings.image.aspect_ratio | round }}" loading="lazy">
+          {%- elsif block.settings.product.featured_image != blank -%}
+            <img src="{{ block.settings.product.featured_image | image_url: width: 500 }}" alt="{{ block.settings.product.title | escape }}" width="500" height="{{ 500 | divided_by: block.settings.product.featured_image.aspect_ratio | round }}" loading="lazy">
+          {%- else -%}
+            <img src="{{ block.settings.fallback_image | default: 'sample-product-3.jpg' | asset_url }}" alt="{{ block.settings.fallback_title | escape }}" width="500" height="625" loading="lazy">
+          {%- endif -%}
+          <span class="bundle__step-badge">{{ forloop.index }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 
   <div class="bundle__content">
     {%- if section.settings.eyebrow != blank -%}<div class="bundle__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
@@ -46,7 +64,7 @@
     <div class="bundle__steps">
       {%- for block in section.blocks -%}
         {%- assign step_product = block.settings.product -%}
-        <div class="bundle__step" data-bundle-row {{ block.shopify_attributes }}>
+        <div class="bundle__step" data-bundle-row data-look-row="{{ forloop.index }}" {{ block.shopify_attributes }}>
           <span class="bundle__step-num">{{ forloop.index }}</span>
           {%- if step_product.featured_image != blank -%}
             <img src="{{ step_product.featured_image | image_url: width: 128 }}" alt="" width="64" height="64" loading="lazy">
@@ -110,6 +128,12 @@
       "default": "Level up your routine with the bundle"
     },
     {
+      "type": "image_picker",
+      "id": "set_image",
+      "label": "t:sections.bundle.settings.set_image.label",
+      "info": "t:sections.bundle.settings.set_image.info"
+    },
+    {
       "type": "text",
       "id": "button_label",
       "label": "t:sections.bundle.settings.button_label.label",
@@ -160,6 +184,31 @@
           "id": "image",
           "label": "t:sections.bundle.blocks.step.settings.image.label",
           "info": "t:sections.bundle.blocks.step.settings.image.info"
+        },
+        {
+          "type": "header",
+          "content": "t:sections.bundle.blocks.step.settings.marker_header.content",
+          "info": "t:sections.bundle.blocks.step.settings.marker_header.info"
+        },
+        {
+          "type": "range",
+          "id": "marker_x",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "t:sections.bundle.blocks.step.settings.marker_x.label",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "marker_y",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "t:sections.bundle.blocks.step.settings.marker_y.label",
+          "default": 20
         },
         {
           "type": "text",
