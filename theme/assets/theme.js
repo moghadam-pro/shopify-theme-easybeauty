@@ -1122,6 +1122,191 @@
     qsa('[data-collection].is-drawer-open').forEach((r) => { r.classList.remove('is-drawer-open'); document.body.style.overflow = ''; });
   });
 
+  /* ---------- dropdowns: styled option list for every <select> ----------
+     The native <select> stays the field (value, form submit, change events,
+     keyboard focus); on mouse/trackpad devices its browser pop-up is swapped
+     for one shared styled list that opens 2px under the field, or above it
+     when there isn't room. Add data-native to a select to opt out. */
+  (function dropdowns() {
+    if (!window.matchMedia || !window.matchMedia('(pointer: fine)').matches) return;
+    const list = document.createElement('ul');
+    list.className = 'eb-listbox';
+    list.setAttribute('role', 'listbox');
+    list.id = 'EbListbox';
+    list.hidden = true;
+    document.body.appendChild(list);
+    let current = null;
+    let active = -1;
+    let typed = '';
+    let typedTimer;
+    const usable = (sel) => sel && sel.tagName === 'SELECT' && !sel.multiple && !sel.disabled && (sel.size || 0) <= 1 && !sel.hasAttribute('data-native');
+    const options = () => qsa('.eb-listbox__option', list);
+
+    function setActive(i, scroll) {
+      const opts = options();
+      if (!opts.length) return;
+      active = Math.max(0, Math.min(opts.length - 1, i));
+      opts.forEach((o, n) => o.classList.toggle('is-active', n === active));
+      if (current) current.setAttribute('aria-activedescendant', opts[active].id);
+      if (scroll) opts[active].scrollIntoView({ block: 'nearest' });
+    }
+    function step(dir) {
+      const opts = options();
+      let i = active;
+      for (let k = 0; k < opts.length; k += 1) {
+        i += dir;
+        if (i < 0 || i >= opts.length) return;
+        if (opts[i].getAttribute('aria-disabled') !== 'true') { setActive(i, true); return; }
+      }
+    }
+    function place() {
+      if (!current) return;
+      const r = current.getBoundingClientRect();
+      const gap = 2;
+      list.style.minWidth = r.width + 'px';
+      list.style.maxWidth = Math.max(r.width, 320) + 'px';
+      list.style.left = Math.max(8, Math.min(r.left, window.innerWidth - Math.max(r.width, list.offsetWidth) - 8)) + 'px';
+      const below = window.innerHeight - r.bottom - gap - 8;
+      const above = r.top - gap - 8;
+      const natural = Math.min(list.scrollHeight, 320);
+      const up = below < natural && above > below;
+      list.classList.toggle('is-up', up);
+      list.style.maxHeight = Math.max(120, Math.min(320, up ? above : below)) + 'px';
+      const h = Math.min(natural, parseFloat(list.style.maxHeight));
+      list.style.top = (up ? r.top - gap - h : r.bottom + gap) + 'px';
+    }
+    function open(sel) {
+      if (current) close();
+      current = sel;
+      list.innerHTML = '';
+      let n = 0;
+      Array.from(sel.children).forEach((child) => {
+        const add = (opt) => {
+          if (opt.hidden) return;
+          const li = document.createElement('li');
+          li.className = 'eb-listbox__option';
+          li.id = 'EbListbox-' + n;
+          li.setAttribute('role', 'option');
+          li.setAttribute('data-index', String(opt.index));
+          li.setAttribute('aria-selected', String(opt.selected));
+          if (opt.disabled) li.setAttribute('aria-disabled', 'true');
+          li.textContent = opt.textContent.trim();
+          list.appendChild(li);
+          n += 1;
+        };
+        if (child.tagName === 'OPTGROUP') {
+          const g = document.createElement('li');
+          g.className = 'eb-listbox__group';
+          g.setAttribute('role', 'presentation');
+          g.textContent = child.label;
+          list.appendChild(g);
+          Array.from(child.children).forEach(add);
+        } else add(child);
+      });
+      list.setAttribute('aria-label', sel.getAttribute('aria-label') || (sel.labels && sel.labels[0] ? sel.labels[0].textContent.trim() : ''));
+      list.hidden = false;
+      sel.classList.add('is-open');
+      sel.setAttribute('aria-expanded', 'true');
+      sel.setAttribute('aria-controls', list.id);
+      const opts = options();
+      setActive(Math.max(0, opts.findIndex((o) => o.getAttribute('aria-selected') === 'true')), false);
+      place();
+      if (opts[active]) opts[active].scrollIntoView({ block: 'nearest' });
+      requestAnimationFrame(() => list.classList.add('is-open'));
+    }
+    function close() {
+      if (!current) return;
+      current.classList.remove('is-open');
+      current.setAttribute('aria-expanded', 'false');
+      current.removeAttribute('aria-activedescendant');
+      list.classList.remove('is-open');
+      list.hidden = true;
+      current = null;
+      active = -1;
+    }
+    function choose(li) {
+      if (!current || !li || li.getAttribute('aria-disabled') === 'true') return;
+      const sel = current;
+      const index = parseInt(li.getAttribute('data-index'), 10);
+      close();
+      if (sel.selectedIndex !== index) {
+        sel.selectedIndex = index;
+        sel.dispatchEvent(new Event('input', { bubbles: true }));
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      sel.focus();
+    }
+
+    document.addEventListener('mousedown', (e) => {
+      const sel = e.target.closest && e.target.closest('select');
+      if (usable(sel) && e.button === 0) {
+        e.preventDefault();
+        sel.focus();
+        if (current === sel) close(); else open(sel);
+        return;
+      }
+      if (!list.contains(e.target)) close();
+    });
+    list.addEventListener('mousedown', (e) => e.preventDefault());
+    list.addEventListener('click', (e) => choose(e.target.closest('.eb-listbox__option')));
+    list.addEventListener('mousemove', (e) => {
+      const li = e.target.closest('.eb-listbox__option');
+      if (li) setActive(options().indexOf(li), false);
+    });
+    document.addEventListener('keydown', (e) => {
+      const sel = e.target;
+      if (!usable(sel)) return;
+      if (!current) {
+        if (e.key === ' ' || e.key === 'Enter' || (e.altKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp'))) { e.preventDefault(); open(sel); }
+        return;
+      }
+      if (e.key === 'ArrowDown') { e.preventDefault(); step(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); step(-1); }
+      else if (e.key === 'Home') { e.preventDefault(); setActive(0, true); }
+      else if (e.key === 'End') { e.preventDefault(); setActive(options().length - 1, true); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(options()[active]); }
+      else if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Tab') close();
+      else if (e.key.length === 1) {
+        typed += e.key.toLowerCase();
+        clearTimeout(typedTimer);
+        typedTimer = setTimeout(() => { typed = ''; }, 600);
+        const i = options().findIndex((o) => o.textContent.toLowerCase().indexOf(typed) === 0);
+        if (i !== -1) setActive(i, true);
+        e.preventDefault();
+      }
+    }, true);
+    window.addEventListener('scroll', (e) => { if (current && e.target !== list) place(); }, true);
+    window.addEventListener('resize', close);
+    document.addEventListener('focusout', (e) => { if (current && e.target === current && !list.contains(e.relatedTarget)) close(); });
+  })();
+
+  /* ---------- sideways product rows with arrow buttons ---------- */
+  qsa('[data-carousel]').forEach((root) => {
+    const track = qs('[data-carousel-track]', root);
+    const prev = qs('[data-carousel-prev]', root);
+    const next = qs('[data-carousel-next]', root);
+    const controls = qs('[data-carousel-controls]', root);
+    if (!track) return;
+    function step() {
+      const first = track.firstElementChild;
+      return first ? first.getBoundingClientRect().width + 2 : track.clientWidth;
+    }
+    function sync() {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      if (controls) controls.hidden = max <= 0;
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max;
+    }
+    if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    if (next) next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    /* hidden tab panels measure 0 until shown */
+    new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['hidden'] });
+    sync();
+  });
+
   /* ---------- legal: document tabs (+ #privacy style links) ---------- */
   qsa('[data-legal]').forEach((root) => {
     const tabs = qsa('[data-legal-tab]', root);

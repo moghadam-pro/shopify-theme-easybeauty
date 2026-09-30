@@ -20,7 +20,9 @@
       "close": "Close",
       "next_slide": "Next slide",
       "previous_slide": "Previous slide",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "previous": "Previous",
+      "next": "Next"
     },
     "password_page": {
       "opening_soon": "Opening soon",

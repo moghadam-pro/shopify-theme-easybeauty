@@ -2,7 +2,9 @@
   Tabbed product grid ("What's hot / Best sellers / Sale"). Each tab block
   points at a collection; tabs switch client-side ([data-tabs] in theme.js).
   An unset collection falls back to collections.all so a fresh install shows
-  real products instead of an empty grid.
+  real products instead of an empty grid. Each tab sets its own product
+  count; in the "Slider" layout the row scrolls sideways with the arrow
+  buttons under it ([data-carousel] in theme.js), "Grid" wraps into rows.
 {%- endcomment -%}
 <section class="section container collection-tabs" data-tabs>
   <div class="section__head collection-tabs__head">
@@ -27,25 +29,40 @@
 
   {%- for block in section.blocks -%}
     {%- assign source_collection = block.settings.collection | default: collections.all -%}
+    {%- assign tab_limit = block.settings.products_to_show | default: section.settings.products_to_show -%}
     <div
-      class="grid grid--products grid--bordered grid-{{ section.settings.columns_desktop }}"
+      class="collection-tabs__panel collection-tabs__panel--{{ section.settings.layout }}"
+      style="--tab-columns: {{ section.settings.columns_desktop }}"
       role="tabpanel"
       id="Panel-{{ section.id }}-{{ forloop.index }}"
       aria-labelledby="Tab-{{ section.id }}-{{ forloop.index }}"
       data-tab-panel
       {% unless forloop.first %}hidden{% endunless %}
+      {% if section.settings.layout == 'slider' %}data-carousel{% endif %}
     >
+      <div class="collection-tabs__track grid--bordered" data-carousel-track>
       {%- if source_collection == blank or source_collection.products.size == 0 -%}
-        {%- for i in (1..section.settings.products_to_show) -%}
+        {%- for i in (1..tab_limit) -%}
           <div class="product-card">
             <div class="product-card__media">{{ 'product-1' | placeholder_svg_tag: class: 'placeholder-svg' }}</div>
             <div class="product-card__title">{{ 'sections.collection-tabs.example_product' | t }}</div>
           </div>
         {%- endfor -%}
       {%- else -%}
-        {%- for product in source_collection.products limit: section.settings.products_to_show -%}
+        {%- for product in source_collection.products limit: tab_limit -%}
           {% render 'product-card', product: product %}
         {%- endfor -%}
+      {%- endif -%}
+      </div>
+      {%- if section.settings.layout == 'slider' -%}
+        <div class="collection-tabs__controls" data-carousel-controls>
+          <button type="button" class="collection-tabs__arrow" data-carousel-prev aria-label="{{ 'general.accessibility.previous' | t }}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H6M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="collection-tabs__arrow" data-carousel-next aria-label="{{ 'general.accessibility.next' | t }}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
       {%- endif -%}
     </div>
   {%- endfor -%}
@@ -56,13 +73,30 @@
   "name": "t:sections.collection-tabs.name",
   "settings": [
     {
+      "type": "select",
+      "id": "layout",
+      "label": "t:sections.collection-tabs.settings.layout.label",
+      "options": [
+        {
+          "value": "slider",
+          "label": "t:sections.collection-tabs.settings.layout.options__1.label"
+        },
+        {
+          "value": "grid",
+          "label": "t:sections.collection-tabs.settings.layout.options__2.label"
+        }
+      ],
+      "default": "slider"
+    },
+    {
       "type": "range",
       "id": "products_to_show",
       "label": "t:sections.collection-tabs.settings.products_to_show.label",
       "min": 2,
-      "max": 12,
+      "max": 24,
       "step": 1,
-      "default": 4
+      "default": 8,
+      "info": "t:sections.collection-tabs.settings.products_to_show.info"
     },
     {
       "type": "select",
@@ -112,6 +146,16 @@
           "id": "collection",
           "label": "t:sections.collection-tabs.blocks.tab.settings.collection.label",
           "info": "t:sections.collection-tabs.blocks.tab.settings.collection.info"
+        },
+        {
+          "type": "range",
+          "id": "products_to_show",
+          "label": "t:sections.collection-tabs.blocks.tab.settings.products_to_show.label",
+          "info": "t:sections.collection-tabs.blocks.tab.settings.products_to_show.info",
+          "min": 2,
+          "max": 24,
+          "step": 1,
+          "default": 8
         }
       ]
     }

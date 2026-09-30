@@ -5,6 +5,20 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.8.0] — 2026-09-30
+
+### Added
+- Styled dropdown list for every `<select>` on mouse/trackpad devices: opens 2px under the field
+  (or above it when there's no room), themed hover and selected states, keyboard support
+  (arrows, Home/End, Enter, Esc, type-to-find). Touch devices keep the native picker; add
+  `data-native` to a select to opt out.
+- Collection tabs: "Slider with arrows" layout (default) with previous/next buttons under the
+  row, and a product count per tab (up to 24).
+
+### Changed
+- Header nav: 12px items with tighter spacing so longer menus leave room for the logo.
+- Dropdown chevron follows the text colour (including dark mode) instead of a fixed colour.
+
 ## [1.7.0] — 2026-09-29
 
 ### Added

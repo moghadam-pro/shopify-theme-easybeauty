@@ -776,41 +776,78 @@
         "document": {
           "name": "Document (tab)",
           "settings": {
-            "label": { "label": "Tab label" },
-            "anchor": { "label": "Link name", "info": "Opens this tab from links such as /pages/legal#privacy. Defaults to the tab label." },
-            "kicker": { "label": "Eyebrow" },
-            "heading": { "label": "Heading" },
+            "label": {
+              "label": "Tab label"
+            },
+            "anchor": {
+              "label": "Link name",
+              "info": "Opens this tab from links such as /pages/legal#privacy. Defaults to the tab label."
+            },
+            "kicker": {
+              "label": "Eyebrow"
+            },
+            "heading": {
+              "label": "Heading"
+            },
             "policy": {
               "label": "Show a Shopify policy",
               "info": "Shown when no Clause blocks follow this document. Edit the text in Settings → Policies.",
-              "options__1": { "label": "None" },
-              "options__2": { "label": "Privacy policy" },
-              "options__3": { "label": "Terms of service" },
-              "options__4": { "label": "Refund policy" },
-              "options__5": { "label": "Shipping policy" },
-              "options__6": { "label": "Subscription policy" }
+              "options__1": {
+                "label": "None"
+              },
+              "options__2": {
+                "label": "Privacy policy"
+              },
+              "options__3": {
+                "label": "Terms of service"
+              },
+              "options__4": {
+                "label": "Refund policy"
+              },
+              "options__5": {
+                "label": "Shipping policy"
+              },
+              "options__6": {
+                "label": "Subscription policy"
+              }
             }
           }
         },
         "clause": {
           "name": "Clause",
           "settings": {
-            "number": { "label": "Number" },
-            "heading": { "label": "Heading" },
-            "text": { "label": "Text" }
+            "number": {
+              "label": "Number"
+            },
+            "heading": {
+              "label": "Heading"
+            },
+            "text": {
+              "label": "Text"
+            }
           }
         },
         "aside": {
           "name": "Side note",
           "settings": {
-            "heading": { "label": "Heading" },
-            "text": { "label": "Text" },
-            "button_label": { "label": "Button label" },
-            "button_link": { "label": "Button link" }
+            "heading": {
+              "label": "Heading"
+            },
+            "text": {
+              "label": "Text"
+            },
+            "button_label": {
+              "label": "Button label"
+            },
+            "button_link": {
+              "label": "Button link"
+            }
           }
         }
       },
-      "presets": { "name": "Legal documents" }
+      "presets": {
+        "name": "Legal documents"
+      }
     },
     "legal-links": {
       "name": "Legal links",
@@ -1177,7 +1214,8 @@
       "name": "Collection tabs",
       "settings": {
         "products_to_show": {
-          "label": "Products per tab"
+          "label": "Products per tab",
+          "info": "Default for tabs that don't set their own number."
         },
         "columns_desktop": {
           "label": "Columns on desktop"
@@ -1187,6 +1225,15 @@
         },
         "view_all_link": {
           "label": "View all link"
+        },
+        "layout": {
+          "label": "Layout",
+          "options__1": {
+            "label": "Slider with arrows"
+          },
+          "options__2": {
+            "label": "Grid"
+          }
         }
       },
       "blocks": {
@@ -1199,6 +1246,10 @@
             "collection": {
               "label": "Collection",
               "info": "Defaults to all products."
+            },
+            "products_to_show": {
+              "label": "Products in this tab",
+              "info": "In the slider, extra products are reached with the arrows."
             }
           }
         }
