@@ -7,6 +7,8 @@ Method: `shopify theme check` (recommended and `theme-check:all`), a grep audit 
 Theme Store feature requirements, and HTML audits of the draft's home, collection, product,
 cart, search, blog, page, list-collections and 404 pages.
 
+How to submit once these are fixed: [THEME-STORE-SUBMISSION.md](THEME-STORE-SUBMISSION.md).
+
 Status legend: **Blocker** = a Theme Store reviewer will reject for this. **Major** = likely
 rejection or a failed review round. **Minor** = polish.
 
