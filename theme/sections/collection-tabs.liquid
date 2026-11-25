@@ -6,6 +6,7 @@
   count; in the "Slider" layout the row scrolls sideways with the arrow
   buttons under it ([data-carousel] in theme.js), "Grid" wraps into rows.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container collection-tabs" data-tabs>
   <div class="section__head collection-tabs__head">
     <div class="tabs" role="tablist">
@@ -67,6 +68,7 @@
     </div>
   {%- endfor -%}
 </section>
+</div>
 
 {% schema %}
 {
@@ -128,6 +130,12 @@
       "type": "url",
       "id": "view_all_link",
       "label": "t:sections.collection-tabs.settings.view_all_link.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container">
   <div class="section__head">
     <h1>{{ 'customer.account.greeting' | t: name: customer.first_name }}</h1>
@@ -40,12 +41,18 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.main-customer-account.name",
   "settings": [
-
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
   ]
 }
 {% endschema %}

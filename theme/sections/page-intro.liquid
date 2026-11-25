@@ -3,6 +3,7 @@
   lead paragraph, optional meta line (e.g. opening hours) and up to two
   buttons. The title falls back to the current page/blog title.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign intro_title = section.settings.heading
   if intro_title == blank
@@ -75,6 +76,7 @@
     </div>
   {%- endif -%}
 </section>
+</div>
 
 {% schema %}
 {
@@ -161,6 +163,12 @@
       "id": "grayscale",
       "label": "t:sections.page-intro.settings.grayscale.label",
       "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

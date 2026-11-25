@@ -2,6 +2,7 @@
   Full-width photograph band between sections (design: About, under the
   intro). Height and focal point are settings; optional caption strip.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <div class="image-banner image-banner--{{ section.settings.height }}">
   <div class="image-banner__media" style="--focus: {{ section.settings.position }}">
     {%- if section.settings.image -%}
@@ -11,6 +12,7 @@
     {%- endif -%}
   </div>
   {%- if section.settings.caption != blank -%}<div class="image-banner__caption">{{ section.settings.caption }}</div>{%- endif -%}
+</div>
 </div>
 
 {% schema %}
@@ -70,6 +72,12 @@
       "type": "text",
       "id": "caption",
       "label": "t:sections.image-banner.settings.caption.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

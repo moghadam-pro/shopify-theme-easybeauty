@@ -2,6 +2,7 @@
   Square photo grid with an eyebrow ("From the community"). Each block is one
   photo; unset photos fall back to a bundled theme asset.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="image-gallery">
   <div class="container">
     {%- if section.settings.eyebrow != blank -%}<div class="kicker image-gallery__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
@@ -18,6 +19,7 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -28,6 +30,12 @@
       "id": "eyebrow",
       "label": "t:sections.image-gallery.settings.eyebrow.label",
       "default": "From the community"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

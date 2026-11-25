@@ -3,6 +3,7 @@
   the other (design's "Our story" block). The photo is capped in height so
   the section never runs taller than a screen on wide monitors.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="image-text{% if section.settings.layout == 'right' %} is-reversed{% endif %}">
   <div class="image-text__media">
     {%- if section.settings.image -%}
@@ -53,6 +54,7 @@
     {%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -110,6 +112,12 @@
       "type": "url",
       "id": "button_link",
       "label": "t:sections.image-text.settings.button_link.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

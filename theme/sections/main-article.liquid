@@ -8,6 +8,7 @@
     terracotta pull quotes, numbered lists, tables), tags and comments.
   Contents / progress / share: [data-article] in theme.js.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign word_count = article.content | strip_html | split: ' ' | size
   assign read_minutes = word_count | divided_by: 200 | at_least: 1
@@ -135,6 +136,7 @@
     </div>
   </div>
 </article>
+</div>
 
 {% schema %}
 {
@@ -170,6 +172,12 @@
       "id": "show_share",
       "label": "t:sections.main-article.settings.show_share.label",
       "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ]
 }

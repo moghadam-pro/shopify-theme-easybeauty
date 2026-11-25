@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="team-grid">
   <div class="team-grid__head">
     {%- if section.settings.eyebrow != blank -%}<div class="kicker">{{ section.settings.eyebrow }}</div>{%- endif -%}
@@ -22,6 +23,7 @@
     {%- endfor -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -38,6 +40,12 @@
       "id": "heading",
       "label": "t:sections.team-grid.settings.heading.label",
       "default": "A team of nine, four of them chemists."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

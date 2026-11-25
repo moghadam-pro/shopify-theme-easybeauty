@@ -6,6 +6,7 @@
   they stay pinned to the same spot on the photo; theme.js opens a hotspot
   card on hover/focus/tap and keeps it open while the pointer is on the card.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign zoom = section.settings.image_shift | divided_by: 100.0 | plus: 1
   assign ratio = 1.887
@@ -117,6 +118,7 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -247,6 +249,12 @@
       "type": "url",
       "id": "button_link_2",
       "label": "t:sections.hero.settings.button_link_2.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

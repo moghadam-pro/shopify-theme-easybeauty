@@ -4,6 +4,7 @@
   reviews app (Judge.me, Shopify Product Reviews, …), which renders its own
   widget on the product page.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="testimonials">
   <div class="container">
     {%- if section.settings.rating != blank or section.settings.rating_label != blank -%}
@@ -68,6 +69,7 @@
     </div>
   {%- endif -%}
 </section>
+</div>
 
 {% schema %}
 {
@@ -102,6 +104,12 @@
       "label": "t:sections.testimonials.settings.press_speed.label",
       "info": "t:sections.testimonials.settings.press_speed.info",
       "default": 4
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

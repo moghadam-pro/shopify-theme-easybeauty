@@ -3,6 +3,7 @@
   numbered list on the right whose rows highlight on hover; "Grid" = four
   columns under the heading.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="about-values about-values--{{ section.settings.layout }}">
   <div class="about-values__head">
     {%- if section.settings.eyebrow != blank -%}<div class="kicker">{{ section.settings.eyebrow }}</div>{%- endif -%}
@@ -20,6 +21,7 @@
     {%- endfor -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -52,6 +54,12 @@
       "id": "heading",
       "label": "t:sections.about-values.settings.heading.label",
       "default": "Four rules that decide every formula we ship."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

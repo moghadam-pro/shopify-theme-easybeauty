@@ -284,7 +284,7 @@
     "behind": {
       "type": "cta-banner",
       "settings": {
-        "color_scheme": "dark",
+        "style": "dark",
         "eyebrow": "Behind the shoot",
         "heading": "Four people, eight weeks on the same routine.",
         "text": "<p>Everyone photographed here had used their routine for at least eight weeks before the camera came out. We list what each of them used, in order, with nothing left off.</p>",

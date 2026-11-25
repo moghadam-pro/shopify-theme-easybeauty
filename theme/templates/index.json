@@ -440,7 +440,7 @@
     "quiz-cta": {
       "type": "cta-banner",
       "settings": {
-        "color_scheme": "accent",
+        "style": "accent",
         "eyebrow": "Find your routine",
         "heading": "Not sure where to start? Take the 60-second skin quiz.",
         "button_label": "Start the quiz",

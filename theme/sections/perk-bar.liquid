@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="perk-bar">
   <div class="perk-bar__grid">
     {%- for block in section.blocks -%}
@@ -8,6 +9,7 @@
     {%- endfor -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -86,6 +88,14 @@
           }
         }
       ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ]
 }

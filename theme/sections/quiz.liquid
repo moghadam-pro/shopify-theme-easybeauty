@@ -11,6 +11,7 @@
   Driven by [data-quiz] in theme.js. Every question is a block with up to
   four options (label, note, tag).
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign question_blocks = section.blocks | where: 'type', 'question'
   assign question_count = question_blocks.size
@@ -155,6 +156,7 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -235,6 +237,12 @@
       "step": 1,
       "label": "t:sections.quiz.settings.result_count.label",
       "default": 3
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

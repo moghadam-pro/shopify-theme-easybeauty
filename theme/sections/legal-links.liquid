@@ -4,6 +4,7 @@
   simple hub that links out to whichever policies the merchant has published,
   rather than duplicating that legal text inside the theme.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container legal-links">
   <h2>{{ section.settings.heading }}</h2>
   <div style="display:flex;flex-direction:column">
@@ -14,6 +15,7 @@
     {%- if shop.subscription_policy -%}<a href="{{ shop.subscription_policy.url }}" class="faq-item__trigger">{{ shop.subscription_policy.title }} &rarr;</a>{%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -24,6 +26,12 @@
       "id": "heading",
       "label": "t:sections.legal-links.settings.heading.label",
       "default": "Legal"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ]
 }

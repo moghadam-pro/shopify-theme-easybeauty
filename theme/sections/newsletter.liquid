@@ -3,6 +3,7 @@
   (design: Journal) puts an eyebrow, heading and inline form on the left
   and a photograph on the right.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- if section.settings.layout == 'split' -%}
   <section class="newsletter-split">
     <div class="newsletter-split__copy" data-newsletter-wrapper>
@@ -46,6 +47,7 @@
   </div>
 </section>
 {%- endif -%}
+</div>
 
 {% schema %}
 {
@@ -89,6 +91,12 @@
       "id": "image",
       "label": "t:sections.newsletter.settings.image.label",
       "info": "t:sections.newsletter.settings.image.info"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

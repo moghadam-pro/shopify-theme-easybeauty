@@ -3,6 +3,7 @@
   Kept separate from main-collection so
   other sections (e.g. category chips) can sit between it and the grid.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <div class="collection-hero">
   <div class="container">
     <nav class="page-intro__breadcrumb" aria-label="{{ 'sections.page-intro.breadcrumb' | t }}">
@@ -16,6 +17,7 @@
     </div>
   </div>
 </div>
+</div>
 
 {% schema %}
 {
@@ -26,6 +28,12 @@
       "id": "fallback_description",
       "label": "t:sections.collection-banner.settings.fallback_description.label",
       "info": "t:sections.collection-banner.settings.fallback_description.info"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

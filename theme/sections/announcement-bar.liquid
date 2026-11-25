@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- if section.blocks.size > 0 -%}
   <div class="announcement-bar" data-announcement-bar {{ section.shopify_attributes }}>
     {%- for block in section.blocks -%}
@@ -27,6 +28,7 @@
     </script>
   {%- endif -%}
 {%- endif -%}
+</div>
 
 {% schema %}
 {
@@ -71,6 +73,14 @@
         }
       }
     ]
-  }
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ]
 }
 {% endschema %}

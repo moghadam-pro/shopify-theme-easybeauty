@@ -221,7 +221,7 @@
     "cta": {
       "type": "cta-banner",
       "settings": {
-        "color_scheme": "dark",
+        "style": "dark",
         "eyebrow": "Still deciding?",
         "heading": "Six questions, three products, no account needed.",
         "button_label": "Take the skin quiz",

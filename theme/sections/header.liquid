@@ -31,7 +31,7 @@
     assign initials = first_initial | append: last_initial
   endif
 -%}
-<header class="site-header site-header--logo-{{ section.settings.logo_position }}" data-site-header {% if section.settings.sticky %}data-sticky{% endif %}>
+<header class="color-scheme color-{{ section.settings.color_scheme }} site-header site-header--logo-{{ section.settings.logo_position }}" data-site-header {% if section.settings.sticky %}data-sticky{% endif %}>
   <div class="site-header__bar container" data-site-nav>
     <nav class="site-header__nav" aria-label="{{ 'sections.header.menu' | t }}">
       {%- for link in menu.links -%}
@@ -457,6 +457,12 @@
       "id": "demo_product",
       "label": "t:sections.header.settings.demo_product.label",
       "info": "t:sections.header.settings.demo_product.info"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

@@ -1,0 +1,92 @@
+{%- comment -%}
+  Theme-wide CSS variables from Theme settings, rendered inline in <head> by both layouts so the
+  theme editor previews changes instantly.
+
+  - Fonts: Typography → heading/body font pickers (Shopify font library). Bold weights are
+    derived with font_modify; a weight the family lacks falls back to the browser's synthesis.
+  - Colors: every color scheme becomes a `.color-<scheme id>` class. The first scheme also
+    defines :root, so the page body and anything without a scheme uses it. Only the base colors
+    are set here; theme.css mixes every shade (muted text, accent tints) from them inside
+    `:root, .color-scheme`.
+  - Dark mode: light schemes (background brightness > 125) switch to the Dark mode colors
+    under html[data-theme="dark"]; dark schemes are already dark and stay as they are.
+{%- endcomment -%}
+{%- liquid
+  assign heading_font = settings.type_heading_font
+  assign body_font = settings.type_body_font
+  assign body_font_500 = body_font | font_modify: 'weight', '500'
+  assign body_font_600 = body_font | font_modify: 'weight', '600'
+  assign body_font_700 = body_font | font_modify: 'weight', '700'
+  assign body_font_800 = body_font | font_modify: 'weight', '800'
+  assign body_font_italic = body_font | font_modify: 'style', 'italic'
+  assign heading_font_italic = heading_font | font_modify: 'style', 'italic'
+-%}
+{% style %}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ heading_font_italic | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font_500 | font_face: font_display: 'swap' }}
+  {{ body_font_600 | font_face: font_display: 'swap' }}
+  {{ body_font_700 | font_face: font_display: 'swap' }}
+  {{ body_font_800 | font_face: font_display: 'swap' }}
+  {{ body_font_italic | font_face: font_display: 'swap' }}
+
+  :root {
+    --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --font-heading-weight: {{ heading_font.weight }};
+    --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+    --font-body-weight: {{ body_font.weight }};
+  }
+
+  {% for scheme in settings.color_schemes -%}
+    {%- liquid
+      assign s = scheme.settings
+      assign selector = '.color-' | append: scheme.id
+      if forloop.first
+        assign selector = ':root, ' | append: selector
+      endif
+    -%}
+    {{ selector }} {
+      --cream: {{ s.background }};
+      --color-bg-gradient: {{ s.background_gradient | default: s.background }};
+      --off: {{ s.surface }};
+      --ink: {{ s.text }};
+      --terra: {{ s.accent }};
+      --moss: {{ s.accent_2 }};
+      --color-border: {{ s.border }};
+      --color-inverse-bg: {{ s.inverse_background }};
+      --color-inverse-text: {{ s.inverse_text }};
+    }
+  {% endfor %}
+
+  {%- if settings.dark_mode_enabled %}
+    {%- liquid
+      assign dark_selectors = ''
+      for scheme in settings.color_schemes
+        assign brightness = scheme.settings.background | color_brightness
+        if brightness > 125
+          if forloop.first
+            assign dark_selectors = dark_selectors | append: 'html[data-theme="dark"], '
+          endif
+          assign dark_selectors = dark_selectors | append: 'html[data-theme="dark"] .color-' | append: scheme.id | append: ', '
+        endif
+      endfor
+      assign dark_selectors = dark_selectors | remove_last: ', '
+    -%}
+    html[data-theme="dark"] { color-scheme: dark; }
+    {%- if dark_selectors != blank %}
+      {{ dark_selectors }} {
+        --cream: {{ settings.dark_background }};
+        --color-bg-gradient: {{ settings.dark_background }};
+        --off: {{ settings.dark_surface }};
+        --ink: {{ settings.dark_text }};
+        --terra: {{ settings.dark_accent }};
+        --moss: #7FB08F;
+        --color-border: {{ settings.dark_border }};
+        --color-inverse-bg: #0C0A08;
+        --color-inverse-text: #F2EAE0;
+        --near: #0C0A08;
+      }
+    {%- endif %}
+  {%- endif %}
+{% endstyle %}

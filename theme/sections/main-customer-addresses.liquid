@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container" style="max-width:640px">
   <h1>{{ 'customer.addresses.title' | t }}</h1>
   <a href="{{ routes.account_url }}" class="btn-ghost">&larr; {{ 'customer.account.return' | t }}</a>
@@ -46,12 +47,18 @@
     </div>
   </details>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.main-customer-addresses.name",
   "settings": [
-
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
   ]
 }
 {% endschema %}

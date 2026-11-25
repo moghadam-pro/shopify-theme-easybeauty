@@ -5,6 +5,27 @@ All notable changes to the EasyBeauty theme. Versions follow
 in `theme/config/settings_schema.json` (shown in Shopify Admin under the theme
 name) and the `vX.Y.Z` git tag. See "Releasing" in `docs/DEVELOPMENT.md`.
 
+## [1.11.0] — 2026-11-25
+
+### Added
+- Color schemes (Theme settings → Colors): five schemes to start with (cream, off-white,
+  sand, dark, terracotta), each with background (+ optional gradient), surface, text, two
+  accents, border and inverse colors. Every section has a "Color scheme" setting (default:
+  scheme 1, so existing pages look the same).
+- Typography font pickers for headings and body, from Shopify's font library (defaults:
+  Bodoni Moda, Archivo).
+
+### Changed
+- Dark mode recolors light schemes only; dark schemes keep their own colors.
+- Select chevrons follow the text color of their scheme.
+- CTA banner: the old "Color scheme" select (accent / dark / light) is now "Style".
+
+### Removed
+- The 12 self-hosted Archivo / Bodoni Moda `.woff2` files in assets. Fonts now load from
+  Shopify's font CDN.
+- The single-palette color settings (`color_background`, `color_accent`, and the rest),
+  replaced by color schemes.
+
 ## [1.10.0] — 2026-09-30
 
 ### Added

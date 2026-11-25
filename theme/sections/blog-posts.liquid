@@ -2,6 +2,7 @@
   Latest articles from a blog ("Keep reading"). Defaults to the blog of the
   article being viewed; the current article is skipped.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign source_blog = section.settings.blog | default: blog
   assign shown = 0
@@ -22,6 +23,7 @@
     </div>
   </section>
 {%- endif -%}
+</div>
 
 {% schema %}
 {
@@ -53,6 +55,12 @@
       "id": "view_all_label",
       "label": "t:sections.blog-posts.settings.view_all_label.label",
       "default": "All articles"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

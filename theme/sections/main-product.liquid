@@ -21,6 +21,7 @@
   Rating comes from the standard reviews.rating / reviews.rating_count
   metafields that review apps write.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign layout = section.settings.layout
   assign form_id = 'ProductForm-' | append: section.id
@@ -474,6 +475,7 @@
     {{ product | json }}
   </script>
 </section>
+</div>
 
 {% schema %}
 {
@@ -582,6 +584,12 @@
       "id": "dossier_eyebrow",
       "label": "t:sections.main-product.settings.dossier_eyebrow.label",
       "info": "t:sections.main-product.settings.dossier_eyebrow.info"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

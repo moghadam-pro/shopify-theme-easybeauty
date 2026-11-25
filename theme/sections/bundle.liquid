@@ -14,6 +14,7 @@
   and the add-to-cart button is replaced by a link until every step has a
   real product.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign all_products_set = true
   assign bundle_total = 0
@@ -110,6 +111,7 @@
     <p class="bundle__error" data-bundle-error hidden></p>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -167,6 +169,12 @@
       "type": "url",
       "id": "fallback_link",
       "label": "t:sections.bundle.settings.fallback_link.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

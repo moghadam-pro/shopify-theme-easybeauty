@@ -1,13 +1,74 @@
 {
   "current": {
-    "color_background": "#F5F0EA",
-    "color_surface": "#FBFAF8",
-    "color_text": "#2B241D",
-    "color_accent": "#94513C",
-    "color_accent_2": "#3D6A4D",
-    "color_border": "#D8CDBE",
-    "color_inverse_background": "#2B241D",
-    "color_inverse_text": "#FBFAF8",
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#F5F0EA",
+          "background_gradient": "",
+          "surface": "#FBFAF8",
+          "text": "#2B241D",
+          "accent": "#94513C",
+          "accent_2": "#3D6A4D",
+          "border": "#D8CDBE",
+          "inverse_background": "#2B241D",
+          "inverse_text": "#FBFAF8"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "background": "#FBFAF8",
+          "background_gradient": "",
+          "surface": "#F5F0EA",
+          "text": "#2B241D",
+          "accent": "#94513C",
+          "accent_2": "#3D6A4D",
+          "border": "#D8CDBE",
+          "inverse_background": "#2B241D",
+          "inverse_text": "#FBFAF8"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "background": "#E9E1D5",
+          "background_gradient": "",
+          "surface": "#FBFAF8",
+          "text": "#2B241D",
+          "accent": "#94513C",
+          "accent_2": "#3D6A4D",
+          "border": "#D8CDBE",
+          "inverse_background": "#2B241D",
+          "inverse_text": "#FBFAF8"
+        }
+      },
+      "scheme-4": {
+        "settings": {
+          "background": "#2B241D",
+          "background_gradient": "",
+          "surface": "#3A322A",
+          "text": "#F5F0EA",
+          "accent": "#CE8268",
+          "accent_2": "#7FB08F",
+          "border": "#4A4037",
+          "inverse_background": "#F5F0EA",
+          "inverse_text": "#2B241D"
+        }
+      },
+      "scheme-5": {
+        "settings": {
+          "background": "#94513C",
+          "background_gradient": "",
+          "surface": "#A65E47",
+          "text": "#FBFAF8",
+          "accent": "#FBFAF8",
+          "accent_2": "#F5F0EA",
+          "border": "#B8735C",
+          "inverse_background": "#2B241D",
+          "inverse_text": "#FBFAF8"
+        }
+      }
+    },
+    "type_heading_font": "bodoni_moda_n4",
+    "type_body_font": "archivo_n4",
     "heading_scale": 100,
     "body_scale": 100,
     "page_width": 1600,
@@ -22,14 +83,75 @@
   },
   "presets": {
     "Default": {
-      "color_background": "#F5F0EA",
-      "color_surface": "#FBFAF8",
-      "color_text": "#2B241D",
-      "color_accent": "#94513C",
-      "color_accent_2": "#3D6A4D",
-      "color_border": "#D8CDBE",
-      "color_inverse_background": "#2B241D",
-      "color_inverse_text": "#FBFAF8",
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#F5F0EA",
+            "background_gradient": "",
+            "surface": "#FBFAF8",
+            "text": "#2B241D",
+            "accent": "#94513C",
+            "accent_2": "#3D6A4D",
+            "border": "#D8CDBE",
+            "inverse_background": "#2B241D",
+            "inverse_text": "#FBFAF8"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#FBFAF8",
+            "background_gradient": "",
+            "surface": "#F5F0EA",
+            "text": "#2B241D",
+            "accent": "#94513C",
+            "accent_2": "#3D6A4D",
+            "border": "#D8CDBE",
+            "inverse_background": "#2B241D",
+            "inverse_text": "#FBFAF8"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#E9E1D5",
+            "background_gradient": "",
+            "surface": "#FBFAF8",
+            "text": "#2B241D",
+            "accent": "#94513C",
+            "accent_2": "#3D6A4D",
+            "border": "#D8CDBE",
+            "inverse_background": "#2B241D",
+            "inverse_text": "#FBFAF8"
+          }
+        },
+        "scheme-4": {
+          "settings": {
+            "background": "#2B241D",
+            "background_gradient": "",
+            "surface": "#3A322A",
+            "text": "#F5F0EA",
+            "accent": "#CE8268",
+            "accent_2": "#7FB08F",
+            "border": "#4A4037",
+            "inverse_background": "#F5F0EA",
+            "inverse_text": "#2B241D"
+          }
+        },
+        "scheme-5": {
+          "settings": {
+            "background": "#94513C",
+            "background_gradient": "",
+            "surface": "#A65E47",
+            "text": "#FBFAF8",
+            "accent": "#FBFAF8",
+            "accent_2": "#F5F0EA",
+            "border": "#B8735C",
+            "inverse_background": "#2B241D",
+            "inverse_text": "#FBFAF8"
+          }
+        }
+      },
+      "type_heading_font": "bodoni_moda_n4",
+      "type_body_font": "archivo_n4",
       "heading_scale": 100,
       "body_scale": 100,
       "page_width": 1600,

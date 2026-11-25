@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="error-page">
   <div class="container">
     <div class="error-page__code">404</div>
@@ -16,12 +17,18 @@
     </form>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.main-404.name",
   "settings": [
-
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
   ]
 }
 {% endschema %}

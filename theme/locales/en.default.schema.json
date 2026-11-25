@@ -6,19 +6,23 @@
     },
     "colors": {
       "name": "Colors",
-      "header": "Brand palette",
+      "header": "Color schemes",
       "background": "Background",
-      "surface": "Surface",
+      "background_gradient": "Background gradient",
+      "background_gradient_info": "Replaces the background color where a section shows the scheme background.",
+      "surface": "Surface (cards, panels)",
       "text": "Text",
-      "accent": "Accent (terracotta)",
-      "accent_2": "Accent 2 (moss)",
-      "border": "Border / divider",
-      "inverse_background": "Inverse background (footer)",
-      "inverse_text": "Inverse text (footer)"
+      "accent": "Accent and primary button",
+      "accent_2": "Second accent",
+      "border": "Border",
+      "inverse_background": "Inverse background",
+      "inverse_text": "Inverse text"
     },
     "typography": {
       "name": "Typography",
-      "brand_font_note": "EasyBeauty ships with Archivo (body/UI) and Bodoni Moda (display headings) self-hosted in Assets. Use the scales below to fine-tune size without switching the brand typefaces.",
+      "headings": "Headings",
+      "body": "Body",
+      "font": "Font",
       "heading_scale": "Heading size",
       "body_scale": "Body size"
     },
@@ -42,7 +46,7 @@
       "name": "Dark mode",
       "enabled": {
         "label": "Enable dark mode",
-        "info": "Adds a light / dark switch to the header (Header → Show light / dark switch)."
+        "info": "Adds a light / dark switch to the header (Header → Show light / dark switch). Light color schemes switch to the colors below; dark schemes stay as they are."
       },
       "default": {
         "label": "Default for new visitors",
@@ -1517,8 +1521,8 @@
     "cta-banner": {
       "name": "Call to action",
       "settings": {
-        "color_scheme": {
-          "label": "Colors"
+        "style": {
+          "label": "Style"
         },
         "eyebrow": {
           "label": "Eyebrow"
@@ -1881,6 +1885,11 @@
       },
       "presets": {
         "name": "Image band"
+      }
+    },
+    "all": {
+      "color_scheme": {
+        "label": "Color scheme"
       }
     }
   }

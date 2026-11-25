@@ -2,121 +2,16 @@
   EasyBeauty theme stylesheet.
   Design tokens carried over from the original design-reference mockups
   (see /design-reference and /docs/DECISIONS.md), rebuilt as plain,
-  framework-free CSS with self-hosted fonts.
+  framework-free CSS. Fonts and base colors come from Theme settings and
+  are rendered inline by snippets/css-variables.liquid.
 */
 
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('archivo-400-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('archivo-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('archivo-500-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('archivo-500-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('archivo-600-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('archivo-600-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('archivo-700-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('archivo-700-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url('archivo-800-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122;
-}
-@font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url('archivo-800-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF;
-}
-@font-face {
-  font-family: 'Bodoni Moda';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('bodoni-moda-400-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122;
-}
-@font-face {
-  font-family: 'Bodoni Moda';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('bodoni-moda-400-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF;
-}
-
-/* Colour tokens. Base colours come from Theme settings → Colors; every
-   secondary shade (muted text, accent tints) is mixed from them, so changing
-   a base colour — or switching to dark mode — recolours the whole theme. */
-:root {
-  --cream: {{ settings.color_background | default: '#F5F0EA' }};
-  --off: {{ settings.color_surface | default: '#FBFAF8' }};
-  --ink: {{ settings.color_text | default: '#2B241D' }};
-  --terra: {{ settings.color_accent | default: '#94513C' }};
-  --moss: {{ settings.color_accent_2 | default: '#3D6A4D' }};
-  --color-border: {{ settings.color_border | default: '#D8CDBE' }};
-  --color-inverse-bg: {{ settings.color_inverse_background | default: '#2B241D' }};
-  --color-inverse-text: {{ settings.color_inverse_text | default: '#FBFAF8' }};
-  --near: #1A1512;
-}
-:root, .theme-scope {
+/* Colour tokens. Base colours (--cream, --off, --ink, --terra, --moss, borders, inverse) come
+   from the color schemes in Theme settings → Colors (snippets/css-variables.liquid); every
+   secondary shade is mixed from them here, per scheme, so a section set to another scheme —
+   or dark mode — recolours everything inside it. */
+:root { --near: #1A1512; }
+:root, .theme-scope, .color-scheme {
   --sand: color-mix(in srgb, var(--ink) 8%, var(--cream));
   --t1: color-mix(in srgb, var(--ink) 86%, var(--cream));
   --t2: color-mix(in srgb, var(--ink) 74%, var(--cream));
@@ -139,8 +34,6 @@
   --color-divider: var(--ink);
 }
 :root {
-  --font-heading: 'Bodoni Moda', Georgia, serif;
-  --font-body: 'Archivo', system-ui, sans-serif;
   --heading-scale: {{ settings.heading_scale | default: 100 | divided_by: 100.0 }};
   --body-scale: {{ settings.body_scale | default: 100 | divided_by: 100.0 }};
 
@@ -163,19 +56,7 @@
    before first paint by layout/theme.liquid and toggled by the header
    switch; the mixed shades above follow automatically. */
 {%- if settings.dark_mode_enabled %}
-html[data-theme="dark"] {
-  color-scheme: dark;
-  --cream: {{ settings.dark_background | default: '#15120F' }};
-  --off: {{ settings.dark_surface | default: '#1D1915' }};
-  --ink: {{ settings.dark_text | default: '#E9E1D5' }};
-  --terra: {{ settings.dark_accent | default: '#CE8268' }};
-  --color-border: {{ settings.dark_border | default: '#3A332C' }};
-  --color-inverse-bg: #0C0A08;
-  --color-inverse-text: #F2EAE0;
-  --near: #0C0A08;
-  --moss: #7FB08F;
-}
-html[data-theme="dark"], html[data-theme="dark"] .theme-scope {
+html[data-theme="dark"], html[data-theme="dark"] .theme-scope, html[data-theme="dark"] .color-scheme {
   --color-accent-600: color-mix(in srgb, var(--terra) 84%, #FFFFFF);
   --color-accent-700: color-mix(in srgb, var(--terra) 64%, #FFFFFF);
   --color-accent-800: color-mix(in srgb, var(--terra) 52%, #FFFFFF);
@@ -188,6 +69,9 @@ html[data-theme="dark"] .hero__media::after {
 {%- endif %}
 
 *, *::before, *::after { box-sizing: border-box; }
+/* A section set to a color scheme paints that scheme's background and text; sections with
+   their own background rules (later in this file) keep them, recoloured by the scheme. */
+.color-scheme { background: var(--color-bg-gradient, var(--color-bg)); color: var(--color-text); }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -200,7 +84,7 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 400;
+  font-weight: var(--font-heading-weight, 400);
   line-height: 1.1;
   letter-spacing: 0.01em;
   margin: 0 0 var(--space-3);
@@ -279,14 +163,10 @@ input[type="text"]:focus-visible, input[type="email"]:focus-visible, input[type=
 input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
 select {
   cursor: pointer; padding-right: 44px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23{{ settings.color_text | default: '#2B241D' | remove: '#' }}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 16px center; background-size: 16px 16px;
+  /* Chevron drawn with gradients so it follows the text colour of any color scheme. */
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-repeat: no-repeat; background-position: right 23px center, right 18px center; background-size: 5px 5px, 5px 5px;
 }
-{%- if settings.dark_mode_enabled %}
-html[data-theme="dark"] select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23{{ settings.dark_text | default: '#E9E1D5' | remove: '#' }}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-}
-{%- endif %}
 select::-ms-expand { display: none; }
 select.is-open { border-color: var(--terra); box-shadow: 0 0 0 1px var(--terra); }
 

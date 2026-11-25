@@ -8,6 +8,7 @@
   the arrows step through them. Driven by [data-reel] in theme.js — without
   JS the row is a plain horizontal scroller.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section media-carousel" data-reel data-image-duration="{{ section.settings.image_duration }}">
   <div class="container section__head">
     <h2>{{ section.settings.heading }}</h2>
@@ -74,6 +75,7 @@
     {%- endfor -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -95,6 +97,12 @@
       "label": "t:sections.media-carousel.settings.image_duration.label",
       "info": "t:sections.media-carousel.settings.image_duration.info",
       "default": 5
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

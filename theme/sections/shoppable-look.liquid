@@ -8,6 +8,7 @@
   The anchor setting gives the section a stable id for in-page links such
   as /pages/lookbook#look-1.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign all_products_set = true
   for block in section.blocks
@@ -86,6 +87,7 @@
     <p class="bundle__error" data-bundle-error hidden></p>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -172,6 +174,12 @@
       "type": "text",
       "id": "note",
       "label": "t:sections.shoppable-look.settings.note.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

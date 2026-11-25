@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container" data-product-recommendations data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}">
   <div class="section__head">
     <h2>{{ section.settings.heading }}</h2>
@@ -8,6 +9,7 @@
     {%- endfor -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -27,6 +29,12 @@
       "step": 1,
       "label": "t:sections.product-recommendations.settings.products_to_show.label",
       "default": 4
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ]
 }

@@ -5,6 +5,7 @@
   the rest as a bordered card grid with "Load more" ([data-blog] in
   theme.js; plain pagination links without JS).
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <div class="blog-header">
   <div class="container">
     <nav class="page-intro__breadcrumb" aria-label="{{ 'sections.page-intro.breadcrumb' | t }}">
@@ -113,6 +114,7 @@
   {%- endif -%}
 {%- endpaginate -%}
 </div>
+</div>
 
 {% schema %}
 {
@@ -164,6 +166,12 @@
       "id": "show_search",
       "label": "t:sections.main-blog.settings.show_search.label",
       "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ]
 }

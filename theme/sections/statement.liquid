@@ -3,6 +3,7 @@
   words. Built from alternating "text" and "image" blocks so merchants can
   reorder/replace either without editing HTML.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="statement">
   <p class="statement__text">
     {%- for block in section.blocks -%}
@@ -21,11 +22,19 @@
     {%- endfor -%}
   </p>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.statement.name",
-  "settings": [],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
   "blocks": [
     {
       "type": "text",

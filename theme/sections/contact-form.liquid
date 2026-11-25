@@ -4,6 +4,7 @@
   newsletter opt-in (sent with the message), and a side column split by
   rules: details, a photo, more details, and "before you write" Q&A.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign has_aside = false
   if section.settings.aside_content != blank or section.settings.aside_content_2 != blank or section.settings.aside_image != blank or section.blocks.size > 0
@@ -106,6 +107,7 @@
     </aside>
   {%- endif -%}
 </section>
+</div>
 
 {% schema %}
 {
@@ -181,6 +183,12 @@
       "id": "faq_heading",
       "label": "t:sections.contact-form.settings.faq_heading.label",
       "default": "Before you write"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

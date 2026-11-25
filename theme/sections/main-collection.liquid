@@ -9,6 +9,7 @@
   Rendering API ([data-collection] in theme.js); without JS the form
   submits normally.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign per_page = section.settings.products_per_page
   assign active_count = 0
@@ -205,6 +206,7 @@
   </div>
   {%- endpaginate -%}
 </section>
+</div>
 
 {% schema %}
 {
@@ -237,6 +239,12 @@
     {
       "type": "paragraph",
       "content": "t:sections.main-collection.settings.filters_info.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ]
 }

@@ -3,6 +3,7 @@
   collections. The chip for the collection being viewed is highlighted.
   A block without a collection links to all products ("All" chip).
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="collection-links">
   {%- assign all_chip_marked = false -%}
   <div class="collection-links__track">
@@ -40,11 +41,19 @@
     {%- endfor -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.collection-links.name",
-  "settings": [],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
   "blocks": [
     {
       "type": "link",

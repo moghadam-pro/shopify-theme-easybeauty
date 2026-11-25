@@ -4,6 +4,7 @@
   and "Remove". Used on the Saved page and under the cart ("Saved for
   later", hidden when nothing is saved).
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section
   class="saved-items"
   data-saved-section
@@ -24,6 +25,7 @@
     <div class="saved-items__grid" data-saved-grid></div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -46,6 +48,12 @@
       "id": "hide_when_empty",
       "label": "t:sections.saved-items.settings.hide_when_empty.label",
       "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [
