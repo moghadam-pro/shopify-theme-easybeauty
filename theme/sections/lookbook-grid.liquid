@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container" style="padding-left:0;padding-right:0">
   <div class="container">
     <h1>{{ section.settings.heading }}</h1>
@@ -47,6 +48,7 @@
     {%- endfor -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -63,6 +65,12 @@
       "id": "text",
       "label": "Text",
       "default": "Four people, eight weeks on the same routine."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

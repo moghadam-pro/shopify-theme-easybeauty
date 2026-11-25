@@ -5,6 +5,7 @@
   groups with their answer counts. Accordion behaviour: theme.js
   ([data-accordion-*]).
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- capture faq_items -%}
   {%- for block in section.blocks -%}
     {%- if forloop.first and block.type == 'question' -%}
@@ -35,6 +36,7 @@
 <section class="faq{% if section.settings.show_nav %} faq--with-nav{% endif %}">
   {%- if section.settings.show_nav -%}
     <nav class="faq__nav" aria-label="{{ 'sections.faq.title' | t }}">
+      <div class="faq__nav-inner">
       {%- for block in section.blocks -%}
         {%- if block.type == 'group' -%}
           {%- assign answer_count = 0 -%}
@@ -48,6 +50,7 @@
           </a>
         {%- endif -%}
       {%- endfor -%}
+      </div>
     </nav>
   {%- endif -%}
   <div class="faq__groups">
@@ -55,6 +58,7 @@
     {{ faq_items }}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -144,6 +148,12 @@
       "id": "show_nav",
       "label": "t:sections.faq-accordion.settings.show_nav.label",
       "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ]
 }

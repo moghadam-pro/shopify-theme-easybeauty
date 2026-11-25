@@ -27,6 +27,20 @@ const themeSettings = {};
 for (const group of settingsSchema) for (const s of group.settings || []) if (s.id && 'default' in s) themeSettings[s.id] = s.default;
 Object.assign(themeSettings, typeof settingsData.current === 'object' ? settingsData.current : {});
 
+// color_scheme_group → array of { id, settings } (Liquid iterates it; .first is the body scheme)
+if (themeSettings.color_schemes && !Array.isArray(themeSettings.color_schemes)) {
+  themeSettings.color_schemes = Object.entries(themeSettings.color_schemes).map(([id, s]) => ({ id, settings: s.settings }));
+}
+// font_picker handle (e.g. "archivo_n4") → font object; the preview loads the family from Google Fonts
+function fontObject(handle) {
+  if (!handle || typeof handle !== 'string') return handle;
+  const m = handle.match(/^(.*)_([ni])(\d)$/);
+  const family = (m ? m[1] : handle).split('_').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
+  return { handle, family: `"${family}"`, fallback_families: m && /bodoni|serif|garamond|playfair/.test(m[1]) ? 'serif' : 'sans-serif',
+    weight: m ? Number(m[3]) * 100 : 400, style: m && m[2] === 'i' ? 'italic' : 'normal', 'system?': false };
+}
+for (const k of Object.keys(themeSettings)) if (/^type_.*_font$/.test(k)) themeSettings[k] = fontObject(themeSettings[k]);
+
 // ---------- helpers ----------
 function lookup(obj, key) {
   return key.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
@@ -53,7 +67,8 @@ function resolveSetting(type, value) {
     case 'link_list': return mock.linklists[value] || null;
     case 'collection': return mock.collections[value] || mock.collection;
     case 'product': return mock.products.find((p) => p.handle === value) || mock.products[0];
-    case 'image_picker': return null; // images uploaded in the admin don't exist locally
+    // images uploaded in the admin don't exist locally; "preview:<asset>" stands in for one
+    case 'image_picker': return String(value).startsWith('preview:') ? { src: `assets/${String(value).slice(8)}`, alt: '', aspect_ratio: 1.5, width: 1500, height: 1000 } : null;
     default: return value;
   }
 }
@@ -92,7 +107,8 @@ const engine = new Liquid({
   jsTruthy: false,
   ownPropertyOnly: false,
   // liquidjs resolves a bare undefined `size` to the scope's key count (0); Shopify treats it as nil.
-  globals: { size: null },
+  // Shopify exposes `settings` everywhere, including inside {% render %}ed snippets.
+  globals: { size: null, settings: themeSettings },
 });
 
 // Shopify filters
@@ -110,6 +126,22 @@ engine.registerFilter('preload_tag', (url) => `<link rel="preload" href="${url}"
 engine.registerFilter('placeholder_svg_tag', (_name, ...args) => {
   const cls = args.find((a) => Array.isArray(a) && a[0] === 'class');
   return PLACEHOLDER(cls ? cls[1] : 'placeholder-svg');
+});
+engine.registerFilter('font_modify', (f, prop, val) => (f && typeof f === 'object' ? { ...f, [prop]: prop === 'weight' ? Number(val) : val } : f));
+// font_face: the preview can't reach Shopify's font CDN; fontLinks() adds Google Fonts links instead
+engine.registerFilter('font_face', () => '');
+function fontLinks() {
+  return Object.keys(themeSettings).filter((k) => /^type_.*_font$/.test(k) && themeSettings[k]).map((k) => {
+    const fam = themeSettings[k].family.replace(/"/g, '').replace(/ /g, '+');
+    return `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${fam}:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap">`;
+  }).join('');
+}
+engine.registerFilter('font_url', () => '');
+engine.registerFilter('color_brightness', (hex) => {
+  const h = String(hex || '').replace('#', '');
+  if (h.length < 6) return 0;
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+  return (r * 299 + g * 587 + b * 114) / 1000;
 });
 engine.registerFilter('handleize', (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
 engine.registerFilter('handle', (s) => String(s ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
@@ -238,6 +270,9 @@ const PAGES = {
   index: { page_type: 'index', title: 'EasyBeauty' },
   product: { page_type: 'product', title: mock.products[0].title },
   'product.serum': { page_type: 'product', title: mock.products[0].title },
+  'product.hero': { page_type: 'product', title: mock.products[0].title },
+  'product.info-left': { page_type: 'product', title: mock.products[0].title },
+  'product.dossier': { page_type: 'product', title: mock.products[0].title },
   collection: { page_type: 'collection', title: mock.collection.title },
   'list-collections': { page_type: 'list-collections', title: 'Collections' },
   cart: { page_type: 'cart', title: 'Your bag' },
@@ -340,7 +375,7 @@ async function main() {
     if (only.length && !only.includes(name)) continue;
     const file = `${name.replace('/', '.')}.html`;
     try {
-      fs.writeFileSync(path.join(OUT, file), await renderPage(name, meta));
+      fs.writeFileSync(path.join(OUT, file), (await renderPage(name, meta)).replace('</head>', `${fontLinks()}</head>`));
       console.log(`ok   ${file}`);
     } catch (e) {
       failures.push(name);

@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container" style="max-width:760px">
   {%- liquid
     assign order_date = order.created_at | date: '%B %d, %Y'
@@ -55,12 +56,18 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.main-customer-order.name",
   "settings": [
-
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
   ]
 }
 {% endschema %}

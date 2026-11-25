@@ -22,7 +22,7 @@
       {%- if gift_card.enabled == false or gift_card.expired -%}
         <p class="tag" style="margin-top:12px">{{ 'general.gift_card.expired' | t }}</p>
       {%- else -%}
-        <p style="margin-top:12px;font-size:13px" class="text-muted">{{ 'general.gift_card.balance' | t: balance: gift_card_balance }}</p>
+        <p style="margin-top:12px;font-size:14px" class="text-muted">{{ 'general.gift_card.balance' | t: balance: gift_card_balance }}</p>
       {%- endif -%}
 
       <p style="margin-top:24px;font-family:monospace;font-size:18px;letter-spacing:0.08em">{{ gift_card.code | format_code }}</p>

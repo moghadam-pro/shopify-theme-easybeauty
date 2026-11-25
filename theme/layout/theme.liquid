@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="{{ settings.color_background }}">
+  <meta name="theme-color" content="{{ settings.color_schemes.first.settings.background }}">
 
   <title>
     {{ page_title }}
@@ -26,15 +26,32 @@
   <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
   {{ 'theme.css' | asset_url | stylesheet_tag }}
 
-  {{ 'archivo-400-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
-  {{ 'bodoni-moda-400-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+  {%- render 'css-variables' -%}
+  <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+  {%- unless settings.type_body_font.system? %}
+    {{ settings.type_body_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+  {%- endunless %}
+  {%- unless settings.type_heading_font.system? %}
+    {{ settings.type_heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+  {%- endunless %}
 
   {%- render 'favicon' -%}
 
   <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+  {%- if settings.dark_mode_enabled -%}
+    {%- comment -%} Apply the saved / default colour mode before first paint (no flash). {%- endcomment -%}
+    <script>
+      (function () {
+        var mode = {{ settings.dark_mode_default | json }};
+        try { var saved = localStorage.getItem('eb-theme'); if (saved === 'dark' || saved === 'light') mode = saved; } catch (e) {}
+        if (mode === 'system') mode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (mode === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      })();
+    </script>
+  {%- endif -%}
 </head>
 
-<body class="template-{{ request.page_type | handleize }}">
+<body class="template-{{ request.page_type | handleize }} color-scheme color-{{ settings.color_schemes.first.id }}">
   <a class="skip-to-content" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
 
   {% sections 'header-group' %}

@@ -22,7 +22,7 @@ theme/
 ├── snippets/    # small includes with no schema (icons, product-card, price, drawers)
 ├── templates/   # one JSON file per page type, composed of sections
 │   └── customers/  # account/login/register/addresses/order templates
-└── assets/      # CSS, JS, self-hosted fonts, images
+└── assets/      # CSS, JS, images
 ```
 
 This is a deliberate, standard shape — it's what `theme-check` (Shopify's official linter)
@@ -87,9 +87,22 @@ Liquid object it corresponds to:
 read `settings.*` for merchant-editable colors/spacing) carries over the exact design tokens
 from the mockups' own design system (`--cream`, `--ink`, `--terra`, the type scale, button/
 card/form styles) as plain CSS custom properties, so the visual identity is unchanged even
-though the underlying markup is now real Liquid. Archivo and Bodoni Moda are self-hosted
-(the same `.woff2` files the mockups used, trimmed to the latin + latin-ext subsets and the
-weights actually used) rather than pulled from Google Fonts at runtime.
+though the underlying markup is now real Liquid.
+
+Since 1.11.0, fonts and base colors come from Theme settings and are rendered inline in
+`<head>` by `snippets/css-variables.liquid`:
+
+- **Typography:** two `font_picker` settings (headings default Bodoni Moda, body default
+  Archivo) from Shopify's font library, loaded with `font_face`. Bold body weights are derived
+  with `font_modify`.
+- **Color schemes:** a `color_scheme_group` (Theme settings → Colors). Every section has a
+  "Color scheme" setting and is wrapped in `.color-scheme.color-<id>`; the header gets the
+  class on `<header>` itself so `position: sticky` keeps working. The first scheme also defines
+  `:root`. Only base colors are per scheme (`--cream`, `--off`, `--ink`, `--terra`, `--moss`,
+  border, inverse); every shade is mixed from them in `theme.css` under
+  `:root, .color-scheme`, so all existing component CSS follows the scheme unchanged.
+- **Dark mode:** under `html[data-theme="dark"]`, light schemes (background brightness > 125)
+  switch to the Dark mode colors and dark schemes stay as they are.
 
 ## JavaScript
 

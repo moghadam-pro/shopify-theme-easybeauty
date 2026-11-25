@@ -108,6 +108,7 @@
     try {
       const formData = new FormData(form);
       if (formData.get('selling_plan') === '') formData.delete('selling_plan');
+      Array.from(formData.keys()).filter((k) => k.indexOf('pack-') === 0).forEach((k) => formData.delete(k));
       const res = await fetch(settings.cartAddUrl, {
         method: 'POST',
         headers: { Accept: 'application/json' },
@@ -230,59 +231,116 @@
     }
   });
 
-  /* ---------- product: variant selection + gallery thumbs ---------- */
+  /* ---------- product: variant selection, packs, sticky bar ----------
+     Prices shown depend on the variant *and* the chosen pack: a quantity
+     pack is qty × variant price less its display discount; a subscription
+     pack uses the variant's selling-plan allocation price. The pack also
+     sets the quantity / selling_plan fields that go to the cart. */
   qsa('[data-product-form]').forEach((form) => {
-    const productJsonEl = qs('[data-product-json]', form.closest('[data-product-root]') || document);
+    const root = form.closest('[data-product-root]') || document;
+    const productJsonEl = qs('[data-product-json]', root);
     if (!productJsonEl) return;
     let product;
     try { product = JSON.parse(productJsonEl.textContent); } catch (err) { return; }
+    const packs = qsa('[data-pack]', form);
+    const qtyInput = qs('[data-pack-quantity]', form);
+    const planInput = qs('[data-pack-plan]', form);
+    let variant = null;
 
     function selectedOptions() {
       return qsa('[data-option-input]:checked, [data-option-select]', form).map((el) => el.value);
     }
     function findVariant(options) {
+      if (!options.length) return product.variants[0];
       return product.variants.find((v) => v.options.every((val, i) => val === options[i]));
     }
-    function updateForVariant(variant) {
-      const priceEl = qs('[data-product-price]', form.closest('[data-product-root]'));
-      const compareEl = qs('[data-product-compare-price]', form.closest('[data-product-root]'));
+    function packPrice(v, pack) {
+      const qty = parseInt(pack.getAttribute('data-qty'), 10) || 1;
+      const plan = pack.getAttribute('data-plan');
+      if (plan) {
+        const alloc = (v.selling_plan_allocations || []).find((a) => String(a.selling_plan_id) === plan);
+        return { price: (alloc ? alloc.price : v.price) * qty, full: v.price * qty, qty };
+      }
+      const discount = parseFloat(pack.getAttribute('data-discount')) || 0;
+      return { price: Math.round(v.price * qty * (100 - discount) / 100), full: v.price * qty, qty };
+    }
+    function activePack() { return packs.find((p) => p.checked) || null; }
+
+    function render() {
+      const priceEl = qs('[data-product-price]', root);
+      const compareEl = qs('[data-product-compare-price]', root);
+      const unitEl = qs('[data-pack-unit]', root);
       const submitBtn = qs('[type="submit"]', form);
       const idInput = qs('[data-variant-id]', form);
       const setButtonLabel = (text) => {
         const label = submitBtn && qs('[data-add-label]', submitBtn);
         if (label) label.textContent = text; else if (submitBtn) submitBtn.textContent = text;
       };
+      const stickyBtn = qs('[data-product-sticky] [type="submit"]', root);
       if (!variant) {
         if (submitBtn) { submitBtn.disabled = true; setButtonLabel(form.getAttribute('data-unavailable-text') || 'Unavailable'); }
+        if (stickyBtn) stickyBtn.disabled = true;
         return;
       }
-      const addPrice = submitBtn && qs('[data-add-price]', submitBtn);
-      if (addPrice) addPrice.textContent = formatMoney(variant.price);
+      const pack = activePack();
+      const pp = pack ? packPrice(variant, pack) : {
+        price: variant.price, qty: 1,
+        full: variant.compare_at_price > variant.price ? variant.compare_at_price : variant.price
+      };
       if (idInput) idInput.value = variant.id;
-      if (priceEl) priceEl.textContent = formatMoney(variant.price);
+      if (priceEl) priceEl.textContent = formatMoney(pp.price);
       if (compareEl) {
-        if (variant.compare_at_price > variant.price) {
-          compareEl.textContent = formatMoney(variant.compare_at_price);
-          compareEl.hidden = false;
-        } else {
-          compareEl.hidden = true;
-        }
+        compareEl.hidden = !(pp.full > pp.price);
+        if (pp.full > pp.price) compareEl.textContent = formatMoney(pp.full);
       }
+      if (unitEl && pack) unitEl.textContent = pp.qty > 1 ? formatMoney(Math.round(pp.price / pp.qty)) + ' ' + (unitEl.getAttribute('data-each') || 'each') : '';
+      qsa('[data-add-price]', root).forEach((el) => { el.textContent = formatMoney(pp.price); });
+      packs.forEach((p) => {
+        const label = p.closest('.pack-option');
+        const el = label && qs('[data-pack-price]', label);
+        if (el) el.textContent = formatMoney(packPrice(variant, p).price);
+      });
+      if (pack) {
+        if (qtyInput) qtyInput.value = pp.qty;
+        if (planInput) planInput.value = pack.getAttribute('data-plan') || '';
+      }
+      const summary = qs('[data-sticky-summary]', root);
+      if (summary) summary.textContent = [variant.title !== 'Default Title' ? variant.title : '', pack ? pack.getAttribute('data-title') : ''].filter(Boolean).join(' · ');
       if (submitBtn) {
         submitBtn.disabled = !variant.available;
         setButtonLabel(variant.available
           ? (form.getAttribute('data-add-text') || 'Add to bag')
           : (form.getAttribute('data-soldout-text') || 'Sold out'));
       }
-      const root = form.closest('[data-product-root]');
-      if (root && variant.featured_image) {
-        const mainImg = qs('[data-product-main-image]', root);
-        if (mainImg) mainImg.src = variant.featured_image.src;
-      }
+      if (stickyBtn) stickyBtn.disabled = !variant.available;
     }
 
-    form.addEventListener('change', () => updateForVariant(findVariant(selectedOptions())));
-    updateForVariant(findVariant(selectedOptions()));
+    form.addEventListener('change', (e) => {
+      if (e.target.matches('[data-option-input], [data-option-select]')) {
+        variant = findVariant(selectedOptions());
+        if (variant && variant.featured_image) {
+          const mainImg = qs('[data-product-main-image]', root);
+          if (mainImg) { mainImg.removeAttribute('srcset'); mainImg.src = variant.featured_image.src; }
+        }
+      }
+      render();
+    });
+    variant = findVariant(selectedOptions());
+    render();
+
+    /* Sticky add-to-bag bar: shown once the main add button has scrolled
+       out of view above, hidden again near it or at the footer. */
+    const sticky = qs('[data-product-sticky]', root);
+    const mainAdd = qs('[data-product-add]', form);
+    if (sticky && mainAdd && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        const show = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+        sticky.classList.toggle('is-visible', show);
+        sticky.setAttribute('aria-hidden', String(!show));
+        const btn = qs('button', sticky);
+        if (btn) btn.tabIndex = show ? 0 : -1;
+      }).observe(mainAdd);
+    }
   });
 
   qsa('[data-gallery-thumb]').forEach((thumb) => {
@@ -291,7 +349,7 @@
       const mainImg = qs('[data-product-main-image]', root);
       qsa('[data-gallery-thumb]', root).forEach((t) => t.classList.remove('is-active'));
       thumb.classList.add('is-active');
-      if (mainImg) mainImg.src = thumb.getAttribute('data-full-src') || thumb.src;
+      if (mainImg) { mainImg.removeAttribute('srcset'); mainImg.src = thumb.getAttribute('data-full-src') || thumb.src; }
     });
   });
 
@@ -308,85 +366,185 @@
     });
   });
 
-  /* ---------- skin quiz ---------- */
+  /* ---------- skin quiz ----------
+     intro → one question at a time → result. Single-answer questions advance
+     on tap; multi-answer ones (checkboxes) cap at data-max and use Next.
+     Products are ranked by how many answer tags they carry. */
   qsa('[data-quiz]').forEach((quiz) => {
-    const steps = qsa('[data-quiz-step]', quiz);
-    const progressFill = qs('[data-quiz-progress-fill]', quiz);
-    const answers = {};
+    const intro = qs('.quiz-intro', quiz);
+    const stage = qs('[data-quiz-stage]', quiz);
+    const result = qs('.quiz-result', quiz);
+    const questions = qsa('.quiz-question', quiz);
+    const progress = qs('[data-quiz-progress]', quiz);
     let current = 0;
 
-    function render() {
-      steps.forEach((step, i) => step.classList.toggle('is-active', i === current));
-      if (progressFill) progressFill.style.width = Math.round((current / (steps.length - 1)) * 100) + '%';
-      if (current === steps.length - 1) buildResult();
+    function scrollTop() {
+      const top = quiz.getBoundingClientRect().top + window.scrollY - 80;
+      if (window.scrollY > top) window.scrollTo({ top, behavior: 'smooth' });
+    }
+    function show(view) {
+      intro.hidden = view !== 'intro';
+      stage.hidden = view !== 'quiz';
+      result.hidden = view !== 'result';
+    }
+    function goTo(i) {
+      current = i;
+      questions.forEach((q, j) => { q.hidden = j !== i; });
+      if (progress) progress.style.width = (i / questions.length) * 100 + '%';
+      show('quiz');
+      const first = qs('input', questions[i]);
+      if (first) first.focus({ preventScroll: true });
+    }
+    function answersOf(q) { return qsa('[data-quiz-input]:checked', q); }
+    function next() {
+      if (current < questions.length - 1) goTo(current + 1);
+      else finish();
+      scrollTop();
     }
 
-    function buildResult() {
-      const pickedTags = Object.values(answers).filter(Boolean);
-      const resultList = qs('[data-quiz-results]', quiz);
-      if (!resultList) return;
-      const cards = qsa('[data-quiz-product]', resultList);
-      if (!pickedTags.length) {
-        cards.forEach((card) => { card.hidden = false; });
-        return;
-      }
-      /* Score every card by how many of the answers it satisfies, rather than
-         picking one "top" tag — with one tag per question, counts tie and a
-         single-tag filter would only ever reflect whichever answer sorted
-         first, ignoring the rest of the quiz. */
-      const scored = cards.map((card) => {
-        const tags = (card.getAttribute('data-tags') || '').split(',').map((t) => t.trim());
-        const score = pickedTags.reduce((n, tag) => n + (tags.includes(tag) ? 1 : 0), 0);
-        return { card, score };
+    questions.forEach((q) => {
+      const multi = q.getAttribute('data-multi') === 'true';
+      const max = parseInt(q.getAttribute('data-max'), 10) || 2;
+      const nextBtn = qs('[data-quiz-next]', q);
+      q.addEventListener('change', (e) => {
+        const input = e.target.closest('[data-quiz-input]');
+        if (!input) return;
+        if (multi) {
+          const checked = answersOf(q);
+          if (checked.length > max) input.checked = false;
+          if (nextBtn) nextBtn.disabled = answersOf(q).length === 0;
+        } else {
+          setTimeout(next, 180);
+        }
       });
-      const bestScore = Math.max(0, ...scored.map((s) => s.score));
-      scored
-        .sort((a, b) => b.score - a.score)
-        .forEach(({ card, score }) => {
-          resultList.appendChild(card);
-          card.hidden = bestScore > 0 && score === 0;
-        });
-    }
-
-    quiz.addEventListener('click', (e) => {
-      const option = e.target.closest('[data-quiz-option]');
-      if (option) {
-        const step = option.closest('[data-quiz-step]');
-        answers[step.getAttribute('data-quiz-step')] = option.getAttribute('data-quiz-tag');
-        current = Math.min(current + 1, steps.length - 1);
-        render();
-      }
-      if (e.target.closest('[data-quiz-back]')) {
-        current = Math.max(current - 1, 0);
-        render();
-      }
-      if (e.target.closest('[data-quiz-restart]')) {
-        Object.keys(answers).forEach((k) => delete answers[k]);
-        current = 0;
-        render();
-      }
-      if (e.target.closest('[data-quiz-start]')) {
-        current = 1;
-        render();
-      }
+      if (nextBtn) nextBtn.addEventListener('click', () => { if (answersOf(q).length) next(); });
+      const back = qs('[data-quiz-back]', q);
+      if (back) back.addEventListener('click', () => {
+        if (current === 0) { show('intro'); } else { goTo(current - 1); }
+        scrollTop();
+      });
     });
 
-    render();
+    function finish() {
+      const tags = [];
+      const recap = qs('[data-quiz-recap]', quiz);
+      if (recap) recap.innerHTML = '';
+      questions.forEach((q) => {
+        const picked = answersOf(q);
+        picked.forEach((input) => { if (input.value) tags.push(input.value.toLowerCase()); });
+        if (recap) {
+          const cell = document.createElement('div');
+          const dt = document.createElement('dt');
+          const dd = document.createElement('dd');
+          dt.textContent = (q.getAttribute('data-question') || '').replace(/\?$/, '');
+          dd.textContent = picked.map((i) => i.getAttribute('data-label')).join(', ') || '—';
+          cell.appendChild(dt); cell.appendChild(dd);
+          recap.appendChild(cell);
+        }
+      });
+      const tagWrap = qs('[data-quiz-tags]', quiz);
+      if (tagWrap) {
+        tagWrap.innerHTML = '';
+        questions.slice(0, 3).forEach((q) => answersOf(q).slice(0, 1).forEach((input) => {
+          const span = document.createElement('span');
+          span.textContent = input.getAttribute('data-label');
+          tagWrap.appendChild(span);
+        }));
+      }
+      const grid = qs('[data-quiz-results]', quiz);
+      const limit = parseInt(grid && grid.getAttribute('data-limit'), 10) || 3;
+      const items = grid ? qsa('[data-quiz-product]', grid) : [];
+      const ranked = items.map((el, index) => {
+        const own = (el.getAttribute('data-tags') || '').split(',').map((t) => t.trim());
+        const score = tags.reduce((n, t) => n + (own.indexOf(t) !== -1 ? 1 : 0), 0);
+        return { el, score, index, ok: !el.hasAttribute('data-unavailable') };
+      }).filter((r) => r.ok).sort((x, y) => y.score - x.score || x.index - y.index);
+      const picks = ranked.slice(0, limit);
+      items.forEach((el) => { el.hidden = true; });
+      picks.forEach((r) => { r.el.hidden = false; grid.appendChild(r.el); });
+      const total = picks.reduce((n, r) => n + (parseInt(r.el.getAttribute('data-price'), 10) || 0), 0);
+      const totalEl = qs('[data-quiz-total]', quiz);
+      if (totalEl) totalEl.textContent = formatMoney(total);
+      quiz._picks = picks.map((r) => parseInt(r.el.getAttribute('data-variant-id'), 10)).filter(Boolean);
+      if (progress) progress.style.width = '100%';
+      show('result');
+      syncSaved();
+    }
+
+    const start = qs('[data-quiz-start]', quiz);
+    if (start) start.addEventListener('click', () => goTo(0));
+    const restart = qs('[data-quiz-restart]', quiz);
+    if (restart) restart.addEventListener('click', () => {
+      qsa('[data-quiz-input]', quiz).forEach((i) => { i.checked = false; });
+      qsa('[data-quiz-next]', quiz).forEach((b) => { b.disabled = true; });
+      show('intro');
+      scrollTop();
+    });
+    const add = qs('[data-quiz-add]', quiz);
+    const error = qs('[data-quiz-error]', quiz);
+    if (add) add.addEventListener('click', async () => {
+      if (!quiz._picks || !quiz._picks.length) return;
+      add.disabled = true;
+      if (error) error.hidden = true;
+      try {
+        const res = await fetch(settings.cartAddUrl + '.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ items: quiz._picks.map((id) => ({ id, quantity: 1 })) })
+        });
+        const data = await res.json();
+        if (!res.ok) { if (error) { error.textContent = data.description || data.message; error.hidden = false; } return; }
+        if (settings.cartType === 'page') { window.location.href = settings.cartUrl; return; }
+        await refreshCartDrawer();
+        openCartDrawer();
+      } catch (err) {
+        console.error('[quiz] add failed', err);
+      } finally {
+        add.disabled = false;
+      }
+    });
   });
 
-  /* ---------- hero hotspots ---------- */
-  document.addEventListener('click', (e) => {
-    const dot = e.target.closest('[data-hotspot-toggle]');
-    if (!dot) return;
-    const hotspot = dot.closest('[data-hotspot]');
-    const wasOpen = hotspot.classList.contains('is-open');
-    qsa('[data-hotspot].is-open').forEach((h) => h.classList.remove('is-open'));
-    if (!wasOpen) hotspot.classList.add('is-open');
+  /* ---------- hero hotspots ----------
+     Hover (or keyboard focus) opens a hotspot's card; it stays open while the
+     pointer is anywhere on the dot or the card, and closes shortly after the
+     pointer leaves both. Touch has no hover, so a tap toggles it instead. */
+  const HOTSPOT_CLOSE_DELAY = 180;
+  function setHotspot(hotspot, open) {
+    clearTimeout(hotspot._closeTimer);
+    hotspot.classList.toggle('is-open', open);
+    const dot = qs('[data-hotspot-toggle]', hotspot);
+    if (dot) dot.setAttribute('aria-expanded', String(open));
+  }
+  function openHotspot(hotspot) {
+    qsa('[data-hotspot].is-open').forEach((h) => { if (h !== hotspot) setHotspot(h, false); });
+    setHotspot(hotspot, true);
+  }
+  const canHover = window.matchMedia('(hover: hover)');
+  qsa('[data-hotspot]').forEach((hotspot) => {
+    hotspot.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') openHotspot(hotspot); });
+    hotspot.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(hotspot._closeTimer);
+      hotspot._closeTimer = setTimeout(() => setHotspot(hotspot, false), HOTSPOT_CLOSE_DELAY);
+    });
+    hotspot.addEventListener('focusin', () => openHotspot(hotspot));
+    hotspot.addEventListener('focusout', (e) => { if (!hotspot.contains(e.relatedTarget)) setHotspot(hotspot, false); });
   });
   document.addEventListener('click', (e) => {
-    if (!e.target.closest('[data-hotspot]')) {
-      qsa('[data-hotspot].is-open').forEach((h) => h.classList.remove('is-open'));
+    const dot = e.target.closest('[data-hotspot-toggle]');
+    if (dot) {
+      const hotspot = dot.closest('[data-hotspot]');
+      /* With a mouse the card is already open from hovering; a click keeps it. */
+      if (canHover.matches) openHotspot(hotspot);
+      else if (hotspot.classList.contains('is-open')) setHotspot(hotspot, false);
+      else openHotspot(hotspot);
+      return;
     }
+    if (!e.target.closest('[data-hotspot]')) qsa('[data-hotspot].is-open').forEach((h) => setHotspot(h, false));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') qsa('[data-hotspot].is-open').forEach((h) => setHotspot(h, false));
   });
 
   /* ---------- header mega menu (hover + keyboard) ---------- */
@@ -495,26 +653,113 @@
     });
   });
 
-  /* ---------- media carousel: prev/next + hover-to-play videos ---------- */
-  qsa('[data-carousel]').forEach((root) => {
-    const track = qs('[data-carousel-track]', root);
-    if (!track) return;
-    const step = () => {
-      const item = track.firstElementChild;
-      return item ? item.getBoundingClientRect().width + 20 : 260;
-    };
-    const prev = qs('[data-carousel-prev]', root);
-    const next = qs('[data-carousel-next]', root);
-    const nav = (prev || next) && (prev || next).parentElement;
-    const syncNav = () => { if (nav) nav.hidden = track.scrollWidth <= track.clientWidth + 1; };
-    syncNav();
-    window.addEventListener('resize', syncNav);
-    if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-    if (next) next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
-    qsa('video', track).forEach((video) => {
-      const media = video.closest('.media-carousel__media') || video;
-      media.addEventListener('mouseenter', () => { video.play().catch(() => {}); });
-      media.addEventListener('mouseleave', () => { video.pause(); });
+  /* ---------- media carousel ("in use" reels) ----------
+     One reel is active at a time: it grows (CSS) and plays. A video advances
+     to the next reel when it ends, a photo after data-image-duration seconds,
+     and the last reel loops back to the first. Playback runs only while the
+     section is visible and never for prefers-reduced-motion. */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  qsa('[data-reel]').forEach((root) => {
+    const track = qs('[data-reel-track]', root);
+    const items = qsa('[data-reel-item]', root);
+    if (!track || !items.length) return;
+    const imageMs = (parseFloat(root.getAttribute('data-image-duration')) || 5) * 1000;
+    let active = Math.max(0, items.findIndex((it) => it.classList.contains('is-active')));
+    let visible = false;
+    let timer = null;
+    let frame = null;
+
+    const videoOf = (item) => qs('video', item);
+    const barOf = (item) => qs('[data-reel-progress]', item);
+    function setProgress(item, ratio) {
+      const bar = barOf(item);
+      if (bar) bar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, ratio)) + ')';
+    }
+    function stop() {
+      clearTimeout(timer);
+      cancelAnimationFrame(frame);
+      items.forEach((item) => {
+        item.classList.remove('is-playing');
+        const video = videoOf(item);
+        if (video) video.pause();
+      });
+    }
+    function next() { activate((active + 1) % items.length, true); }
+    function play() {
+      stop();
+      if (!visible || reduceMotion.matches) return;
+      const item = items[active];
+      const video = videoOf(item);
+      item.classList.add('is-playing');
+      if (video) {
+        video.muted = true;
+        video.play().catch(() => { timer = setTimeout(next, imageMs); });
+        const tick = () => {
+          if (video.duration) setProgress(item, video.currentTime / video.duration);
+          frame = requestAnimationFrame(tick);
+        };
+        tick();
+      } else {
+        const started = performance.now();
+        const tick = (now) => {
+          setProgress(item, (now - started) / imageMs);
+          frame = requestAnimationFrame(tick);
+        };
+        frame = requestAnimationFrame(tick);
+        timer = setTimeout(next, imageMs);
+      }
+    }
+    /* Bring the active reel into view inside the track only — never scroll
+       the page — once its grow transition has settled. */
+    function reveal(item) {
+      if (track.scrollWidth <= track.clientWidth + 1) return;
+      setTimeout(() => {
+        const left = item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2;
+        track.scrollTo({ left: Math.max(0, left), behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      }, 520);
+    }
+    function activate(index, autoplay) {
+      const changed = index !== active;
+      if (changed) {
+        const prevVideo = videoOf(items[active]);
+        if (prevVideo) { prevVideo.pause(); prevVideo.currentTime = 0; }
+        setProgress(items[active], 0);
+      }
+      active = index;
+      items.forEach((item, i) => item.classList.toggle('is-active', i === active));
+      if (changed) reveal(items[active]);
+      if (autoplay) play();
+    }
+
+    items.forEach((item, i) => {
+      const video = videoOf(item);
+      if (video) {
+        video.loop = false;
+        video.addEventListener('ended', () => { if (i === active) next(); });
+      }
+      const media = qs('[data-reel-media]', item);
+      if (!media) return;
+      media.addEventListener('click', () => {
+        if (i !== active) { activate(i, true); return; }
+        /* Clicking the playing reel pauses it; clicking again resumes. */
+        if (item.classList.contains('is-playing')) stop(); else play();
+      });
+    });
+    const prevBtn = qs('[data-reel-prev]', root);
+    const nextBtn = qs('[data-reel-next]', root);
+    if (prevBtn) prevBtn.addEventListener('click', () => activate((active - 1 + items.length) % items.length, true));
+    if (nextBtn) nextBtn.addEventListener('click', () => activate((active + 1) % items.length, true));
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          visible = entry.isIntersecting;
+          if (visible) play(); else stop();
+        });
+      }, { threshold: 0.35 }).observe(root);
+    }
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop(); else if (visible) play();
     });
   });
 
@@ -524,6 +769,7 @@
     const totalEl = qs('[data-bundle-total]', root);
     const errorEl = qs('[data-bundle-error]', root);
     const inputs = qsa('[data-bundle-variant]', root);
+    const discount = parseFloat(root.getAttribute('data-discount')) || 0;
     function priceOf(input) {
       const opt = input.tagName === 'SELECT' ? input.options[input.selectedIndex] : input;
       return parseInt(opt.getAttribute('data-price'), 10) || 0;
@@ -537,7 +783,7 @@
         const priceEl = row && qs('[data-bundle-price]', row);
         if (priceEl) priceEl.textContent = formatMoney(price);
       });
-      if (totalEl) totalEl.textContent = formatMoney(total);
+      if (totalEl) totalEl.textContent = formatMoney(Math.round(total * (100 - discount) / 100));
     }
     inputs.forEach((input) => input.addEventListener('change', refresh));
     if (!addBtn) return;
@@ -713,6 +959,523 @@
 
   window.addEventListener('storage', (e) => { if (e.key === SAVED_KEY) syncSaved(); });
   syncSaved();
+
+  /* ---------- collection page: filters, sort, density, load more ----------
+     Filter / sort changes fetch this section again through the Section
+     Rendering API and swap it in place (URL kept in sync with history), so
+     the page never fully reloads. */
+  const GRID_KEY = 'eb-grid';
+  const FILTERS_KEY = 'eb-filters-hidden';
+  const narrow = window.matchMedia('(max-width: 900px)');
+
+  function initCollection(root) {
+    const sectionId = root.getAttribute('data-section-id');
+    const form = qs('[data-collection-form]', root);
+    const grid = qs('[data-collection-grid]', root);
+
+    /* show / hide filters (desktop) or open / close the drawer (narrow) */
+    try { root.classList.toggle('is-filters-hidden', localStorage.getItem(FILTERS_KEY) === '1'); } catch (err) { /* storage unavailable */ }
+    qsa('[data-collection-toggle]', root).forEach((btn) => btn.addEventListener('click', () => {
+      if (narrow.matches) {
+        root.classList.toggle('is-drawer-open');
+        document.body.style.overflow = root.classList.contains('is-drawer-open') ? 'hidden' : '';
+        return;
+      }
+      const hidden = root.classList.toggle('is-filters-hidden');
+      try { localStorage.setItem(FILTERS_KEY, hidden ? '1' : '0'); } catch (err) { /* storage unavailable */ }
+      const toggle = qs('.collection-toolbar__toggle', root);
+      if (toggle) toggle.setAttribute('aria-expanded', String(!hidden));
+    }));
+
+    /* grid density */
+    function setDensity(mode) {
+      if (grid) grid.classList.toggle('is-dense', mode === 'dense');
+      qsa('[data-grid-density]', root).forEach((b) => b.setAttribute('aria-pressed', String(b.getAttribute('data-grid-density') === mode)));
+    }
+    let density = 'large';
+    try { density = localStorage.getItem(GRID_KEY) || 'large'; } catch (err) { /* storage unavailable */ }
+    setDensity(density);
+    qsa('[data-grid-density]', root).forEach((b) => b.addEventListener('click', () => {
+      const mode = b.getAttribute('data-grid-density');
+      setDensity(mode);
+      try { localStorage.setItem(GRID_KEY, mode); } catch (err) { /* storage unavailable */ }
+    }));
+
+    /* quick search over the loaded cards */
+    const search = qs('[data-collection-search]', root);
+    const searchEmpty = qs('[data-collection-search-empty]', root);
+    if (search && grid) {
+      search.addEventListener('input', () => {
+        const q = search.value.trim().toLowerCase();
+        let shown = 0;
+        qsa('.product-card', grid).forEach((card) => {
+          const title = (qs('.product-card__title', card) || card).textContent.toLowerCase();
+          const match = !q || title.indexOf(q) !== -1;
+          card.hidden = !match;
+          if (match) shown += 1;
+        });
+        if (searchEmpty) searchEmpty.hidden = shown > 0;
+      });
+    }
+
+    /* two-handle price range */
+    qsa('[data-price-range]', root).forEach((wrap) => {
+      const minR = qs('[data-price-min]', wrap);
+      const maxR = qs('[data-price-max]', wrap);
+      const minF = qs('[data-price-min-field]', wrap);
+      const maxF = qs('[data-price-max-field]', wrap);
+      const minL = qs('[data-price-min-label]', wrap);
+      const maxL = qs('[data-price-max-label]', wrap);
+      const box = qs('.price-range', wrap);
+      const rangeMax = parseFloat(maxF.getAttribute('data-range-max')) || parseFloat(maxR.max);
+      function paint(changed) {
+        let lo = parseFloat(minR.value);
+        let hi = parseFloat(maxR.value);
+        if (lo > hi) { if (changed === minR) { lo = hi; minR.value = lo; } else { hi = lo; maxR.value = hi; } }
+        box.style.setProperty('--min', lo);
+        box.style.setProperty('--max', hi);
+        if (minL) minL.textContent = formatMoney(lo * 100).replace(/[.,]00(?=\D*$)/, '');
+        if (maxL) maxL.textContent = formatMoney(hi * 100).replace(/[.,]00(?=\D*$)/, '');
+        minF.value = lo > 0 ? lo : '';
+        maxF.value = hi < rangeMax ? hi : '';
+      }
+      [minR, maxR].forEach((r) => {
+        r.addEventListener('input', () => paint(r));
+        r.addEventListener('change', () => { paint(r); submit(); });
+      });
+    });
+
+    /* AJAX filtering */
+    function urlFromForm() {
+      const params = new URLSearchParams();
+      new FormData(form).forEach((value, key) => { if (value !== '') params.append(key, value); });
+      return form.getAttribute('action') + (params.toString() ? '?' + params.toString() : '');
+    }
+    async function load(url, push) {
+      root.classList.add('is-loading');
+      try {
+        const sep = url.indexOf('?') === -1 ? '?' : '&';
+        const res = await fetch(url + sep + 'section_id=' + encodeURIComponent(sectionId));
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const fresh = doc.querySelector('[data-collection]');
+        if (!fresh) { window.location.href = url; return; }
+        const drawerOpen = root.classList.contains('is-drawer-open');
+        const hidden = root.classList.contains('is-filters-hidden');
+        const scroll = (qs('[data-collection-filters]', root) || {}).scrollTop || 0;
+        const openGroups = qsa('.collection-filters__group', root).map((d) => d.open);
+        root.innerHTML = fresh.innerHTML;
+        root.classList.toggle('is-drawer-open', drawerOpen);
+        root.classList.toggle('is-filters-hidden', hidden);
+        qsa('.collection-filters__group', root).forEach((d, i) => { if (openGroups[i] !== undefined) d.open = openGroups[i] || d.open; });
+        const aside = qs('[data-collection-filters]', root);
+        if (aside) aside.scrollTop = scroll;
+        if (push) history.replaceState({}, '', url);
+        initCollection(root);
+        syncSaved();
+      } catch (err) {
+        window.location.href = url;
+      } finally {
+        root.classList.remove('is-loading');
+      }
+    }
+    function submit() { if (form) load(urlFromForm(), true); }
+    if (form) {
+      form.addEventListener('change', (e) => { if (!e.target.closest('[data-price-range]')) submit(); });
+      form.addEventListener('submit', (e) => { e.preventDefault(); submit(); });
+    }
+    const sort = qs('[data-collection-sort]', root);
+    if (sort) sort.addEventListener('change', submit);
+    qsa('[data-collection-link]', root).forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); load(a.href, true); }));
+
+    /* load more: fetch the next page of this section and append its cards */
+    const more = qs('[data-load-more]', root);
+    if (more && grid) {
+      more.addEventListener('click', async (e) => {
+        e.preventDefault();
+        more.setAttribute('aria-busy', 'true');
+        try {
+          const url = more.href;
+          const res = await fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'section_id=' + encodeURIComponent(sectionId));
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+          qsa('[data-collection-grid] > *', doc).forEach((card) => grid.appendChild(card));
+          const nextMore = doc.querySelector('[data-load-more]');
+          const total = parseInt(more.getAttribute('data-total'), 10) || 0;
+          const count = qsa('.product-card', grid).length;
+          const shownEl = qs('[data-shown]', root);
+          const bar = qs('[data-progress]', root);
+          if (shownEl) shownEl.textContent = count;
+          if (bar && total) bar.style.width = Math.min(100, (count / total) * 100) + '%';
+          if (nextMore) more.href = nextMore.href; else (qs('[data-collection-more]', root) || more).remove();
+          syncSaved();
+        } catch (err) {
+          window.location.href = more.href;
+        } finally {
+          more.removeAttribute('aria-busy');
+        }
+      });
+    }
+  }
+  qsa('[data-collection]').forEach(initCollection);
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    qsa('[data-collection].is-drawer-open').forEach((r) => { r.classList.remove('is-drawer-open'); document.body.style.overflow = ''; });
+  });
+
+  /* ---------- hero: "fit the first screen" measures what sits above it ---------- */
+  qsa('[data-hero]').forEach((hero) => {
+    const measure = () => hero.style.setProperty('--hero-top', Math.round(hero.getBoundingClientRect().top + window.scrollY) + 'px');
+    measure();
+    window.addEventListener('resize', measure);
+  });
+
+  /* ---------- dropdowns: styled option list for every <select> ----------
+     The native <select> stays the field (value, form submit, change events,
+     keyboard focus); on mouse/trackpad devices its browser pop-up is swapped
+     for one shared styled list that opens 2px under the field, or above it
+     when there isn't room. Add data-native to a select to opt out. */
+  (function dropdowns() {
+    if (!window.matchMedia || !window.matchMedia('(pointer: fine)').matches) return;
+    const list = document.createElement('ul');
+    list.className = 'eb-listbox';
+    list.setAttribute('role', 'listbox');
+    list.id = 'EbListbox';
+    list.hidden = true;
+    document.body.appendChild(list);
+    let current = null;
+    let active = -1;
+    let typed = '';
+    let typedTimer;
+    const usable = (sel) => sel && sel.tagName === 'SELECT' && !sel.multiple && !sel.disabled && (sel.size || 0) <= 1 && !sel.hasAttribute('data-native');
+    const options = () => qsa('.eb-listbox__option', list);
+
+    function setActive(i, scroll) {
+      const opts = options();
+      if (!opts.length) return;
+      active = Math.max(0, Math.min(opts.length - 1, i));
+      opts.forEach((o, n) => o.classList.toggle('is-active', n === active));
+      if (current) current.setAttribute('aria-activedescendant', opts[active].id);
+      if (scroll) opts[active].scrollIntoView({ block: 'nearest' });
+    }
+    function step(dir) {
+      const opts = options();
+      let i = active;
+      for (let k = 0; k < opts.length; k += 1) {
+        i += dir;
+        if (i < 0 || i >= opts.length) return;
+        if (opts[i].getAttribute('aria-disabled') !== 'true') { setActive(i, true); return; }
+      }
+    }
+    function place() {
+      if (!current) return;
+      const r = current.getBoundingClientRect();
+      const gap = 2;
+      list.style.minWidth = r.width + 'px';
+      list.style.maxWidth = Math.max(r.width, 320) + 'px';
+      list.style.left = Math.max(8, Math.min(r.left, window.innerWidth - Math.max(r.width, list.offsetWidth) - 8)) + 'px';
+      const below = window.innerHeight - r.bottom - gap - 8;
+      const above = r.top - gap - 8;
+      const natural = Math.min(list.scrollHeight, 320);
+      const up = below < natural && above > below;
+      list.classList.toggle('is-up', up);
+      list.style.maxHeight = Math.max(120, Math.min(320, up ? above : below)) + 'px';
+      const h = Math.min(natural, parseFloat(list.style.maxHeight));
+      list.style.top = (up ? r.top - gap - h : r.bottom + gap) + 'px';
+    }
+    function open(sel) {
+      if (current) close();
+      current = sel;
+      list.innerHTML = '';
+      let n = 0;
+      Array.from(sel.children).forEach((child) => {
+        const add = (opt) => {
+          if (opt.hidden) return;
+          const li = document.createElement('li');
+          li.className = 'eb-listbox__option';
+          li.id = 'EbListbox-' + n;
+          li.setAttribute('role', 'option');
+          li.setAttribute('data-index', String(opt.index));
+          li.setAttribute('aria-selected', String(opt.selected));
+          if (opt.disabled) li.setAttribute('aria-disabled', 'true');
+          li.textContent = opt.textContent.trim();
+          list.appendChild(li);
+          n += 1;
+        };
+        if (child.tagName === 'OPTGROUP') {
+          const g = document.createElement('li');
+          g.className = 'eb-listbox__group';
+          g.setAttribute('role', 'presentation');
+          g.textContent = child.label;
+          list.appendChild(g);
+          Array.from(child.children).forEach(add);
+        } else add(child);
+      });
+      list.setAttribute('aria-label', sel.getAttribute('aria-label') || (sel.labels && sel.labels[0] ? sel.labels[0].textContent.trim() : ''));
+      list.hidden = false;
+      sel.classList.add('is-open');
+      sel.setAttribute('aria-expanded', 'true');
+      sel.setAttribute('aria-controls', list.id);
+      const opts = options();
+      setActive(Math.max(0, opts.findIndex((o) => o.getAttribute('aria-selected') === 'true')), false);
+      place();
+      if (opts[active]) opts[active].scrollIntoView({ block: 'nearest' });
+      requestAnimationFrame(() => list.classList.add('is-open'));
+    }
+    function close() {
+      if (!current) return;
+      current.classList.remove('is-open');
+      current.setAttribute('aria-expanded', 'false');
+      current.removeAttribute('aria-activedescendant');
+      list.classList.remove('is-open');
+      list.hidden = true;
+      current = null;
+      active = -1;
+    }
+    function choose(li) {
+      if (!current || !li || li.getAttribute('aria-disabled') === 'true') return;
+      const sel = current;
+      const index = parseInt(li.getAttribute('data-index'), 10);
+      close();
+      if (sel.selectedIndex !== index) {
+        sel.selectedIndex = index;
+        sel.dispatchEvent(new Event('input', { bubbles: true }));
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      sel.focus();
+    }
+
+    document.addEventListener('mousedown', (e) => {
+      const sel = e.target.closest && e.target.closest('select');
+      if (usable(sel) && e.button === 0) {
+        e.preventDefault();
+        sel.focus();
+        if (current === sel) close(); else open(sel);
+        return;
+      }
+      if (!list.contains(e.target)) close();
+    });
+    list.addEventListener('mousedown', (e) => e.preventDefault());
+    list.addEventListener('click', (e) => choose(e.target.closest('.eb-listbox__option')));
+    list.addEventListener('mousemove', (e) => {
+      const li = e.target.closest('.eb-listbox__option');
+      if (li) setActive(options().indexOf(li), false);
+    });
+    document.addEventListener('keydown', (e) => {
+      const sel = e.target;
+      if (!usable(sel)) return;
+      if (!current) {
+        if (e.key === ' ' || e.key === 'Enter' || (e.altKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp'))) { e.preventDefault(); open(sel); }
+        return;
+      }
+      if (e.key === 'ArrowDown') { e.preventDefault(); step(1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); step(-1); }
+      else if (e.key === 'Home') { e.preventDefault(); setActive(0, true); }
+      else if (e.key === 'End') { e.preventDefault(); setActive(options().length - 1, true); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(options()[active]); }
+      else if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Tab') close();
+      else if (e.key.length === 1) {
+        typed += e.key.toLowerCase();
+        clearTimeout(typedTimer);
+        typedTimer = setTimeout(() => { typed = ''; }, 600);
+        const i = options().findIndex((o) => o.textContent.toLowerCase().indexOf(typed) === 0);
+        if (i !== -1) setActive(i, true);
+        e.preventDefault();
+      }
+    }, true);
+    window.addEventListener('scroll', (e) => { if (current && e.target !== list) place(); }, true);
+    window.addEventListener('resize', close);
+    document.addEventListener('focusout', (e) => { if (current && e.target === current && !list.contains(e.relatedTarget)) close(); });
+  })();
+
+  /* ---------- sideways product rows with arrow buttons ---------- */
+  qsa('[data-carousel]').forEach((root) => {
+    const track = qs('[data-carousel-track]', root);
+    const prev = qs('[data-carousel-prev]', root);
+    const next = qs('[data-carousel-next]', root);
+    const controls = qs('[data-carousel-controls]', root);
+    if (!track) return;
+    function step() {
+      const first = track.firstElementChild;
+      return first ? first.getBoundingClientRect().width + 2 : track.clientWidth;
+    }
+    function sync() {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      if (controls) controls.hidden = max <= 0;
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max;
+    }
+    if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    if (next) next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    /* hidden tab panels measure 0 until shown */
+    new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['hidden'] });
+    sync();
+  });
+
+  /* ---------- legal: document tabs (+ #privacy style links) ---------- */
+  qsa('[data-legal]').forEach((root) => {
+    const tabs = qsa('[data-legal-tab]', root);
+    const panels = qsa('[data-legal-panel]', root);
+    if (!tabs.length) return;
+    function show(id, focus) {
+      if (!panels.some((p) => p.getAttribute('data-legal-panel') === id)) id = tabs[0].getAttribute('data-legal-tab');
+      tabs.forEach((t) => {
+        const on = t.getAttribute('data-legal-tab') === id;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach((p) => { p.hidden = p.getAttribute('data-legal-panel') !== id; });
+    }
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => {
+        const id = t.getAttribute('data-legal-tab');
+        show(id);
+        try { history.replaceState(null, '', '#' + id); } catch (err) { /* ignore */ }
+      });
+      t.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        show(next.getAttribute('data-legal-tab'), true);
+      });
+    });
+    const fromHash = () => show((window.location.hash || '').replace('#', ''));
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  });
+
+  /* ---------- lookbook: hotspots <-> product rows ---------- */
+  qsa('[data-look]').forEach((root) => {
+    const spots = qsa('[data-look-spot]', root);
+    const rows = qsa('[data-look-row]', root);
+    let pinned = '';
+    function mark(n) {
+      const key = n || pinned;
+      spots.forEach((el) => el.classList.toggle('is-active', el.getAttribute('data-look-spot') === key));
+      rows.forEach((el) => el.classList.toggle('is-active', el.getAttribute('data-look-row') === key));
+    }
+    spots.forEach((el) => {
+      const n = el.getAttribute('data-look-spot');
+      el.addEventListener('mouseenter', () => mark(n));
+      el.addEventListener('mouseleave', () => mark(''));
+      el.addEventListener('click', () => { pinned = pinned === n ? '' : n; mark(''); });
+    });
+    rows.forEach((el) => {
+      const n = el.getAttribute('data-look-row');
+      el.addEventListener('mouseenter', () => mark(n));
+      el.addEventListener('mouseleave', () => mark(''));
+    });
+  });
+
+  /* ---------- journal: search + load more ---------- */
+  qsa('[data-blog]').forEach((root) => {
+    const grid = qs('[data-blog-grid]', root);
+    const search = qs('[data-blog-search]', root);
+    const empty = qs('[data-blog-search-empty]', root);
+    function filter() {
+      if (!search || !grid) return;
+      const q = search.value.trim().toLowerCase();
+      let visible = 0;
+      qsa('[data-article-card]', grid).forEach((card) => {
+        const hit = !q || (card.getAttribute('data-title') || '').indexOf(q) !== -1;
+        card.hidden = !hit;
+        if (hit) visible += 1;
+      });
+      if (empty) empty.hidden = visible > 0;
+    }
+    if (search) search.addEventListener('input', filter);
+    const more = qs('[data-blog-load-more]', root);
+    if (more && grid) {
+      more.addEventListener('click', async (e) => {
+        e.preventDefault();
+        more.setAttribute('aria-busy', 'true');
+        try {
+          const url = more.href;
+          const res = await fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + 'section_id=' + encodeURIComponent(root.getAttribute('data-section-id')));
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+          qsa('[data-blog-grid] > *', doc).forEach((card) => grid.appendChild(card));
+          const nextMore = doc.querySelector('[data-blog-load-more]');
+          const total = parseInt(more.getAttribute('data-total'), 10) || 0;
+          const count = qsa('[data-article-card]', grid).length + (qs('.blog-featured', root) ? 1 : 0);
+          const shownEl = qs('[data-shown]', root);
+          const bar = qs('[data-progress]', root);
+          if (shownEl) shownEl.textContent = count;
+          if (bar && total) bar.style.width = Math.min(100, (count / total) * 100) + '%';
+          if (nextMore) more.href = nextMore.href; else (qs('[data-blog-more]', root) || more).remove();
+          filter();
+        } catch (err) {
+          window.location.href = more.href;
+        } finally {
+          more.removeAttribute('aria-busy');
+        }
+      });
+    }
+  });
+
+  /* ---------- journal article: contents, reading progress, copy link ---------- */
+  qsa('[data-article]').forEach((root) => {
+    const content = qs('[data-article-content]', root);
+    const toc = qs('[data-article-toc]', root);
+    const tocWrap = qs('[data-article-toc-wrap]', root);
+    const heads = content ? qsa('h2', content) : [];
+    const links = [];
+    if (toc && heads.length > 1) {
+      heads.forEach((h, i) => {
+        if (!h.id) h.id = 'section-' + (i + 1) + '-' + h.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40);
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.textContent = h.textContent.trim();
+        toc.appendChild(a);
+        links.push(a);
+      });
+      if (tocWrap) tocWrap.hidden = false;
+    }
+    const bar = qs('[data-article-progress]');
+    function onScroll() {
+      if (!content) return;
+      const rect = content.getBoundingClientRect();
+      const total = rect.height - window.innerHeight * 0.6;
+      const done = Math.min(1, Math.max(0, -rect.top / (total > 0 ? total : 1)));
+      if (bar) bar.style.width = (done * 100) + '%';
+      if (!links.length) return;
+      let active = 0;
+      heads.forEach((h, i) => { if (h.getBoundingClientRect().top < window.innerHeight * 0.3) active = i; });
+      links.forEach((a, i) => a.classList.toggle('is-active', i === active));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    const copy = qs('[data-article-copy]', root);
+    const note = qs('[data-article-copied]', root);
+    if (copy) {
+      copy.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(window.location.href.split('#')[0]); } catch (err) { /* clipboard blocked */ }
+        if (!note) return;
+        note.textContent = copy.getAttribute('data-copied') || '';
+        clearTimeout(copy._t);
+        copy._t = setTimeout(() => { note.textContent = ''; }, 2200);
+      });
+    }
+  });
+
+  /* ---------- light / dark switch (header) ---------- */
+  function syncThemeToggle() {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    qsa('[data-theme-toggle]').forEach((btn) => {
+      btn.setAttribute('aria-label', btn.getAttribute(dark ? 'data-label-light' : 'data-label-dark') || '');
+      btn.setAttribute('aria-pressed', String(dark));
+    });
+  }
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('[data-theme-toggle]')) return;
+    const dark = document.documentElement.getAttribute('data-theme') !== 'dark';
+    if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+    else document.documentElement.removeAttribute('data-theme');
+    try { localStorage.setItem('eb-theme', dark ? 'dark' : 'light'); } catch (err) { /* storage unavailable */ }
+    syncThemeToggle();
+  });
+  syncThemeToggle();
 
   /* ---------- free shipping progress bar in cart ---------- */
   updateCartCount();

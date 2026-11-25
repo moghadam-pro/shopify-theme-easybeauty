@@ -20,7 +20,9 @@
       "close": "Close",
       "next_slide": "Next slide",
       "previous_slide": "Previous slide",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "previous": "Previous",
+      "next": "Next"
     },
     "password_page": {
       "opening_soon": "Opening soon",
@@ -56,7 +58,19 @@
       "view_all": "View all",
       "dock_shop": "Shop",
       "dock_bag": "Bag",
-      "dock_account": "You"
+      "dock_account": "You",
+      "theme_dark": "Switch to dark mode",
+      "theme_light": "Switch to light mode",
+      "products_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "dark_mode": "Dark mode",
+      "layout_gallery": "Gallery left",
+      "layout_default": "Default",
+      "layout_full": "Full-width photo",
+      "layout_info_left": "Details left, gallery right",
+      "layout_dossier": "Dark dossier"
     },
     "cart": {
       "title": "Your bag",
@@ -110,11 +124,19 @@
     "quiz": {
       "title": "Twelve products, narrowed to a routine.",
       "start": "Start the quiz",
-      "next": "Next",
+      "next": "Next question",
       "back": "Back",
       "see_results": "See my routine",
       "retake": "Retake the quiz",
-      "add_routine_to_bag": "Add routine to bag"
+      "add_routine_to_bag": "Add all to bag",
+      "skip": "Skip the quiz",
+      "step": "Question {{ current }} of {{ total }}",
+      "pick_up_to": "Pick up to {{ count }}.",
+      "tap_to_continue": "Tap an answer to continue.",
+      "routine_total": "Routine total",
+      "browse": "Browse everything instead",
+      "you_told_us": "What you told us",
+      "adding": "Adding…"
     },
     "faq": {
       "title": "Help",
@@ -131,7 +153,11 @@
       "message": "Message",
       "submit": "Send message",
       "success": "Thanks — we usually reply within 6 hours.",
-      "order_number": "Order number (optional)"
+      "order_number": "Order number (optional)",
+      "order_number_label": "Order number",
+      "optional": "(optional)",
+      "newsletter": "Newsletter",
+      "yes": "Yes"
     },
     "collection-tabs": {
       "example_product": "Example product"
@@ -149,6 +175,38 @@
     "page-intro": {
       "breadcrumb": "Breadcrumb",
       "home": "Home"
+    },
+    "collection": {
+      "filter": "Filter",
+      "clear_all": "Clear all",
+      "clear_all_filters": "Clear all filters",
+      "search_placeholder": "Search products",
+      "filters_applied": {
+        "one": "{{ count }} filter applied",
+        "other": "{{ count }} filters applied"
+      },
+      "price_min": "Minimum price",
+      "price_max": "Maximum price",
+      "in_stock_only": "In stock only",
+      "apply": "Apply filters",
+      "hide_filters": "Hide filters",
+      "show_filters": "Show filters",
+      "products_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "sort": "Sort",
+      "grid_size": "Grid size",
+      "grid_dense": "Compact grid",
+      "grid_large": "Large grid",
+      "empty_title": "No products match those filters.",
+      "empty_text": "Try widening the price range or clearing a filter — most formulas suit more than one concern.",
+      "search_empty": "No products on this page match your search.",
+      "load_more": "Load more",
+      "showing_html": "Showing {{ shown }} of {{ total }}"
+    },
+    "lookbook": {
+      "add": "Add"
     }
   },
   "templates": {
@@ -192,7 +250,11 @@
       "choose_pack": "Choose your pack",
       "one_time": "One-time purchase",
       "one_time_note": "Delivered once.",
-      "cancel_anytime": "Cancel or skip anytime"
+      "cancel_anytime": "Cancel or skip anytime",
+      "quick_add": "Quick add",
+      "choose_options": "Choose size",
+      "each": "each",
+      "add_short": "Add"
     }
   },
   "blogs": {
@@ -200,8 +262,26 @@
       "read_more": "Keep reading",
       "back_to_journal": "Back to the Journal",
       "by_author": "By {{ author }}",
-      "share": "Share this article",
-      "read_article": "Read article"
+      "share": "Share",
+      "read_article": "Read article",
+      "read_time": {
+        "one": "{{ count }} min read",
+        "other": "{{ count }} min read"
+      },
+      "written_by": "Written by",
+      "in_this_article": "In this article",
+      "copy_link": "Copy link",
+      "copied": "Link copied",
+      "email": "Email",
+      "comments": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      },
+      "comment_posted": "Thanks — your comment will appear once it is approved.",
+      "name": "Name",
+      "email_label": "Email",
+      "comment": "Comment",
+      "post_comment": "Post comment"
     },
     "blog": {
       "featured": "Featured",
@@ -210,7 +290,11 @@
         "one": "{{ count }} article",
         "other": "{{ count }} articles"
       },
-      "empty": "No articles yet — the first formulation notes are on their way."
+      "empty": "No articles yet — the first formulation notes are on their way.",
+      "all": "All",
+      "search": "Search the journal",
+      "search_empty": "No articles on this page match your search.",
+      "load_more": "Load more articles"
     }
   },
   "customer": {

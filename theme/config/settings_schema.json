@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "EasyBeauty",
-    "theme_version": "1.2.0",
+    "theme_version": "1.11.0",
     "theme_author": "EasyBeauty",
     "theme_documentation_url": "https://github.com/moghadam-pro/shopify-theme-easybeauty/blob/main/docs/ARCHITECTURE.md",
     "theme_support_url": "https://github.com/moghadam-pro/shopify-theme-easybeauty/issues"
@@ -25,52 +25,141 @@
         "content": "t:settings.colors.header"
       },
       {
-        "type": "color",
-        "id": "color_background",
-        "label": "t:settings.colors.background",
-        "default": "#F5F0EA"
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "color",
+            "id": "background",
+            "label": "t:settings.colors.background",
+            "default": "#F5F0EA"
+          },
+          {
+            "type": "color_background",
+            "id": "background_gradient",
+            "label": "t:settings.colors.background_gradient",
+            "info": "t:settings.colors.background_gradient_info"
+          },
+          {
+            "type": "color",
+            "id": "surface",
+            "label": "t:settings.colors.surface",
+            "default": "#FBFAF8"
+          },
+          {
+            "type": "color",
+            "id": "text",
+            "label": "t:settings.colors.text",
+            "default": "#2B241D"
+          },
+          {
+            "type": "color",
+            "id": "accent",
+            "label": "t:settings.colors.accent",
+            "default": "#94513C"
+          },
+          {
+            "type": "color",
+            "id": "accent_2",
+            "label": "t:settings.colors.accent_2",
+            "default": "#3D6A4D"
+          },
+          {
+            "type": "color",
+            "id": "border",
+            "label": "t:settings.colors.border",
+            "default": "#D8CDBE"
+          },
+          {
+            "type": "color",
+            "id": "inverse_background",
+            "label": "t:settings.colors.inverse_background",
+            "default": "#2B241D"
+          },
+          {
+            "type": "color",
+            "id": "inverse_text",
+            "label": "t:settings.colors.inverse_text",
+            "default": "#FBFAF8"
+          }
+        ],
+        "role": {
+          "background": {
+            "solid": "background",
+            "gradient": "background_gradient"
+          },
+          "text": "text",
+          "links": "accent",
+          "icons": "text",
+          "primary_button": "accent",
+          "on_primary_button": "surface",
+          "primary_button_border": "accent",
+          "secondary_button": "surface",
+          "on_secondary_button": "text",
+          "secondary_button_border": "text"
+        }
+      }
+    ]
+  },
+  {
+    "name": "t:settings.dark_mode.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "dark_mode_enabled",
+        "label": "t:settings.dark_mode.enabled.label",
+        "info": "t:settings.dark_mode.enabled.info",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "dark_mode_default",
+        "label": "t:settings.dark_mode.default.label",
+        "options": [
+          {
+            "value": "light",
+            "label": "t:settings.dark_mode.default.options__1.label"
+          },
+          {
+            "value": "dark",
+            "label": "t:settings.dark_mode.default.options__2.label"
+          },
+          {
+            "value": "system",
+            "label": "t:settings.dark_mode.default.options__3.label"
+          }
+        ],
+        "default": "light"
       },
       {
         "type": "color",
-        "id": "color_surface",
-        "label": "t:settings.colors.surface",
-        "default": "#FBFAF8"
+        "id": "dark_background",
+        "label": "t:settings.dark_mode.background.label",
+        "default": "#15120F"
       },
       {
         "type": "color",
-        "id": "color_text",
-        "label": "t:settings.colors.text",
-        "default": "#2B241D"
+        "id": "dark_surface",
+        "label": "t:settings.dark_mode.surface.label",
+        "default": "#1D1915"
       },
       {
         "type": "color",
-        "id": "color_accent",
-        "label": "t:settings.colors.accent",
-        "default": "#94513C"
+        "id": "dark_text",
+        "label": "t:settings.dark_mode.text.label",
+        "default": "#E9E1D5"
       },
       {
         "type": "color",
-        "id": "color_accent_2",
-        "label": "t:settings.colors.accent_2",
-        "default": "#3D6A4D"
+        "id": "dark_accent",
+        "label": "t:settings.dark_mode.accent.label",
+        "default": "#CE8268"
       },
       {
         "type": "color",
-        "id": "color_border",
-        "label": "t:settings.colors.border",
-        "default": "#D8CDBE"
-      },
-      {
-        "type": "color",
-        "id": "color_inverse_background",
-        "label": "t:settings.colors.inverse_background",
-        "default": "#2B241D"
-      },
-      {
-        "type": "color",
-        "id": "color_inverse_text",
-        "label": "t:settings.colors.inverse_text",
-        "default": "#FBFAF8"
+        "id": "dark_border",
+        "label": "t:settings.dark_mode.border.label",
+        "default": "#3A332C"
       }
     ]
   },
@@ -78,8 +167,14 @@
     "name": "t:settings.typography.name",
     "settings": [
       {
-        "type": "paragraph",
-        "content": "t:settings.typography.brand_font_note"
+        "type": "header",
+        "content": "t:settings.typography.headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "t:settings.typography.font",
+        "default": "bodoni_moda_n4"
       },
       {
         "type": "range",
@@ -90,6 +185,16 @@
         "unit": "%",
         "label": "t:settings.typography.heading_scale",
         "default": 100
+      },
+      {
+        "type": "header",
+        "content": "t:settings.typography.body"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "t:settings.typography.font",
+        "default": "archivo_n4"
       },
       {
         "type": "range",

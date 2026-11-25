@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container">
   <div class="section__head">
     <h2>{{ section.settings.heading }}</h2>
@@ -22,6 +23,7 @@
     {%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -71,6 +73,12 @@
       "type": "url",
       "id": "view_all_link",
       "label": "t:sections.featured-collection.settings.view_all_link.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

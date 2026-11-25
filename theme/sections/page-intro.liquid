@@ -3,13 +3,21 @@
   lead paragraph, optional meta line (e.g. opening hours) and up to two
   buttons. The title falls back to the current page/blog title.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign intro_title = section.settings.heading
   if intro_title == blank
     assign intro_title = page.title | default: blog.title | default: collection.title
   endif
 -%}
-<section class="page-intro">
+{%- liquid
+  assign intro_image = section.settings.image
+  assign has_image = false
+  if intro_image != blank or section.settings.fallback_image != blank
+    assign has_image = true
+  endif
+-%}
+<section class="page-intro{% if has_image %} page-intro--media{% endif %}{% if section.settings.grayscale %} page-intro--mono{% endif %}">
   <div class="container">
     {%- if section.settings.show_breadcrumb -%}
       <nav class="page-intro__breadcrumb" aria-label="{{ 'sections.page-intro.breadcrumb' | t }}">
@@ -17,9 +25,32 @@
       </nav>
     {%- endif -%}
     {%- if section.settings.eyebrow != blank -%}<div class="page-intro__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
-    <h1 class="page-intro__title">{{ intro_title }}</h1>
-    {%- if section.settings.text != blank -%}<div class="page-intro__text">{{ section.settings.text }}</div>{%- endif -%}
-    {%- if section.settings.meta != blank or section.settings.button_label != blank or section.settings.button_label_2 != blank -%}
+    {%- liquid
+      assign meta_right = false
+      if section.settings.meta != blank and section.settings.meta_style == 'right'
+        assign meta_right = true
+      endif
+      assign meta_items = section.settings.meta | split: '|'
+      assign show_footer = false
+      if section.settings.button_label != blank or section.settings.button_label_2 != blank
+        assign show_footer = true
+      endif
+      if section.settings.meta != blank and meta_right == false
+        assign show_footer = true
+      endif
+    -%}
+    <div class="page-intro__row">
+      <div>
+        <h1 class="page-intro__title">{{ intro_title }}</h1>
+        {%- if section.settings.text != blank -%}<div class="page-intro__text">{{ section.settings.text }}</div>{%- endif -%}
+      </div>
+      {%- if meta_right -%}
+        <div class="page-intro__side">
+          {%- for item in meta_items -%}<span>{{ item | strip }}</span>{%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+    {%- if show_footer -%}
       <div class="page-intro__footer">
         {%- if section.settings.button_label != blank -%}
           <a href="{{ section.settings.button_link | default: '#' }}" class="btn btn-primary">{{ section.settings.button_label }}</a>
@@ -27,16 +58,25 @@
         {%- if section.settings.button_label_2 != blank -%}
           <a href="{{ section.settings.button_link_2 | default: '#' }}" class="btn btn-secondary">{{ section.settings.button_label_2 }}</a>
         {%- endif -%}
-        {%- if section.settings.meta != blank -%}
+        {%- if section.settings.meta != blank and meta_right == false -%}
           <div class="page-intro__meta">
-            {%- assign meta_items = section.settings.meta | split: '|' -%}
             {%- for item in meta_items -%}<span class="tag tag-outline">{{ item | strip }}</span>{%- endfor -%}
           </div>
         {%- endif -%}
       </div>
     {%- endif -%}
   </div>
+  {%- if has_image -%}
+    <div class="page-intro__media">
+      {%- if intro_image != blank -%}
+        {{ intro_image | image_url: width: 1400 | image_tag: loading: 'eager', sizes: '(min-width: 960px) 44vw, 100vw', widths: '600, 1000, 1400', alt: intro_image.alt }}
+      {%- else -%}
+        <img src="{{ section.settings.fallback_image | asset_url }}" alt="" width="1200" height="1500" loading="eager">
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 </section>
+</div>
 
 {% schema %}
 {
@@ -71,6 +111,22 @@
       "info": "t:sections.page-intro.settings.meta.info"
     },
     {
+      "type": "select",
+      "id": "meta_style",
+      "label": "t:sections.page-intro.settings.meta_style.label",
+      "options": [
+        {
+          "value": "tags",
+          "label": "t:sections.page-intro.settings.meta_style.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.page-intro.settings.meta_style.options__2.label"
+        }
+      ],
+      "default": "tags"
+    },
+    {
       "type": "text",
       "id": "button_label",
       "label": "t:sections.page-intro.settings.button_label.label"
@@ -89,6 +145,30 @@
       "type": "url",
       "id": "button_link_2",
       "label": "t:sections.page-intro.settings.button_link_2.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:sections.page-intro.settings.image.label",
+      "info": "t:sections.page-intro.settings.image.info"
+    },
+    {
+      "type": "text",
+      "id": "fallback_image",
+      "label": "t:sections.page-intro.settings.fallback_image.label",
+      "info": "t:sections.page-intro.settings.fallback_image.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "grayscale",
+      "label": "t:sections.page-intro.settings.grayscale.label",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

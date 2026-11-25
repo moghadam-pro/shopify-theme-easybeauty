@@ -5,6 +5,7 @@
   Promo codes go through Shopify's /discount/CODE route, which attaches the
   code to the checkout ([data-cart-promo] in theme.js).
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 {%- liquid
   assign threshold_cents = settings.cart_free_shipping_threshold | times: 100
   assign remaining_cents = threshold_cents | minus: cart.total_price
@@ -167,6 +168,7 @@
     </div>
   {%- endif -%}
 </div>
+</div>
 
 {% schema %}
 {
@@ -214,6 +216,12 @@
       "label": "t:sections.main-cart.settings.trust_badges.label",
       "info": "t:sections.main-cart.settings.trust_badges.info",
       "default": "Secure | 60-day | Carbon neutral"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ]
 }

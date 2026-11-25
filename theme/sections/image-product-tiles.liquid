@@ -3,6 +3,7 @@
   pinned bottom-left. The card reads a picked product; without one it falls
   back to the block's own title/price text and thumbnail asset.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="image-product-tiles">
   {%- for block in section.blocks -%}
     {%- assign tile_product = block.settings.product -%}
@@ -47,11 +48,19 @@
     </div>
   {%- endfor -%}
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.image-product-tiles.name",
-  "settings": [],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
   "blocks": [
     {
       "type": "tile",

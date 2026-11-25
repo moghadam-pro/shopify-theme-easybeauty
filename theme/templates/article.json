@@ -14,8 +14,10 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "heading": "One letter, every other Thursday",
-        "text": "New research, plainly summarised. No launches, no urgency."
+        "layout": "split",
+        "eyebrow": "One letter, every other Thursday",
+        "heading": "New research, plainly summarised. No launches, no urgency.",
+        "text": ""
       }
     }
   },

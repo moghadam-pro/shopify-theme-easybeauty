@@ -4,6 +4,7 @@
   underneath (see [data-category-showcase] in theme.js). Without JS the first
   category stays visible and every name is still a plain link.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="category-showcase" data-category-showcase>
   <div class="category-showcase__stage">
     {%- for block in section.blocks -%}
@@ -52,6 +53,7 @@
     </div>
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -62,6 +64,12 @@
       "id": "eyebrow",
       "label": "t:sections.category-showcase.settings.eyebrow.label",
       "default": "Shop by category"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

@@ -1,0 +1,355 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "pack-single": {
+          "type": "pack",
+          "settings": {
+            "title": "Single bottle",
+            "note": "One bottle, delivered once.",
+            "quantity": 1,
+            "discount": 0,
+            "tag": "",
+            "subscription": false
+          }
+        },
+        "pack-duo": {
+          "type": "pack",
+          "settings": {
+            "title": "Duo pack",
+            "note": "Two bottles — about four months.",
+            "quantity": 2,
+            "discount": 10,
+            "tag": "Save 10%",
+            "subscription": false
+          }
+        },
+        "pack-trio": {
+          "type": "pack",
+          "settings": {
+            "title": "Trio pack",
+            "note": "Three bottles — our best value.",
+            "quantity": 3,
+            "discount": 18,
+            "tag": "Save 18%",
+            "subscription": false
+          }
+        },
+        "pack-refill": {
+          "type": "pack",
+          "settings": {
+            "title": "Refill every 8 weeks",
+            "note": "One bottle, auto-delivered. Skip anytime.",
+            "quantity": 1,
+            "discount": 0,
+            "tag": "Save 15%",
+            "subscription": true
+          }
+        },
+        "spec-1": {
+          "type": "spec",
+          "settings": {
+            "value": "10%",
+            "label": "Niacinamide, the dose that stopped flushing our panel"
+          }
+        },
+        "spec-2": {
+          "type": "spec",
+          "settings": {
+            "value": "87%",
+            "label": "Saw brighter, more even skin in two weeks"
+          }
+        },
+        "spec-3": {
+          "type": "spec",
+          "settings": {
+            "value": "0",
+            "label": "Reported stinging across 42 sensitive-skin panellists"
+          }
+        },
+        "spec-4": {
+          "type": "spec",
+          "settings": {
+            "value": "13",
+            "label": "Ingredients, printed in full on the carton"
+          }
+        },
+        "highlight-1": {
+          "type": "highlight",
+          "settings": {
+            "title": "10% niacinamide",
+            "text": "fades dark spots and evens tone over eight weeks."
+          }
+        },
+        "highlight-2": {
+          "type": "highlight",
+          "settings": {
+            "title": "Multi-weight hyaluronic acid",
+            "text": "floods skin with water, plumping fine lines on contact."
+          }
+        },
+        "highlight-3": {
+          "type": "highlight",
+          "settings": {
+            "title": "Ceramide NP",
+            "text": "rebuilds the barrier, so the glow holds through winter."
+          }
+        },
+        "highlight-4": {
+          "type": "highlight",
+          "settings": {
+            "title": "Silky, weightless finish",
+            "text": "that layers under SPF without pilling."
+          }
+        },
+        "highlight-5": {
+          "type": "highlight",
+          "settings": {
+            "title": "Fragrance-free, pH 5.5",
+            "text": "— tested on sensitive and acne-prone skin."
+          }
+        },
+        "accordion-1": {
+          "type": "accordion",
+          "settings": {
+            "title": "Full ingredients (INCI)",
+            "content": "<p>Aqua, Niacinamide, Glycerin, Propanediol, Sodium Hyaluronate, Hydroxyethyl Acrylate/Sodium Acryloyldimethyl Taurate Copolymer, Panthenol, Ceramide NP, Zinc PCA, Allantoin, Citric Acid, Sodium Benzoate, Potassium Sorbate. Fragrance-free, alcohol-free, essential-oil-free.</p>"
+          }
+        },
+        "accordion-2": {
+          "type": "accordion",
+          "settings": {
+            "title": "How to use",
+            "content": "<p>Two to three drops on clean, damp skin, morning and night. Press in rather than rubbing, then follow with moisturiser. If you use a retinoid, apply this first and wait one minute. Sunscreen every morning.</p>"
+          }
+        },
+        "accordion-3": {
+          "type": "accordion",
+          "settings": {
+            "title": "FAQ",
+            "content": "<p>Can I use it with vitamin C? Yes — apply the serum after. Will it pill under SPF? Not in our testing, provided skin is damp rather than wet. Pregnancy-safe? Niacinamide and hyaluronic acid are generally considered safe, but ask your doctor.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "pack-single",
+        "pack-duo",
+        "pack-trio",
+        "pack-refill",
+        "spec-1",
+        "spec-2",
+        "spec-3",
+        "spec-4",
+        "highlight-1",
+        "highlight-2",
+        "highlight-3",
+        "highlight-4",
+        "highlight-5",
+        "accordion-1",
+        "accordion-2",
+        "accordion-3"
+      ],
+      "settings": {
+        "show_vendor": false,
+        "lead_words": 26,
+        "show_quantity": false,
+        "show_save": true,
+        "badges": "Fragrance-free | Vegan | Cruelty-free | Derm tested | Made in Portugal | Batch-tested | 60-day returns",
+        "show_description": true,
+        "default_pack": 2,
+        "show_sticky_bar": true,
+        "stock_note": "In stock — ships within 24h",
+        "service_notes": "Free delivery over $75 | 60-day returns, opened or not",
+        "layout": "dossier",
+        "dossier_eyebrow": "No.3 · Serum · Niacinamide 10% · pH 5.5"
+      }
+    },
+    "results": {
+      "type": "multicolumn",
+      "settings": {
+        "style": "stats",
+        "caption": "Independent consumer study, 120 participants, 8 weeks, 2025. Self-reported results."
+      },
+      "blocks": {
+        "stat-1": {
+          "type": "column",
+          "settings": {
+            "title": "87%",
+            "text": "saw brighter, more even skin in two weeks"
+          }
+        },
+        "stat-2": {
+          "type": "column",
+          "settings": {
+            "title": "92%",
+            "text": "said it layered under SPF without pilling"
+          }
+        },
+        "stat-3": {
+          "type": "column",
+          "settings": {
+            "title": "0",
+            "text": "reported stinging across 42 sensitive-skin panellists"
+          }
+        }
+      },
+      "block_order": [
+        "stat-1",
+        "stat-2",
+        "stat-3"
+      ]
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Complete the routine",
+        "products_to_show": 3
+      }
+    },
+    "story": {
+      "type": "image-text",
+      "settings": {
+        "fallback_image": "lifestyle-skin.jpg",
+        "layout": "left",
+        "eyebrow": "Why No.3",
+        "heading": "The third formula was the one that stopped stinging.",
+        "text": "<p>We put niacinamide at 10% and stopped there, because higher concentrations flushed half our test panel. Two years, twelve versions, one serum — and the number stayed in the name as a reminder.</p>",
+        "button_label": "Read our story",
+        "button_link": "/pages/about"
+      }
+    },
+    "community": {
+      "type": "image-gallery",
+      "settings": {
+        "eyebrow": "From the community"
+      },
+      "blocks": {
+        "ugc-1": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-skin.jpg"
+          }
+        },
+        "ugc-2": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-apply.jpg"
+          }
+        },
+        "ugc-3": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "hero-banner.jpg"
+          }
+        },
+        "ugc-4": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "sample-product-4.jpg"
+          }
+        },
+        "ugc-5": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-skin.jpg"
+          }
+        },
+        "ugc-6": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "lifestyle-apply.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "ugc-1",
+        "ugc-2",
+        "ugc-3",
+        "ugc-4",
+        "ugc-5",
+        "ugc-6"
+      ]
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": {
+        "rating": "4.9",
+        "rating_label": "1,284 verified reviews",
+        "press": ""
+      },
+      "blocks": {
+        "r-1": {
+          "type": "quote",
+          "settings": {
+            "quote": "The first niacinamide that did not flush me. Eight weeks in, the patch on my jaw has genuinely faded.",
+            "author": "Maya R.",
+            "meta": "Sensitive, 34",
+            "stars": 5
+          }
+        },
+        "r-2": {
+          "type": "quote",
+          "settings": {
+            "quote": "Layers under SPF with no pilling, which is the only reason I kept it. The glow is a bonus.",
+            "author": "Dilan A.",
+            "meta": "Combination, 41",
+            "stars": 5
+          }
+        },
+        "r-3": {
+          "type": "quote",
+          "settings": {
+            "quote": "No breakouts, no sting, no perfume. My dermatologist had no notes on the ingredient list.",
+            "author": "Priya S.",
+            "meta": "Acne-prone, 27",
+            "stars": 5
+          }
+        },
+        "r-4": {
+          "type": "quote",
+          "settings": {
+            "quote": "I use it under the cream at night and wake up looking rested rather than tight.",
+            "author": "Noor K.",
+            "meta": "Dry, 52",
+            "stars": 5
+          }
+        },
+        "r-5": {
+          "type": "quote",
+          "settings": {
+            "quote": "Bought the duo after the first bottle. Cheaper per ml and I never run out mid-routine.",
+            "author": "Elif T.",
+            "meta": "Combination, 23",
+            "stars": 5
+          }
+        },
+        "r-6": {
+          "type": "quote",
+          "settings": {
+            "quote": "Rosacea-prone and fine with it, which is rare. I patch-tested for a week out of habit — nothing.",
+            "author": "Sara B.",
+            "meta": "Sensitive, 38",
+            "stars": 5
+          }
+        }
+      },
+      "block_order": [
+        "r-1",
+        "r-2",
+        "r-3",
+        "r-4",
+        "r-5",
+        "r-6"
+      ]
+    }
+  },
+  "order": [
+    "main",
+    "results",
+    "recommendations",
+    "story",
+    "community",
+    "reviews"
+  ]
+}

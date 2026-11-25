@@ -78,11 +78,31 @@
             "footnote_link_label_2": "Shipping & returns",
             "footnote_link_2": "/pages/faq"
           }
+        },
+        "features": {
+          "type": "link_mega",
+          "settings": {
+            "title": "Features",
+            "link": "",
+            "column_1_title": "Pages",
+            "column_1_links": "Home | / | Landing\nAll products | /collections/all | Filters\nJournal | /blogs/journal\nAbout | /pages/about\nContact | /pages/contact\nFAQ | /pages/faq\nLookbook | /pages/lookbook",
+            "column_2_title": "Shopping",
+            "column_2_links": "Skin quiz | /pages/quiz\nBag | /cart\nSaved items | /pages/saved\nSearch | /search\nAccount | /account\nPage not found | /pages/404 | 404",
+            "column_3_title": "Built in",
+            "column_3_links": "Pack picker | /collections/all | Duo · Trio · Refill\nBundle builder | /#bundle\nQuick add & wishlist | /collections/all\nDark mode | / | Header switch\nMega menus | /collections/all",
+            "column_4_title": "",
+            "column_4_links": "",
+            "show_layouts": true,
+            "layouts_title": "Product page",
+            "layouts_position": 1,
+            "footnote": "4 product layouts · AJAX filters · dark mode · every text, colour and image editable in the theme editor"
+          }
         }
       },
       "block_order": [
         "mega-shop",
-        "mega-collections"
+        "mega-collections",
+        "features"
       ]
     }
   },

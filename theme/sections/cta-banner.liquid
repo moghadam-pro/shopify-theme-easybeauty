@@ -3,7 +3,8 @@
   two buttons. Reused for the quiz prompt on the homepage/collection/about
   pages and the "still stuck" / "behind the shoot" bands elsewhere.
 {%- endcomment -%}
-<section class="cta-banner cta-banner--{{ section.settings.color_scheme }}">
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
+<section class="cta-banner cta-banner--{{ section.settings.style }}">
   <div class="container cta-banner__inner">
     <div class="cta-banner__copy">
       {%- if section.settings.eyebrow != blank -%}<div class="cta-banner__eyebrow">{{ section.settings.eyebrow }}</div>{%- endif -%}
@@ -22,6 +23,7 @@
     {%- endif -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
@@ -29,8 +31,8 @@
   "settings": [
     {
       "type": "select",
-      "id": "color_scheme",
-      "label": "t:sections.cta-banner.settings.color_scheme.label",
+      "id": "style",
+      "label": "t:sections.cta-banner.settings.style.label",
       "options": [
         {
           "value": "accent",
@@ -84,6 +86,12 @@
       "type": "url",
       "id": "button_link_2",
       "label": "t:sections.cta-banner.settings.button_link_2.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

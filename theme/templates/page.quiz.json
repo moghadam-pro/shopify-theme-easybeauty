@@ -2,40 +2,74 @@
   "sections": {
     "main": {
       "type": "quiz",
+      "settings": {
+        "eyebrow": "Six questions · about a minute",
+        "heading": "Twelve products, narrowed to a routine.",
+        "text": "No email required, no account. Answer what your skin is doing right now — not what it did last winter — and we match formulas to it.",
+        "trust": "Reviewed by a dermatologist | No data sold",
+        "result_eyebrow": "Your routine",
+        "result_heading": "A routine built around your barrier.",
+        "result_text": "Everything here is fragrance-free, and the treat step is the only active — that is deliberate, because stacking them is what breaks skin.",
+        "result_count": 3
+      },
       "blocks": {
         "question-1": {
           "type": "question",
           "settings": {
             "question": "How does your skin feel two hours after cleansing?",
+            "hint": "Bare skin, no products on top.",
+            "multi": false,
+            "max_choices": 2,
             "option_1": "Tight and dry",
+            "note_1": "Flaking at the cheeks or around the nose.",
             "tag_1": "dry",
             "option_2": "Shiny all over",
+            "note_2": "Especially the forehead and nose.",
             "tag_2": "oily",
-            "option_3": "Comfortable",
-            "tag_3": "balanced"
+            "option_3": "Oily centre, dry edges",
+            "note_3": "The classic combination pattern.",
+            "tag_3": "combination",
+            "option_4": "Comfortable",
+            "note_4": "Neither tight nor shiny.",
+            "tag_4": "normal"
           }
         },
         "question-2": {
           "type": "question",
           "settings": {
             "question": "What would you fix first?",
+            "hint": "Pick up to two — we weight the first one heavier.",
+            "multi": true,
+            "max_choices": 2,
             "option_1": "Dullness and uneven tone",
+            "note_1": "Marks left by old spots, grey cast.",
             "tag_1": "brightening",
-            "option_2": "Breakouts",
-            "tag_2": "acne",
-            "option_3": "Early lines",
-            "tag_3": "anti-aging"
+            "option_2": "Dehydration",
+            "note_2": "Fine lines that disappear after moisturiser.",
+            "tag_2": "hydration",
+            "option_3": "Breakouts",
+            "note_3": "Congestion, blackheads, active spots.",
+            "tag_3": "acne",
+            "option_4": "Early lines and laxity",
+            "note_4": "Texture around the eyes and mouth.",
+            "tag_4": "anti-aging"
           }
         },
         "question-3": {
           "type": "question",
           "settings": {
             "question": "How reactive is your skin?",
+            "hint": "Stinging, flushing or itching counts as reactive.",
+            "multi": false,
+            "max_choices": 2,
             "option_1": "Very — most actives sting",
+            "note_1": "We will keep the routine fragrance-free and low-dose.",
             "tag_1": "sensitive",
             "option_2": "Sometimes",
+            "note_2": "Certain acids or retinoids only.",
             "tag_2": "sensitive",
             "option_3": "Rarely",
+            "note_3": "I can use most things without trouble.",
             "tag_3": "resilient"
           }
         },
@@ -43,11 +77,17 @@
           "type": "question",
           "settings": {
             "question": "How many steps will you actually do?",
+            "hint": "Be honest — an unused product is a wasted one.",
+            "multi": false,
+            "max_choices": 2,
             "option_1": "Two",
+            "note_1": "Cleanse and one more thing.",
             "tag_1": "minimal",
             "option_2": "Three",
+            "note_2": "Cleanse, treat, moisturise.",
             "tag_2": "full",
             "option_3": "Four or more",
+            "note_3": "I enjoy the ritual.",
             "tag_3": "full"
           }
         },
@@ -55,23 +95,38 @@
           "type": "question",
           "settings": {
             "question": "Anything you already use and want to keep?",
-            "option_1": "A retinoid",
+            "hint": "We avoid doubling up on the same active.",
+            "multi": true,
+            "max_choices": 2,
+            "option_1": "Retinoid",
+            "note_1": "Retinol, retinal or tretinoin.",
             "tag_1": "retinoid",
             "option_2": "Vitamin C",
+            "note_2": "Morning brightening step.",
             "tag_2": "vitamin-c",
-            "option_3": "Nothing yet",
-            "tag_3": "starter"
+            "option_3": "Exfoliating acid",
+            "note_3": "AHA or BHA, any frequency.",
+            "tag_3": "acid",
+            "option_4": "Nothing yet",
+            "note_4": "Starting from scratch.",
+            "tag_4": "starter"
           }
         },
         "question-6": {
           "type": "question",
           "settings": {
             "question": "Do you wear sunscreen every morning?",
+            "hint": "It decides how fast anything else will work.",
+            "multi": false,
+            "max_choices": 2,
             "option_1": "Every day",
+            "note_1": "Rain or shine.",
             "tag_1": "spf-daily",
             "option_2": "Sunny days only",
+            "note_2": "Summer and holidays.",
             "tag_2": "spf",
             "option_3": "Not yet",
+            "note_3": "We will put it in the routine.",
             "tag_3": "spf"
           }
         }

@@ -10,7 +10,7 @@ journal (blog).
 theme/              ← the actual Shopify theme (deployable root — see below)
 design-reference/    ← the original AI-generated mockups this theme's design/copy came from
                        (not a theme, not deployed — see design-reference/README.md)
-docs/                ← architecture, page-mapping, decisions, and dev/deploy instructions
+docs/                ← architecture, decisions, dev/release, and Theme Store docs (see below)
 ```
 
 **Start with `/docs/ARCHITECTURE.md`** for how the theme is put together, and
@@ -36,3 +36,16 @@ shopify theme dev --store your-store.myshopify.com
 ```
 
 See `/docs/DEVELOPMENT.md` for linting and publishing.
+
+## Documentation
+
+| Doc | What it covers |
+|---|---|
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How the theme is built: templates, sections, CSS tokens, color schemes, fonts, JS |
+| [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Local dev, linting, releasing a version, building and uploading the ZIP |
+| [docs/DECISIONS.md](docs/DECISIONS.md) | Why things are the way they are |
+| [docs/PAGE-MAPPING.md](docs/PAGE-MAPPING.md) | Design mockup page → theme template/section |
+| [docs/DESIGN-HANDOFF.md](docs/DESIGN-HANDOFF.md) | Design handoff notes |
+| [docs/THEME-STORE-READINESS.md](docs/THEME-STORE-READINESS.md) | Theme Store review of the theme: open blockers and fix order |
+| [docs/THEME-STORE-SUBMISSION.md](docs/THEME-STORE-SUBMISSION.md) | How to sell on the Shopify Theme Store: fees, rules, submission, review, after launch |
+| [CHANGELOG.md](CHANGELOG.md) | Every release |

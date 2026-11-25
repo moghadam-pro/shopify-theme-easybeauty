@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container" style="max-width:420px">
   <h1>{{ 'customer.register.title' | t }}</h1>
 
@@ -26,12 +27,18 @@
     <button type="submit" class="btn btn-primary btn-block">{{ 'customer.register.submit' | t }}</button>
   {%- endform -%}
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.main-customer-register.name",
   "settings": [
-
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
   ]
 }
 {% endschema %}

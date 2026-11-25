@@ -1,8 +1,9 @@
 {%- comment -%}
   Collection header: breadcrumb, title, description (or a fallback line)
-  and short badges on the right. Kept separate from main-collection so
+  Kept separate from main-collection so
   other sections (e.g. category chips) can sit between it and the grid.
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <div class="collection-hero">
   <div class="container">
     <nav class="page-intro__breadcrumb" aria-label="{{ 'sections.page-intro.breadcrumb' | t }}">
@@ -13,14 +14,9 @@
         <h1>{{ collection.title }}</h1>
         {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- elsif section.settings.fallback_description != blank -%}<p>{{ section.settings.fallback_description }}</p>{%- endif -%}
       </div>
-      {%- if section.settings.badges != blank -%}
-        <div class="collection-hero__badges">
-          {%- assign badges = section.settings.badges | split: '|' -%}
-          {%- for badge in badges -%}<span>{{ badge | strip }}</span>{%- endfor -%}
-        </div>
-      {%- endif -%}
     </div>
   </div>
+</div>
 </div>
 
 {% schema %}
@@ -34,10 +30,10 @@
       "info": "t:sections.collection-banner.settings.fallback_description.info"
     },
     {
-      "type": "text",
-      "id": "badges",
-      "label": "t:sections.collection-banner.settings.badges.label",
-      "info": "t:sections.collection-banner.settings.badges.info"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "presets": [

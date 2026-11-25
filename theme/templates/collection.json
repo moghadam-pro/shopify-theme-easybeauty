@@ -3,8 +3,7 @@
     "banner": {
       "type": "collection-banner",
       "settings": {
-        "fallback_description": "Twelve formulas, six concerns, no seasonal launches. Filter by what your skin is actually doing this month.",
-        "badges": "Fragrance-free | Vegan | Derm tested"
+        "fallback_description": "Twelve formulas, six concerns, no seasonal launches. Filter by what your skin is actually doing this month."
       }
     },
     "chips": {

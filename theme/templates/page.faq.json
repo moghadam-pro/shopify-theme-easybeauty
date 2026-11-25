@@ -192,7 +192,7 @@
     "still-stuck": {
       "type": "cta-banner",
       "settings": {
-        "color_scheme": "dark",
+        "style": "dark",
         "eyebrow": "Still stuck",
         "heading": "A formulator answers, not a script.",
         "text": "<p>Mon–Fri, 9–18 WET. Average reply about six hours. Order questions are fastest with your order number to hand.</p>",

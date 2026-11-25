@@ -3,7 +3,9 @@
   - stats:    big serif figure (title) + caption
   - timeline: small accent label (kicker) + serif title + text
   - cards:    kicker + title + text + link (contact channels, 404 shortcuts)
+  - index:    serif accent number (kicker) + small-caps title + note (lookbook contents)
 {%- endcomment -%}
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="multicolumn multicolumn--{{ section.settings.style }}">
   {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
     <div class="multicolumn__head">
@@ -28,6 +30,7 @@
   </div>
   {%- if section.settings.caption != blank -%}<p class="multicolumn__caption">{{ section.settings.caption }}</p>{%- endif -%}
 </section>
+</div>
 
 {% schema %}
 {
@@ -49,6 +52,10 @@
         {
           "value": "cards",
           "label": "Cards"
+        },
+        {
+          "value": "index",
+          "label": "t:sections.multicolumn.settings.style.options__index.label"
         }
       ],
       "default": "cards"
@@ -68,6 +75,12 @@
       "id": "caption",
       "label": "t:sections.multicolumn.settings.caption.label",
       "info": "t:sections.multicolumn.settings.caption.info"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
     }
   ],
   "blocks": [

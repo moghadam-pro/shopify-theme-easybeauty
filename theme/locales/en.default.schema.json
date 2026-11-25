@@ -6,19 +6,23 @@
     },
     "colors": {
       "name": "Colors",
-      "header": "Brand palette",
+      "header": "Color schemes",
       "background": "Background",
-      "surface": "Surface",
+      "background_gradient": "Background gradient",
+      "background_gradient_info": "Replaces the background color where a section shows the scheme background.",
+      "surface": "Surface (cards, panels)",
       "text": "Text",
-      "accent": "Accent (terracotta)",
-      "accent_2": "Accent 2 (moss)",
-      "border": "Border / divider",
-      "inverse_background": "Inverse background (footer)",
-      "inverse_text": "Inverse text (footer)"
+      "accent": "Accent and primary button",
+      "accent_2": "Second accent",
+      "border": "Border",
+      "inverse_background": "Inverse background",
+      "inverse_text": "Inverse text"
     },
     "typography": {
       "name": "Typography",
-      "brand_font_note": "EasyBeauty ships with Archivo (body/UI) and Bodoni Moda (display headings) self-hosted in Assets. Use the scales below to fine-tune size without switching the brand typefaces.",
+      "headings": "Headings",
+      "body": "Body",
+      "font": "Font",
       "heading_scale": "Heading size",
       "body_scale": "Body size"
     },
@@ -37,6 +41,40 @@
       "page": "Page",
       "show_free_shipping_bar": "Show free shipping progress bar",
       "free_shipping_threshold": "Free shipping threshold ($)"
+    },
+    "dark_mode": {
+      "name": "Dark mode",
+      "enabled": {
+        "label": "Enable dark mode",
+        "info": "Adds a light / dark switch to the header (Header → Show light / dark switch). Light color schemes switch to the colors below; dark schemes stay as they are."
+      },
+      "default": {
+        "label": "Default for new visitors",
+        "options__1": {
+          "label": "Light"
+        },
+        "options__2": {
+          "label": "Dark"
+        },
+        "options__3": {
+          "label": "Follow the visitor's device"
+        }
+      },
+      "background": {
+        "label": "Background"
+      },
+      "surface": {
+        "label": "Surface (cards, panels)"
+      },
+      "text": {
+        "label": "Text"
+      },
+      "accent": {
+        "label": "Accent"
+      },
+      "border": {
+        "label": "Border"
+      }
     }
   },
   "sections": {
@@ -59,6 +97,35 @@
         "saved_link": {
           "label": "Saved items page link",
           "info": "A page using the \"saved\" template, e.g. /pages/saved. Leave empty to hide it from the account menu."
+        },
+        "logo_position": {
+          "label": "Logo position",
+          "options__1": {
+            "label": "Centre (menu left)"
+          },
+          "options__2": {
+            "label": "Left (menu centre)"
+          }
+        },
+        "show_theme_toggle": {
+          "label": "Show light / dark switch",
+          "info": "Needs dark mode switched on in Theme settings → Dark mode."
+        },
+        "header_mega": {
+          "content": "Mega menu"
+        },
+        "mega_items": {
+          "label": "Links per column"
+        },
+        "mega_counts": {
+          "label": "Show product counts next to collection links"
+        },
+        "mega_mono": {
+          "label": "Show the feature image in black and white"
+        },
+        "demo_product": {
+          "label": "Demo product",
+          "info": "Used by the \"Product page\" column of a link mega menu. Defaults to the first product."
         }
       },
       "blocks": {
@@ -129,6 +196,37 @@
               "label": "Footnote link 2"
             }
           }
+        },
+        "link_mega": {
+          "name": "Link mega menu",
+          "settings": {
+            "title": {
+              "label": "Menu label"
+            },
+            "link": {
+              "label": "Menu label link"
+            },
+            "column_title": {
+              "label": "Column title"
+            },
+            "column_links": {
+              "label": "Column links",
+              "info": "One link per line: Label | /url | optional note"
+            },
+            "show_layouts": {
+              "label": "Add a column with the product page layouts",
+              "info": "Links the demo product in all four layouts."
+            },
+            "layouts_title": {
+              "label": "Layouts column title"
+            },
+            "layouts_position": {
+              "label": "Layouts column position"
+            },
+            "footnote": {
+              "label": "Footnote"
+            }
+          }
         }
       }
     },
@@ -156,6 +254,19 @@
         },
         "show_newsletter": {
           "label": "Show newsletter signup"
+        },
+        "brand": {
+          "label": "Brand name",
+          "info": "Defaults to the store name."
+        },
+        "header_legal": {
+          "content": "Bottom links"
+        },
+        "legal_label": {
+          "label": "Link label"
+        },
+        "legal_url": {
+          "label": "Link"
         }
       },
       "blocks": {
@@ -178,6 +289,17 @@
             },
             "content": {
               "label": "Content"
+            }
+          }
+        },
+        "links": {
+          "name": "Links",
+          "settings": {
+            "label": {
+              "label": "Link label"
+            },
+            "url": {
+              "label": "Link"
             }
           }
         }
@@ -218,6 +340,36 @@
         },
         "button_link_2": {
           "label": "Second button link"
+        },
+        "image_shift": {
+          "label": "Move the photo away from the text",
+          "info": "\"Show the whole height\": slides the photo right (left when the text is on the right) and fills the gap with its own background. \"Fill the width\": zooms in from the text side."
+        },
+        "height": {
+          "label": "Height",
+          "options__1": {
+            "label": "Fit the first screen"
+          },
+          "options__2": {
+            "label": "Photo's own shape"
+          }
+        },
+        "focus_x": {
+          "label": "Photo focus — left / right"
+        },
+        "focus_y": {
+          "label": "Photo focus — top / bottom",
+          "info": "The part of the photo kept in view when the hero is cropped."
+        },
+        "image_fit": {
+          "label": "Photo fit",
+          "info": "On screens wider than the photo: keep its full height beside the text, or fill the width and crop top and bottom.",
+          "options__1": {
+            "label": "Show the whole height"
+          },
+          "options__2": {
+            "label": "Fill the width"
+          }
         }
       },
       "blocks": {
@@ -242,6 +394,22 @@
             "fallback_image": {
               "label": "Fallback image (theme asset filename)",
               "info": "Used only if no thumbnail is picked above. Must be a filename already in Assets, e.g. sample-product-1.jpg."
+            },
+            "product": {
+              "label": "Product",
+              "info": "Optional. Fills in the title, thumbnail and link when those are left empty."
+            },
+            "link": {
+              "label": "Link"
+            },
+            "card_side": {
+              "label": "Card opens to the",
+              "options__1": {
+                "label": "Right"
+              },
+              "options__2": {
+                "label": "Left"
+              }
             }
           }
         }
@@ -333,6 +501,22 @@
         },
         "text": {
           "label": "Text"
+        },
+        "layout": {
+          "label": "Layout",
+          "options__1": {
+            "label": "Centered"
+          },
+          "options__2": {
+            "label": "Split with image"
+          }
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "image": {
+          "label": "Image",
+          "info": "Used by the split layout."
         }
       },
       "presets": {
@@ -395,6 +579,43 @@
         },
         "show_description": {
           "label": "Show full description as an accordion"
+        },
+        "layout": {
+          "label": "Layout",
+          "info": "Each layout is also available as its own product template (hero, info-left, dossier) that you can assign per product.",
+          "options__1": {
+            "label": "Gallery left"
+          },
+          "options__2": {
+            "label": "Full-width photo"
+          },
+          "options__3": {
+            "label": "Details left, gallery right"
+          },
+          "options__4": {
+            "label": "Dark dossier"
+          }
+        },
+        "stock_note": {
+          "label": "In-stock note"
+        },
+        "service_notes": {
+          "label": "Service notes",
+          "info": "Separate with |"
+        },
+        "default_pack": {
+          "label": "Pack selected by default",
+          "info": "Position of the pack block, counting only packs that are shown."
+        },
+        "show_sticky_bar": {
+          "label": "Show sticky add-to-bag bar"
+        },
+        "header_dossier": {
+          "content": "Dark dossier layout"
+        },
+        "dossier_eyebrow": {
+          "label": "Eyebrow",
+          "info": "Separate parts with ·, e.g. No.3 · Serum · Niacinamide 10%. Defaults to the product type."
         }
       },
       "blocks": {
@@ -415,6 +636,42 @@
             "title": {},
             "content": {}
           }
+        },
+        "pack": {
+          "name": "Pack",
+          "settings": {
+            "title": {
+              "label": "Title"
+            },
+            "note": {
+              "label": "Note"
+            },
+            "quantity": {
+              "label": "Bottles in the pack"
+            },
+            "discount": {
+              "label": "Pack discount",
+              "info": "Only changes the prices shown. Create an automatic discount with the same percentage and minimum quantity (Admin → Discounts), or checkout charges full price."
+            },
+            "tag": {
+              "label": "Tag"
+            },
+            "subscription": {
+              "label": "Subscription pack",
+              "info": "Uses the product's first selling plan (from a subscriptions app) and its price. Hidden when the product has no selling plan."
+            }
+          }
+        },
+        "spec": {
+          "name": "Spec (dossier)",
+          "settings": {
+            "value": {
+              "label": "Value"
+            },
+            "label": {
+              "label": "Label"
+            }
+          }
         }
       }
     },
@@ -430,7 +687,21 @@
       }
     },
     "main-collection": {
-      "name": "Collection"
+      "name": "Collection",
+      "settings": {
+        "products_per_page": {
+          "label": "Products per page"
+        },
+        "open_groups": {
+          "label": "Filter groups open by default"
+        },
+        "show_search": {
+          "label": "Show product search in the sidebar"
+        },
+        "filters_info": {
+          "content": "Filters come from the Shopify Search & Discovery app (Online Store → Navigation → Collection and search filters). Add Price, Availability, Product type and any product metafields (concern, skin type, key active…)."
+        }
+      }
     },
     "collection-banner": {
       "name": "Collection banner",
@@ -487,14 +758,126 @@
         },
         "show_featured": {
           "label": "Feature the newest article"
+        },
+        "header_note": {
+          "label": "Header note"
+        },
+        "author_role": {
+          "label": "Featured author role"
+        },
+        "per_page": {
+          "label": "Articles per page"
+        },
+        "max_tags": {
+          "label": "Tags in the filter bar"
+        },
+        "show_search": {
+          "label": "Show journal search"
         }
       }
     },
     "main-article": {
-      "name": "Article"
+      "name": "Article",
+      "settings": {
+        "reviewer": {
+          "label": "Reviewer note"
+        },
+        "author_role": {
+          "label": "Author role"
+        },
+        "author_bio": {
+          "label": "Author bio",
+          "info": "Used when the staff account has no bio."
+        },
+        "show_caption": {
+          "label": "Show the image alt text as a caption"
+        },
+        "show_share": {
+          "label": "Show share buttons"
+        }
+      }
     },
     "main-page": {
       "name": "Page"
+    },
+    "legal-document": {
+      "name": "Legal documents",
+      "blocks": {
+        "document": {
+          "name": "Document (tab)",
+          "settings": {
+            "label": {
+              "label": "Tab label"
+            },
+            "anchor": {
+              "label": "Link name",
+              "info": "Opens this tab from links such as /pages/legal#privacy. Defaults to the tab label."
+            },
+            "kicker": {
+              "label": "Eyebrow"
+            },
+            "heading": {
+              "label": "Heading"
+            },
+            "policy": {
+              "label": "Show a Shopify policy",
+              "info": "Shown when no Clause blocks follow this document. Edit the text in Settings → Policies.",
+              "options__1": {
+                "label": "None"
+              },
+              "options__2": {
+                "label": "Privacy policy"
+              },
+              "options__3": {
+                "label": "Terms of service"
+              },
+              "options__4": {
+                "label": "Refund policy"
+              },
+              "options__5": {
+                "label": "Shipping policy"
+              },
+              "options__6": {
+                "label": "Subscription policy"
+              }
+            }
+          }
+        },
+        "clause": {
+          "name": "Clause",
+          "settings": {
+            "number": {
+              "label": "Number"
+            },
+            "heading": {
+              "label": "Heading"
+            },
+            "text": {
+              "label": "Text"
+            }
+          }
+        },
+        "aside": {
+          "name": "Side note",
+          "settings": {
+            "heading": {
+              "label": "Heading"
+            },
+            "text": {
+              "label": "Text"
+            },
+            "button_label": {
+              "label": "Button label"
+            },
+            "button_link": {
+              "label": "Button link"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Legal documents"
+      }
     },
     "legal-links": {
       "name": "Legal links",
@@ -520,6 +903,23 @@
               "label": "Text"
             }
           }
+        }
+      },
+      "settings": {
+        "layout": {
+          "label": "Layout",
+          "options__1": {
+            "label": "Split — heading left, list right"
+          },
+          "options__2": {
+            "label": "Grid"
+          }
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
         }
       }
     },
@@ -618,6 +1018,22 @@
         },
         "faq_heading": {
           "label": "Q&A heading"
+        },
+        "aside_image": {
+          "label": "Side column image"
+        },
+        "aside_content_2": {
+          "label": "Side column details (below the image)"
+        },
+        "show_consent": {
+          "label": "Show newsletter opt-in"
+        },
+        "consent_text": {
+          "label": "Opt-in text"
+        },
+        "show_image": {
+          "label": "Show a photo in the side column",
+          "info": "Uses the theme's sample photo until you pick an image."
         }
       },
       "blocks": {
@@ -683,8 +1099,69 @@
             },
             "tag_3": {
               "label": "Option 3 → product tag"
+            },
+            "hint": {
+              "label": "Hint"
+            },
+            "multi": {
+              "label": "Allow more than one answer (shows checkboxes)"
+            },
+            "max_choices": {
+              "label": "Maximum answers"
+            },
+            "note": {
+              "label": "Option note"
+            },
+            "option_4": {
+              "label": "Option 4"
+            },
+            "tag_4": {
+              "label": "Option 4 tag"
             }
           }
+        }
+      },
+      "settings": {
+        "header_intro": {
+          "content": "Intro"
+        },
+        "eyebrow": {
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "label": "Heading"
+        },
+        "text": {
+          "label": "Text"
+        },
+        "start_label": {
+          "label": "Start button label"
+        },
+        "trust": {
+          "label": "Small notes",
+          "info": "Separate with |"
+        },
+        "image": {
+          "label": "Image"
+        },
+        "header_result": {
+          "content": "Result"
+        },
+        "result_eyebrow": {
+          "label": "Eyebrow"
+        },
+        "result_heading": {
+          "label": "Heading"
+        },
+        "result_text": {
+          "label": "Text"
+        },
+        "result_collection": {
+          "label": "Recommend products from",
+          "info": "Products are ranked by how many answer tags they carry as product tags (e.g. tag a product dry, sensitive, brightening). Defaults to all products."
+        },
+        "result_count": {
+          "label": "Products to recommend"
         }
       }
     },
@@ -767,7 +1244,8 @@
       "name": "Collection tabs",
       "settings": {
         "products_to_show": {
-          "label": "Products per tab"
+          "label": "Products per tab",
+          "info": "Default for tabs that don't set their own number."
         },
         "columns_desktop": {
           "label": "Columns on desktop"
@@ -777,6 +1255,15 @@
         },
         "view_all_link": {
           "label": "View all link"
+        },
+        "layout": {
+          "label": "Layout",
+          "options__1": {
+            "label": "Slider with arrows"
+          },
+          "options__2": {
+            "label": "Grid"
+          }
         }
       },
       "blocks": {
@@ -789,6 +1276,10 @@
             "collection": {
               "label": "Collection",
               "info": "Defaults to all products."
+            },
+            "products_to_show": {
+              "label": "Products in this tab",
+              "info": "In the slider, extra products are reached with the arrows."
             }
           }
         }
@@ -884,6 +1375,14 @@
         },
         "fallback_link": {
           "label": "Link when products are missing"
+        },
+        "discount_percent": {
+          "label": "Bundle discount",
+          "info": "Only lowers the total shown on the button. Create an automatic discount with the same percentage in Admin → Discounts, or checkout will charge full price. Leave at 0% if there is no discount."
+        },
+        "set_image": {
+          "label": "Set photo",
+          "info": "One photo of the whole set. Each step then gets a numbered marker you place on its product (in the step's settings)."
         }
       },
       "blocks": {
@@ -900,10 +1399,24 @@
               "label": "Fallback price text"
             },
             "fallback_sizes": {
-              "label": "Fallback size text"
+              "label": "Fallback sizes (comma-separated)"
             },
             "fallback_image": {
               "label": "Fallback image (theme asset filename)"
+            },
+            "image": {
+              "label": "Large image",
+              "info": "Optional. Replaces the product photo in the image panel only."
+            },
+            "marker_header": {
+              "content": "Marker on the set photo",
+              "info": "Only used when the section has a set photo."
+            },
+            "marker_x": {
+              "label": "Marker — left / right"
+            },
+            "marker_y": {
+              "label": "Marker — top / bottom"
             }
           }
         }
@@ -917,6 +1430,10 @@
       "settings": {
         "heading": {
           "label": "Heading"
+        },
+        "image_duration": {
+          "label": "Photo reel duration",
+          "info": "How long a reel with a photo instead of a video stays active before the next one plays."
         }
       },
       "blocks": {
@@ -965,6 +1482,10 @@
         "press": {
           "label": "Press names",
           "info": "Comma-separated, e.g. Vogue, Allure, Byrdie"
+        },
+        "press_speed": {
+          "label": "Press strip speed (seconds per name)",
+          "info": "Higher is slower."
         }
       },
       "blocks": {
@@ -1000,8 +1521,8 @@
     "cta-banner": {
       "name": "Call to action",
       "settings": {
-        "color_scheme": {
-          "label": "Colors"
+        "style": {
+          "label": "Style"
         },
         "eyebrow": {
           "label": "Eyebrow"
@@ -1060,6 +1581,26 @@
         },
         "button_link_2": {
           "label": "Second button link"
+        },
+        "meta_style": {
+          "label": "Meta style",
+          "options__1": {
+            "label": "Tags under the text"
+          },
+          "options__2": {
+            "label": "Small caps on the right"
+          }
+        },
+        "image": {
+          "label": "Side image",
+          "info": "Shows the intro as a split with the image on the right."
+        },
+        "fallback_image": {
+          "label": "Theme sample image (file name)",
+          "info": "Used until you pick an image, e.g. hero-banner.jpg. Leave empty for no image."
+        },
+        "grayscale": {
+          "label": "Black & white image"
         }
       },
       "presets": {
@@ -1070,7 +1611,10 @@
       "name": "Multicolumn",
       "settings": {
         "style": {
-          "label": "Style"
+          "label": "Style",
+          "options__index": {
+            "label": "Index (numbered links)"
+          }
         },
         "eyebrow": {
           "label": "Eyebrow"
@@ -1202,6 +1746,9 @@
         },
         "note": {
           "label": "Note next to the button"
+        },
+        "grayscale": {
+          "label": "Black & white photo"
         }
       },
       "blocks": {
@@ -1297,6 +1844,52 @@
       },
       "presets": {
         "name": "Saved items"
+      }
+    },
+    "image-banner": {
+      "name": "Image band",
+      "settings": {
+        "image": {
+          "label": "Image"
+        },
+        "height": {
+          "label": "Height",
+          "options__1": {
+            "label": "Small"
+          },
+          "options__2": {
+            "label": "Medium"
+          },
+          "options__3": {
+            "label": "Large"
+          }
+        },
+        "position": {
+          "label": "Image focus",
+          "options__1": {
+            "label": "Top"
+          },
+          "options__2": {
+            "label": "Upper third"
+          },
+          "options__3": {
+            "label": "Center"
+          },
+          "options__4": {
+            "label": "Bottom"
+          }
+        },
+        "caption": {
+          "label": "Caption"
+        }
+      },
+      "presets": {
+        "name": "Image band"
+      }
+    },
+    "all": {
+      "color_scheme": {
+        "label": "Color scheme"
       }
     }
   }

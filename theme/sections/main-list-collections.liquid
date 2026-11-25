@@ -1,3 +1,4 @@
+<div class="color-scheme color-{{ section.settings.color_scheme }}">
 <section class="section container">
   <h1>{{ 'general.collections.title' | t }}</h1>
   <div class="grid grid-3">
@@ -20,12 +21,18 @@
     {%- endfor -%}
   </div>
 </section>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.main-list-collections.name",
   "settings": [
-
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.color_scheme.label",
+      "default": "scheme-1"
+    }
   ]
 }
 {% endschema %}
